@@ -15,5 +15,6 @@
 /sandbox/public/assets/
 /sandbox/public/vite-dev/
 /sandbox/.bundle/
+/sandbox/config/master.key
 
 /packages/cli/node_modules/
