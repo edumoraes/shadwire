@@ -19,7 +19,43 @@ def inside_directory?(path, directory)
   relative.each_filename.first != ".."
 end
 
-files = REGISTRY.fetch("items").flat_map { |item| item.fetch("files") }.uniq
+items = REGISTRY.fetch("items")
+items_by_name = items.to_h { |item| [item.fetch("name"), item] }
+
+selected_items =
+  if ARGV.empty?
+    complete_items = []
+
+    items.each do |item|
+      missing_sources = item.fetch("files").filter_map do |file|
+        source = file.fetch("source")
+        source unless ROOT.join(source).file?
+      end
+
+      if missing_sources.empty?
+        complete_items << item
+      else
+        warn "Skipping incomplete registry item #{item.fetch("name")}: missing #{missing_sources.join(", ")}"
+      end
+    end
+
+    if complete_items.empty?
+      puts "No complete registry items available; nothing to sync."
+      exit 0
+    end
+
+    complete_items
+  else
+    unknown_names = ARGV.reject { |name| items_by_name.key?(name) }
+    unless unknown_names.empty?
+      warn "Unknown registry item#{"s" if unknown_names.length > 1}: #{unknown_names.join(", ")}"
+      exit 1
+    end
+
+    ARGV.map { |name| items_by_name.fetch(name) }
+  end
+
+files = selected_items.flat_map { |item| item.fetch("files") }.uniq
 targets = {}
 sync_files = files.map do |file|
   source = ROOT.join(file.fetch("source"))
@@ -42,12 +78,15 @@ end
 
 sync_files.each do |file|
   source = file.fetch(:source)
-  target = file.fetch(:target)
   unless source.file?
     warn "Missing registry source: #{source.relative_path_from(ROOT)}"
     exit 1
   end
+end
 
+sync_files.each do |file|
+  source = file.fetch(:source)
+  target = file.fetch(:target)
   FileUtils.mkdir_p(target.dirname)
   FileUtils.cp(source, target)
   puts "synced #{source.relative_path_from(ROOT)} -> #{target.relative_path_from(ROOT)}"
