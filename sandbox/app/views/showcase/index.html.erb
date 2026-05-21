@@ -1,0 +1,34 @@
+<main class="mx-auto flex max-w-4xl flex-col gap-8 p-8">
+  <section class="flex flex-col gap-4">
+    <h1 class="text-3xl font-bold tracking-normal">Shadwire</h1>
+    <p class="text-muted-foreground">Rails ViewComponent ports of shadcn/ui components.</p>
+  </section>
+
+  <section class="flex flex-wrap items-center gap-3">
+    <%= ui_button { "Default" } %>
+    <%= ui_button(variant: :outline) { "Outline" } %>
+    <%= ui_badge { "Badge" } %>
+    <%= ui_badge(variant: :secondary) { "Secondary" } %>
+  </section>
+
+  <%= ui_separator(decorative: false) %>
+
+  <%= ui_alert do %>
+    Components render through ViewComponent helpers and keep Rails HTML attributes.
+  <% end %>
+
+  <%= ui_card(class_name: "max-w-md") do %>
+    <%= ui_card_header do %>
+      <%= ui_card_title { "Card title" } %>
+      <%= ui_card_description { "Composed subcomponents match the shadcn structure." } %>
+    <% end %>
+    <%= ui_card_content do %>
+      <p>Card content is rendered as server-side HTML.</p>
+    <% end %>
+    <%= ui_card_footer do %>
+      <%= ui_button(size: :sm) { "Action" } %>
+    <% end %>
+  <% end %>
+
+  <%= ui_avatar(src: "https://example.com/avatar.png", alt: "Example user", fallback: "EU") %>
+</main>
