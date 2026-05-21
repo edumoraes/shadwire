@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "fileutils"
+require "json"
+require "pathname"
+
+ROOT = Pathname.new(__dir__).join("..").expand_path
+REGISTRY = JSON.parse(ROOT.join("registry/registry.json").read)
+SANDBOX = ROOT.join("sandbox")
+
+unless SANDBOX.directory?
+  warn "sandbox/ does not exist. Run Task 2 before syncing registry files."
+  exit 1
+end
+
+def inside_directory?(path, directory)
+  relative = path.relative_path_from(directory)
+  relative.each_filename.first != ".."
+end
+
+files = REGISTRY.fetch("items").flat_map { |item| item.fetch("files") }.uniq
+targets = {}
+sync_files = files.map do |file|
+  source = ROOT.join(file.fetch("source"))
+  target = SANDBOX.join(file.fetch("target")).expand_path
+
+  unless inside_directory?(target, SANDBOX)
+    warn "Unsafe registry target: #{file.fetch("target")}"
+    exit 1
+  end
+
+  previous_source = targets[target.to_s]
+  if previous_source && previous_source != file.fetch("source")
+    warn "Conflicting registry target: #{target.relative_path_from(SANDBOX)} maps to both #{previous_source} and #{file.fetch("source")}"
+    exit 1
+  end
+
+  targets[target.to_s] = file.fetch("source")
+  { source:, target: }
+end
+
+sync_files.each do |file|
+  source = file.fetch(:source)
+  target = file.fetch(:target)
+  unless source.file?
+    warn "Missing registry source: #{source.relative_path_from(ROOT)}"
+    exit 1
+  end
+
+  FileUtils.mkdir_p(target.dirname)
+  FileUtils.cp(source, target)
+  puts "synced #{source.relative_path_from(ROOT)} -> #{target.relative_path_from(ROOT)}"
+end
