@@ -10,7 +10,7 @@ module Ui
       end
 
       def call
-        tag.public_send(@tag_name, content, **html_attrs, class: class_names("text-2xl font-semibold leading-none tracking-normal", @class_name))
+        tag.public_send(@tag_name, content, **html_attrs, class: class_names("text-2xl font-semibold leading-none tracking-tight", @class_name))
       end
     end
   end

@@ -21,12 +21,16 @@ module Ui
     private
 
     def separator_attrs
-      html_attrs.merge(
-        role: "separator",
-        "aria-orientation": @orientation.to_s,
-        "aria-hidden": @decorative,
-        class: separator_classes
-      )
+      html_attrs.merge(role_attrs).merge(class: separator_classes)
+    end
+
+    # A decorative separator is purely visual, so it is removed from the
+    # accessibility tree with role="none". A non-decorative separator is a
+    # semantic divider and exposes role="separator" with its orientation.
+    def role_attrs
+      return { role: "none" } if @decorative
+
+      { role: "separator", "aria-orientation": @orientation.to_s }
     end
 
     def separator_classes
