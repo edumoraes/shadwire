@@ -4,18 +4,35 @@ Shadwire ports the shadcn/ui Open Code model to Ruby on Rails.
 
 The source of truth is `registry/`. The Rails app in `sandbox/` consumes copied registry files so components are validated in a real Rails, ViewComponent, Tailwind CSS v4, and Hotwire environment.
 
-## MVP
+## Components
 
-Initial components:
+The MVP includes:
 
-- Button
-- Badge
-- Card
-- Alert
-- Separator
-- Avatar
+- `Ui::ButtonComponent`
+- `Ui::BadgeComponent`
+- `Ui::CardComponent`
+- `Ui::Card::HeaderComponent`
+- `Ui::Card::TitleComponent`
+- `Ui::Card::DescriptionComponent`
+- `Ui::Card::ContentComponent`
+- `Ui::Card::FooterComponent`
+- `Ui::AlertComponent`
+- `Ui::SeparatorComponent`
+- `Ui::AvatarComponent`
 
-## Workflow
+Helpers use the `ui_*` prefix.
+
+```erb
+<%= render Ui::ButtonComponent.new(variant: :outline, size: :sm) do %>
+  Save
+<% end %>
+
+<%= ui_button(variant: :outline, size: :sm) { "Save" } %>
+```
+
+## Registry Workflow
+
+Edit source files in `registry/rails/ui`.
 
 Sync registry files into the sandbox:
 
@@ -23,16 +40,34 @@ Sync registry files into the sandbox:
 bin/sync_registry
 ```
 
-Run sandbox tests:
+Run all tests:
+
+```bash
+rake test
+```
+
+Run sandbox tests only:
 
 ```bash
 cd sandbox
 bin/rails test test/components test/integration/ui_accessibility_test.rb
 ```
 
+## Translation Rules
+
+| shadcn / React concept | Shadwire / Rails equivalent |
+| --- | --- |
+| Base class string | `base_classes` method |
+| `cva` variants | frozen Ruby hashes |
+| `cn(...)` and `className` | `class_names(..., @class_name)` |
+| React props | `initialize(...)` keyword arguments |
+| `children` | `content` |
+| `asChild` | configurable `tag:` or conditional rendering |
+| Radix/Base behavior | native HTML, Stimulus, or Hotwire |
+
 ## Commits
 
-Use Conventional Commits, for example:
+Use Conventional Commits:
 
 ```bash
 git commit -m "feat: add button component"
