@@ -11,6 +11,21 @@
     <%= ui_badge(variant: :secondary) { "Secondary" } %>
   </section>
 
+  <section class="flex flex-wrap items-center gap-3">
+    <%= ui_button do %>
+      <%= ui_icon("download") %>
+      Baixar
+    <% end %>
+    <%= ui_button(variant: :outline) do %>
+      Avançar
+      <%= ui_icon("arrow-right") %>
+    <% end %>
+    <%= ui_button(size: :icon, variant: :secondary) do %>
+      <%= ui_icon("plus", label: "Adicionar item") %>
+    <% end %>
+    <%= ui_icon("circle-alert", size: :lg, class: "text-destructive") %>
+  </section>
+
   <%= ui_separator(decorative: false) %>
 
   <%= ui_alert do %>

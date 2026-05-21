@@ -43,8 +43,9 @@ bin/dev                            # dev server + Tailwind watch (Procfile.dev)
 ```
 
 The sandbox targets Ruby 3.4.8 / Rails 8.1. The `dependencies` block in
-`registry.json` (`ruby >= 3.2`, `rails >= 7.1`, `view_component >= 4.0`) is the
-*consuming app's* support floor — keep registry component code compatible with it.
+`registry.json` (`ruby >= 3.2`, `rails >= 7.1`, `view_component >= 4.0`,
+`lucide-rails >= 0.7`) is the *consuming app's* support floor — keep registry
+component code compatible with it.
 
 ## Architecture
 
@@ -80,6 +81,17 @@ pointing at the synced `vendor/shadwire/shadwire.css`.
 - Compose classes in this order: `class_names(base_classes, variant_classes, size_classes, @class_name)`.
 - Use shadcn semantic Tailwind tokens (`bg-primary`, `text-muted-foreground`,
   `border-input`, …) — no hardcoded colors unless upstream shadcn does so.
+
+### Icons
+
+Icons use the **lucide-rails** gem (`lucide_icon` helper) — the Rails port of
+Lucide, shadcn/ui's icon set. `Ui::IconComponent` / `ui_icon(name, ...)` wraps it
+with shadcn-style size variants (`:sm`/`:default`/`:lg`/`:xl`) and is decorative
+(`aria-hidden`) by default; pass `label:` to expose a meaningful icon. Icon names
+are Lucide kebab-case (`"chevron-down"`). Compose icons into other components
+(shadcn-style) instead of adding `icon:` props — `ButtonComponent` carries
+`[&_svg]` utilities so a nested `ui_icon` is sized correctly, and `size: :icon`
+gives an icon-only button.
 
 ### Adding a component
 

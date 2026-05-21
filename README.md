@@ -19,6 +19,7 @@ The MVP includes:
 - `Ui::AlertComponent`
 - `Ui::SeparatorComponent`
 - `Ui::AvatarComponent`
+- `Ui::IconComponent`
 
 Helpers use the `ui_*` prefix.
 
@@ -28,6 +29,15 @@ Helpers use the `ui_*` prefix.
 <% end %>
 
 <%= ui_button(variant: :outline, size: :sm) { "Save" } %>
+```
+
+Icons are rendered with [lucide-rails](https://github.com/heyvito/lucide-rails)
+(add `gem "lucide-rails"` to the consuming app). Compose them inside other
+components:
+
+```erb
+<%= ui_button { (ui_icon("download") + " Download").html_safe } %>
+<%= ui_button(size: :icon) { ui_icon("plus", label: "Add item") } %>
 ```
 
 ## Registry Workflow

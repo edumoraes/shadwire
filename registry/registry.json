@@ -1,12 +1,13 @@
 {
   "$schema": "https://shadwire.dev/schema/registry-item.json",
   "name": "shadwire",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "framework": "rails",
   "dependencies": {
     "ruby": ">= 3.2",
     "rails": ">= 7.1",
-    "view_component": ">= 4.0"
+    "view_component": ">= 4.0",
+    "lucide-rails": ">= 0.7"
   },
   "tailwind": {
     "version": "4",
@@ -155,6 +156,28 @@
         {
           "source": "registry/rails/ui/components/avatar_component.rb",
           "target": "app/components/ui/avatar_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "icon",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/icon_component.rb",
+          "target": "app/components/ui/icon_component.rb"
         },
         {
           "source": "registry/rails/ui/helpers/ui_helper.rb",

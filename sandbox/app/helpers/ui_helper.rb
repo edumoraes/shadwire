@@ -44,4 +44,8 @@ module UiHelper
   def ui_avatar(**options, &block)
     render(Ui::AvatarComponent.new(**options), &block)
   end
+
+  def ui_icon(name, **options)
+    render(Ui::IconComponent.new(name, **options))
+  end
 end
