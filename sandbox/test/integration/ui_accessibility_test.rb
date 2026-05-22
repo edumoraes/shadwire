@@ -12,6 +12,7 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "[role='alert']", text: /Components render/
     assert_select "[role='separator'][aria-orientation='horizontal']"
     assert_select "img[alt='Example user']"
+    assert_select "span[aria-hidden='true']", text: "EU"
     assert_select "button svg[aria-hidden='true']"
     assert_select "svg[role='img'][aria-label='Adicionar item']"
     assert_select "button[aria-label='Alternar tema']"

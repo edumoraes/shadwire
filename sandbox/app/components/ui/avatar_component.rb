@@ -31,7 +31,13 @@ module Ui
     def fallback_html
       return if @fallback.blank?
 
-      tag.span(@fallback, class: "flex size-full items-center justify-center rounded-full bg-muted")
+      tag.span(@fallback, **fallback_attrs)
+    end
+
+    def fallback_attrs
+      attrs = { class: "flex size-full items-center justify-center rounded-full bg-muted" }
+      attrs[:aria] = { hidden: "true" } if @src.present?
+      attrs
     end
   end
 end
