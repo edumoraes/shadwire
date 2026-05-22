@@ -1,0 +1,123 @@
+<% content_for :title, "Button — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+  <header class="space-y-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-3xl font-bold tracking-tight">Button</h1>
+    <p class="text-lg text-muted-foreground">
+      Exibe um botão ou um elemento que se parece com um botão.
+    </p>
+  </header>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <p class="text-sm text-muted-foreground">
+      O Shadwire segue o modelo <em>open-code</em> do shadcn/ui: você copia o
+      código-fonte do componente para a sua aplicação e passa a ser dono dele. A
+      CLI de instalação ainda está por vir; por enquanto, o item
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">button</code> do
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">registry.json</code>
+      instala estes arquivos:
+    </p>
+    <ul class="space-y-1 text-sm">
+      <% %w[
+        app/components/ui_component.rb
+        app/components/ui/button_component.rb
+        app/helpers/ui_helper.rb
+        vendor/shadwire/shadwire.css
+      ].each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground">
+          <%= ui_icon("file-code", size: :sm) %>
+          <code><%= path %></code>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <p class="text-sm text-muted-foreground">
+      Use o helper <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_button</code>
+      em qualquer view — ele aceita os mesmos argumentos do componente.
+    </p>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_helper) %></pre>
+    <p class="text-sm text-muted-foreground">
+      Ou renderize o componente
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::ButtonComponent</code>
+      diretamente:
+    </p>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_component) %></pre>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <p class="text-sm text-muted-foreground">
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_button(**options, &block)</code>
+      encapsula
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::ButtonComponent.new(**options)</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Argumento</th>
+            <th>Tipo</th>
+            <th>Padrão</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>variant</code></td>
+            <td>Symbol</td>
+            <td><code>:default</code></td>
+            <td><code>:default</code>, <code>:secondary</code>, <code>:destructive</code>, <code>:outline</code>, <code>:ghost</code>, <code>:link</code></td>
+          </tr>
+          <tr>
+            <td><code>size</code></td>
+            <td>Symbol</td>
+            <td><code>:default</code></td>
+            <td><code>:default</code>, <code>:sm</code>, <code>:lg</code>, <code>:icon</code></td>
+          </tr>
+          <tr>
+            <td><code>tag</code></td>
+            <td>Symbol</td>
+            <td><code>:button</code></td>
+            <td>Tag HTML renderizada (ex.: <code>:button</code>, <code>:a</code>).</td>
+          </tr>
+          <tr>
+            <td><code>class</code> / <code>class_name</code></td>
+            <td>String</td>
+            <td><code>nil</code></td>
+            <td>Classes extras, mescladas após as classes de variante e tamanho.</td>
+          </tr>
+          <tr>
+            <td><code>**attrs</code></td>
+            <td>Hash</td>
+            <td><code>{}</code></td>
+            <td>Atributos HTML livres (<code>href</code>, <code>disabled</code>, <code>data:</code>, <code>aria:</code>, …).</td>
+          </tr>
+          <tr>
+            <td><code>&block</code></td>
+            <td>Block</td>
+            <td>—</td>
+            <td>Conteúdo do botão — texto e/ou <code>ui_icon</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

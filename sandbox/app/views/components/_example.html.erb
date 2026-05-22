@@ -1,0 +1,24 @@
+<%# Renders one documentation example: live preview on top, highlighted source below. %>
+<%# Locals: name (example partial slug), title, description. %>
+<section id="example-<%= name %>" class="scroll-mt-24 space-y-3">
+  <h3 class="text-lg font-semibold tracking-tight"><%= title %></h3>
+  <% if local_assigns[:description].present? %>
+    <p class="text-sm text-muted-foreground"><%= description %></p>
+  <% end %>
+
+  <%= ui_card(class: "overflow-hidden", data: { controller: "clipboard" }) do %>
+    <div class="flex min-h-[140px] flex-wrap items-center justify-center gap-3 p-8">
+      <%= render "components/examples/#{name}" %>
+    </div>
+
+    <div class="relative border-t">
+      <%= ui_button(variant: :secondary, size: :sm,
+                    class: "absolute right-3 top-3",
+                    data: { action: "clipboard#copy" }) do %>
+        <%= ui_icon("copy", size: :sm) %>
+        <span data-clipboard-target="label">Copiar</span>
+      <% end %>
+      <pre class="highlight overflow-x-auto p-4 pr-24 text-sm leading-relaxed" data-clipboard-target="source"><%= highlight_example(name) %></pre>
+    </div>
+  <% end %>
+</section>

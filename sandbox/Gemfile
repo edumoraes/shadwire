@@ -24,6 +24,9 @@ gem "view_component"
 # Lucide icons for Rails — Shadwire's standard icon library [https://github.com/heyvito/lucide-rails]
 gem "lucide-rails"
 
+# Syntax highlighting for the component documentation pages [https://github.com/rouge-ruby/rouge]
+gem "rouge"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 

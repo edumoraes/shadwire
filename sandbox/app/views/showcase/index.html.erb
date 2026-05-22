@@ -2,6 +2,12 @@
   <section class="flex flex-col gap-4">
     <h1 class="text-3xl font-bold tracking-normal">Shadwire</h1>
     <p class="text-muted-foreground">Rails ViewComponent ports of shadcn/ui components.</p>
+    <div>
+      <%= ui_button(tag: :a, href: components_button_path, variant: :outline, size: :sm) do %>
+        Documentação do Button
+        <%= ui_icon("arrow-right") %>
+      <% end %>
+    </div>
   </section>
 
   <section class="flex flex-wrap items-center gap-3">
