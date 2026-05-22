@@ -18,10 +18,20 @@ module Ui
       icon: "size-9"
     }.freeze
 
-    def initialize(variant: :default, size: :default, tag: :button, class_name: nil, **attrs)
+    def initialize(
+      variant: :default,
+      size: :default,
+      tag: :button,
+      disabled: false,
+      focusable_when_disabled: false,
+      class_name: nil,
+      **attrs
+    )
       @variant = variant
       @size = size
       @tag = tag
+      @disabled = disabled
+      @focusable_when_disabled = focusable_when_disabled
       @attrs = attrs
       @class_name = extract_class_name(@attrs, class_name)
     end
@@ -33,9 +43,24 @@ module Ui
     private
 
     def button_attrs
-      html_attrs.merge(class: button_classes).tap do |attrs|
-        attrs[:type] = "button" if @tag.to_sym == :button && attrs[:type].blank?
+      html_attrs.dup.merge(class: button_classes).tap do |attrs|
+        attrs[:type] = "button" if native_button? && attrs[:type].blank?
+
+        next unless @disabled
+
+        attrs[:data] = attrs.fetch(:data, {}).dup.merge(disabled: "")
+
+        if native_button? && !@focusable_when_disabled
+          attrs[:disabled] = true
+        else
+          attrs[:aria] = attrs.fetch(:aria, {}).dup.merge(disabled: "true")
+          attrs[:tabindex] = "0" if native_button?
+        end
       end
+    end
+
+    def native_button?
+      @tag.to_sym == :button
     end
 
     def button_classes

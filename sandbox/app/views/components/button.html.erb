@@ -99,6 +99,18 @@
             <td>Tag HTML renderizada (ex.: <code>:button</code>, <code>:a</code>).</td>
           </tr>
           <tr>
+            <td><code>disabled</code></td>
+            <td>Boolean</td>
+            <td><code>false</code></td>
+            <td>Renderiza <code>data-disabled</code>. Em <code>tag: :button</code>, também renderiza <code>disabled</code> por padrão.</td>
+          </tr>
+          <tr>
+            <td><code>focusable_when_disabled</code></td>
+            <td>Boolean</td>
+            <td><code>false</code></td>
+            <td>Com <code>disabled: true</code>, mantém o botão nativo focável com <code>aria-disabled="true"</code> e <code>tabindex="0"</code> em vez de <code>disabled</code>.</td>
+          </tr>
+          <tr>
             <td><code>class</code> / <code>class_name</code></td>
             <td>String</td>
             <td><code>nil</code></td>
@@ -108,7 +120,7 @@
             <td><code>**attrs</code></td>
             <td>Hash</td>
             <td><code>{}</code></td>
-            <td>Atributos HTML livres (<code>href</code>, <code>disabled</code>, <code>data:</code>, <code>aria:</code>, …).</td>
+            <td>Atributos HTML livres (<code>href</code>, <code>data:</code>, <code>aria:</code>, …).</td>
           </tr>
           <tr>
             <td><code>&block</code></td>
