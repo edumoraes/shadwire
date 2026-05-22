@@ -81,6 +81,8 @@ pointing at the synced `vendor/shadwire/shadwire.css`.
 - Compose classes in this order: `class_names(base_classes, variant_classes, size_classes, @class_name)`.
 - Use shadcn semantic Tailwind tokens (`bg-primary`, `text-muted-foreground`,
   `border-input`, …) — no hardcoded colors unless upstream shadcn does so.
+  See `README.md` for the Theme Tokens table that documents what each token
+  controls and where it is used.
 
 ### Icons
 

@@ -37,4 +37,13 @@ class RegistryManifestTest < Minitest::Test
       assert_includes sources, "registry/rails/ui/styles/shadwire.css"
     end
   end
+
+  def test_theme_css_uses_the_shadcn_two_layer_token_structure
+    css = ROOT.join("registry/rails/ui/styles/shadwire.css").read
+
+    assert_includes css, "@custom-variant dark", "missing class-based dark variant"
+    assert_includes css, "@theme inline", "missing @theme inline token mapping layer"
+    assert_match(/^:root\s*\{/, css, "missing :root raw token block")
+    assert_match(/^\.dark\s*\{/, css, "missing .dark raw token override block")
+  end
 end

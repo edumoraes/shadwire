@@ -18,12 +18,24 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%# Aplica o tema salvo antes da primeira pintura para evitar flash. %>
+    <script>
+      (() => {
+        const stored = localStorage.getItem("theme")
+        const dark = stored
+          ? stored === "dark"
+          : window.matchMedia("(prefers-color-scheme: dark)").matches
+        document.documentElement.classList.toggle("dark", dark)
+      })()
+    </script>
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+    <%= render "layouts/theme_toggle" %>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>

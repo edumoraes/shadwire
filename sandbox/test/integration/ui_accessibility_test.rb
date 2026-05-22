@@ -14,5 +14,6 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "img[alt='Example user']"
     assert_select "button svg[aria-hidden='true']"
     assert_select "svg[role='img'][aria-label='Adicionar item']"
+    assert_select "button[aria-label='Alternar tema']"
   end
 end
