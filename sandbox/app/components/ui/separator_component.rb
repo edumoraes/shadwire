@@ -7,9 +7,8 @@ module Ui
       vertical: "h-full w-px"
     }.freeze
 
-    def initialize(orientation: :horizontal, decorative: true, class_name: nil, **attrs)
-      @orientation = orientation
-      @decorative = decorative
+    def initialize(orientation: :horizontal, decorative: nil, class_name: nil, **attrs)
+      @orientation = orientation_value(orientation)
       @attrs = attrs
       @class_name = extract_class_name(@attrs, class_name)
     end
@@ -21,16 +20,10 @@ module Ui
     private
 
     def separator_attrs
-      html_attrs.merge(role_attrs).merge(class: separator_classes)
-    end
-
-    # A decorative separator is purely visual, so it is removed from the
-    # accessibility tree with role="none". A non-decorative separator is a
-    # semantic divider and exposes role="separator" with its orientation.
-    def role_attrs
-      return { role: "none" } if @decorative
-
-      { role: "separator", "aria-orientation": @orientation.to_s }
+      html_attrs.dup.merge(role: "separator", class: separator_classes).tap do |attrs|
+        attrs[:aria] = (attrs[:aria] || {}).dup.merge(orientation: @orientation)
+        attrs[:data] = (attrs[:data] || {}).dup.merge(orientation: @orientation)
+      end
     end
 
     def separator_classes
@@ -39,6 +32,11 @@ module Ui
         fetch_variant(ORIENTATION_CLASSES, @orientation, fallback: :horizontal),
         @class_name
       )
+    end
+
+    def orientation_value(orientation)
+      key = orientation.presence&.to_sym
+      ORIENTATION_CLASSES.key?(key) ? key.to_s : "horizontal"
     end
   end
 end
