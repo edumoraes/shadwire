@@ -1,0 +1,123 @@
+<% content_for :title, "Accordion — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto flex w-full max-w-3xl flex-col gap-12 pb-16">
+  <header class="flex flex-col gap-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-3xl font-bold tracking-tight">Accordion</h1>
+    <p class="text-lg text-muted-foreground">
+      Um conjunto vertical de cabeçalhos interativos que revelam seções de conteúdo.
+    </p>
+  </header>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <p class="text-sm text-muted-foreground">
+      Como no shadcn/ui, o componente é copiado para a aplicação como código aberto.
+      O item <code class="rounded bg-muted px-1 py-0.5 text-xs">accordion</code>
+      do registry instala os componentes, helper, CSS e controller Stimulus.
+    </p>
+    <ul class="flex flex-col gap-1 text-sm">
+      <% %w[
+        app/components/ui_component.rb
+        app/components/ui/accordion_component.rb
+        app/components/ui/accordion/item_component.rb
+        app/components/ui/accordion/header_component.rb
+        app/components/ui/accordion/trigger_component.rb
+        app/components/ui/accordion/content_component.rb
+        app/components/ui/accordion/panel_component.rb
+        app/javascript/controllers/ui_accordion_controller.js
+        app/helpers/ui_helper.rb
+        vendor/shadwire/shadwire.css
+      ].each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground">
+          <%= ui_icon("file-code", size: :sm) %>
+          <code><%= path %></code>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <p class="text-sm text-muted-foreground">
+      Use a composição <code class="rounded bg-muted px-1 py-0.5 text-xs">Root > Item > Header > Trigger + Content</code>.
+      O helper <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion</code>
+      aceita os mesmos argumentos de <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::AccordionComponent</code>.
+    </p>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_helper) %></pre>
+    <p class="text-sm text-muted-foreground">
+      Também é possível renderizar as classes ViewComponent diretamente:
+    </p>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_component) %></pre>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composição</h2>
+    <p class="text-sm text-muted-foreground">
+      A anatomia segue a referência Base UI usada pelo shadcn: item, cabeçalho,
+      trigger e painel de conteúdo. <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion_panel</code>
+      é um alias de nome para <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion_content</code>.
+    </p>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@composition) %></pre>
+  </section>
+
+  <section class="flex flex-col gap-8">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <p class="text-sm text-muted-foreground">
+      Os helpers encapsulam os componentes ViewComponent e preservam atributos HTML livres,
+      incluindo <code class="rounded bg-muted px-1 py-0.5 text-xs">data:</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">aria:</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Helper</th>
+            <th>Argumentos principais</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ui_accordion</code></td>
+            <td><code>multiple</code>, <code>default_value</code>, <code>orientation</code>, <code>disabled</code>, <code>loop_focus</code></td>
+            <td>Root com controller Stimulus, valores iniciais e navegação por teclado.</td>
+          </tr>
+          <tr>
+            <td><code>ui_accordion_item</code></td>
+            <td><code>value</code>, <code>disabled</code></td>
+            <td>Item com <code>border-b last:border-b-0</code>. Use <code>value</code> quando configurar <code>default_value</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_accordion_header</code></td>
+            <td><code>tag</code></td>
+            <td>Renderiza o cabeçalho semântico; o padrão é <code>:h3</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_accordion_trigger</code></td>
+            <td><code>disabled</code></td>
+            <td>Botão que alterna o item, com ícone <code>chevron-down</code> e ações Stimulus.</td>
+          </tr>
+          <tr>
+            <td><code>ui_accordion_content</code> / <code>ui_accordion_panel</code></td>
+            <td><code>class</code> / <code>class_name</code></td>
+            <td>Painel com <code>role="region"</code>, animações shadcn e wrapper interno <code>pt-0 pb-4</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

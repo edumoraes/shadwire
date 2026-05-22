@@ -1,0 +1,26 @@
+<%= ui_accordion(default_value: :password, class_name: "w-full max-w-md") do %>
+  <%= ui_accordion_item(value: :password) do %>
+    <%= ui_accordion_header do %>
+      <%= ui_accordion_trigger { "Como faço para redefinir minha senha?" } %>
+    <% end %>
+    <%= ui_accordion_content do %>
+      Clique em "Esqueci minha senha" na tela de login, informe seu e-mail e enviaremos um link válido por 24 horas.
+    <% end %>
+  <% end %>
+  <%= ui_accordion_item(value: :plan) do %>
+    <%= ui_accordion_header do %>
+      <%= ui_accordion_trigger { "Posso alterar meu plano?" } %>
+    <% end %>
+    <%= ui_accordion_content do %>
+      Sim. Você pode mudar entre planos mensais e anuais a qualquer momento nas configurações de cobrança.
+    <% end %>
+  <% end %>
+  <%= ui_accordion_item(value: :payment) do %>
+    <%= ui_accordion_header do %>
+      <%= ui_accordion_trigger { "Quais formas de pagamento são aceitas?" } %>
+    <% end %>
+    <%= ui_accordion_content do %>
+      Aceitamos cartões de crédito, débito e faturamento por boleto para contas empresariais.
+    <% end %>
+  <% end %>
+<% end %>

@@ -38,4 +38,35 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "size"
     assert_select "table td code", text: "tag"
   end
+
+  test "accordion docs page renders with heading and description" do
+    get components_accordion_path
+
+    assert_response :success
+    assert_select "h1", text: "Accordion"
+    assert_select "p", text: /conjunto vertical de cabeçalhos interativos/
+  end
+
+  test "accordion docs page shows live examples from the shadcn reference" do
+    get components_accordion_path
+
+    assert_select "[data-controller='ui-accordion']"
+    assert_select "[data-slot='accordion-trigger']", text: "Como faço para redefinir minha senha?"
+    assert_select "[data-ui-accordion-multiple-value='true']"
+    assert_select "[data-slot='accordion-item'][data-disabled]"
+    assert_select ".border [data-slot='accordion-item'].border-b"
+    assert_select ".bg-card [data-slot='accordion']"
+  end
+
+  test "accordion docs page renders usage composition and api" do
+    get components_accordion_path
+
+    assert_select "pre.highlight span"
+    assert_select "code", text: "ui_accordion"
+    assert_select "code", text: "ui_accordion_item"
+    assert_select "code", text: "ui_accordion_trigger"
+    assert_select "table td code", text: "multiple"
+    assert_select "table td code", text: "default_value"
+    assert_select "table td code", text: "loop_focus"
+  end
 end

@@ -11,6 +11,9 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "button[type='button']", text: "Default"
     assert_select "[role='alert']", text: /Components render/
     assert_select "[role='separator'][aria-orientation='horizontal'][data-orientation='horizontal']"
+    assert_select "[role='region'][data-slot='accordion'][data-controller='ui-accordion']"
+    assert_select "h3[data-slot='accordion-header'] button[type='button'][data-slot='accordion-trigger']", text: "Accordion item"
+    assert_select "[role='region'][data-slot='accordion-content'][hidden]", text: /semantic disclosure/
     assert_select "img[alt='Example user']"
     assert_select "span[aria-hidden='true']", text: "EU"
     assert_select "button svg[aria-hidden='true']"

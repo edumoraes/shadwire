@@ -2,9 +2,13 @@
   <section class="flex flex-col gap-4">
     <h1 class="text-3xl font-bold tracking-normal">Shadwire</h1>
     <p class="text-muted-foreground">Rails ViewComponent ports of shadcn/ui components.</p>
-    <div>
+    <div class="flex flex-wrap gap-2">
       <%= ui_button(tag: :a, href: components_button_path, variant: :outline, size: :sm) do %>
         Documentação do Button
+        <%= ui_icon("arrow-right") %>
+      <% end %>
+      <%= ui_button(tag: :a, href: components_accordion_path, variant: :outline, size: :sm) do %>
+        Documentação do Accordion
         <%= ui_icon("arrow-right") %>
       <% end %>
     </div>
@@ -48,6 +52,17 @@
     <% end %>
     <%= ui_card_footer do %>
       <%= ui_button(size: :sm) { "Action" } %>
+    <% end %>
+  <% end %>
+
+  <%= ui_accordion(default_value: :overview, class_name: "max-w-md") do %>
+    <%= ui_accordion_item(value: :overview) do %>
+      <%= ui_accordion_header do %>
+        <%= ui_accordion_trigger { "Accordion item" } %>
+      <% end %>
+      <%= ui_accordion_content do %>
+        Accordion content renders with semantic disclosure markup.
+      <% end %>
     <% end %>
   <% end %>
 

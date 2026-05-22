@@ -40,9 +40,68 @@ class ComponentsController < ApplicationController
     <% end %>
   ERB
 
+  ACCORDION_EXAMPLES = [
+    { name: "accordion_basic", title: "Basic",
+      description: "Um accordion simples que exibe um item por vez. O primeiro item começa aberto." },
+    { name: "accordion_multiple", title: "Multiple",
+      description: "Use multiple: true para permitir que vários itens fiquem abertos ao mesmo tempo." },
+    { name: "accordion_disabled", title: "Disabled",
+      description: "Use disabled: true no item para bloquear um painel específico." },
+    { name: "accordion_borders", title: "Borders",
+      description: "Adicione border no accordion para destacar o contorno do grupo." },
+    { name: "accordion_card", title: "Card",
+      description: "Componha o Accordion dentro de Card quando ele fizer parte de uma superfície maior." }
+  ].freeze
+
+  ACCORDION_USAGE_HELPER = <<~ERB
+    <%= ui_accordion(default_value: :item_1) do %>
+      <%= ui_accordion_item(value: :item_1) do %>
+        <%= ui_accordion_header do %>
+          <%= ui_accordion_trigger { "É acessível?" } %>
+        <% end %>
+        <%= ui_accordion_content do %>
+          Sim. Ele segue o padrão WAI-ARIA para accordions.
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  ACCORDION_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::AccordionComponent.new(default_value: :item_1) do %>
+      <%= render Ui::Accordion::ItemComponent.new(value: :item_1) do %>
+        <%= render Ui::Accordion::HeaderComponent.new do %>
+          <%= render Ui::Accordion::TriggerComponent.new do %>
+            É acessível?
+          <% end %>
+        <% end %>
+        <%= render Ui::Accordion::ContentComponent.new do %>
+          Sim. Ele segue o padrão WAI-ARIA para accordions.
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  ACCORDION_COMPOSITION = <<~ERB
+    <%= ui_accordion do %>
+      <%= ui_accordion_item do %>
+        <%= ui_accordion_header do %>
+          <%= ui_accordion_trigger { "Título" } %>
+        <% end %>
+        <%= ui_accordion_content { "Conteúdo" } %>
+      <% end %>
+    <% end %>
+  ERB
+
   def button
     @examples = BUTTON_EXAMPLES
     @usage_helper = USAGE_HELPER
     @usage_component = USAGE_COMPONENT
+  end
+
+  def accordion
+    @examples = ACCORDION_EXAMPLES
+    @usage_helper = ACCORDION_USAGE_HELPER
+    @usage_component = ACCORDION_USAGE_COMPONENT
+    @composition = ACCORDION_COMPOSITION
   end
 end

@@ -1,0 +1,34 @@
+<%= ui_card(class_name: "w-full max-w-md") do %>
+  <%= ui_card_header do %>
+    <%= ui_card_title { "Assinatura e cobrança" } %>
+    <%= ui_card_description { "Perguntas comuns sobre planos, pagamentos e cancelamentos." } %>
+  <% end %>
+  <%= ui_card_content do %>
+    <%= ui_accordion(default_value: :plans) do %>
+      <%= ui_accordion_item(value: :plans) do %>
+        <%= ui_accordion_header do %>
+          <%= ui_accordion_trigger { "Quais planos estão disponíveis?" } %>
+        <% end %>
+        <%= ui_accordion_content do %>
+          Starter, Professional e Enterprise, com limites e recursos progressivos.
+        <% end %>
+      <% end %>
+      <%= ui_accordion_item(value: :billing) do %>
+        <%= ui_accordion_header do %>
+          <%= ui_accordion_trigger { "Como a cobrança é feita?" } %>
+        <% end %>
+        <%= ui_accordion_content do %>
+          A cobrança é recorrente e acompanha o ciclo escolhido na contratação.
+        <% end %>
+      <% end %>
+      <%= ui_accordion_item(value: :cancel) do %>
+        <%= ui_accordion_header do %>
+          <%= ui_accordion_trigger { "Como cancelo a assinatura?" } %>
+        <% end %>
+        <%= ui_accordion_content do %>
+          O cancelamento fica disponível em configurações de cobrança e mantém acesso até o fim do ciclo.
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

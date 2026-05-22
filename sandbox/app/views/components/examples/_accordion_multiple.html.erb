@@ -1,0 +1,26 @@
+<%= ui_accordion(multiple: true, default_value: [ :notifications, :privacy ], class_name: "w-full max-w-md") do %>
+  <%= ui_accordion_item(value: :notifications) do %>
+    <%= ui_accordion_header do %>
+      <%= ui_accordion_trigger { "Configurações de notificação" } %>
+    <% end %>
+    <%= ui_accordion_content do %>
+      Gerencie alertas por e-mail, push e resumos semanais para acompanhar atualizações importantes.
+    <% end %>
+  <% end %>
+  <%= ui_accordion_item(value: :privacy) do %>
+    <%= ui_accordion_header do %>
+      <%= ui_accordion_trigger { "Privacidade e segurança" } %>
+    <% end %>
+    <%= ui_accordion_content do %>
+      Configure autenticação em duas etapas, sessões ativas e permissões de acesso aos seus dados.
+    <% end %>
+  <% end %>
+  <%= ui_accordion_item(value: :billing) do %>
+    <%= ui_accordion_header do %>
+      <%= ui_accordion_trigger { "Cobrança e assinatura" } %>
+    <% end %>
+    <%= ui_accordion_content do %>
+      Consulte faturas, métodos de pagamento e o ciclo atual da sua assinatura.
+    <% end %>
+  <% end %>
+<% end %>

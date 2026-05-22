@@ -168,6 +168,56 @@
       ]
     },
     {
+      "name": "accordion",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/accordion_component.rb",
+          "target": "app/components/ui/accordion_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/accordion/item_component.rb",
+          "target": "app/components/ui/accordion/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/accordion/header_component.rb",
+          "target": "app/components/ui/accordion/header_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/accordion/trigger_component.rb",
+          "target": "app/components/ui/accordion/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/accordion/content_component.rb",
+          "target": "app/components/ui/accordion/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/accordion/panel_component.rb",
+          "target": "app/components/ui/accordion/panel_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/icon_component.rb",
+          "target": "app/components/ui/icon_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_accordion_controller.js",
+          "target": "app/javascript/controllers/ui_accordion_controller.js"
+        }
+      ]
+    },
+    {
       "name": "icon",
       "type": "component",
       "files": [
