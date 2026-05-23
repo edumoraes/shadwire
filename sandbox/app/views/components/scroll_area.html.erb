@@ -21,7 +21,7 @@
       The <code class="rounded bg-muted px-1 py-0.5 text-xs">scroll-area</code>
       registry item installs the component parts, helper, CSS, and Stimulus controller.
     </p>
-    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><code><%= @install_command.strip %></code></pre>
+    <%= docs_code_block(@install_command, language: :text) %>
     <ul class="flex flex-col gap-1 text-sm">
       <% %w[
         app/components/ui_component.rb
@@ -48,8 +48,8 @@
     <p class="text-sm text-muted-foreground">
       Use the helper in Rails views, or render the ViewComponent class directly when you need the object API.
     </p>
-    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_helper) %></pre>
-    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_component) %></pre>
+    <%= docs_code_block(@usage_helper) %>
+    <%= docs_code_block(@usage_component) %>
   </section>
 
   <section class="flex flex-col gap-4">
@@ -60,7 +60,7 @@
       In Shadwire, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_scroll_area</code>
       renders the viewport, content, scrollbars, thumb, and corner parts for you.
     </p>
-    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><code><%= @composition %></code></pre>
+    <%= docs_code_block(@composition, language: :text) %>
   </section>
 
   <section class="flex flex-col gap-4">
@@ -76,7 +76,7 @@
       </p>
       <%= render "components/example", **@examples.second %>
     </div>
-    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_horizontal) %></pre>
+    <%= docs_code_block(@usage_horizontal) %>
   </section>
 
   <section class="flex flex-col gap-4">

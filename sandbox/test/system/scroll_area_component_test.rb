@@ -54,4 +54,35 @@ class ScrollAreaComponentTest < ApplicationSystemTestCase
 
     assert_in_delta rtl_area_left, rtl_scrollbar_left, 2
   end
+
+  test "long documentation code blocks expand into a scroll area" do
+    visit components_scroll_area_path
+
+    example = find("#example-scroll_area_horizontal")
+    code_block = example.find("[data-controller~='code-block']")
+
+    assert_equal "false", code_block["data-code-block-expanded-value"]
+    collapsed_scroll_area = code_block.find("[data-code-block-target='collapsed'][data-slot='scroll-area']", visible: :visible)
+
+    collapsed_scroll_area.assert_selector "[data-orientation='horizontal']", visible: :all
+    collapsed_scroll_area.assert_no_selector "[data-orientation='vertical']", visible: :all
+
+    code_block.click_button "Expandir"
+
+    assert_equal "true", code_block["data-code-block-expanded-value"]
+    expanded_scroll_area = code_block.find("[data-slot='scroll-area']", visible: :visible)
+    collapsed_background = code_block.find("[data-code-block-target='collapsed']", visible: :all)
+                                     .evaluate_script("getComputedStyle(this).backgroundColor")
+    expanded_background = expanded_scroll_area.evaluate_script("getComputedStyle(this).backgroundColor")
+
+    assert_equal collapsed_background, expanded_background
+    code_block.assert_selector "button", text: "Recolher"
+
+    code_block.click_button "Recolher"
+
+    assert_equal "false", code_block["data-code-block-expanded-value"]
+    code_block.assert_selector "[data-code-block-target='collapsed'][data-slot='scroll-area']", visible: :visible
+    code_block.assert_no_selector "[data-code-block-target='expanded'][data-slot='scroll-area']", visible: :visible
+    code_block.assert_selector "button", text: "Expandir"
+  end
 end

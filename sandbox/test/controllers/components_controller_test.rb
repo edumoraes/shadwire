@@ -31,6 +31,17 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "[data-action='clipboard#copy']"
   end
 
+  test "short code examples render copy controls without expand controls" do
+    get components_button_path
+
+    assert_select "section#example-default [data-controller='clipboard']"
+    assert_select "section#example-default [data-action='clipboard#copy']"
+    assert_select "section#example-default [data-action='code-block#toggle']", count: 0
+    assert_select "section#example-default [data-controller='ui-scroll-area']"
+    assert_select "section#example-default [data-orientation='horizontal']"
+    assert_select "section#example-default [data-orientation='vertical']", count: 0
+  end
+
   test "button docs page documents the component api" do
     get components_button_path
 
@@ -83,7 +94,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "h3", text: "Horizontal"
     assert_select "h2", text: "RTL"
     assert_select "section#example-scroll_area_rtl", text: /التمرير/
-    assert_select "section#example-scroll_area_rtl [data-controller='clipboard']"
+    assert_select "section#example-scroll_area_rtl [data-controller~='clipboard']"
     assert_select "h2", text: "API Reference"
     assert_select "[data-controller='ui-scroll-area']"
     assert_select "[data-slot='scroll-area'][dir='rtl']", text: /التمرير/
@@ -94,5 +105,20 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "code", text: "scrollbars"
     assert_select "code", text: "ScrollArea"
     assert_select "code", text: "ScrollBar"
+  end
+
+  test "long code examples are collapsible and keep copy controls" do
+    get components_scroll_area_path
+
+    assert_select "section#example-scroll_area_horizontal [data-controller~='code-block']"
+    assert_select "section#example-scroll_area_horizontal [data-code-block-expanded-value='false']"
+    assert_select "section#example-scroll_area_horizontal [data-code-block-target='collapsed'][data-slot='scroll-area']"
+    assert_select "section#example-scroll_area_horizontal [data-code-block-target='collapsed'] [data-orientation='horizontal']"
+    assert_select "section#example-scroll_area_horizontal [data-code-block-target='collapsed'] [data-orientation='vertical']", count: 0
+    assert_select "section#example-scroll_area_horizontal [data-action='code-block#toggle']", text: "Expandir"
+    assert_select "section#example-scroll_area_horizontal [data-action='clipboard#copy']", text: "Copiar"
+    assert_select "section#example-scroll_area_horizontal [data-controller~='code-block']" do |blocks|
+      assert_includes blocks.first["data-clipboard-source-value"], "Vladimir Malyavko"
+    end
   end
 end

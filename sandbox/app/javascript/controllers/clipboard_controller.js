@@ -4,9 +4,10 @@ import { Controller } from "@hotwired/stimulus"
 // brief visual feedback on the button label that triggered it.
 export default class extends Controller {
   static targets = ["source", "label"]
+  static values = { source: String }
 
   copy() {
-    const text = this.sourceTarget.textContent.trim()
+    const text = this.hasSourceValue ? this.sourceValue.trim() : this.sourceTarget.textContent.trim()
     navigator.clipboard.writeText(text).then(() => this.flash())
   }
 
