@@ -69,4 +69,30 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "default_value"
     assert_select "table td code", text: "loop_focus"
   end
+
+  test "scroll area docs page renders examples and api" do
+    get components_scroll_area_path
+
+    assert_response :success
+    assert_select "h1", text: "Scroll Area"
+    assert_select "p", text: /Augments native scroll functionality/
+    assert_select "h2", text: "Installation"
+    assert_select "h2", text: "Usage"
+    assert_select "h2", text: "Composition"
+    assert_select "h2", text: "Examples"
+    assert_select "h3", text: "Horizontal"
+    assert_select "h2", text: "RTL"
+    assert_select "section#example-scroll_area_rtl", text: /التمرير/
+    assert_select "section#example-scroll_area_rtl [data-controller='clipboard']"
+    assert_select "h2", text: "API Reference"
+    assert_select "[data-controller='ui-scroll-area']"
+    assert_select "[data-slot='scroll-area'][dir='rtl']", text: /التمرير/
+    assert_select "[data-slot='scroll-area-scrollbar'][data-orientation='vertical']"
+    assert_select "[data-slot='scroll-area-scrollbar'][data-orientation='horizontal']"
+    assert_select "code", text: "ui_scroll_area"
+    assert_select "code", text: "ui_scroll_bar"
+    assert_select "code", text: "scrollbars"
+    assert_select "code", text: "ScrollArea"
+    assert_select "code", text: "ScrollBar"
+  end
 end

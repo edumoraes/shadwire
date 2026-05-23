@@ -1,0 +1,9 @@
+<%= ui_scroll_area(class: "h-[200px] w-[350px] rounded-md border p-4", data: { testid: "scroll-area-vertical" }) do %>
+  <div class="flex flex-col gap-4 text-sm leading-6">
+    <% 12.times do |index| %>
+      <p>
+        Release note <%= index + 1 %>: Rails components are copied into the app and can be edited in place after installation.
+      </p>
+    <% end %>
+  </div>
+<% end %>

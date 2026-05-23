@@ -1,0 +1,127 @@
+<% content_for :title, "Scroll Area — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto flex w-full max-w-3xl flex-col gap-12 pb-16">
+  <header class="flex flex-col gap-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-3xl font-bold tracking-tight">Scroll Area</h1>
+    <p class="text-lg text-muted-foreground">
+      Augments native scroll functionality for custom, cross-browser styling.
+    </p>
+  </header>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Installation</h2>
+    <p class="text-sm text-muted-foreground">
+      The <code class="rounded bg-muted px-1 py-0.5 text-xs">scroll-area</code>
+      registry item installs the component parts, helper, CSS, and Stimulus controller.
+    </p>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><code><%= @install_command.strip %></code></pre>
+    <ul class="flex flex-col gap-1 text-sm">
+      <% %w[
+        app/components/ui_component.rb
+        app/components/ui/scroll_area_component.rb
+        app/components/ui/scroll_area/viewport_component.rb
+        app/components/ui/scroll_area/content_component.rb
+        app/components/ui/scroll_area/scrollbar_component.rb
+        app/components/ui/scroll_area/thumb_component.rb
+        app/components/ui/scroll_area/corner_component.rb
+        app/javascript/controllers/ui_scroll_area_controller.js
+        app/helpers/ui_helper.rb
+        vendor/shadwire/shadwire.css
+      ].each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground">
+          <%= ui_icon("file-code", size: :sm) %>
+          <code><%= path %></code>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
+    <p class="text-sm text-muted-foreground">
+      Use the helper in Rails views, or render the ViewComponent class directly when you need the object API.
+    </p>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_helper) %></pre>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_component) %></pre>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composition</h2>
+    <p class="text-sm text-muted-foreground">
+      The shadcn anatomy is <code class="rounded bg-muted px-1 py-0.5 text-xs">ScrollArea</code>
+      with an optional <code class="rounded bg-muted px-1 py-0.5 text-xs">ScrollBar</code>.
+      In Shadwire, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_scroll_area</code>
+      renders the viewport, content, scrollbars, thumb, and corner parts for you.
+    </p>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><code><%= @composition %></code></pre>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Examples</h2>
+    <%= render "components/example", **@examples.first %>
+
+    <div class="flex flex-col gap-3">
+      <h3 class="text-xl font-semibold tracking-tight">Horizontal</h3>
+      <p class="text-sm text-muted-foreground">
+        Use <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_scroll_bar(orientation: :horizontal)</code>
+        or pass <code class="rounded bg-muted px-1 py-0.5 text-xs">scrollbars: [ :horizontal ]</code>
+        for horizontal scrolling.
+      </p>
+      <%= render "components/example", **@examples.second %>
+    </div>
+    <pre class="highlight overflow-x-auto rounded-lg border p-4 text-sm leading-relaxed"><%= highlight_erb(@usage_horizontal) %></pre>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">RTL</h2>
+    <p class="text-sm text-muted-foreground">
+      Pass standard HTML direction attributes through the component when rendering right-to-left content.
+    </p>
+    <%= render "components/example", **@examples.third %>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">API Reference</h2>
+    <p class="text-sm text-muted-foreground">
+      This Rails port mirrors the Base UI-style parts with ViewComponent classes and data attributes.
+      Helpers preserve free HTML attributes, including
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">data:</code> and
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">aria:</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Helper</th>
+            <th>Main arguments</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ui_scroll_area</code></td>
+            <td><code>scrollbars</code>, <code>class</code> / <code>class_name</code></td>
+            <td>Root component that renders viewport, content, scrollbars, corner, and the Stimulus controller.</td>
+          </tr>
+          <tr>
+            <td><code>ui_scroll_bar</code></td>
+            <td><code>orientation</code></td>
+            <td>Optional subcomponent for a vertical or horizontal scrollbar.</td>
+          </tr>
+          <tr>
+            <td><code>Ui::ScrollAreaComponent</code></td>
+            <td><code>scrollbars</code>, HTML attrs</td>
+            <td>ViewComponent API for rendering the Rails port directly.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

@@ -14,6 +14,9 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "[role='region'][data-slot='accordion'][data-controller='ui-accordion']"
     assert_select "h3[data-slot='accordion-header'] button[type='button'][data-slot='accordion-trigger']", text: "Accordion item"
     assert_select "[role='region'][data-slot='accordion-content'][hidden]", text: /semantic disclosure/
+    assert_select "[data-slot='scroll-area'][data-controller='ui-scroll-area']"
+    assert_select "[data-slot='scroll-area-viewport']"
+    assert_select "[data-slot='scroll-area-scrollbar'][data-orientation='vertical']"
     assert_select "img[alt='Example user']"
     assert_select "span[aria-hidden='true']", text: "EU"
     assert_select "button svg[aria-hidden='true']"

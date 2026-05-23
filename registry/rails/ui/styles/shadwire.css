@@ -138,3 +138,22 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .shadwire-scroll-area-viewport {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .shadwire-scroll-area-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+}
+
+[dir="rtl"] [data-slot="scroll-area-scrollbar"][data-orientation="vertical"] {
+  right: auto;
+  left: 0;
+  border-right: 1px solid transparent;
+  border-left: 0;
+}

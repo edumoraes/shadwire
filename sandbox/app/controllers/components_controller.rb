@@ -92,6 +92,48 @@ class ComponentsController < ApplicationController
     <% end %>
   ERB
 
+  SCROLL_AREA_EXAMPLES = [
+    { name: "scroll_area_vertical", title: "Preview",
+      description: "A vertical Scroll Area keeps native scrolling while matching Shadwire styles." },
+    { name: "scroll_area_horizontal", title: "Horizontal",
+      description: "Use a horizontal scrollbar for galleries and wide content." },
+    { name: "scroll_area_rtl", title: "RTL",
+      description: "Use dir: \"rtl\" when rendering right-to-left content." }
+  ].freeze
+
+  SCROLL_AREA_INSTALL = <<~SH
+    bin/sync_registry scroll-area
+  SH
+
+  SCROLL_AREA_USAGE_HELPER = <<~ERB
+    <%= ui_scroll_area(class: "h-[200px] w-[350px] rounded-md border p-4") do %>
+      Your scrollable content here.
+    <% end %>
+  ERB
+
+  SCROLL_AREA_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::ScrollAreaComponent.new(class: "h-[200px] w-[350px] rounded-md border p-4") do %>
+      Your scrollable content here.
+    <% end %>
+  ERB
+
+  SCROLL_AREA_COMPOSITION = <<~TEXT
+    ScrollArea
+    `-- ScrollBar
+  TEXT
+
+  SCROLL_AREA_USAGE_HORIZONTAL = <<~ERB
+    <%= ui_scroll_area(scrollbars: [ :horizontal ], class: "w-96 rounded-md border whitespace-nowrap") do %>
+      <div class="flex w-max gap-4 p-4">...</div>
+    <% end %>
+  ERB
+
+  SCROLL_AREA_RTL = <<~ERB
+    <%= ui_scroll_area(dir: "rtl", class: "h-[200px] w-[350px] rounded-md border p-4") do %>
+      المحتوى القابل للتمرير هنا.
+    <% end %>
+  ERB
+
   def button
     @examples = BUTTON_EXAMPLES
     @usage_helper = USAGE_HELPER
@@ -103,5 +145,15 @@ class ComponentsController < ApplicationController
     @usage_helper = ACCORDION_USAGE_HELPER
     @usage_component = ACCORDION_USAGE_COMPONENT
     @composition = ACCORDION_COMPOSITION
+  end
+
+  def scroll_area
+    @examples = SCROLL_AREA_EXAMPLES
+    @install_command = SCROLL_AREA_INSTALL
+    @usage_helper = SCROLL_AREA_USAGE_HELPER
+    @usage_component = SCROLL_AREA_USAGE_COMPONENT
+    @composition = SCROLL_AREA_COMPOSITION
+    @usage_horizontal = SCROLL_AREA_USAGE_HORIZONTAL
+    @rtl_usage = SCROLL_AREA_RTL
   end
 end

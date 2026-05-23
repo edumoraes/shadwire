@@ -11,6 +11,10 @@
         Documentação do Accordion
         <%= ui_icon("arrow-right") %>
       <% end %>
+      <%= ui_button(tag: :a, href: components_scroll_area_path, variant: :outline, size: :sm) do %>
+        Documentação do Scroll Area
+        <%= ui_icon("arrow-right") %>
+      <% end %>
     </div>
   </section>
 
@@ -64,6 +68,14 @@
         Accordion content renders with semantic disclosure markup.
       <% end %>
     <% end %>
+  <% end %>
+
+  <%= ui_scroll_area(class: "h-32 max-w-md rounded-md border p-4") do %>
+    <div class="flex flex-col gap-3 text-sm">
+      <% 8.times do |index| %>
+        <p>Scrollable row <%= index + 1 %> rendered through the Scroll Area helper.</p>
+      <% end %>
+    </div>
   <% end %>
 
   <%= ui_avatar(src: "https://i.pravatar.cc/96?img=12", alt: "Example user", fallback: "EU") %>

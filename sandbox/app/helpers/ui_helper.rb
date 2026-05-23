@@ -69,6 +69,14 @@ module UiHelper
     render(Ui::Accordion::PanelComponent.new(**options), &block)
   end
 
+  def ui_scroll_area(**options, &block)
+    render(Ui::ScrollAreaComponent.new(**options), &block)
+  end
+
+  def ui_scroll_bar(**options, &block)
+    render(Ui::ScrollArea::ScrollbarComponent.new(**options), &block)
+  end
+
   def ui_icon(name, **options)
     render(Ui::IconComponent.new(name, **options))
   end

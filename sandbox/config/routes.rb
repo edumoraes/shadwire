@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # Component documentation pages.
   get "components/button", to: "components#button"
   get "components/accordion", to: "components#accordion"
+  get "components/scroll-area", to: "components#scroll_area"
 
   # Defines the root path route ("/")
   root "showcase#index"
