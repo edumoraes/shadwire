@@ -1,0 +1,21 @@
+<%= form_with url: "#", scope: :subscription do |form| %>
+  <%= ui_radio_group(aria: { label: "Ciclo de cobrança" }) do %>
+    <div class="flex items-center gap-2">
+      <%= ui_radio_group_item(
+            name: form.field_name(:cycle),
+            value: "monthly",
+            id: form.field_id(:cycle, "monthly"),
+            checked: true
+          ) %>
+      <%= ui_label(for: form.field_id(:cycle, "monthly")) { "Mensal" } %>
+    </div>
+    <div class="flex items-center gap-2">
+      <%= ui_radio_group_item(
+            name: form.field_name(:cycle),
+            value: "yearly",
+            id: form.field_id(:cycle, "yearly")
+          ) %>
+      <%= ui_label(for: form.field_id(:cycle, "yearly")) { "Anual" } %>
+    </div>
+  <% end %>
+<% end %>

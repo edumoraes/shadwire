@@ -1,0 +1,10 @@
+<%= ui_radio_group(aria: { label: "Plano" }) do %>
+  <div class="flex items-center gap-2">
+    <%= ui_radio_group_item(name: "plan", value: "free", id: "plan-free", checked: true) %>
+    <%= ui_label(for: "plan-free") { "Gratuito" } %>
+  </div>
+  <div class="flex items-center gap-2">
+    <%= ui_radio_group_item(name: "plan", value: "enterprise", id: "plan-enterprise", disabled: true) %>
+    <%= ui_label(for: "plan-enterprise", class: "opacity-50") { "Enterprise (em breve)" } %>
+  </div>
+<% end %>

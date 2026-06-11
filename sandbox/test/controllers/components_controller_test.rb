@@ -153,6 +153,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "checked"
   end
 
+  test "radio group docs page renders examples and api" do
+    get components_radio_group_path
+
+    assert_response :success
+    assert_select "h1", text: "Radio Group"
+    assert_select "[role='radiogroup'][aria-label='Densidade da interface']"
+    assert_select "input[type='radio'][name='density'][checked]#density-default"
+    assert_select "input[type='radio'][disabled]#plan-enterprise"
+    assert_select "input[type='radio'][name='subscription[cycle]'][id='subscription_cycle_monthly']"
+    assert_select "table td code", text: "value:"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

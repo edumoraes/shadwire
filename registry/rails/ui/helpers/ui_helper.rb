@@ -96,4 +96,12 @@ module UiHelper
   def ui_checkbox(**options)
     render(Ui::CheckboxComponent.new(**options))
   end
+
+  def ui_radio_group(**options, &block)
+    render(Ui::RadioGroupComponent.new(**options), &block)
+  end
+
+  def ui_radio_group_item(**options)
+    render(Ui::RadioGroup::ItemComponent.new(**options))
+  end
 end

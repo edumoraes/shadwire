@@ -218,10 +218,46 @@ class ComponentsController < ApplicationController
     @usage_component = USAGE_COMPONENT
   end
 
+  RADIO_GROUP_EXAMPLES = [
+    { name: "radio_group_default", title: "Padrão",
+      description: "Radios nativos compartilhando o mesmo name: — a navegação por setas vem do navegador." },
+    { name: "radio_group_disabled", title: "Item desabilitado",
+      description: "disabled: true desabilita um item específico sem afetar o grupo." },
+    { name: "radio_group_form", title: "Com form_with",
+      description: "Use form.field_name para o name compartilhado e form.field_id(attr, valor) para cada id." }
+  ].freeze
+
+  RADIO_GROUP_USAGE_HELPER = <<~ERB
+    <%= ui_radio_group(aria: { label: "Plano" }) do %>
+      <div class="flex items-center gap-2">
+        <%= ui_radio_group_item(name: "plan", value: "free", id: "plan-free", checked: true) %>
+        <%= ui_label(for: "plan-free") { "Gratuito" } %>
+      </div>
+    <% end %>
+  ERB
+
+  RADIO_GROUP_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::RadioGroupComponent.new do %>
+      <%= render Ui::RadioGroup::ItemComponent.new(name: "plan", value: "free") %>
+    <% end %>
+  ERB
+
+  RADIO_GROUP_COMPOSITION = <<~TEXT
+    RadioGroup
+    `-- RadioGroup::Item (um por opção, mesmo name:)
+  TEXT
+
   def checkbox
     @examples = CHECKBOX_EXAMPLES
     @usage_helper = CHECKBOX_USAGE_HELPER
     @usage_component = CHECKBOX_USAGE_COMPONENT
+  end
+
+  def radio_group
+    @examples = RADIO_GROUP_EXAMPLES
+    @usage_helper = RADIO_GROUP_USAGE_HELPER
+    @usage_component = RADIO_GROUP_USAGE_COMPONENT
+    @composition = RADIO_GROUP_COMPOSITION
   end
 
   def input

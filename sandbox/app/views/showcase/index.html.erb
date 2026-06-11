@@ -65,6 +65,16 @@
       <%= ui_checkbox(id: "showcase-terms") %>
       <%= ui_label(for: "showcase-terms") { "Aceito os termos" } %>
     </div>
+    <%= ui_radio_group(aria: { label: "Tema preferido" }) do %>
+      <div class="flex items-center gap-2">
+        <%= ui_radio_group_item(name: "showcase-theme", value: "light", id: "showcase-theme-light", checked: true) %>
+        <%= ui_label(for: "showcase-theme-light") { "Claro" } %>
+      </div>
+      <div class="flex items-center gap-2">
+        <%= ui_radio_group_item(name: "showcase-theme", value: "dark", id: "showcase-theme-dark") %>
+        <%= ui_label(for: "showcase-theme-dark") { "Escuro" } %>
+      </div>
+    <% end %>
   </section>
 
   <%= ui_separator %>
