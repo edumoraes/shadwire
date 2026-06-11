@@ -75,6 +75,10 @@
         <%= ui_label(for: "showcase-theme-dark") { "Escuro" } %>
       </div>
     <% end %>
+    <div class="flex items-center gap-2">
+      <%= ui_switch(id: "showcase-notifications", checked: true) %>
+      <%= ui_label(for: "showcase-notifications") { "Notificações" } %>
+    </div>
   </section>
 
   <%= ui_separator %>

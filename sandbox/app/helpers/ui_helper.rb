@@ -104,4 +104,8 @@ module UiHelper
   def ui_radio_group_item(**options)
     render(Ui::RadioGroup::ItemComponent.new(**options))
   end
+
+  def ui_switch(**options)
+    render(Ui::SwitchComponent.new(**options))
+  end
 end

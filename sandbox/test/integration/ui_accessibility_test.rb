@@ -31,5 +31,7 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "[role='radiogroup'][aria-label='Tema preferido']"
     assert_select "[role='radiogroup'] input[type='radio'][name='showcase-theme']", count: 2
     assert_select "label[for='showcase-theme-light']", text: "Claro"
+    assert_select "input[type='checkbox'][role='switch']#showcase-notifications[data-slot='switch']"
+    assert_select "label[for='showcase-notifications']", text: "Notificações"
   end
 end

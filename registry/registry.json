@@ -398,6 +398,28 @@
           "target": "vendor/shadwire/shadwire.css"
         }
       ]
+    },
+    {
+      "name": "switch",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/switch_component.rb",
+          "target": "app/components/ui/switch_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
     }
   ]
 }

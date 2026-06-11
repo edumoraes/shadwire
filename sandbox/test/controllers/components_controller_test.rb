@@ -165,6 +165,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "value:"
   end
 
+  test "switch docs page renders examples and api" do
+    get components_switch_path
+
+    assert_response :success
+    assert_select "h1", text: "Switch"
+    assert_select "input[role='switch'][data-slot='switch']"
+    assert_select "input[role='switch'][checked]#switch-notifications"
+    assert_select "input[role='switch'][disabled]#switch-disabled"
+    assert_select "input[role='switch'][name='settings[marketing]']"
+    assert_select "table td code", text: "checked"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

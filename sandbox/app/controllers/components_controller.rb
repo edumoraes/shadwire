@@ -253,11 +253,37 @@ class ComponentsController < ApplicationController
     @usage_component = CHECKBOX_USAGE_COMPONENT
   end
 
+  SWITCH_EXAMPLES = [
+    { name: "switch_default", title: "Padrão",
+      description: "Um checkbox nativo com role=\"switch\" — semântica de alternância para leitores de tela." },
+    { name: "switch_checked", title: "Ligado",
+      description: "Use checked: true para iniciar ligado; combine com textos auxiliares." },
+    { name: "switch_disabled", title: "Desabilitado",
+      description: "disabled: true desabilita o input nativo." },
+    { name: "switch_form", title: "Com form_with",
+      description: "Use form.field_name/form.field_id. Sem input hidden — trate a ausência do parâmetro como desligado." }
+  ].freeze
+
+  SWITCH_USAGE_HELPER = <<~ERB
+    <%= ui_switch(id: "airplane-mode") %>
+    <%= ui_label(for: "airplane-mode") { "Modo avião" } %>
+  ERB
+
+  SWITCH_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::SwitchComponent.new(name: "settings[airplane]", checked: true) %>
+  ERB
+
   def radio_group
     @examples = RADIO_GROUP_EXAMPLES
     @usage_helper = RADIO_GROUP_USAGE_HELPER
     @usage_component = RADIO_GROUP_USAGE_COMPONENT
     @composition = RADIO_GROUP_COMPOSITION
+  end
+
+  def switch
+    @examples = SWITCH_EXAMPLES
+    @usage_helper = SWITCH_USAGE_HELPER
+    @usage_component = SWITCH_USAGE_COMPONENT
   end
 
   def input
