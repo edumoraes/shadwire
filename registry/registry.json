@@ -514,6 +514,56 @@
           "target": "vendor/shadwire/shadwire.css"
         }
       ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/breadcrumb_component.rb",
+          "target": "app/components/ui/breadcrumb_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/breadcrumb/list_component.rb",
+          "target": "app/components/ui/breadcrumb/list_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/breadcrumb/item_component.rb",
+          "target": "app/components/ui/breadcrumb/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/breadcrumb/link_component.rb",
+          "target": "app/components/ui/breadcrumb/link_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/breadcrumb/page_component.rb",
+          "target": "app/components/ui/breadcrumb/page_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/breadcrumb/separator_component.rb",
+          "target": "app/components/ui/breadcrumb/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/breadcrumb/ellipsis_component.rb",
+          "target": "app/components/ui/breadcrumb/ellipsis_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/icon_component.rb",
+          "target": "app/components/ui/icon_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
     }
   ]
 }

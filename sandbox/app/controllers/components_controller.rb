@@ -375,11 +375,61 @@ class ComponentsController < ApplicationController
     @usage_component = PROGRESS_USAGE_COMPONENT
   end
 
+  BREADCRUMB_EXAMPLES = [
+    { name: "breadcrumb_default", title: "Padrão",
+      description: "Trilha com links e a página atual marcada com aria-current=\"page\"." },
+    { name: "breadcrumb_ellipsis", title: "Recolhido",
+      description: "Use ui_breadcrumb_ellipsis para trilhas longas." },
+    { name: "breadcrumb_custom_separator", title: "Separador custom",
+      description: "Passe um bloco ao separador para trocar o chevron padrão." }
+  ].freeze
+
+  BREADCRUMB_USAGE_HELPER = <<~ERB
+    <%= ui_breadcrumb do %>
+      <%= ui_breadcrumb_list do %>
+        <%= ui_breadcrumb_item do %>
+          <%= ui_breadcrumb_link(href: "/") { "Início" } %>
+        <% end %>
+        <%= ui_breadcrumb_separator %>
+        <%= ui_breadcrumb_item do %>
+          <%= ui_breadcrumb_page { "Página atual" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  BREADCRUMB_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::BreadcrumbComponent.new do %>
+      <%= render Ui::Breadcrumb::ListComponent.new do %>
+        <%= render Ui::Breadcrumb::ItemComponent.new do %>
+          <%= render Ui::Breadcrumb::PageComponent.new do %>
+            Página atual
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  BREADCRUMB_COMPOSITION = <<~TEXT
+    Breadcrumb (nav aria-label="breadcrumb")
+    `-- Breadcrumb::List (ol)
+        |-- Breadcrumb::Item (li) > Breadcrumb::Link (a) ou Breadcrumb::Page (span)
+        |-- Breadcrumb::Separator (li decorativo)
+        `-- Breadcrumb::Ellipsis (span decorativo)
+  TEXT
+
   def table
     @examples = TABLE_EXAMPLES
     @usage_helper = TABLE_USAGE_HELPER
     @usage_component = TABLE_USAGE_COMPONENT
     @composition = TABLE_COMPOSITION
+  end
+
+  def breadcrumb
+    @examples = BREADCRUMB_EXAMPLES
+    @usage_helper = BREADCRUMB_USAGE_HELPER
+    @usage_component = BREADCRUMB_USAGE_COMPONENT
+    @composition = BREADCRUMB_COMPOSITION
   end
 
   def input

@@ -1,0 +1,15 @@
+<%= ui_breadcrumb do %>
+  <%= ui_breadcrumb_list do %>
+    <%= ui_breadcrumb_item do %>
+      <%= ui_breadcrumb_link(href: "#") { "Início" } %>
+    <% end %>
+    <%= ui_breadcrumb_separator %>
+    <%= ui_breadcrumb_item do %>
+      <%= ui_breadcrumb_ellipsis %>
+    <% end %>
+    <%= ui_breadcrumb_separator %>
+    <%= ui_breadcrumb_item do %>
+      <%= ui_breadcrumb_page { "Breadcrumb" } %>
+    <% end %>
+  <% end %>
+<% end %>

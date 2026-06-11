@@ -1,0 +1,124 @@
+<% content_for :title, "Breadcrumb — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+  <header class="space-y-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-3xl font-bold tracking-tight">Breadcrumb</h1>
+    <p class="text-lg text-muted-foreground">
+      Exibe o caminho até o recurso atual usando uma hierarquia de links.
+    </p>
+  </header>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <p class="text-sm text-muted-foreground">
+      O item
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">breadcrumb</code> do
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">registry.json</code>
+      instala estes arquivos:
+    </p>
+    <ul class="space-y-1 text-sm">
+      <% %w[
+        app/components/ui_component.rb
+        app/components/ui/breadcrumb_component.rb
+        app/components/ui/breadcrumb/list_component.rb
+        app/components/ui/breadcrumb/item_component.rb
+        app/components/ui/breadcrumb/link_component.rb
+        app/components/ui/breadcrumb/page_component.rb
+        app/components/ui/breadcrumb/separator_component.rb
+        app/components/ui/breadcrumb/ellipsis_component.rb
+        app/components/ui/icon_component.rb
+        app/helpers/ui_helper.rb
+        vendor/shadwire/shadwire.css
+      ].each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground">
+          <%= ui_icon("file-code", size: :sm) %>
+          <code><%= path %></code>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <p class="text-sm text-muted-foreground">
+      Separadores e ellipsis são decorativos (<code class="rounded bg-muted px-1 py-0.5 text-xs">aria-hidden</code>);
+      a página atual usa <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-current="page"</code>.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Ou renderize os componentes diretamente:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composição</h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <p class="text-sm text-muted-foreground">
+      Todas as partes aceitam <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Helper</th>
+            <th>Elemento</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ui_breadcrumb</code></td>
+            <td><code>nav</code></td>
+            <td>Já vem com <code>aria-label="breadcrumb"</code> (sobrescritível).</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_list</code> / <code>ui_breadcrumb_item</code></td>
+            <td><code>ol</code> / <code>li</code></td>
+            <td>Estrutura da trilha.</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_link</code></td>
+            <td><code>a</code></td>
+            <td>Passe <code>href</code> via attrs.</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_page</code></td>
+            <td><code>span</code></td>
+            <td>Página atual: <code>role="link"</code>, <code>aria-disabled</code>, <code>aria-current="page"</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_separator</code></td>
+            <td><code>li</code></td>
+            <td>Chevron por padrão; o bloco substitui o ícone.</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_ellipsis</code></td>
+            <td><code>span</code></td>
+            <td>Indicador decorativo de itens recolhidos.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

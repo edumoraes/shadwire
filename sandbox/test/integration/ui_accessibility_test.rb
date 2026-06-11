@@ -38,5 +38,8 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "table[data-slot='table'] caption", text: "Faturas do mês"
     assert_select "table thead th[scope='col']", text: "Fatura"
     assert_select "table tbody td", text: "INV001"
+    assert_select "nav[aria-label='breadcrumb'] ol li a[data-slot='breadcrumb-link']", text: "Início"
+    assert_select "nav[aria-label='breadcrumb'] li[role='presentation'][aria-hidden='true']"
+    assert_select "nav[aria-label='breadcrumb'] span[aria-current='page']", text: "Showcase"
   end
 end

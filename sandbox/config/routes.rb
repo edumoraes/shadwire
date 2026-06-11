@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get "components/skeleton", to: "components#skeleton"
   get "components/progress", to: "components#progress"
   get "components/table", to: "components#table"
+  get "components/breadcrumb", to: "components#breadcrumb"
 
   # Defines the root path route ("/")
   root "showcase#index"

@@ -208,6 +208,17 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "ui_table_caption"
   end
 
+  test "breadcrumb docs page renders examples and api" do
+    get components_breadcrumb_path
+
+    assert_response :success
+    assert_select "h1", text: "Breadcrumb"
+    assert_select "nav[aria-label='breadcrumb'] a[data-slot='breadcrumb-link']", text: "Início"
+    assert_select "span[aria-current='page'][data-slot='breadcrumb-page']", text: "Breadcrumb"
+    assert_select "[data-slot='breadcrumb-ellipsis']"
+    assert_select "table td code", text: "ui_breadcrumb_page"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 
