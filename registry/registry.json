@@ -350,6 +350,28 @@
           "target": "vendor/shadwire/shadwire.css"
         }
       ]
+    },
+    {
+      "name": "checkbox",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/checkbox_component.rb",
+          "target": "app/components/ui/checkbox_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
     }
   ]
 }

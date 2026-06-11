@@ -141,6 +141,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "&block"
   end
 
+  test "checkbox docs page renders examples and api" do
+    get components_checkbox_path
+
+    assert_response :success
+    assert_select "h1", text: "Checkbox"
+    assert_select "input[type='checkbox'][data-slot='checkbox']"
+    assert_select "input[type='checkbox'][checked]#checkbox-newsletter"
+    assert_select "input[type='checkbox'][disabled]#checkbox-disabled"
+    assert_select "input[type='checkbox'][name='signup[terms]'][id='signup_terms']"
+    assert_select "table td code", text: "checked"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

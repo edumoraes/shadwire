@@ -192,10 +192,36 @@ class ComponentsController < ApplicationController
     <% end %>
   ERB
 
+  CHECKBOX_EXAMPLES = [
+    { name: "checkbox_default", title: "Padrão",
+      description: "Um checkbox nativo estilizado, associado a um ui_label via for:/id:." },
+    { name: "checkbox_checked", title: "Marcado",
+      description: "Use checked: true para renderizar marcado; combine com textos auxiliares." },
+    { name: "checkbox_disabled", title: "Desabilitado",
+      description: "disabled: true desabilita o input nativo." },
+    { name: "checkbox_form", title: "Com form_with",
+      description: "Use form.field_name/form.field_id. Diferente de form.check_box, não há input hidden — trate a ausência do parâmetro como desmarcado." }
+  ].freeze
+
+  CHECKBOX_USAGE_HELPER = <<~ERB
+    <%= ui_checkbox(id: "terms") %>
+    <%= ui_label(for: "terms") { "Aceitar termos" } %>
+  ERB
+
+  CHECKBOX_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::CheckboxComponent.new(name: "user[terms]", checked: true) %>
+  ERB
+
   def button
     @examples = BUTTON_EXAMPLES
     @usage_helper = USAGE_HELPER
     @usage_component = USAGE_COMPONENT
+  end
+
+  def checkbox
+    @examples = CHECKBOX_EXAMPLES
+    @usage_helper = CHECKBOX_USAGE_HELPER
+    @usage_component = CHECKBOX_USAGE_COMPONENT
   end
 
   def input

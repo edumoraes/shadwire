@@ -61,6 +61,10 @@
       <%= ui_label(for: "showcase-message") { "Mensagem" } %>
       <%= ui_textarea(id: "showcase-message", placeholder: "Como podemos ajudar?") %>
     </div>
+    <div class="flex items-center gap-2">
+      <%= ui_checkbox(id: "showcase-terms") %>
+      <%= ui_label(for: "showcase-terms") { "Aceito os termos" } %>
+    </div>
   </section>
 
   <%= ui_separator %>

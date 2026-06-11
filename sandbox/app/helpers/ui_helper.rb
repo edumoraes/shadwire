@@ -92,4 +92,8 @@ module UiHelper
   def ui_textarea(**options, &block)
     render(Ui::TextareaComponent.new(**options), &block)
   end
+
+  def ui_checkbox(**options)
+    render(Ui::CheckboxComponent.new(**options))
+  end
 end

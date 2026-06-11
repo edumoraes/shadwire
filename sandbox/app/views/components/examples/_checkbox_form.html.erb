@@ -1,0 +1,6 @@
+<%= form_with url: "#", scope: :signup do |form| %>
+  <div class="flex items-center gap-2">
+    <%= ui_checkbox(name: form.field_name(:terms), id: form.field_id(:terms), value: "1") %>
+    <%= ui_label(for: form.field_id(:terms)) { "Li e aceito os termos" } %>
+  </div>
+<% end %>

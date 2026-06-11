@@ -26,5 +26,7 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "input[type='email']#showcase-email[data-slot='input']"
     assert_select "label[for='showcase-message'][data-slot='label']", text: "Mensagem"
     assert_select "textarea#showcase-message[data-slot='textarea']"
+    assert_select "input[type='checkbox']#showcase-terms[data-slot='checkbox']"
+    assert_select "label[for='showcase-terms']", text: "Aceito os termos"
   end
 end
