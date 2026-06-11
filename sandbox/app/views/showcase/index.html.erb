@@ -130,4 +130,22 @@
   </div>
 
   <%= ui_progress(value: 60, aria: { label: "Progresso de exemplo" }, class: "max-w-md") %>
+
+  <div class="max-w-md">
+    <%= ui_table do %>
+      <%= ui_table_caption { "Faturas do mês" } %>
+      <%= ui_table_header do %>
+        <%= ui_table_row do %>
+          <%= ui_table_head(scope: "col") { "Fatura" } %>
+          <%= ui_table_head(scope: "col", class: "text-right") { "Valor" } %>
+        <% end %>
+      <% end %>
+      <%= ui_table_body do %>
+        <%= ui_table_row do %>
+          <%= ui_table_cell(class: "font-medium") { "INV001" } %>
+          <%= ui_table_cell(class: "text-right") { "R$ 250,00" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
 </main>

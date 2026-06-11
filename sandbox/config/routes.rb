@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get "components/switch", to: "components#switch"
   get "components/skeleton", to: "components#skeleton"
   get "components/progress", to: "components#progress"
+  get "components/table", to: "components#table"
 
   # Defines the root path route ("/")
   root "showcase#index"

@@ -324,10 +324,62 @@ class ComponentsController < ApplicationController
     @usage_component = SKELETON_USAGE_COMPONENT
   end
 
+  TABLE_EXAMPLES = [
+    { name: "table_demo", title: "Faturas",
+      description: "A anatomia completa: caption, header, body e footer com células alinhadas." },
+    { name: "table_selected", title: "Linha selecionada",
+      description: "Use data: { state: \"selected\" } para destacar uma linha." }
+  ].freeze
+
+  TABLE_USAGE_HELPER = <<~ERB
+    <%= ui_table do %>
+      <%= ui_table_header do %>
+        <%= ui_table_row do %>
+          <%= ui_table_head(scope: "col") { "Fatura" } %>
+        <% end %>
+      <% end %>
+      <%= ui_table_body do %>
+        <%= ui_table_row do %>
+          <%= ui_table_cell { "INV001" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  TABLE_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::TableComponent.new do %>
+      <%= render Ui::Table::BodyComponent.new do %>
+        <%= render Ui::Table::RowComponent.new do %>
+          <%= render Ui::Table::CellComponent.new do %>
+            INV001
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  TABLE_COMPOSITION = <<~TEXT
+    Table (container com overflow + <table>)
+    |-- Table::Caption
+    |-- Table::Header
+    |   `-- Table::Row > Table::Head (th)
+    |-- Table::Body
+    |   `-- Table::Row > Table::Cell (td)
+    `-- Table::Footer
+        `-- Table::Row > Table::Cell
+  TEXT
+
   def progress
     @examples = PROGRESS_EXAMPLES
     @usage_helper = PROGRESS_USAGE_HELPER
     @usage_component = PROGRESS_USAGE_COMPONENT
+  end
+
+  def table
+    @examples = TABLE_EXAMPLES
+    @usage_helper = TABLE_USAGE_HELPER
+    @usage_component = TABLE_USAGE_COMPONENT
+    @composition = TABLE_COMPOSITION
   end
 
   def input

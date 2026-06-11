@@ -35,5 +35,8 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "label[for='showcase-notifications']", text: "Notificações"
     assert_select "[data-slot='skeleton'][aria-hidden='true']"
     assert_select "[role='progressbar'][aria-valuemin='0'][aria-valuemax='100'][aria-valuenow='60'][aria-label='Progresso de exemplo']"
+    assert_select "table[data-slot='table'] caption", text: "Faturas do mês"
+    assert_select "table thead th[scope='col']", text: "Fatura"
+    assert_select "table tbody td", text: "INV001"
   end
 end

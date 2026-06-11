@@ -464,6 +464,56 @@
           "target": "vendor/shadwire/shadwire.css"
         }
       ]
+    },
+    {
+      "name": "table",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/table_component.rb",
+          "target": "app/components/ui/table_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/table/header_component.rb",
+          "target": "app/components/ui/table/header_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/table/body_component.rb",
+          "target": "app/components/ui/table/body_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/table/footer_component.rb",
+          "target": "app/components/ui/table/footer_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/table/row_component.rb",
+          "target": "app/components/ui/table/row_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/table/head_component.rb",
+          "target": "app/components/ui/table/head_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/table/cell_component.rb",
+          "target": "app/components/ui/table/cell_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/table/caption_component.rb",
+          "target": "app/components/ui/table/caption_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
     }
   ]
 }

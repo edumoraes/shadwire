@@ -196,6 +196,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "max"
   end
 
+  test "table docs page renders examples and api" do
+    get components_table_path
+
+    assert_response :success
+    assert_select "h1", text: "Table"
+    assert_select "[data-slot='table-container'] table caption", text: /faturas recentes/
+    assert_select "table thead th[scope='col']", text: "Status"
+    assert_select "table tfoot td[colspan='3']", text: "Total"
+    assert_select "tr[data-state='selected']"
+    assert_select "table td code", text: "ui_table_caption"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

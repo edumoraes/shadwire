@@ -1,0 +1,132 @@
+<% content_for :title, "Table — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+  <header class="space-y-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-3xl font-bold tracking-tight">Table</h1>
+    <p class="text-lg text-muted-foreground">
+      Uma tabela responsiva construída sobre os elementos semânticos nativos.
+    </p>
+  </header>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <p class="text-sm text-muted-foreground">
+      O item
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">table</code> do
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">registry.json</code>
+      instala estes arquivos:
+    </p>
+    <ul class="space-y-1 text-sm">
+      <% %w[
+        app/components/ui_component.rb
+        app/components/ui/table_component.rb
+        app/components/ui/table/header_component.rb
+        app/components/ui/table/body_component.rb
+        app/components/ui/table/footer_component.rb
+        app/components/ui/table/row_component.rb
+        app/components/ui/table/head_component.rb
+        app/components/ui/table/cell_component.rb
+        app/components/ui/table/caption_component.rb
+        app/helpers/ui_helper.rb
+        vendor/shadwire/shadwire.css
+      ].each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground">
+          <%= ui_icon("file-code", size: :sm) %>
+          <code><%= path %></code>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <p class="text-sm text-muted-foreground">
+      Cada parte renderiza o elemento HTML correspondente
+      (<code class="rounded bg-muted px-1 py-0.5 text-xs">thead</code>,
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">tbody</code>,
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">th</code>, …) — use
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">scope:</code> nos cabeçalhos
+      e <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_table_caption</code>
+      para descrever a tabela.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Ou renderize os componentes diretamente:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composição</h2>
+    <p class="text-sm text-muted-foreground">
+      A raiz envolve a tabela em um container com rolagem horizontal.
+    </p>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <p class="text-sm text-muted-foreground">
+      Todas as partes aceitam <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code>,
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code> e bloco.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Helper</th>
+            <th>Elemento</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ui_table</code></td>
+            <td><code>div &gt; table</code></td>
+            <td>Container com <code>overflow-x-auto</code>; classes extras vão na <code>&lt;table&gt;</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_table_header</code> / <code>ui_table_body</code> / <code>ui_table_footer</code></td>
+            <td><code>thead</code> / <code>tbody</code> / <code>tfoot</code></td>
+            <td>Seções da tabela.</td>
+          </tr>
+          <tr>
+            <td><code>ui_table_row</code></td>
+            <td><code>tr</code></td>
+            <td><code>data: { state: "selected" }</code> destaca a linha.</td>
+          </tr>
+          <tr>
+            <td><code>ui_table_head</code></td>
+            <td><code>th</code></td>
+            <td>Passe <code>scope: "col"</code> ou <code>scope: "row"</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_table_cell</code></td>
+            <td><code>td</code></td>
+            <td>Aceita <code>colspan</code>/<code>rowspan</code> via attrs.</td>
+          </tr>
+          <tr>
+            <td><code>ui_table_caption</code></td>
+            <td><code>caption</code></td>
+            <td>Descrição acessível, exibida abaixo da tabela (<code>caption-bottom</code>).</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>
