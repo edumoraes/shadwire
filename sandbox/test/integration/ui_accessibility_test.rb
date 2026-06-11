@@ -34,5 +34,6 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "input[type='checkbox'][role='switch']#showcase-notifications[data-slot='switch']"
     assert_select "label[for='showcase-notifications']", text: "Notificações"
     assert_select "[data-slot='skeleton'][aria-hidden='true']"
+    assert_select "[role='progressbar'][aria-valuemin='0'][aria-valuemax='100'][aria-valuenow='60'][aria-label='Progresso de exemplo']"
   end
 end

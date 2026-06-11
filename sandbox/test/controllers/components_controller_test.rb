@@ -186,6 +186,16 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "**attrs"
   end
 
+  test "progress docs page renders examples and api" do
+    get components_progress_path
+
+    assert_response :success
+    assert_select "h1", text: "Progress"
+    assert_select "[role='progressbar'][aria-valuenow='60']"
+    assert_select "[role='progressbar'][aria-valuemax='12'][aria-valuenow='8']"
+    assert_select "table td code", text: "max"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

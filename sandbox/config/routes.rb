@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get "components/radio-group", to: "components#radio_group"
   get "components/switch", to: "components#switch"
   get "components/skeleton", to: "components#skeleton"
+  get "components/progress", to: "components#progress"
 
   # Defines the root path route ("/")
   root "showcase#index"

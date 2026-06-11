@@ -112,4 +112,8 @@ module UiHelper
   def ui_skeleton(**options, &block)
     render(Ui::SkeletonComponent.new(**options), &block)
   end
+
+  def ui_progress(**options)
+    render(Ui::ProgressComponent.new(**options))
+  end
 end

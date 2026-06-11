@@ -301,10 +301,33 @@ class ComponentsController < ApplicationController
     @usage_component = SWITCH_USAGE_COMPONENT
   end
 
+  PROGRESS_EXAMPLES = [
+    { name: "progress_default", title: "Padrão",
+      description: "O valor é renderizado no servidor e exposto via aria-valuenow." },
+    { name: "progress_values", title: "Valores",
+      description: "Barras em diferentes estágios de conclusão." },
+    { name: "progress_custom", title: "Máximo e altura customizados",
+      description: "Use max: para escalas próprias e classes para ajustar a altura." }
+  ].freeze
+
+  PROGRESS_USAGE_HELPER = <<~ERB
+    <%= ui_progress(value: 60, aria: { label: "Progresso do envio" }) %>
+  ERB
+
+  PROGRESS_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::ProgressComponent.new(value: 8, max: 12) %>
+  ERB
+
   def skeleton
     @examples = SKELETON_EXAMPLES
     @usage_helper = SKELETON_USAGE_HELPER
     @usage_component = SKELETON_USAGE_COMPONENT
+  end
+
+  def progress
+    @examples = PROGRESS_EXAMPLES
+    @usage_helper = PROGRESS_USAGE_HELPER
+    @usage_component = PROGRESS_USAGE_COMPONENT
   end
 
   def input
