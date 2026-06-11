@@ -22,5 +22,9 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "button svg[aria-hidden='true']"
     assert_select "svg[role='img'][aria-label='Adicionar item']"
     assert_select "button[aria-label='Alternar tema']"
+    assert_select "label[for='showcase-email'][data-slot='label']", text: "Email"
+    assert_select "input[type='email']#showcase-email[data-slot='input']"
+    assert_select "label[for='showcase-message'][data-slot='label']", text: "Mensagem"
+    assert_select "textarea#showcase-message[data-slot='textarea']"
   end
 end

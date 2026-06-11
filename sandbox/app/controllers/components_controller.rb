@@ -134,10 +134,86 @@ class ComponentsController < ApplicationController
     <% end %>
   ERB
 
+  INPUT_EXAMPLES = [
+    { name: "input_default", title: "Padrão",
+      description: "Um campo de texto com o visual shadcn. Atributos HTML livres passam direto para o <input>." },
+    { name: "input_with_label", title: "Com label",
+      description: "Combine com ui_label usando for:/id: para associar o rótulo ao campo." },
+    { name: "input_disabled", title: "Desabilitado",
+      description: "Passe disabled: true como atributo HTML." },
+    { name: "input_file", title: "Arquivo",
+      description: "type: :file estiliza o seletor de arquivo nativo." },
+    { name: "input_form", title: "Com form_with",
+      description: "Use form.field_name/form.field_id para integrar com formulários Rails." }
+  ].freeze
+
+  INPUT_USAGE_HELPER = <<~ERB
+    <%= ui_input(type: :email, placeholder: "voce@exemplo.com") %>
+  ERB
+
+  INPUT_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::InputComponent.new(type: :email, name: "user[email]") %>
+  ERB
+
+  LABEL_EXAMPLES = [
+    { name: "label_default", title: "Padrão",
+      description: "Associe o rótulo ao campo com for: apontando para o id do controle." },
+    { name: "label_disabled", title: "Grupo desabilitado",
+      description: "Dentro de um grupo com data-disabled, o rótulo reduz a opacidade automaticamente." }
+  ].freeze
+
+  LABEL_USAGE_HELPER = <<~ERB
+    <%= ui_label(for: "email") { "Email" } %>
+    <%= ui_input(type: :email, id: "email") %>
+  ERB
+
+  LABEL_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::LabelComponent.new(for: "email") do %>
+      Email
+    <% end %>
+  ERB
+
+  TEXTAREA_EXAMPLES = [
+    { name: "textarea_default", title: "Padrão",
+      description: "Uma área de texto com o visual shadcn; cresce com o conteúdo via field-sizing." },
+    { name: "textarea_with_label", title: "Com label",
+      description: "Combine com ui_label para formulários acessíveis." },
+    { name: "textarea_disabled", title: "Desabilitado",
+      description: "Passe disabled: true como atributo HTML." }
+  ].freeze
+
+  TEXTAREA_USAGE_HELPER = <<~ERB
+    <%= ui_textarea(name: "post[body]", placeholder: "Digite sua mensagem") %>
+  ERB
+
+  TEXTAREA_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::TextareaComponent.new(placeholder: "Digite sua mensagem") do %>
+      Conteúdo inicial
+    <% end %>
+  ERB
+
   def button
     @examples = BUTTON_EXAMPLES
     @usage_helper = USAGE_HELPER
     @usage_component = USAGE_COMPONENT
+  end
+
+  def input
+    @examples = INPUT_EXAMPLES
+    @usage_helper = INPUT_USAGE_HELPER
+    @usage_component = INPUT_USAGE_COMPONENT
+  end
+
+  def label
+    @examples = LABEL_EXAMPLES
+    @usage_helper = LABEL_USAGE_HELPER
+    @usage_component = LABEL_USAGE_COMPONENT
+  end
+
+  def textarea
+    @examples = TEXTAREA_EXAMPLES
+    @usage_helper = TEXTAREA_USAGE_HELPER
+    @usage_component = TEXTAREA_USAGE_COMPONENT
   end
 
   def accordion

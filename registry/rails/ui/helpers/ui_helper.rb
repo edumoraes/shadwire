@@ -80,4 +80,16 @@ module UiHelper
   def ui_icon(name, **options)
     render(Ui::IconComponent.new(name, **options))
   end
+
+  def ui_input(**options)
+    render(Ui::InputComponent.new(**options))
+  end
+
+  def ui_label(**options, &block)
+    render(Ui::LabelComponent.new(**options), &block)
+  end
+
+  def ui_textarea(**options, &block)
+    render(Ui::TextareaComponent.new(**options), &block)
+  end
 end

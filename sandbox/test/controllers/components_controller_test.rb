@@ -107,6 +107,40 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "code", text: "ScrollBar"
   end
 
+  test "input docs page renders examples and api" do
+    get components_input_path
+
+    assert_response :success
+    assert_select "h1", text: "Input"
+    assert_select "p", text: /se parece com um campo de texto/
+    assert_select "input[type='email'][data-slot='input']"
+    assert_select "input[type='file'][data-slot='input']"
+    assert_select "input[disabled][data-slot='input']"
+    assert_select "input[name='newsletter[email]'][id='newsletter_email']"
+    assert_select "table td code", text: "type"
+  end
+
+  test "label docs page renders examples and api" do
+    get components_label_path
+
+    assert_response :success
+    assert_select "h1", text: "Label"
+    assert_select "label[for='label-demo-username'][data-slot='label']", text: "Nome de usuário"
+    assert_select "[data-disabled='true'] label[for='label-demo-disabled']"
+    assert_select "table td code", text: "**attrs"
+  end
+
+  test "textarea docs page renders examples and api" do
+    get components_textarea_path
+
+    assert_response :success
+    assert_select "h1", text: "Textarea"
+    assert_select "textarea[data-slot='textarea'][placeholder='Digite sua mensagem aqui.']"
+    assert_select "textarea[disabled][data-slot='textarea']"
+    assert_select "label[for='textarea-message']", text: "Sua mensagem"
+    assert_select "table td code", text: "&block"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

@@ -1,0 +1,12 @@
+<%= form_with url: "#", scope: :newsletter do |form| %>
+  <div class="flex w-full max-w-sm items-center gap-2">
+    <%= ui_input(
+          type: :email,
+          name: form.field_name(:email),
+          id: form.field_id(:email),
+          placeholder: "voce@exemplo.com",
+          aria: { label: "Email" }
+        ) %>
+    <%= ui_button(type: :submit, variant: :outline) { "Inscrever" } %>
+  </div>
+<% end %>

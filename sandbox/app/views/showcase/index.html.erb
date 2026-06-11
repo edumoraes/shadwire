@@ -15,6 +15,18 @@
         Documentação do Scroll Area
         <%= ui_icon("arrow-right") %>
       <% end %>
+      <%= ui_button(tag: :a, href: components_input_path, variant: :outline, size: :sm) do %>
+        Documentação do Input
+        <%= ui_icon("arrow-right") %>
+      <% end %>
+      <%= ui_button(tag: :a, href: components_label_path, variant: :outline, size: :sm) do %>
+        Documentação do Label
+        <%= ui_icon("arrow-right") %>
+      <% end %>
+      <%= ui_button(tag: :a, href: components_textarea_path, variant: :outline, size: :sm) do %>
+        Documentação do Textarea
+        <%= ui_icon("arrow-right") %>
+      <% end %>
     </div>
   </section>
 
@@ -38,6 +50,17 @@
       <%= ui_icon("plus", label: "Adicionar item") %>
     <% end %>
     <%= ui_icon("circle-alert", size: :lg, class: "text-destructive") %>
+  </section>
+
+  <section class="grid w-full max-w-md gap-4">
+    <div class="grid gap-2">
+      <%= ui_label(for: "showcase-email") { "Email" } %>
+      <%= ui_input(type: :email, id: "showcase-email", placeholder: "voce@exemplo.com") %>
+    </div>
+    <div class="grid gap-2">
+      <%= ui_label(for: "showcase-message") { "Mensagem" } %>
+      <%= ui_textarea(id: "showcase-message", placeholder: "Como podemos ajudar?") %>
+    </div>
   </section>
 
   <%= ui_separator %>
