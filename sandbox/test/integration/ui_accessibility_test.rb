@@ -41,5 +41,8 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "nav[aria-label='breadcrumb'] ol li a[data-slot='breadcrumb-link']", text: "Início"
     assert_select "nav[aria-label='breadcrumb'] li[role='presentation'][aria-hidden='true']"
     assert_select "nav[aria-label='breadcrumb'] span[aria-current='page']", text: "Showcase"
+    assert_select "nav[role='navigation'][aria-label='pagination'] ul li a[aria-current='page']", text: "1"
+    assert_select "nav[aria-label='pagination'] a[aria-label='Ir para a página anterior']"
+    assert_select "nav[aria-label='pagination'] a[aria-label='Ir para a próxima página']"
   end
 end

@@ -1,0 +1,22 @@
+<%= ui_pagination do %>
+  <%= ui_pagination_content do %>
+    <%= ui_pagination_item do %>
+      <%= ui_pagination_previous(href: "#") %>
+    <% end %>
+    <%= ui_pagination_item do %>
+      <%= ui_pagination_link(href: "#") { "1" } %>
+    <% end %>
+    <%= ui_pagination_item do %>
+      <%= ui_pagination_link(href: "#", active: true) { "2" } %>
+    <% end %>
+    <%= ui_pagination_item do %>
+      <%= ui_pagination_link(href: "#") { "3" } %>
+    <% end %>
+    <%= ui_pagination_item do %>
+      <%= ui_pagination_ellipsis %>
+    <% end %>
+    <%= ui_pagination_item do %>
+      <%= ui_pagination_next(href: "#") %>
+    <% end %>
+  <% end %>
+<% end %>

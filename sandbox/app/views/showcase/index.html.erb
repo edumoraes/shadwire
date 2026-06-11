@@ -143,6 +143,23 @@
 
   <%= ui_progress(value: 60, aria: { label: "Progresso de exemplo" }, class: "max-w-md") %>
 
+  <%= ui_pagination do %>
+    <%= ui_pagination_content do %>
+      <%= ui_pagination_item do %>
+        <%= ui_pagination_previous(href: "#") %>
+      <% end %>
+      <%= ui_pagination_item do %>
+        <%= ui_pagination_link(href: "#", active: true) { "1" } %>
+      <% end %>
+      <%= ui_pagination_item do %>
+        <%= ui_pagination_link(href: "#") { "2" } %>
+      <% end %>
+      <%= ui_pagination_item do %>
+        <%= ui_pagination_next(href: "#") %>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <div class="max-w-md">
     <%= ui_table do %>
       <%= ui_table_caption { "Faturas do mês" } %>

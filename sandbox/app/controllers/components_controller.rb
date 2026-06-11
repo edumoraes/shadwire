@@ -425,11 +425,52 @@ class ComponentsController < ApplicationController
     @composition = TABLE_COMPOSITION
   end
 
+  PAGINATION_EXAMPLES = [
+    { name: "pagination_default", title: "Padrão",
+      description: "Anterior/Próxima com rótulos acessíveis, página ativa com aria-current=\"page\" e ellipsis decorativo." }
+  ].freeze
+
+  PAGINATION_USAGE_HELPER = <<~ERB
+    <%= ui_pagination do %>
+      <%= ui_pagination_content do %>
+        <%= ui_pagination_item do %>
+          <%= ui_pagination_previous(href: "?page=1") %>
+        <% end %>
+        <%= ui_pagination_item do %>
+          <%= ui_pagination_link(href: "?page=2", active: true) { "2" } %>
+        <% end %>
+        <%= ui_pagination_item do %>
+          <%= ui_pagination_next(href: "?page=3") %>
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  PAGINATION_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::Pagination::LinkComponent.new(href: "?page=2", active: true) do %>
+      2
+    <% end %>
+  ERB
+
+  PAGINATION_COMPOSITION = <<~TEXT
+    Pagination (nav role="navigation" aria-label="pagination")
+    `-- Pagination::Content (ul)
+        |-- Pagination::Item (li) > Pagination::Previous / Pagination::Link / Pagination::Next
+        `-- Pagination::Item (li) > Pagination::Ellipsis
+  TEXT
+
   def breadcrumb
     @examples = BREADCRUMB_EXAMPLES
     @usage_helper = BREADCRUMB_USAGE_HELPER
     @usage_component = BREADCRUMB_USAGE_COMPONENT
     @composition = BREADCRUMB_COMPOSITION
+  end
+
+  def pagination
+    @examples = PAGINATION_EXAMPLES
+    @usage_helper = PAGINATION_USAGE_HELPER
+    @usage_component = PAGINATION_USAGE_COMPONENT
+    @composition = PAGINATION_COMPOSITION
   end
 
   def input

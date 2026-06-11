@@ -219,6 +219,17 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "ui_breadcrumb_page"
   end
 
+  test "pagination docs page renders examples and api" do
+    get components_pagination_path
+
+    assert_response :success
+    assert_select "h1", text: "Pagination"
+    assert_select "nav[aria-label='pagination'] a[aria-current='page'][data-active]", text: "2"
+    assert_select "a[aria-label='Ir para a página anterior'] svg"
+    assert_select "[data-slot='pagination-ellipsis'] span.sr-only", text: "Mais páginas"
+    assert_select "table td code", text: "active: false"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

@@ -564,6 +564,60 @@
           "target": "vendor/shadwire/shadwire.css"
         }
       ]
+    },
+    {
+      "name": "pagination",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/pagination_component.rb",
+          "target": "app/components/ui/pagination_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/pagination/content_component.rb",
+          "target": "app/components/ui/pagination/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/pagination/item_component.rb",
+          "target": "app/components/ui/pagination/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/pagination/link_component.rb",
+          "target": "app/components/ui/pagination/link_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/pagination/previous_component.rb",
+          "target": "app/components/ui/pagination/previous_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/pagination/next_component.rb",
+          "target": "app/components/ui/pagination/next_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/pagination/ellipsis_component.rb",
+          "target": "app/components/ui/pagination/ellipsis_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/button_component.rb",
+          "target": "app/components/ui/button_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/icon_component.rb",
+          "target": "app/components/ui/icon_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,117 @@
+<% content_for :title, "Pagination — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+  <header class="space-y-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-3xl font-bold tracking-tight">Pagination</h1>
+    <p class="text-lg text-muted-foreground">
+      Navegação entre páginas com links para anterior e próxima.
+    </p>
+  </header>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <p class="text-sm text-muted-foreground">
+      O item
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">pagination</code> do
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">registry.json</code>
+      instala estes arquivos:
+    </p>
+    <ul class="space-y-1 text-sm">
+      <% %w[
+        app/components/ui_component.rb
+        app/components/ui/pagination_component.rb
+        app/components/ui/pagination/content_component.rb
+        app/components/ui/pagination/item_component.rb
+        app/components/ui/pagination/link_component.rb
+        app/components/ui/pagination/previous_component.rb
+        app/components/ui/pagination/next_component.rb
+        app/components/ui/pagination/ellipsis_component.rb
+        app/components/ui/button_component.rb
+        app/components/ui/icon_component.rb
+        app/helpers/ui_helper.rb
+        vendor/shadwire/shadwire.css
+      ].each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground">
+          <%= ui_icon("file-code", size: :sm) %>
+          <code><%= path %></code>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <p class="text-sm text-muted-foreground">
+      Os links compõem o visual do <code class="rounded bg-muted px-1 py-0.5 text-xs">Button</code>:
+      a página ativa usa a variante outline e recebe
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-current="page"</code>.
+      Integre com Pagy/Kaminari gerando os <code class="rounded bg-muted px-1 py-0.5 text-xs">href</code> reais.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Ou renderize os componentes diretamente:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composição</h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <p class="text-sm text-muted-foreground">
+      Todas as partes aceitam <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Helper</th>
+            <th>Argumentos</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ui_pagination</code> / <code>ui_pagination_content</code> / <code>ui_pagination_item</code></td>
+            <td>—</td>
+            <td>Landmark <code>nav</code>, lista <code>ul</code> e itens <code>li</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_pagination_link</code></td>
+            <td><code>active: false</code>, <code>size: :icon</code></td>
+            <td>Renderiza <code>&lt;a&gt;</code> com visual de Button (outline quando ativo, ghost caso contrário).</td>
+          </tr>
+          <tr>
+            <td><code>ui_pagination_previous</code> / <code>ui_pagination_next</code></td>
+            <td>—</td>
+            <td>Chevron + rótulo (oculto em telas pequenas); o bloco substitui o texto padrão.</td>
+          </tr>
+          <tr>
+            <td><code>ui_pagination_ellipsis</code></td>
+            <td>—</td>
+            <td>Decorativo, com texto <code>sr-only</code> "Mais páginas".</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>
