@@ -177,6 +177,15 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "checked"
   end
 
+  test "skeleton docs page renders examples and api" do
+    get components_skeleton_path
+
+    assert_response :success
+    assert_select "h1", text: "Skeleton"
+    assert_select "[data-slot='skeleton'][aria-hidden='true'].rounded-full"
+    assert_select "table td code", text: "**attrs"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

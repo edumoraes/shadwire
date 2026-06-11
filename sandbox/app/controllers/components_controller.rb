@@ -280,10 +280,31 @@ class ComponentsController < ApplicationController
     @composition = RADIO_GROUP_COMPOSITION
   end
 
+  SKELETON_EXAMPLES = [
+    { name: "skeleton_default", title: "Padrão",
+      description: "Combine formas para esboçar o conteúdo que está carregando." },
+    { name: "skeleton_card", title: "Card",
+      description: "Um placeholder para cards de mídia com linhas de texto." }
+  ].freeze
+
+  SKELETON_USAGE_HELPER = <<~ERB
+    <%= ui_skeleton(class: "h-4 w-48") %>
+  ERB
+
+  SKELETON_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::SkeletonComponent.new(class: "size-10 rounded-full") %>
+  ERB
+
   def switch
     @examples = SWITCH_EXAMPLES
     @usage_helper = SWITCH_USAGE_HELPER
     @usage_component = SWITCH_USAGE_COMPONENT
+  end
+
+  def skeleton
+    @examples = SKELETON_EXAMPLES
+    @usage_helper = SKELETON_USAGE_HELPER
+    @usage_component = SKELETON_USAGE_COMPONENT
   end
 
   def input

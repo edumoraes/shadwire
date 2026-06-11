@@ -108,4 +108,8 @@ module UiHelper
   def ui_switch(**options)
     render(Ui::SwitchComponent.new(**options))
   end
+
+  def ui_skeleton(**options, &block)
+    render(Ui::SkeletonComponent.new(**options), &block)
+  end
 end

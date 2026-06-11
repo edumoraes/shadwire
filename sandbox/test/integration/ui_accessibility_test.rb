@@ -33,5 +33,6 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "label[for='showcase-theme-light']", text: "Claro"
     assert_select "input[type='checkbox'][role='switch']#showcase-notifications[data-slot='switch']"
     assert_select "label[for='showcase-notifications']", text: "Notificações"
+    assert_select "[data-slot='skeleton'][aria-hidden='true']"
   end
 end

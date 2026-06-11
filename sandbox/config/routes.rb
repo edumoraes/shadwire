@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get "components/checkbox", to: "components#checkbox"
   get "components/radio-group", to: "components#radio_group"
   get "components/switch", to: "components#switch"
+  get "components/skeleton", to: "components#skeleton"
 
   # Defines the root path route ("/")
   root "showcase#index"

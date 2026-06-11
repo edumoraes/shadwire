@@ -120,4 +120,12 @@
   <% end %>
 
   <%= ui_avatar(src: "https://i.pravatar.cc/96?img=12", alt: "Example user", fallback: "EU") %>
+
+  <div class="flex items-center gap-4">
+    <%= ui_skeleton(class: "size-10 rounded-full") %>
+    <div class="grid gap-2">
+      <%= ui_skeleton(class: "h-4 w-36") %>
+      <%= ui_skeleton(class: "h-4 w-24") %>
+    </div>
+  </div>
 </main>
