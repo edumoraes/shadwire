@@ -780,6 +780,68 @@
           "target": "app/javascript/controllers/ui_dialog_controller.js"
         }
       ]
+    },
+    {
+      "name": "sheet",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sheet_component.rb",
+          "target": "app/components/ui/sheet_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sheet/trigger_component.rb",
+          "target": "app/components/ui/sheet/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sheet/content_component.rb",
+          "target": "app/components/ui/sheet/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sheet/header_component.rb",
+          "target": "app/components/ui/sheet/header_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sheet/footer_component.rb",
+          "target": "app/components/ui/sheet/footer_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sheet/title_component.rb",
+          "target": "app/components/ui/sheet/title_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sheet/description_component.rb",
+          "target": "app/components/ui/sheet/description_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sheet/close_component.rb",
+          "target": "app/components/ui/sheet/close_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/button_component.rb",
+          "target": "app/components/ui/button_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/icon_component.rb",
+          "target": "app/components/ui/icon_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_dialog_controller.js",
+          "target": "app/javascript/controllers/ui_dialog_controller.js"
+        }
+      ]
     }
   ]
 }

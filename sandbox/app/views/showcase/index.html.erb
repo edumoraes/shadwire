@@ -123,6 +123,19 @@
     <% end %>
   <% end %>
 
+  <%= ui_sheet(class: "w-fit") do %>
+    <%= ui_sheet_trigger(variant: :outline, size: :sm) { "Abrir sheet" } %>
+    <%= ui_sheet_content do %>
+      <%= ui_sheet_header do %>
+        <%= ui_sheet_title { "Sheet de exemplo" } %>
+        <%= ui_sheet_description { "Painel lateral sobre o dialog nativo." } %>
+      <% end %>
+      <%= ui_sheet_footer do %>
+        <%= ui_sheet_close { "Fechar" } %>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <%= ui_alert_dialog(class: "w-fit") do %>
     <%= ui_alert_dialog_trigger(variant: :destructive, size: :sm) { "Excluir registro" } %>
     <%= ui_alert_dialog_content do %>

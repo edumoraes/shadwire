@@ -41,6 +41,14 @@
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-dialog-in: dialog-in 0.15s ease-out;
   --animate-dialog-out: dialog-out 0.15s ease-in;
+  --animate-sheet-in-right: sheet-in-from-right 0.3s ease-out;
+  --animate-sheet-out-right: sheet-out-to-right 0.2s ease-in;
+  --animate-sheet-in-left: sheet-in-from-left 0.3s ease-out;
+  --animate-sheet-out-left: sheet-out-to-left 0.2s ease-in;
+  --animate-sheet-in-top: sheet-in-from-top 0.3s ease-out;
+  --animate-sheet-out-top: sheet-out-to-top 0.2s ease-in;
+  --animate-sheet-in-bottom: sheet-in-from-bottom 0.3s ease-out;
+  --animate-sheet-out-bottom: sheet-out-to-bottom 0.2s ease-in;
 }
 
 @keyframes accordion-down {
@@ -89,6 +97,78 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes sheet-in-from-right {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes sheet-out-to-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes sheet-in-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes sheet-out-to-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes sheet-in-from-top {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheet-out-to-top {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes sheet-in-from-bottom {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheet-out-to-bottom {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
   }
 }
 

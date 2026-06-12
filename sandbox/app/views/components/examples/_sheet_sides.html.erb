@@ -1,0 +1,14 @@
+<% { right: "Direita", left: "Esquerda", top: "Topo", bottom: "Base" }.each do |side, label| %>
+  <%= ui_sheet do %>
+    <%= ui_sheet_trigger(variant: :outline) { label } %>
+    <%= ui_sheet_content(side: side) do %>
+      <%= ui_sheet_header do %>
+        <%= ui_sheet_title { "Sheet: #{label.downcase}" } %>
+        <%= ui_sheet_description { "Este painel desliza do lado \"#{side}\"." } %>
+      <% end %>
+      <%= ui_sheet_footer do %>
+        <%= ui_sheet_close { "Fechar" } %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

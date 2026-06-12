@@ -52,5 +52,7 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "dialog[data-slot='dialog-content'][data-ui-dialog-target='dialog'] h2[data-slot='dialog-title']"
     assert_select "[data-slot='alert-dialog'][data-ui-dialog-close-on-escape-value='false']"
     assert_select "dialog[role='alertdialog'][data-slot='alert-dialog-content'] h2[data-slot='alert-dialog-title']"
+    assert_select "[data-slot='sheet'][data-controller='ui-dialog']"
+    assert_select "dialog[data-slot='sheet-content'][data-side='right'] h2[data-slot='sheet-title']"
   end
 end

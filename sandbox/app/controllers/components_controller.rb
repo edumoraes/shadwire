@@ -612,11 +612,61 @@ class ComponentsController < ApplicationController
     @composition = DIALOG_COMPOSITION
   end
 
+  SHEET_EXAMPLES = [
+    { name: "sheet_default", title: "Padrão",
+      description: "Um painel que desliza da direita, com formulário e footer." },
+    { name: "sheet_sides", title: "Os quatro lados",
+      description: "side: :right, :left, :top ou :bottom controla a borda de origem e a animação." }
+  ].freeze
+
+  SHEET_USAGE_HELPER = <<~ERB
+    <%= ui_sheet do %>
+      <%= ui_sheet_trigger(variant: :outline) { "Abrir" } %>
+      <%= ui_sheet_content(side: :right) do %>
+        <%= ui_sheet_header do %>
+          <%= ui_sheet_title { "Título" } %>
+          <%= ui_sheet_description { "Descrição do painel." } %>
+        <% end %>
+        <%= ui_sheet_footer do %>
+          <%= ui_sheet_close { "Fechar" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  SHEET_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::SheetComponent.new do %>
+      <%= render Ui::Sheet::TriggerComponent.new do %>
+        Abrir
+      <% end %>
+      <%= render Ui::Sheet::ContentComponent.new(side: :left) do %>
+        <%= render Ui::Sheet::TitleComponent.new do %>
+          Título
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  SHEET_COMPOSITION = <<~TEXT
+    Sheet (ui-dialog)
+    |-- Sheet::Trigger (Button)
+    `-- Sheet::Content (<dialog> ancorado em uma borda, side:)
+        |-- Sheet::Header > Sheet::Title + Sheet::Description
+        `-- Sheet::Footer > Sheet::Close (Button)
+  TEXT
+
   def alert_dialog
     @examples = ALERT_DIALOG_EXAMPLES
     @usage_helper = ALERT_DIALOG_USAGE_HELPER
     @usage_component = ALERT_DIALOG_USAGE_COMPONENT
     @composition = ALERT_DIALOG_COMPOSITION
+  end
+
+  def sheet
+    @examples = SHEET_EXAMPLES
+    @usage_helper = SHEET_USAGE_HELPER
+    @usage_component = SHEET_USAGE_COMPONENT
+    @composition = SHEET_COMPOSITION
   end
 
   def input

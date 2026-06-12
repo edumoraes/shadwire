@@ -266,6 +266,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "AlertDialog::Cancel"
   end
 
+  test "sheet docs page renders examples and api" do
+    get components_sheet_path
+
+    assert_response :success
+    assert_select "h1", text: "Sheet"
+    assert_select "dialog[data-slot='sheet-content'][data-side='right'] h2[data-slot='sheet-title']", text: "Editar perfil"
+    assert_select "dialog[data-side='top']"
+    assert_select "dialog[data-side='bottom']"
+    assert_select "dialog[data-side='left']"
+    assert_select "table td code", text: "side"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

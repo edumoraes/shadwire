@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   get "components/tabs", to: "components#tabs"
   get "components/dialog", to: "components#dialog"
   get "components/alert-dialog", to: "components#alert_dialog"
+  get "components/sheet", to: "components#sheet"
 
   # Defines the root path route ("/")
   root "showcase#index"

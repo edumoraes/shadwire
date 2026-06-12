@@ -1,0 +1,124 @@
+<% content_for :title, "Sheet — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+  <header class="space-y-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-3xl font-bold tracking-tight">Sheet</h1>
+    <p class="text-lg text-muted-foreground">
+      Estende o Dialog para exibir conteúdo complementar deslizando de uma borda da tela.
+    </p>
+  </header>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <p class="text-sm text-muted-foreground">
+      O item
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">sheet</code> do
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">registry.json</code>
+      instala estes arquivos:
+    </p>
+    <ul class="space-y-1 text-sm">
+      <% %w[
+        app/components/ui_component.rb
+        app/components/ui/sheet_component.rb
+        app/components/ui/sheet/trigger_component.rb
+        app/components/ui/sheet/content_component.rb
+        app/components/ui/sheet/header_component.rb
+        app/components/ui/sheet/footer_component.rb
+        app/components/ui/sheet/title_component.rb
+        app/components/ui/sheet/description_component.rb
+        app/components/ui/sheet/close_component.rb
+        app/components/ui/button_component.rb
+        app/components/ui/icon_component.rb
+        app/helpers/ui_helper.rb
+        app/javascript/controllers/ui_dialog_controller.js
+        vendor/shadwire/shadwire.css
+      ].each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground">
+          <%= ui_icon("file-code", size: :sm) %>
+          <code><%= path %></code>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <p class="text-sm text-muted-foreground">
+      Mesmo contrato do Dialog (elemento
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">&lt;dialog&gt;</code> +
+      controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dialog</code>),
+      com o painel ancorado em uma borda via <code class="rounded bg-muted px-1 py-0.5 text-xs">side:</code>.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Ou renderize os componentes diretamente:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composição</h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <p class="text-sm text-muted-foreground">
+      Todas as partes aceitam <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Componente</th>
+            <th>Argumento</th>
+            <th>Padrão</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Sheet</code></td>
+            <td><code>close_on_backdrop</code></td>
+            <td><code>true</code></td>
+            <td>Fecha ao clicar fora do painel.</td>
+          </tr>
+          <tr>
+            <td><code>Sheet::Content</code></td>
+            <td><code>side</code></td>
+            <td><code>:right</code></td>
+            <td><code>:right</code>, <code>:left</code>, <code>:top</code>, <code>:bottom</code> — emite <code>data-side</code>.</td>
+          </tr>
+          <tr>
+            <td><code>Sheet::Content</code></td>
+            <td><code>show_close_button</code></td>
+            <td><code>true</code></td>
+            <td>Renderiza o botão X no canto superior direito.</td>
+          </tr>
+          <tr>
+            <td><code>Sheet::Trigger</code> / <code>Sheet::Close</code></td>
+            <td><code>variant</code>, <code>size</code></td>
+            <td><code>:default</code> / <code>:outline</code></td>
+            <td>Encapsulam <code>Ui::ButtonComponent</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>
