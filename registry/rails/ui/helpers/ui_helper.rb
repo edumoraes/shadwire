@@ -320,4 +320,16 @@ module UiHelper
   def ui_sheet_close(**options, &block)
     render(Ui::Sheet::CloseComponent.new(**options), &block)
   end
+
+  def ui_tooltip(**options, &block)
+    render(Ui::TooltipComponent.new(**options), &block)
+  end
+
+  def ui_tooltip_trigger(**options, &block)
+    render(Ui::Tooltip::TriggerComponent.new(**options), &block)
+  end
+
+  def ui_tooltip_content(**options, &block)
+    render(Ui::Tooltip::ContentComponent.new(**options), &block)
+  end
 end

@@ -669,6 +669,44 @@ class ComponentsController < ApplicationController
     @composition = SHEET_COMPOSITION
   end
 
+  TOOLTIP_EXAMPLES = [
+    { name: "tooltip_default", title: "Padrão",
+      description: "Abre no hover e no foco depois de um pequeno atraso; Esc fecha sem mover o foco." },
+    { name: "tooltip_sides", title: "Lados",
+      description: "side: :top, :right, :bottom ou :left posiciona o balão." }
+  ].freeze
+
+  TOOLTIP_USAGE_HELPER = <<~ERB
+    <%= ui_tooltip do %>
+      <%= ui_tooltip_trigger(variant: :outline) { "Passe o mouse" } %>
+      <%= ui_tooltip_content { "Adicionar à biblioteca" } %>
+    <% end %>
+  ERB
+
+  TOOLTIP_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::TooltipComponent.new(open_delay: 150) do %>
+      <%= render Ui::Tooltip::TriggerComponent.new do %>
+        Ajuda
+      <% end %>
+      <%= render Ui::Tooltip::ContentComponent.new(side: :right) do %>
+        Mais detalhes
+      <% end %>
+    <% end %>
+  ERB
+
+  TOOLTIP_COMPOSITION = <<~TEXT
+    Tooltip (data-controller="ui-tooltip", relative)
+    |-- Tooltip::Trigger (Button descrito via aria-describedby)
+    `-- Tooltip::Content (role="tooltip", absolute, side:)
+  TEXT
+
+  def tooltip
+    @examples = TOOLTIP_EXAMPLES
+    @usage_helper = TOOLTIP_USAGE_HELPER
+    @usage_component = TOOLTIP_USAGE_COMPONENT
+    @composition = TOOLTIP_COMPOSITION
+  end
+
   def input
     @examples = INPUT_EXAMPLES
     @usage_helper = INPUT_USAGE_HELPER

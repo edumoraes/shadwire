@@ -54,5 +54,8 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "dialog[role='alertdialog'][data-slot='alert-dialog-content'] h2[data-slot='alert-dialog-title']"
     assert_select "[data-slot='sheet'][data-controller='ui-dialog']"
     assert_select "dialog[data-slot='sheet-content'][data-side='right'] h2[data-slot='sheet-title']"
+    assert_select "[data-slot='tooltip'][data-controller='ui-tooltip']"
+    assert_select "button[data-slot='tooltip-trigger'][data-ui-tooltip-target='trigger']", text: "Hover"
+    assert_select "[role='tooltip'][hidden][data-ui-tooltip-target='content']", text: "Tooltip de exemplo"
   end
 end

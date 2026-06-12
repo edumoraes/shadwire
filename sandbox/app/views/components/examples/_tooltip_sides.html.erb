@@ -1,0 +1,6 @@
+<% { top: "Topo", right: "Direita", bottom: "Base", left: "Esquerda" }.each do |side, label| %>
+  <%= ui_tooltip do %>
+    <%= ui_tooltip_trigger(variant: :outline) { label } %>
+    <%= ui_tooltip_content(side: side) { "Lado #{side}" } %>
+  <% end %>
+<% end %>

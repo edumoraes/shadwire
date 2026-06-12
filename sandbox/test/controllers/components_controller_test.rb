@@ -278,6 +278,17 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "side"
   end
 
+  test "tooltip docs page renders examples and api" do
+    get components_tooltip_path
+
+    assert_response :success
+    assert_select "h1", text: "Tooltip"
+    assert_select "[data-controller='ui-tooltip'] button[data-slot='tooltip-trigger']", text: "Passe o mouse"
+    assert_select "[role='tooltip'][data-ui-tooltip-target='content']", text: "Adicionar à biblioteca"
+    assert_select "[role='tooltip'].left-full" # right side example
+    assert_select "table td code", text: "open_delay"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

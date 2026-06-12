@@ -49,6 +49,7 @@
   --animate-sheet-out-top: sheet-out-to-top 0.2s ease-in;
   --animate-sheet-in-bottom: sheet-in-from-bottom 0.3s ease-out;
   --animate-sheet-out-bottom: sheet-out-to-bottom 0.2s ease-in;
+  --animate-tooltip-in: tooltip-in 0.15s ease-out;
 }
 
 @keyframes accordion-down {
@@ -169,6 +170,17 @@
   }
   to {
     transform: translateY(100%);
+  }
+}
+
+/* Opacity-only so the per-side centering transform (-translate-x-1/2, …) is
+   not clobbered by an animated `transform` mid-open. */
+@keyframes tooltip-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
