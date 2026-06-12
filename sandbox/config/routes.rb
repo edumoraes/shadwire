@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get "components/table", to: "components#table"
   get "components/breadcrumb", to: "components#breadcrumb"
   get "components/pagination", to: "components#pagination"
+  get "components/tabs", to: "components#tabs"
 
   # Defines the root path route ("/")
   root "showcase#index"

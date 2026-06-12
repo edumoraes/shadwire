@@ -618,6 +618,44 @@
           "target": "vendor/shadwire/shadwire.css"
         }
       ]
+    },
+    {
+      "name": "tabs",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/tabs_component.rb",
+          "target": "app/components/ui/tabs_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/tabs/list_component.rb",
+          "target": "app/components/ui/tabs/list_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/tabs/trigger_component.rb",
+          "target": "app/components/ui/tabs/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/tabs/content_component.rb",
+          "target": "app/components/ui/tabs/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_tabs_controller.js",
+          "target": "app/javascript/controllers/ui_tabs_controller.js"
+        }
+      ]
     }
   ]
 }

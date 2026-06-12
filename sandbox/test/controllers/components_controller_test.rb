@@ -230,6 +230,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "active: false"
   end
 
+  test "tabs docs page renders examples and api" do
+    get components_tabs_path
+
+    assert_response :success
+    assert_select "h1", text: "Tabs"
+    assert_select "[data-controller='ui-tabs'][data-ui-tabs-default-value-value='account']"
+    assert_select "[role='tablist'] button[role='tab'][data-ui-tabs-value='password']", text: "Senha"
+    assert_select "button[role='tab'][disabled][data-disabled]", text: "Analytics"
+    assert_select "[role='tabpanel'][data-ui-tabs-value='account'][hidden]"
+    assert_select "table td code", text: "default_value"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

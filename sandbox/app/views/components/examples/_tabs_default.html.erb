@@ -1,0 +1,40 @@
+<%= ui_tabs(default_value: :account, class: "w-full max-w-sm") do %>
+  <%= ui_tabs_list(class: "w-full") do %>
+    <%= ui_tabs_trigger(value: :account) { "Conta" } %>
+    <%= ui_tabs_trigger(value: :password) { "Senha" } %>
+  <% end %>
+  <%= ui_tabs_content(value: :account) do %>
+    <%= ui_card do %>
+      <%= ui_card_header do %>
+        <%= ui_card_title { "Conta" } %>
+        <%= ui_card_description { "Altere seus dados de perfil aqui." } %>
+      <% end %>
+      <%= ui_card_content(class: "grid gap-4") do %>
+        <div class="grid gap-2">
+          <%= ui_label(for: "tabs-demo-name") { "Nome" } %>
+          <%= ui_input(id: "tabs-demo-name", value: "Eduardo de Moraes") %>
+        </div>
+      <% end %>
+      <%= ui_card_footer do %>
+        <%= ui_button { "Salvar alterações" } %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= ui_tabs_content(value: :password) do %>
+    <%= ui_card do %>
+      <%= ui_card_header do %>
+        <%= ui_card_title { "Senha" } %>
+        <%= ui_card_description { "Troque sua senha de acesso aqui." } %>
+      <% end %>
+      <%= ui_card_content(class: "grid gap-4") do %>
+        <div class="grid gap-2">
+          <%= ui_label(for: "tabs-demo-password") { "Nova senha" } %>
+          <%= ui_input(id: "tabs-demo-password", type: :password) %>
+        </div>
+      <% end %>
+      <%= ui_card_footer do %>
+        <%= ui_button { "Salvar senha" } %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

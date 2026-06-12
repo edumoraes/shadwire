@@ -466,11 +466,56 @@ class ComponentsController < ApplicationController
     @composition = BREADCRUMB_COMPOSITION
   end
 
+  TABS_EXAMPLES = [
+    { name: "tabs_default", title: "Padrão",
+      description: "Dois painéis com cards; o painel ativo é controlado pelo controller ui-tabs." },
+    { name: "tabs_disabled", title: "Trigger desabilitado",
+      description: "disabled: true tira o trigger do fluxo de teclado e da ativação." }
+  ].freeze
+
+  TABS_USAGE_HELPER = <<~ERB
+    <%= ui_tabs(default_value: :account) do %>
+      <%= ui_tabs_list do %>
+        <%= ui_tabs_trigger(value: :account) { "Conta" } %>
+        <%= ui_tabs_trigger(value: :password) { "Senha" } %>
+      <% end %>
+      <%= ui_tabs_content(value: :account) { "Painel da conta" } %>
+      <%= ui_tabs_content(value: :password) { "Painel de senha" } %>
+    <% end %>
+  ERB
+
+  TABS_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::TabsComponent.new(default_value: :account) do %>
+      <%= render Ui::Tabs::ListComponent.new do %>
+        <%= render Ui::Tabs::TriggerComponent.new(value: :account) do %>
+          Conta
+        <% end %>
+      <% end %>
+      <%= render Ui::Tabs::ContentComponent.new(value: :account) do %>
+        Painel da conta
+      <% end %>
+    <% end %>
+  ERB
+
+  TABS_COMPOSITION = <<~TEXT
+    Tabs (data-controller="ui-tabs")
+    |-- Tabs::List (role="tablist")
+    |   `-- Tabs::Trigger (role="tab", um por painel)
+    `-- Tabs::Content (role="tabpanel", um por value)
+  TEXT
+
   def pagination
     @examples = PAGINATION_EXAMPLES
     @usage_helper = PAGINATION_USAGE_HELPER
     @usage_component = PAGINATION_USAGE_COMPONENT
     @composition = PAGINATION_COMPOSITION
+  end
+
+  def tabs
+    @examples = TABS_EXAMPLES
+    @usage_helper = TABS_USAGE_HELPER
+    @usage_component = TABS_USAGE_COMPONENT
+    @composition = TABS_COMPOSITION
   end
 
   def input

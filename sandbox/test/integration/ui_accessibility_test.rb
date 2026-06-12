@@ -44,5 +44,8 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "nav[role='navigation'][aria-label='pagination'] ul li a[aria-current='page']", text: "1"
     assert_select "nav[aria-label='pagination'] a[aria-label='Ir para a página anterior']"
     assert_select "nav[aria-label='pagination'] a[aria-label='Ir para a próxima página']"
+    assert_select "[data-slot='tabs'][data-controller='ui-tabs'][data-ui-tabs-default-value-value='preview']"
+    assert_select "[role='tablist'] button[type='button'][role='tab'][data-ui-tabs-value='preview']", text: "Preview"
+    assert_select "[role='tabpanel'][tabindex='0'][hidden][data-ui-tabs-value='code']"
   end
 end

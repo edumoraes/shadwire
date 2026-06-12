@@ -1,0 +1,12 @@
+<%= ui_tabs(default_value: :overview, class: "w-full max-w-sm") do %>
+  <%= ui_tabs_list(class: "w-full") do %>
+    <%= ui_tabs_trigger(value: :overview) { "Visão geral" } %>
+    <%= ui_tabs_trigger(value: :analytics, disabled: true) { "Analytics" } %>
+  <% end %>
+  <%= ui_tabs_content(value: :overview, class: "rounded-md border p-4 text-sm") do %>
+    Triggers desabilitados ficam fora da navegação por teclado.
+  <% end %>
+  <%= ui_tabs_content(value: :analytics, class: "rounded-md border p-4 text-sm") do %>
+    Indisponível.
+  <% end %>
+<% end %>

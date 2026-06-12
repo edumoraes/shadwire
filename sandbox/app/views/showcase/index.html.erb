@@ -123,6 +123,19 @@
     <% end %>
   <% end %>
 
+  <%= ui_tabs(default_value: :preview, class_name: "max-w-md") do %>
+    <%= ui_tabs_list do %>
+      <%= ui_tabs_trigger(value: :preview) { "Preview" } %>
+      <%= ui_tabs_trigger(value: :code) { "Código" } %>
+    <% end %>
+    <%= ui_tabs_content(value: :preview, class: "rounded-md border p-4 text-sm") do %>
+      Painéis de tabs renderizam no servidor e alternam via Stimulus.
+    <% end %>
+    <%= ui_tabs_content(value: :code, class: "rounded-md border p-4 text-sm") do %>
+      <code>ui_tabs(default_value: :preview) { ... }</code>
+    <% end %>
+  <% end %>
+
   <%= ui_scroll_area(class: "h-32 max-w-md rounded-md border p-4") do %>
     <div class="flex flex-col gap-3 text-sm">
       <% 8.times do |index| %>
