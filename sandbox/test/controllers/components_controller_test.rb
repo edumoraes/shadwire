@@ -289,6 +289,17 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "open_delay"
   end
 
+  test "popover docs page renders examples and api" do
+    get components_popover_path
+
+    assert_response :success
+    assert_select "h1", text: "Popover"
+    assert_select "[data-controller='ui-popover'] button[data-slot='popover-trigger']", text: "Abrir dimensões"
+    assert_select "[role='dialog'][data-ui-popover-target='content'][hidden]"
+    assert_select "[data-slot='popover-content'].left-0" # align: :start example
+    assert_select "table td code", text: "align"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

@@ -880,6 +880,44 @@
           "target": "app/javascript/controllers/ui_tooltip_controller.js"
         }
       ]
+    },
+    {
+      "name": "popover",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/popover_component.rb",
+          "target": "app/components/ui/popover_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/popover/trigger_component.rb",
+          "target": "app/components/ui/popover/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/popover/content_component.rb",
+          "target": "app/components/ui/popover/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/button_component.rb",
+          "target": "app/components/ui/button_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_popover_controller.js",
+          "target": "app/javascript/controllers/ui_popover_controller.js"
+        }
+      ]
     }
   ]
 }

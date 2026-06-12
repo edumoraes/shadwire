@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   get "components/alert-dialog", to: "components#alert_dialog"
   get "components/sheet", to: "components#sheet"
   get "components/tooltip", to: "components#tooltip"
+  get "components/popover", to: "components#popover"
 
   # Defines the root path route ("/")
   root "showcase#index"

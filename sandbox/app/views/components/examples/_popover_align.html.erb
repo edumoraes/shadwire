@@ -1,0 +1,8 @@
+<% %i[start center end].each do |align| %>
+  <%= ui_popover do %>
+    <%= ui_popover_trigger(variant: :outline) { "align: #{align}" } %>
+    <%= ui_popover_content(side: :bottom, align: align, class: "w-48") do %>
+      <p class="text-sm">Alinhado a <strong><%= align %></strong> no eixo horizontal.</p>
+    <% end %>
+  <% end %>
+<% end %>

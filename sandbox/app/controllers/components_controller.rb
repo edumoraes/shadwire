@@ -707,6 +707,46 @@ class ComponentsController < ApplicationController
     @composition = TOOLTIP_COMPOSITION
   end
 
+  POPOVER_EXAMPLES = [
+    { name: "popover_default", title: "Padrão",
+      description: "Painel não-modal: abre no clique, foca o conteúdo e fecha por clique fora ou Esc." },
+    { name: "popover_align", title: "Alinhamento",
+      description: "align: :start, :center ou :end desloca o painel no eixo cruzado." }
+  ].freeze
+
+  POPOVER_USAGE_HELPER = <<~ERB
+    <%= ui_popover do %>
+      <%= ui_popover_trigger(variant: :outline) { "Abrir" } %>
+      <%= ui_popover_content do %>
+        Conteúdo do popover.
+      <% end %>
+    <% end %>
+  ERB
+
+  POPOVER_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::PopoverComponent.new do %>
+      <%= render Ui::Popover::TriggerComponent.new do %>
+        Abrir
+      <% end %>
+      <%= render Ui::Popover::ContentComponent.new(side: :bottom, align: :start) do %>
+        Conteúdo
+      <% end %>
+    <% end %>
+  ERB
+
+  POPOVER_COMPOSITION = <<~TEXT
+    Popover (data-controller="ui-popover", relative)
+    |-- Popover::Trigger (Button, aria-expanded)
+    `-- Popover::Content (absolute, side: + align:)
+  TEXT
+
+  def popover
+    @examples = POPOVER_EXAMPLES
+    @usage_helper = POPOVER_USAGE_HELPER
+    @usage_component = POPOVER_USAGE_COMPONENT
+    @composition = POPOVER_COMPOSITION
+  end
+
   def input
     @examples = INPUT_EXAMPLES
     @usage_helper = INPUT_USAGE_HELPER

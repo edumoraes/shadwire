@@ -128,6 +128,13 @@
     <%= ui_tooltip_content { "Tooltip de exemplo" } %>
   <% end %>
 
+  <%= ui_popover(class: "w-fit") do %>
+    <%= ui_popover_trigger(variant: :outline, size: :sm) { "Abrir popover" } %>
+    <%= ui_popover_content(class: "w-56") do %>
+      <p class="text-sm">Popover não-modal de exemplo.</p>
+    <% end %>
+  <% end %>
+
   <%= ui_sheet(class: "w-fit") do %>
     <%= ui_sheet_trigger(variant: :outline, size: :sm) { "Abrir sheet" } %>
     <%= ui_sheet_content do %>
