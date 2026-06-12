@@ -6,6 +6,8 @@ class SheetComponentTest < ApplicationSystemTestCase
   test "sheet slides in anchored to a side and closes by escape" do
     visit components_sheet_path
 
+    assert_no_selector "dialog[data-slot='sheet-content']"
+
     within "#example-sheet_default" do
       click_button "Abrir sheet"
     end
@@ -26,6 +28,7 @@ class SheetComponentTest < ApplicationSystemTestCase
     sheet.send_keys :escape
 
     assert_no_selector "dialog[open]"
+    assert_no_selector "dialog[data-slot='sheet-content']"
 
     within "#example-sheet_sides" do
       click_button "Base"
@@ -40,5 +43,6 @@ class SheetComponentTest < ApplicationSystemTestCase
     end
 
     assert_no_selector "dialog[open]"
+    assert_no_selector "dialog[data-slot='sheet-content']"
   end
 end

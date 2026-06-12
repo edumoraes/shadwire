@@ -6,20 +6,36 @@ The source of truth is `registry/`. The Rails app in `sandbox/` consumes copied 
 
 ## Components
 
-The MVP includes:
+The registry currently includes:
 
-- `Ui::ButtonComponent`
-- `Ui::BadgeComponent`
-- `Ui::CardComponent`
-- `Ui::Card::HeaderComponent`
-- `Ui::Card::TitleComponent`
-- `Ui::Card::DescriptionComponent`
-- `Ui::Card::ContentComponent`
-- `Ui::Card::FooterComponent`
+- `Ui::AccordionComponent`
 - `Ui::AlertComponent`
-- `Ui::SeparatorComponent`
+- `Ui::AlertDialogComponent`
 - `Ui::AvatarComponent`
+- `Ui::BadgeComponent`
+- `Ui::BreadcrumbComponent`
+- `Ui::ButtonComponent`
+- `Ui::CardComponent`
+- `Ui::CheckboxComponent`
+- `Ui::DialogComponent`
+- `Ui::DropdownMenuComponent`
 - `Ui::IconComponent`
+- `Ui::InputComponent`
+- `Ui::LabelComponent`
+- `Ui::PaginationComponent`
+- `Ui::PopoverComponent`
+- `Ui::ProgressComponent`
+- `Ui::RadioGroupComponent`
+- `Ui::ScrollAreaComponent`
+- `Ui::SelectComponent`
+- `Ui::SeparatorComponent`
+- `Ui::SheetComponent`
+- `Ui::SkeletonComponent`
+- `Ui::SwitchComponent`
+- `Ui::TableComponent`
+- `Ui::TabsComponent`
+- `Ui::TextareaComponent`
+- `Ui::TooltipComponent`
 
 Helpers use the `ui_*` prefix.
 

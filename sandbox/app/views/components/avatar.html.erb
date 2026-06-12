@@ -1,0 +1,57 @@
+<% content_for :title, "Avatar — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+  <header class="space-y-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-3xl font-bold tracking-tight">Avatar</h1>
+    <p class="text-lg text-muted-foreground">
+      Imagem circular de usuário com fallback textual.
+    </p>
+  </header>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <p class="text-sm text-muted-foreground">O item <code class="rounded bg-muted px-1 py-0.5 text-xs">avatar</code> instala estes arquivos:</p>
+    <ul class="space-y-1 text-sm">
+      <% %w[app/components/ui_component.rb app/components/ui/avatar_component.rb app/helpers/ui_helper.rb vendor/shadwire/shadwire.css].each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground"><%= ui_icon("file-code", size: :sm) %><code><%= path %></code></li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">Ou renderize <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::AvatarComponent</code> diretamente:</p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <p class="text-sm text-muted-foreground"><code class="rounded bg-muted px-1 py-0.5 text-xs">ui_avatar(**options, &block)</code> encapsula <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::AvatarComponent.new(**options)</code>.</p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50"><tr><th>Argumento</th><th>Tipo</th><th>Padrão</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td><code>src</code></td><td>String</td><td><code>nil</code></td><td>URL da imagem.</td></tr>
+          <tr><td><code>alt</code></td><td>String</td><td><code>""</code></td><td>Texto alternativo da imagem.</td></tr>
+          <tr><td><code>fallback</code></td><td>String</td><td><code>nil</code></td><td>Iniciais ou símbolo exibido quando não há imagem.</td></tr>
+          <tr><td><code>**attrs</code></td><td>Hash</td><td><code>{}</code></td><td>Atributos HTML livres no wrapper.</td></tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

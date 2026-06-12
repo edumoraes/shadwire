@@ -11,6 +11,12 @@ Rails.application.routes.draw do
 
   # Component documentation pages.
   get "components/button", to: "components#button"
+  get "components/badge", to: "components#badge"
+  get "components/card", to: "components#card"
+  get "components/alert", to: "components#alert"
+  get "components/separator", to: "components#separator"
+  get "components/avatar", to: "components#avatar"
+  get "components/icon", to: "components#icon"
   get "components/accordion", to: "components#accordion"
   get "components/scroll-area", to: "components#scroll_area"
   get "components/input", to: "components#input"

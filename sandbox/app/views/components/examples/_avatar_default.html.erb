@@ -1,0 +1,9 @@
+<div class="flex items-center gap-4">
+  <%= ui_avatar(
+        src: "https://i.pravatar.cc/96?img=12",
+        alt: "Eduardo Moraes",
+        fallback: "EM"
+      ) %>
+  <%= ui_avatar(fallback: "EM", aria: { label: "Eduardo Moraes" }) %>
+  <%= ui_avatar(fallback: "?", aria: { label: "Usuário anônimo" }) %>
+</div>

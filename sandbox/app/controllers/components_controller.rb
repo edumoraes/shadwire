@@ -40,6 +40,116 @@ class ComponentsController < ApplicationController
     <% end %>
   ERB
 
+  BADGE_EXAMPLES = [
+    { name: "badge_variants", title: "Variantes",
+      description: "Use variantes para indicar prioridade, estado ou categorias." }
+  ].freeze
+
+  BADGE_USAGE_HELPER = <<~ERB
+    <%= ui_badge { "Badge" } %>
+    <%= ui_badge(variant: :secondary) { "Secondary" } %>
+  ERB
+
+  BADGE_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::BadgeComponent.new(variant: :outline) do %>
+      Outline
+    <% end %>
+  ERB
+
+  CARD_EXAMPLES = [
+    { name: "card_default", title: "Padrão",
+      description: "Componha header, title, description, content e footer dentro do card." }
+  ].freeze
+
+  CARD_USAGE_HELPER = <<~ERB
+    <%= ui_card do %>
+      <%= ui_card_header do %>
+        <%= ui_card_title { "Criar projeto" } %>
+        <%= ui_card_description { "Configure o novo workspace." } %>
+      <% end %>
+      <%= ui_card_content { "Conteúdo do card." } %>
+    <% end %>
+  ERB
+
+  CARD_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::CardComponent.new do %>
+      <%= render Ui::Card::HeaderComponent.new do %>
+        <%= render Ui::Card::TitleComponent.new do %>
+          Criar projeto
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  CARD_COMPOSITION = <<~TEXT
+    Card
+    |-- Card::Header
+    |   |-- Card::Title
+    |   `-- Card::Description
+    |-- Card::Content
+    `-- Card::Footer
+  TEXT
+
+  ALERT_EXAMPLES = [
+    { name: "alert_default", title: "Padrão",
+      description: "Mensagem importante com role=\"alert\" por padrão." },
+    { name: "alert_destructive", title: "Destrutivo",
+      description: "Use para erros ou avisos de alta severidade." }
+  ].freeze
+
+  ALERT_USAGE_HELPER = <<~ERB
+    <%= ui_alert do %>
+      Heads up! Você pode adicionar componentes ao seu app.
+    <% end %>
+  ERB
+
+  ALERT_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::AlertComponent.new(variant: :destructive) do %>
+      Erro ao salvar alterações.
+    <% end %>
+  ERB
+
+  SEPARATOR_EXAMPLES = [
+    { name: "separator_default", title: "Orientações e decorativo",
+      description: "Separadores semânticos expõem aria-orientation; decorativos ficam ocultos da tecnologia assistiva." }
+  ].freeze
+
+  SEPARATOR_USAGE_HELPER = <<~ERB
+    <%= ui_separator %>
+    <%= ui_separator(orientation: :vertical, class: "h-5") %>
+  ERB
+
+  SEPARATOR_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::SeparatorComponent.new(decorative: true) %>
+  ERB
+
+  AVATAR_EXAMPLES = [
+    { name: "avatar_default", title: "Imagem, fallback e rótulo",
+      description: "Renderize uma imagem com fallback ou um fallback isolado para usuários sem foto." }
+  ].freeze
+
+  AVATAR_USAGE_HELPER = <<~ERB
+    <%= ui_avatar(src: "/avatar.png", alt: "Eduardo Moraes", fallback: "EM") %>
+  ERB
+
+  AVATAR_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::AvatarComponent.new(fallback: "EM", aria: { label: "Eduardo Moraes" }) %>
+  ERB
+
+  ICON_EXAMPLES = [
+    { name: "icon_default", title: "Decorativo e rotulado",
+      description: "Ícones são decorativos por padrão; passe label: quando o ícone carregar significado." }
+  ].freeze
+
+  ICON_USAGE_HELPER = <<~ERB
+    <%= ui_icon("download") %>
+    <%= ui_icon("bell", label: "Notificações") %>
+  ERB
+
+  ICON_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::IconComponent.new("download", size: :lg) %>
+  ERB
+
   ACCORDION_EXAMPLES = [
     { name: "accordion_basic", title: "Basic",
       description: "Um accordion simples que exibe um item por vez. O primeiro item começa aberto." },
@@ -216,6 +326,43 @@ class ComponentsController < ApplicationController
     @examples = BUTTON_EXAMPLES
     @usage_helper = USAGE_HELPER
     @usage_component = USAGE_COMPONENT
+  end
+
+  def badge
+    @examples = BADGE_EXAMPLES
+    @usage_helper = BADGE_USAGE_HELPER
+    @usage_component = BADGE_USAGE_COMPONENT
+  end
+
+  def card
+    @examples = CARD_EXAMPLES
+    @usage_helper = CARD_USAGE_HELPER
+    @usage_component = CARD_USAGE_COMPONENT
+    @composition = CARD_COMPOSITION
+  end
+
+  def alert
+    @examples = ALERT_EXAMPLES
+    @usage_helper = ALERT_USAGE_HELPER
+    @usage_component = ALERT_USAGE_COMPONENT
+  end
+
+  def separator
+    @examples = SEPARATOR_EXAMPLES
+    @usage_helper = SEPARATOR_USAGE_HELPER
+    @usage_component = SEPARATOR_USAGE_COMPONENT
+  end
+
+  def avatar
+    @examples = AVATAR_EXAMPLES
+    @usage_helper = AVATAR_USAGE_HELPER
+    @usage_component = AVATAR_USAGE_COMPONENT
+  end
+
+  def icon
+    @examples = ICON_EXAMPLES
+    @usage_helper = ICON_USAGE_HELPER
+    @usage_component = ICON_USAGE_COMPONENT
   end
 
   RADIO_GROUP_EXAMPLES = [

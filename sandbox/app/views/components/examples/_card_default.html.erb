@@ -1,0 +1,15 @@
+<%= ui_card(class: "max-w-sm", data: { slot: "card" }) do %>
+  <%= ui_card_header(data: { slot: "card-header" }) do %>
+    <%= ui_card_title(data: { slot: "card-title" }) { "Criar projeto" } %>
+    <%= ui_card_description(data: { slot: "card-description" }) do %>
+      Configure nome, visibilidade e membros iniciais.
+    <% end %>
+  <% end %>
+  <%= ui_card_content(data: { slot: "card-content" }) do %>
+    <p class="text-sm text-muted-foreground">Use cards para agrupar conteúdo e ações relacionadas.</p>
+  <% end %>
+  <%= ui_card_footer(class: "justify-end gap-2", data: { slot: "card-footer" }) do %>
+    <%= ui_button(variant: :outline, size: :sm) { "Cancelar" } %>
+    <%= ui_button(size: :sm) { "Criar" } %>
+  <% end %>
+<% end %>

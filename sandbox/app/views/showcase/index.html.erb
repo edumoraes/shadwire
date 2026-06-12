@@ -1,264 +1,50 @@
-<main class="mx-auto flex max-w-4xl flex-col gap-8 p-8">
-  <section class="flex flex-col gap-4">
+<section class="mx-auto flex w-full max-w-4xl flex-col gap-8 p-8">
+  <header class="flex flex-col gap-3">
     <h1 class="text-3xl font-bold tracking-normal">Shadwire</h1>
-    <p class="text-muted-foreground">Rails ViewComponent ports of shadcn/ui components.</p>
-    <div class="flex flex-wrap gap-2">
-      <%= ui_button(tag: :a, href: components_button_path, variant: :outline, size: :sm) do %>
-        Documentação do Button
-        <%= ui_icon("arrow-right") %>
-      <% end %>
-      <%= ui_button(tag: :a, href: components_accordion_path, variant: :outline, size: :sm) do %>
-        Documentação do Accordion
-        <%= ui_icon("arrow-right") %>
-      <% end %>
-      <%= ui_button(tag: :a, href: components_scroll_area_path, variant: :outline, size: :sm) do %>
-        Documentação do Scroll Area
-        <%= ui_icon("arrow-right") %>
-      <% end %>
-      <%= ui_button(tag: :a, href: components_input_path, variant: :outline, size: :sm) do %>
-        Documentação do Input
-        <%= ui_icon("arrow-right") %>
-      <% end %>
-      <%= ui_button(tag: :a, href: components_label_path, variant: :outline, size: :sm) do %>
-        Documentação do Label
-        <%= ui_icon("arrow-right") %>
-      <% end %>
-      <%= ui_button(tag: :a, href: components_textarea_path, variant: :outline, size: :sm) do %>
-        Documentação do Textarea
-        <%= ui_icon("arrow-right") %>
-      <% end %>
-    </div>
-  </section>
+    <p class="max-w-2xl text-muted-foreground">
+      Rails ViewComponent ports of shadcn/ui components. Use the links below to open each component's documentation page.
+    </p>
+  </header>
 
-  <section class="flex flex-wrap items-center gap-3">
-    <%= ui_button { "Default" } %>
-    <%= ui_button(variant: :outline) { "Outline" } %>
-    <%= ui_badge { "Badge" } %>
-    <%= ui_badge(variant: :secondary) { "Secondary" } %>
-  </section>
-
-  <section class="flex flex-wrap items-center gap-3">
-    <%= ui_button do %>
-      <%= ui_icon("download") %>
-      Baixar
-    <% end %>
-    <%= ui_button(variant: :outline) do %>
-      Avançar
-      <%= ui_icon("arrow-right") %>
-    <% end %>
-    <%= ui_button(size: :icon, variant: :secondary) do %>
-      <%= ui_icon("plus", label: "Adicionar item") %>
-    <% end %>
-    <%= ui_icon("circle-alert", size: :lg, class: "text-destructive") %>
-  </section>
-
-  <%= ui_breadcrumb do %>
-    <%= ui_breadcrumb_list do %>
-      <%= ui_breadcrumb_item do %>
-        <%= ui_breadcrumb_link(href: root_path) { "Início" } %>
+  <nav aria-label="Component documentation">
+    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <% [
+        [ "Accordion", components_accordion_path ],
+        [ "Alert", components_alert_path ],
+        [ "Alert Dialog", components_alert_dialog_path ],
+        [ "Avatar", components_avatar_path ],
+        [ "Badge", components_badge_path ],
+        [ "Breadcrumb", components_breadcrumb_path ],
+        [ "Button", components_button_path ],
+        [ "Card", components_card_path ],
+        [ "Checkbox", components_checkbox_path ],
+        [ "Dialog", components_dialog_path ],
+        [ "Dropdown Menu", components_dropdown_menu_path ],
+        [ "Icon", components_icon_path ],
+        [ "Input", components_input_path ],
+        [ "Label", components_label_path ],
+        [ "Pagination", components_pagination_path ],
+        [ "Popover", components_popover_path ],
+        [ "Progress", components_progress_path ],
+        [ "Radio Group", components_radio_group_path ],
+        [ "Scroll Area", components_scroll_area_path ],
+        [ "Select", components_select_path ],
+        [ "Separator", components_separator_path ],
+        [ "Sheet", components_sheet_path ],
+        [ "Skeleton", components_skeleton_path ],
+        [ "Switch", components_switch_path ],
+        [ "Table", components_table_path ],
+        [ "Tabs", components_tabs_path ],
+        [ "Textarea", components_textarea_path ],
+        [ "Tooltip", components_tooltip_path ]
+      ].each do |label, path| %>
+        <li>
+          <%= link_to path, class: "group flex items-center justify-between rounded-lg border bg-card px-4 py-3 text-sm font-medium text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
+            <span><%= label %></span>
+            <span aria-hidden="true" class="text-muted-foreground transition-transform group-hover:translate-x-0.5">→</span>
+          <% end %>
+        </li>
       <% end %>
-      <%= ui_breadcrumb_separator %>
-      <%= ui_breadcrumb_item do %>
-        <%= ui_breadcrumb_page { "Showcase" } %>
-      <% end %>
-    <% end %>
-  <% end %>
-
-  <section class="grid w-full max-w-md gap-4">
-    <div class="grid gap-2">
-      <%= ui_label(for: "showcase-email") { "Email" } %>
-      <%= ui_input(type: :email, id: "showcase-email", placeholder: "voce@exemplo.com") %>
-    </div>
-    <div class="grid gap-2">
-      <%= ui_label(for: "showcase-message") { "Mensagem" } %>
-      <%= ui_textarea(id: "showcase-message", placeholder: "Como podemos ajudar?") %>
-    </div>
-    <div class="flex items-center gap-2">
-      <%= ui_checkbox(id: "showcase-terms") %>
-      <%= ui_label(for: "showcase-terms") { "Aceito os termos" } %>
-    </div>
-    <%= ui_radio_group(aria: { label: "Tema preferido" }) do %>
-      <div class="flex items-center gap-2">
-        <%= ui_radio_group_item(name: "showcase-theme", value: "light", id: "showcase-theme-light", checked: true) %>
-        <%= ui_label(for: "showcase-theme-light") { "Claro" } %>
-      </div>
-      <div class="flex items-center gap-2">
-        <%= ui_radio_group_item(name: "showcase-theme", value: "dark", id: "showcase-theme-dark") %>
-        <%= ui_label(for: "showcase-theme-dark") { "Escuro" } %>
-      </div>
-    <% end %>
-    <div class="flex items-center gap-2">
-      <%= ui_switch(id: "showcase-notifications", checked: true) %>
-      <%= ui_label(for: "showcase-notifications") { "Notificações" } %>
-    </div>
-  </section>
-
-  <%= ui_separator %>
-
-  <%= ui_alert do %>
-    Components render through ViewComponent helpers and keep Rails HTML attributes.
-  <% end %>
-
-  <%= ui_card(class_name: "max-w-md") do %>
-    <%= ui_card_header do %>
-      <%= ui_card_title { "Card title" } %>
-      <%= ui_card_description { "Composed subcomponents match the shadcn structure." } %>
-    <% end %>
-    <%= ui_card_content do %>
-      <p>Card content is rendered as server-side HTML.</p>
-    <% end %>
-    <%= ui_card_footer do %>
-      <%= ui_button(size: :sm) { "Action" } %>
-    <% end %>
-  <% end %>
-
-  <%= ui_accordion(default_value: :overview, class_name: "max-w-md") do %>
-    <%= ui_accordion_item(value: :overview) do %>
-      <%= ui_accordion_header do %>
-        <%= ui_accordion_trigger { "Accordion item" } %>
-      <% end %>
-      <%= ui_accordion_content do %>
-        Accordion content renders with semantic disclosure markup.
-      <% end %>
-    <% end %>
-  <% end %>
-
-  <%= ui_tooltip do %>
-    <%= ui_tooltip_trigger(variant: :outline, size: :sm) { "Hover" } %>
-    <%= ui_tooltip_content { "Tooltip de exemplo" } %>
-  <% end %>
-
-  <%= ui_popover(class: "w-fit") do %>
-    <%= ui_popover_trigger(variant: :outline, size: :sm) { "Abrir popover" } %>
-    <%= ui_popover_content(class: "w-56") do %>
-      <p class="text-sm">Popover não-modal de exemplo.</p>
-    <% end %>
-  <% end %>
-
-  <%= ui_dropdown_menu do %>
-    <%= ui_dropdown_menu_trigger(variant: :outline, size: :sm) { "Menu" } %>
-    <%= ui_dropdown_menu_content(class: "w-48") do %>
-      <%= ui_dropdown_menu_item { "Perfil" } %>
-      <%= ui_dropdown_menu_item { "Configurações" } %>
-      <%= ui_dropdown_menu_separator %>
-      <%= ui_dropdown_menu_item(variant: :destructive) { "Sair" } %>
-    <% end %>
-  <% end %>
-
-  <%= ui_select(name: "showcase-fruit", placeholder: "Selecione uma fruta", class: "w-[200px]") do %>
-    <%= ui_select_trigger(class: "w-full") { ui_select_value } %>
-    <%= ui_select_content do %>
-      <%= ui_select_item(value: "apple") { "Maçã" } %>
-      <%= ui_select_item(value: "banana") { "Banana" } %>
-      <%= ui_select_item(value: "cherry") { "Cereja" } %>
-    <% end %>
-  <% end %>
-
-  <%= ui_sheet(class: "w-fit") do %>
-    <%= ui_sheet_trigger(variant: :outline, size: :sm) { "Abrir sheet" } %>
-    <%= ui_sheet_content do %>
-      <%= ui_sheet_header do %>
-        <%= ui_sheet_title { "Sheet de exemplo" } %>
-        <%= ui_sheet_description { "Painel lateral sobre o dialog nativo." } %>
-      <% end %>
-      <%= ui_sheet_footer do %>
-        <%= ui_sheet_close { "Fechar" } %>
-      <% end %>
-    <% end %>
-  <% end %>
-
-  <%= ui_alert_dialog(class: "w-fit") do %>
-    <%= ui_alert_dialog_trigger(variant: :destructive, size: :sm) { "Excluir registro" } %>
-    <%= ui_alert_dialog_content do %>
-      <%= ui_alert_dialog_header do %>
-        <%= ui_alert_dialog_title { "Excluir registro?" } %>
-        <%= ui_alert_dialog_description { "Esta ação não pode ser desfeita." } %>
-      <% end %>
-      <%= ui_alert_dialog_footer do %>
-        <%= ui_alert_dialog_cancel { "Cancelar" } %>
-        <%= ui_alert_dialog_action(variant: :destructive) { "Excluir" } %>
-      <% end %>
-    <% end %>
-  <% end %>
-
-  <%= ui_dialog(class: "w-fit") do %>
-    <%= ui_dialog_trigger(variant: :outline) { "Abrir diálogo" } %>
-    <%= ui_dialog_content do %>
-      <%= ui_dialog_header do %>
-        <%= ui_dialog_title { "Diálogo de exemplo" } %>
-        <%= ui_dialog_description { "Construído sobre o elemento dialog nativo." } %>
-      <% end %>
-      <%= ui_dialog_footer do %>
-        <%= ui_dialog_close { "Fechar" } %>
-      <% end %>
-    <% end %>
-  <% end %>
-
-  <%= ui_tabs(default_value: :preview, class_name: "max-w-md") do %>
-    <%= ui_tabs_list do %>
-      <%= ui_tabs_trigger(value: :preview) { "Preview" } %>
-      <%= ui_tabs_trigger(value: :code) { "Código" } %>
-    <% end %>
-    <%= ui_tabs_content(value: :preview, class: "rounded-md border p-4 text-sm") do %>
-      Painéis de tabs renderizam no servidor e alternam via Stimulus.
-    <% end %>
-    <%= ui_tabs_content(value: :code, class: "rounded-md border p-4 text-sm") do %>
-      <code>ui_tabs(default_value: :preview) { ... }</code>
-    <% end %>
-  <% end %>
-
-  <%= ui_scroll_area(class: "h-32 max-w-md rounded-md border p-4") do %>
-    <div class="flex flex-col gap-3 text-sm">
-      <% 8.times do |index| %>
-        <p>Scrollable row <%= index + 1 %> rendered through the Scroll Area helper.</p>
-      <% end %>
-    </div>
-  <% end %>
-
-  <%= ui_avatar(src: "https://i.pravatar.cc/96?img=12", alt: "Example user", fallback: "EU") %>
-
-  <div class="flex items-center gap-4">
-    <%= ui_skeleton(class: "size-10 rounded-full") %>
-    <div class="grid gap-2">
-      <%= ui_skeleton(class: "h-4 w-36") %>
-      <%= ui_skeleton(class: "h-4 w-24") %>
-    </div>
-  </div>
-
-  <%= ui_progress(value: 60, aria: { label: "Progresso de exemplo" }, class: "max-w-md") %>
-
-  <%= ui_pagination do %>
-    <%= ui_pagination_content do %>
-      <%= ui_pagination_item do %>
-        <%= ui_pagination_previous(href: "#") %>
-      <% end %>
-      <%= ui_pagination_item do %>
-        <%= ui_pagination_link(href: "#", active: true) { "1" } %>
-      <% end %>
-      <%= ui_pagination_item do %>
-        <%= ui_pagination_link(href: "#") { "2" } %>
-      <% end %>
-      <%= ui_pagination_item do %>
-        <%= ui_pagination_next(href: "#") %>
-      <% end %>
-    <% end %>
-  <% end %>
-
-  <div class="max-w-md">
-    <%= ui_table do %>
-      <%= ui_table_caption { "Faturas do mês" } %>
-      <%= ui_table_header do %>
-        <%= ui_table_row do %>
-          <%= ui_table_head(scope: "col") { "Fatura" } %>
-          <%= ui_table_head(scope: "col", class: "text-right") { "Valor" } %>
-        <% end %>
-      <% end %>
-      <%= ui_table_body do %>
-        <%= ui_table_row do %>
-          <%= ui_table_cell(class: "font-medium") { "INV001" } %>
-          <%= ui_table_cell(class: "text-right") { "R$ 250,00" } %>
-        <% end %>
-      <% end %>
-    <% end %>
-  </div>
-</main>
+    </ul>
+  </nav>
+</section>

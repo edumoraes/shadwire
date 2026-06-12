@@ -6,6 +6,8 @@ class DialogComponentTest < ApplicationSystemTestCase
   test "dialog opens as a modal, wires aria, and closes by escape, backdrop, and buttons" do
     visit components_dialog_path
 
+    assert_no_selector "dialog[data-slot='dialog-content']"
+
     within "#example-dialog_default" do
       click_button "Editar perfil"
     end
@@ -20,6 +22,7 @@ class DialogComponentTest < ApplicationSystemTestCase
     dialog.send_keys :escape
 
     assert_no_selector "dialog[open]"
+    assert_no_selector "dialog[data-slot='dialog-content']"
 
     within "#example-dialog_default" do
       assert_equal "Editar perfil", page.evaluate_script("document.activeElement.textContent").strip
@@ -33,6 +36,7 @@ class DialogComponentTest < ApplicationSystemTestCase
     JS
 
     assert_no_selector "dialog[open]"
+    assert_no_selector "dialog[data-slot='dialog-content']"
 
     within "#example-dialog_default" do
       click_button "Editar perfil"
@@ -43,6 +47,7 @@ class DialogComponentTest < ApplicationSystemTestCase
     end
 
     assert_no_selector "dialog[open]"
+    assert_no_selector "dialog[data-slot='dialog-content']"
   end
 
   test "dialog with close_on_backdrop false ignores outside clicks" do
@@ -65,5 +70,6 @@ class DialogComponentTest < ApplicationSystemTestCase
     end
 
     assert_no_selector "dialog[open]"
+    assert_no_selector "dialog[data-slot='dialog-content']"
   end
 end

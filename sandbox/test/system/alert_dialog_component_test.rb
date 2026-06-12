@@ -6,6 +6,8 @@ class AlertDialogComponentTest < ApplicationSystemTestCase
   test "alert dialog ignores escape and backdrop, closing only by explicit choice" do
     visit components_alert_dialog_path
 
+    assert_no_selector "dialog[data-slot='alert-dialog-content']"
+
     within "#example-alert_dialog_default" do
       click_button "Excluir conta"
     end
@@ -30,6 +32,7 @@ class AlertDialogComponentTest < ApplicationSystemTestCase
     end
 
     assert_no_selector "dialog[open]"
+    assert_no_selector "dialog[data-slot='alert-dialog-content']"
 
     within "#example-alert_dialog_default" do
       click_button "Excluir conta"
@@ -40,5 +43,6 @@ class AlertDialogComponentTest < ApplicationSystemTestCase
     end
 
     assert_no_selector "dialog[open]"
+    assert_no_selector "dialog[data-slot='alert-dialog-content']"
   end
 end

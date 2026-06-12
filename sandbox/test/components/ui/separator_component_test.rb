@@ -15,6 +15,19 @@ class SeparatorComponentTest < ViewComponent::TestCase
     assert_selector "div[role='separator'][aria-orientation='vertical'][data-orientation='vertical'].h-full.w-px.mx-2"
   end
 
+  def test_decorative_separator_is_hidden_from_assistive_technology
+    render_inline(Ui::SeparatorComponent.new(decorative: true))
+
+    assert_selector "div[role='none'][aria-hidden='true'][data-orientation='horizontal'].h-px.w-full"
+    assert_no_selector "div[aria-orientation]"
+  end
+
+  def test_decorative_vertical_separator
+    render_inline(Ui::SeparatorComponent.new(decorative: true, orientation: :vertical))
+
+    assert_selector "div[role='none'][aria-hidden='true'][data-orientation='vertical'].h-full.w-px"
+  end
+
   def test_merges_custom_data_and_aria_attributes
     render_inline(
       Ui::SeparatorComponent.new(

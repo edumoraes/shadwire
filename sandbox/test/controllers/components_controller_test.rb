@@ -50,6 +50,71 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "tag"
   end
 
+  test "badge docs page renders examples and api" do
+    get components_badge_path
+
+    assert_response :success
+    assert_select "h1", text: "Badge"
+    assert_select "span.bg-primary.text-primary-foreground", text: "Badge"
+    assert_select "span.bg-secondary", text: "Secondary"
+    assert_select "span.bg-destructive", text: "Destructive"
+    assert_select "span.border.border-input", text: "Outline"
+    assert_select "table td code", text: "variant"
+  end
+
+  test "card docs page renders examples and api" do
+    get components_card_path
+
+    assert_response :success
+    assert_select "h1", text: "Card"
+    assert_select "[data-slot='card'].bg-card"
+    assert_select "[data-slot='card-title']", text: "Criar projeto"
+    assert_select "[data-slot='card-footer'] button", text: "Criar"
+    assert_select "table td code", text: "ui_card_header"
+  end
+
+  test "alert docs page renders examples and api" do
+    get components_alert_path
+
+    assert_response :success
+    assert_select "h1", text: "Alert"
+    assert_select "div[role='alert'].bg-background", text: /Heads up/
+    assert_select "div[role='alert'].text-destructive", text: /Erro ao salvar/
+    assert_select "table td code", text: "variant"
+  end
+
+  test "separator docs page renders examples and api" do
+    get components_separator_path
+
+    assert_response :success
+    assert_select "h1", text: "Separator"
+    assert_select "div[role='separator'][aria-orientation='horizontal'][data-orientation='horizontal']"
+    assert_select "div[role='separator'][aria-orientation='vertical'][data-orientation='vertical']"
+    assert_select "div[role='none'][aria-hidden='true'][data-orientation='horizontal']"
+    assert_select "table td code", text: "decorative"
+  end
+
+  test "avatar docs page renders examples and api" do
+    get components_avatar_path
+
+    assert_response :success
+    assert_select "h1", text: "Avatar"
+    assert_select "span.relative.flex img[alt='Eduardo Moraes']"
+    assert_select "span.relative.flex span", text: "EM"
+    assert_select "span[aria-label='Usuário anônimo'] span", text: "?"
+    assert_select "table td code", text: "fallback"
+  end
+
+  test "icon docs page renders examples and api" do
+    get components_icon_path
+
+    assert_response :success
+    assert_select "h1", text: "Icon"
+    assert_select "section#example-icon_default svg[aria-hidden='true']"
+    assert_select "svg[role='img'][aria-label='Notificações']"
+    assert_select "table td code", text: "label"
+  end
+
   test "accordion docs page renders with heading and description" do
     get components_accordion_path
 
@@ -324,6 +389,46 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "[role='listbox'] [role='group'] [data-slot='select-label']", text: "América do Norte"
     assert_select "[role='listbox'] [role='option'][data-disabled][data-value='cet']", text: /CET/
     assert_select "table td code", text: "placeholder"
+  end
+
+  test "showcase links every component docs page" do
+    get root_path
+
+    assert_response :success
+    assert_select "nav[aria-label='Component documentation']"
+
+    [
+      [ "Accordion", components_accordion_path ],
+      [ "Alert", components_alert_path ],
+      [ "Alert Dialog", components_alert_dialog_path ],
+      [ "Avatar", components_avatar_path ],
+      [ "Badge", components_badge_path ],
+      [ "Breadcrumb", components_breadcrumb_path ],
+      [ "Button", components_button_path ],
+      [ "Card", components_card_path ],
+      [ "Checkbox", components_checkbox_path ],
+      [ "Dialog", components_dialog_path ],
+      [ "Dropdown Menu", components_dropdown_menu_path ],
+      [ "Icon", components_icon_path ],
+      [ "Input", components_input_path ],
+      [ "Label", components_label_path ],
+      [ "Pagination", components_pagination_path ],
+      [ "Popover", components_popover_path ],
+      [ "Progress", components_progress_path ],
+      [ "Radio Group", components_radio_group_path ],
+      [ "Scroll Area", components_scroll_area_path ],
+      [ "Select", components_select_path ],
+      [ "Separator", components_separator_path ],
+      [ "Sheet", components_sheet_path ],
+      [ "Skeleton", components_skeleton_path ],
+      [ "Switch", components_switch_path ],
+      [ "Table", components_table_path ],
+      [ "Tabs", components_tabs_path ],
+      [ "Textarea", components_textarea_path ],
+      [ "Tooltip", components_tooltip_path ]
+    ].each do |label, path|
+      assert_select "a[href='#{path}']", text: /#{Regexp.escape(label)}/
+    end
   end
 
   test "long code examples are collapsible and keep copy controls" do

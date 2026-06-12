@@ -9,6 +9,7 @@ module Ui
 
     def initialize(orientation: :horizontal, decorative: nil, class_name: nil, **attrs)
       @orientation = orientation_value(orientation)
+      @decorative = decorative == true
       @attrs = attrs
       @class_name = extract_class_name(@attrs, class_name)
     end
@@ -20,9 +21,23 @@ module Ui
     private
 
     def separator_attrs
-      html_attrs.dup.merge(role: "separator", class: separator_classes).tap do |attrs|
-        attrs[:aria] = (attrs[:aria] || {}).dup.merge(orientation: @orientation)
+      html_attrs.dup.merge(role: separator_role, class: separator_classes).tap do |attrs|
+        attrs[:aria] = separator_aria_attrs(attrs[:aria])
         attrs[:data] = (attrs[:data] || {}).dup.merge(orientation: @orientation)
+      end
+    end
+
+    def separator_role
+      @decorative ? "none" : "separator"
+    end
+
+    def separator_aria_attrs(aria_attrs)
+      aria_attrs = (aria_attrs || {}).dup
+
+      if @decorative
+        aria_attrs.except(:orientation, "orientation").merge(hidden: true)
+      else
+        aria_attrs.merge(orientation: @orientation)
       end
     end
 
