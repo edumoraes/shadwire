@@ -718,6 +718,68 @@
           "target": "app/javascript/controllers/ui_dialog_controller.js"
         }
       ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert_dialog_component.rb",
+          "target": "app/components/ui/alert_dialog_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert_dialog/trigger_component.rb",
+          "target": "app/components/ui/alert_dialog/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert_dialog/content_component.rb",
+          "target": "app/components/ui/alert_dialog/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert_dialog/header_component.rb",
+          "target": "app/components/ui/alert_dialog/header_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert_dialog/footer_component.rb",
+          "target": "app/components/ui/alert_dialog/footer_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert_dialog/title_component.rb",
+          "target": "app/components/ui/alert_dialog/title_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert_dialog/description_component.rb",
+          "target": "app/components/ui/alert_dialog/description_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert_dialog/action_component.rb",
+          "target": "app/components/ui/alert_dialog/action_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert_dialog/cancel_component.rb",
+          "target": "app/components/ui/alert_dialog/cancel_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/button_component.rb",
+          "target": "app/components/ui/button_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_dialog_controller.js",
+          "target": "app/javascript/controllers/ui_dialog_controller.js"
+        }
+      ]
     }
   ]
 }

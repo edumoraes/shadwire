@@ -123,6 +123,20 @@
     <% end %>
   <% end %>
 
+  <%= ui_alert_dialog(class: "w-fit") do %>
+    <%= ui_alert_dialog_trigger(variant: :destructive, size: :sm) { "Excluir registro" } %>
+    <%= ui_alert_dialog_content do %>
+      <%= ui_alert_dialog_header do %>
+        <%= ui_alert_dialog_title { "Excluir registro?" } %>
+        <%= ui_alert_dialog_description { "Esta ação não pode ser desfeita." } %>
+      <% end %>
+      <%= ui_alert_dialog_footer do %>
+        <%= ui_alert_dialog_cancel { "Cancelar" } %>
+        <%= ui_alert_dialog_action(variant: :destructive) { "Excluir" } %>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <%= ui_dialog(class: "w-fit") do %>
     <%= ui_dialog_trigger(variant: :outline) { "Abrir diálogo" } %>
     <%= ui_dialog_content do %>

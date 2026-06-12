@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   get "components/pagination", to: "components#pagination"
   get "components/tabs", to: "components#tabs"
   get "components/dialog", to: "components#dialog"
+  get "components/alert-dialog", to: "components#alert_dialog"
 
   # Defines the root path route ("/")
   root "showcase#index"

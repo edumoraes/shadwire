@@ -1,0 +1,16 @@
+<%= ui_alert_dialog do %>
+  <%= ui_alert_dialog_trigger(variant: :destructive) { "Excluir conta" } %>
+  <%= ui_alert_dialog_content do %>
+    <%= ui_alert_dialog_header do %>
+      <%= ui_alert_dialog_title { "Tem certeza absoluta?" } %>
+      <%= ui_alert_dialog_description do %>
+        Esta ação não pode ser desfeita. Sua conta e seus dados serão removidos
+        permanentemente dos nossos servidores.
+      <% end %>
+    <% end %>
+    <%= ui_alert_dialog_footer do %>
+      <%= ui_alert_dialog_cancel { "Cancelar" } %>
+      <%= ui_alert_dialog_action { "Continuar" } %>
+    <% end %>
+  <% end %>
+<% end %>

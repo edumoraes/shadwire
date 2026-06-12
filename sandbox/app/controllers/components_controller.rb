@@ -563,11 +563,60 @@ class ComponentsController < ApplicationController
     @composition = TABS_COMPOSITION
   end
 
+  ALERT_DIALOG_EXAMPLES = [
+    { name: "alert_dialog_default", title: "Confirmação de exclusão",
+      description: "Backdrop e Esc não fecham — a pessoa precisa escolher Cancelar ou Continuar." }
+  ].freeze
+
+  ALERT_DIALOG_USAGE_HELPER = <<~ERB
+    <%= ui_alert_dialog do %>
+      <%= ui_alert_dialog_trigger(variant: :destructive) { "Excluir" } %>
+      <%= ui_alert_dialog_content do %>
+        <%= ui_alert_dialog_header do %>
+          <%= ui_alert_dialog_title { "Tem certeza?" } %>
+          <%= ui_alert_dialog_description { "Esta ação não pode ser desfeita." } %>
+        <% end %>
+        <%= ui_alert_dialog_footer do %>
+          <%= ui_alert_dialog_cancel { "Cancelar" } %>
+          <%= ui_alert_dialog_action { "Continuar" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  ALERT_DIALOG_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::AlertDialogComponent.new do %>
+      <%= render Ui::AlertDialog::TriggerComponent.new do %>
+        Excluir
+      <% end %>
+      <%= render Ui::AlertDialog::ContentComponent.new do %>
+        <%= render Ui::AlertDialog::TitleComponent.new do %>
+          Tem certeza?
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  ALERT_DIALOG_COMPOSITION = <<~TEXT
+    AlertDialog (ui-dialog com backdrop/Esc desativados)
+    |-- AlertDialog::Trigger (Button)
+    `-- AlertDialog::Content (<dialog role="alertdialog">, sem X)
+        |-- AlertDialog::Header > AlertDialog::Title + AlertDialog::Description
+        `-- AlertDialog::Footer > AlertDialog::Cancel + AlertDialog::Action
+  TEXT
+
   def dialog
     @examples = DIALOG_EXAMPLES
     @usage_helper = DIALOG_USAGE_HELPER
     @usage_component = DIALOG_USAGE_COMPONENT
     @composition = DIALOG_COMPOSITION
+  end
+
+  def alert_dialog
+    @examples = ALERT_DIALOG_EXAMPLES
+    @usage_helper = ALERT_DIALOG_USAGE_HELPER
+    @usage_component = ALERT_DIALOG_USAGE_COMPONENT
+    @composition = ALERT_DIALOG_COMPOSITION
   end
 
   def input

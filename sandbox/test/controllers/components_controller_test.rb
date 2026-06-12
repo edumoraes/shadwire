@@ -254,6 +254,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "close_on_backdrop"
   end
 
+  test "alert dialog docs page renders examples and api" do
+    get components_alert_dialog_path
+
+    assert_response :success
+    assert_select "h1", text: "Alert Dialog"
+    assert_select "[data-ui-dialog-close-on-backdrop-value='false'][data-ui-dialog-close-on-escape-value='false']"
+    assert_select "dialog[role='alertdialog'] h2[data-slot='alert-dialog-title']", text: "Tem certeza absoluta?"
+    assert_select "[data-slot='alert-dialog-cancel']", text: "Cancelar"
+    assert_select "[data-slot='alert-dialog-action']", text: "Continuar"
+    assert_select "table td code", text: "AlertDialog::Cancel"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 
