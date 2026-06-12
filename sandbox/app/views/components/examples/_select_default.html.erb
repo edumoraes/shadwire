@@ -1,0 +1,12 @@
+<%= ui_select(name: "fruit", placeholder: "Selecione uma fruta", class: "w-[200px]") do %>
+  <%= ui_select_trigger(class: "w-full") do %>
+    <%= ui_select_value %>
+  <% end %>
+  <%= ui_select_content do %>
+    <%= ui_select_item(value: "apple") { "Maçã" } %>
+    <%= ui_select_item(value: "banana") { "Banana" } %>
+    <%= ui_select_item(value: "blueberry") { "Mirtilo" } %>
+    <%= ui_select_item(value: "grapes") { "Uvas" } %>
+    <%= ui_select_item(value: "pineapple") { "Abacaxi" } %>
+  <% end %>
+<% end %>

@@ -976,6 +976,64 @@
           "target": "app/javascript/controllers/ui_dropdown_menu_controller.js"
         }
       ]
+    },
+    {
+      "name": "select",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/select_component.rb",
+          "target": "app/components/ui/select_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/select/trigger_component.rb",
+          "target": "app/components/ui/select/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/select/value_component.rb",
+          "target": "app/components/ui/select/value_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/select/content_component.rb",
+          "target": "app/components/ui/select/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/select/item_component.rb",
+          "target": "app/components/ui/select/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/select/group_component.rb",
+          "target": "app/components/ui/select/group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/select/label_component.rb",
+          "target": "app/components/ui/select/label_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/select/separator_component.rb",
+          "target": "app/components/ui/select/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/icon_component.rb",
+          "target": "app/components/ui/icon_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_select_controller.js",
+          "target": "app/javascript/controllers/ui_select_controller.js"
+        }
+      ]
     }
   ]
 }

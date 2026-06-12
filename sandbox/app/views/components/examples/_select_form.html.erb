@@ -1,0 +1,18 @@
+<%= form_with url: "#", scope: :profile do |form| %>
+  <div class="grid w-[240px] gap-2">
+    <%= ui_label(for: "profile-role-trigger") { "Função" } %>
+    <%= ui_select(name: form.field_name(:role), value: "member", placeholder: "Selecione", class: "w-full") do %>
+      <%= ui_select_trigger(id: "profile-role-trigger", class: "w-full") do %>
+        <%= ui_select_value %>
+      <% end %>
+      <%= ui_select_content do %>
+        <%= ui_select_item(value: "admin") { "Administrador" } %>
+        <%= ui_select_item(value: "member") { "Membro" } %>
+        <%= ui_select_item(value: "guest") { "Convidado" } %>
+      <% end %>
+    <% end %>
+    <p class="text-sm text-muted-foreground">
+      O valor é submetido por um input hidden — valide no servidor.
+    </p>
+  </div>
+<% end %>

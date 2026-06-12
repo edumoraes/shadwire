@@ -1,0 +1,19 @@
+<%= ui_select(name: "timezone", value: "est", placeholder: "Selecione um fuso", class: "w-[240px]") do %>
+  <%= ui_select_trigger(class: "w-full") do %>
+    <%= ui_select_value %>
+  <% end %>
+  <%= ui_select_content do %>
+    <%= ui_select_group do %>
+      <%= ui_select_label { "América do Norte" } %>
+      <%= ui_select_item(value: "est") { "Horário do Leste (EST)" } %>
+      <%= ui_select_item(value: "cst") { "Horário Central (CST)" } %>
+      <%= ui_select_item(value: "pst") { "Horário do Pacífico (PST)" } %>
+    <% end %>
+    <%= ui_select_separator %>
+    <%= ui_select_group do %>
+      <%= ui_select_label { "Europa" } %>
+      <%= ui_select_item(value: "gmt") { "Greenwich (GMT)" } %>
+      <%= ui_select_item(value: "cet", disabled: true) { "Europa Central (CET)" } %>
+    <% end %>
+  <% end %>
+<% end %>

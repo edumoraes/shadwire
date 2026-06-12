@@ -145,6 +145,15 @@
     <% end %>
   <% end %>
 
+  <%= ui_select(name: "showcase-fruit", placeholder: "Selecione uma fruta", class: "w-[200px]") do %>
+    <%= ui_select_trigger(class: "w-full") { ui_select_value } %>
+    <%= ui_select_content do %>
+      <%= ui_select_item(value: "apple") { "Maçã" } %>
+      <%= ui_select_item(value: "banana") { "Banana" } %>
+      <%= ui_select_item(value: "cherry") { "Cereja" } %>
+    <% end %>
+  <% end %>
+
   <%= ui_sheet(class: "w-fit") do %>
     <%= ui_sheet_trigger(variant: :outline, size: :sm) { "Abrir sheet" } %>
     <%= ui_sheet_content do %>

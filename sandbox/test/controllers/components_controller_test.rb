@@ -313,6 +313,19 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "inset"
   end
 
+  test "select docs page renders examples and api" do
+    get components_select_path
+
+    assert_response :success
+    assert_select "h1", text: "Select"
+    assert_select "[data-controller='ui-select'] button[role='combobox'][data-slot='select-trigger']"
+    assert_select "input[type='hidden'][name='fruit']"
+    assert_select "[role='listbox'] [role='option'][data-value='banana']", text: "Banana"
+    assert_select "[role='listbox'] [role='group'] [data-slot='select-label']", text: "América do Norte"
+    assert_select "[role='listbox'] [role='option'][data-disabled][data-value='cet']", text: /CET/
+    assert_select "table td code", text: "placeholder"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

@@ -801,6 +801,53 @@ class ComponentsController < ApplicationController
     @composition = DROPDOWN_MENU_COMPOSITION
   end
 
+  SELECT_EXAMPLES = [
+    { name: "select_default", title: "Padrão",
+      description: "Combobox APG: o foco fica no gatilho, setas/typeahead navegam e a opção ativa usa aria-activedescendant." },
+    { name: "select_groups", title: "Grupos",
+      description: "Agrupe opções com label e separador; itens podem ser desabilitados." },
+    { name: "select_form", title: "Com form_with",
+      description: "O valor vai num input hidden (name:). O required nativo não se aplica — valide no servidor." }
+  ].freeze
+
+  SELECT_USAGE_HELPER = <<~ERB
+    <%= ui_select(name: "fruit", placeholder: "Selecione") do %>
+      <%= ui_select_trigger { ui_select_value } %>
+      <%= ui_select_content do %>
+        <%= ui_select_item(value: "apple") { "Maçã" } %>
+        <%= ui_select_item(value: "banana") { "Banana" } %>
+      <% end %>
+    <% end %>
+  ERB
+
+  SELECT_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::SelectComponent.new(name: "fruit", value: "banana") do %>
+      <%= render Ui::Select::TriggerComponent.new do %>
+        <%= render Ui::Select::ValueComponent.new %>
+      <% end %>
+      <%= render Ui::Select::ContentComponent.new do %>
+        <%= render Ui::Select::ItemComponent.new(value: "banana") do %>
+          Banana
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  SELECT_COMPOSITION = <<~TEXT
+    Select (data-controller="ui-select", hidden input)
+    |-- Select::Trigger (role="combobox") > Select::Value + chevron
+    `-- Select::Content (role="listbox")
+        `-- Select::Group > Select::Label + Select::Item (role="option")
+            Select::Separator
+  TEXT
+
+  def select
+    @examples = SELECT_EXAMPLES
+    @usage_helper = SELECT_USAGE_HELPER
+    @usage_component = SELECT_USAGE_COMPONENT
+    @composition = SELECT_COMPOSITION
+  end
+
   def input
     @examples = INPUT_EXAMPLES
     @usage_helper = INPUT_USAGE_HELPER
