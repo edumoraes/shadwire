@@ -39,6 +39,8 @@
   --radius-xl: calc(var(--radius) + 4px);
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-dialog-in: dialog-in 0.15s ease-out;
+  --animate-dialog-out: dialog-out 0.15s ease-in;
 }
 
 @keyframes accordion-down {
@@ -56,6 +58,37 @@
   }
   to {
     height: 0;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes dialog-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -200,4 +233,15 @@
   left: 0;
   border-right: 1px solid transparent;
   border-left: 0;
+}
+
+/* The ::backdrop pseudo-element cannot be styled with Tailwind utilities. */
+dialog[data-slot="dialog-content"]::backdrop,
+dialog[data-slot="alert-dialog-content"]::backdrop,
+dialog[data-slot="sheet-content"]::backdrop {
+  background-color: oklch(0 0 0 / 0.5);
+}
+
+dialog[data-state="open"]::backdrop {
+  animation: overlay-in 0.15s ease-out;
 }

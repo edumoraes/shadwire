@@ -1,0 +1,16 @@
+<%= ui_dialog do %>
+  <%= ui_dialog_trigger(variant: :outline) { "Compartilhar link" } %>
+  <%= ui_dialog_content(show_close_button: false, class: "sm:max-w-md") do %>
+    <%= ui_dialog_header do %>
+      <%= ui_dialog_title { "Compartilhar" } %>
+      <%= ui_dialog_description { "Qualquer pessoa com este link poderá visualizar." } %>
+    <% end %>
+    <div class="flex items-center gap-2">
+      <%= ui_input(value: "https://shadwire.dev/docs", readonly: true, aria: { label: "Link" }) %>
+      <%= ui_button(variant: :secondary) { "Copiar" } %>
+    </div>
+    <%= ui_dialog_footer do %>
+      <%= ui_dialog_close(variant: :secondary) { "Fechar" } %>
+    <% end %>
+  <% end %>
+<% end %>

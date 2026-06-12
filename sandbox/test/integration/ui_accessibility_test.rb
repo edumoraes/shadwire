@@ -47,5 +47,8 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "[data-slot='tabs'][data-controller='ui-tabs'][data-ui-tabs-default-value-value='preview']"
     assert_select "[role='tablist'] button[type='button'][role='tab'][data-ui-tabs-value='preview']", text: "Preview"
     assert_select "[role='tabpanel'][tabindex='0'][hidden][data-ui-tabs-value='code']"
+    assert_select "[data-slot='dialog'][data-controller='ui-dialog']"
+    assert_select "button[aria-haspopup='dialog'][data-slot='dialog-trigger']", text: "Abrir diálogo"
+    assert_select "dialog[data-slot='dialog-content'][data-ui-dialog-target='dialog'] h2[data-slot='dialog-title']"
   end
 end

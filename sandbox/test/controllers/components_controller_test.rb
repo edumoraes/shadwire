@@ -242,6 +242,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "default_value"
   end
 
+  test "dialog docs page renders examples and api" do
+    get components_dialog_path
+
+    assert_response :success
+    assert_select "h1", text: "Dialog"
+    assert_select "[data-controller='ui-dialog'] button[aria-haspopup='dialog']", text: "Editar perfil"
+    assert_select "dialog[data-slot='dialog-content'] h2[data-slot='dialog-title']", text: "Editar perfil"
+    assert_select "[data-ui-dialog-close-on-backdrop-value='false']"
+    assert_select "dialog [data-slot='dialog-close-x'] span.sr-only", text: "Fechar"
+    assert_select "table td code", text: "close_on_backdrop"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

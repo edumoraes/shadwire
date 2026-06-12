@@ -1,0 +1,12 @@
+<%= ui_dialog(close_on_backdrop: false) do %>
+  <%= ui_dialog_trigger(variant: :outline) { "Sem fechar pelo backdrop" } %>
+  <%= ui_dialog_content do %>
+    <%= ui_dialog_header do %>
+      <%= ui_dialog_title { "Atenção" } %>
+      <%= ui_dialog_description { "Clicar fora não fecha este diálogo — use o X, Esc ou o botão abaixo." } %>
+    <% end %>
+    <%= ui_dialog_footer do %>
+      <%= ui_dialog_close { "Entendi" } %>
+    <% end %>
+  <% end %>
+<% end %>

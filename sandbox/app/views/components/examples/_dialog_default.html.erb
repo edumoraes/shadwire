@@ -1,0 +1,23 @@
+<%= ui_dialog do %>
+  <%= ui_dialog_trigger(variant: :outline) { "Editar perfil" } %>
+  <%= ui_dialog_content(class: "sm:max-w-md") do %>
+    <%= ui_dialog_header do %>
+      <%= ui_dialog_title { "Editar perfil" } %>
+      <%= ui_dialog_description { "Faça alterações no seu perfil e salve quando terminar." } %>
+    <% end %>
+    <div class="grid gap-4">
+      <div class="grid gap-2">
+        <%= ui_label(for: "dialog-profile-name") { "Nome" } %>
+        <%= ui_input(id: "dialog-profile-name", value: "Eduardo de Moraes") %>
+      </div>
+      <div class="grid gap-2">
+        <%= ui_label(for: "dialog-profile-username") { "Usuário" } %>
+        <%= ui_input(id: "dialog-profile-username", value: "@edu") %>
+      </div>
+    </div>
+    <%= ui_dialog_footer do %>
+      <%= ui_dialog_close { "Cancelar" } %>
+      <%= ui_button { "Salvar alterações" } %>
+    <% end %>
+  <% end %>
+<% end %>

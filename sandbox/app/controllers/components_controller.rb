@@ -511,11 +511,63 @@ class ComponentsController < ApplicationController
     @composition = PAGINATION_COMPOSITION
   end
 
+  DIALOG_EXAMPLES = [
+    { name: "dialog_default", title: "Padrão",
+      description: "Formulário de perfil em um <dialog> nativo: focus trap, Esc e restauração de foco vêm do navegador." },
+    { name: "dialog_no_backdrop_close", title: "Sem fechar pelo backdrop",
+      description: "close_on_backdrop: false ignora cliques fora do painel." },
+    { name: "dialog_custom_close", title: "Footer custom",
+      description: "show_close_button: false remove o X; componha seus próprios botões com ui_dialog_close." }
+  ].freeze
+
+  DIALOG_USAGE_HELPER = <<~ERB
+    <%= ui_dialog do %>
+      <%= ui_dialog_trigger(variant: :outline) { "Abrir" } %>
+      <%= ui_dialog_content do %>
+        <%= ui_dialog_header do %>
+          <%= ui_dialog_title { "Título" } %>
+          <%= ui_dialog_description { "Descrição do diálogo." } %>
+        <% end %>
+        <%= ui_dialog_footer do %>
+          <%= ui_dialog_close { "Cancelar" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  DIALOG_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::DialogComponent.new do %>
+      <%= render Ui::Dialog::TriggerComponent.new do %>
+        Abrir
+      <% end %>
+      <%= render Ui::Dialog::ContentComponent.new do %>
+        <%= render Ui::Dialog::TitleComponent.new do %>
+          Título
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  DIALOG_COMPOSITION = <<~TEXT
+    Dialog (data-controller="ui-dialog")
+    |-- Dialog::Trigger (Button que chama showModal)
+    `-- Dialog::Content (<dialog> nativo)
+        |-- Dialog::Header > Dialog::Title + Dialog::Description
+        `-- Dialog::Footer > Dialog::Close (Button)
+  TEXT
+
   def tabs
     @examples = TABS_EXAMPLES
     @usage_helper = TABS_USAGE_HELPER
     @usage_component = TABS_USAGE_COMPONENT
     @composition = TABS_COMPOSITION
+  end
+
+  def dialog
+    @examples = DIALOG_EXAMPLES
+    @usage_helper = DIALOG_USAGE_HELPER
+    @usage_component = DIALOG_USAGE_COMPONENT
+    @composition = DIALOG_COMPOSITION
   end
 
   def input

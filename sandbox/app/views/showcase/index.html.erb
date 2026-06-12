@@ -123,6 +123,19 @@
     <% end %>
   <% end %>
 
+  <%= ui_dialog(class: "w-fit") do %>
+    <%= ui_dialog_trigger(variant: :outline) { "Abrir diálogo" } %>
+    <%= ui_dialog_content do %>
+      <%= ui_dialog_header do %>
+        <%= ui_dialog_title { "Diálogo de exemplo" } %>
+        <%= ui_dialog_description { "Construído sobre o elemento dialog nativo." } %>
+      <% end %>
+      <%= ui_dialog_footer do %>
+        <%= ui_dialog_close { "Fechar" } %>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <%= ui_tabs(default_value: :preview, class_name: "max-w-md") do %>
     <%= ui_tabs_list do %>
       <%= ui_tabs_trigger(value: :preview) { "Preview" } %>
