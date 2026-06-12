@@ -60,5 +60,8 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
     assert_select "[data-slot='popover'][data-controller='ui-popover']"
     assert_select "button[data-slot='popover-trigger'][aria-haspopup='dialog'][aria-expanded='false']", text: "Abrir popover"
     assert_select "[role='dialog'][hidden][data-ui-popover-target='content']"
+    assert_select "[data-slot='dropdown-menu'][data-controller='ui-dropdown-menu']"
+    assert_select "button[data-slot='dropdown-menu-trigger'][aria-haspopup='menu'][aria-expanded='false']", text: "Menu"
+    assert_select "[role='menu'][hidden] button[role='menuitem']", text: "Perfil"
   end
 end

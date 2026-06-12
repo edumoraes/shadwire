@@ -135,6 +135,16 @@
     <% end %>
   <% end %>
 
+  <%= ui_dropdown_menu do %>
+    <%= ui_dropdown_menu_trigger(variant: :outline, size: :sm) { "Menu" } %>
+    <%= ui_dropdown_menu_content(class: "w-48") do %>
+      <%= ui_dropdown_menu_item { "Perfil" } %>
+      <%= ui_dropdown_menu_item { "Configurações" } %>
+      <%= ui_dropdown_menu_separator %>
+      <%= ui_dropdown_menu_item(variant: :destructive) { "Sair" } %>
+    <% end %>
+  <% end %>
+
   <%= ui_sheet(class: "w-fit") do %>
     <%= ui_sheet_trigger(variant: :outline, size: :sm) { "Abrir sheet" } %>
     <%= ui_sheet_content do %>

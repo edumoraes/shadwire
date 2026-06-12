@@ -300,6 +300,19 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "align"
   end
 
+  test "dropdown menu docs page renders examples and api" do
+    get components_dropdown_menu_path
+
+    assert_response :success
+    assert_select "h1", text: "Dropdown Menu"
+    assert_select "[data-controller='ui-dropdown-menu'] button[aria-haspopup='menu']", text: "Abrir"
+    assert_select "[role='menu'] [data-slot='dropdown-menu-label']", text: "Minha conta"
+    assert_select "[role='menu'] button[role='menuitem'][data-disabled]", text: "Indisponível"
+    assert_select "[role='menu'] a[role='menuitem'][href='#docs']", text: "Documentação"
+    assert_select "[role='menu'] button[data-variant='destructive']", text: /Excluir/
+    assert_select "table td code", text: "inset"
+  end
+
   test "long code examples are collapsible and keep copy controls" do
     get components_scroll_area_path
 

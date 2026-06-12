@@ -747,6 +747,60 @@ class ComponentsController < ApplicationController
     @composition = POPOVER_COMPOSITION
   end
 
+  DROPDOWN_MENU_EXAMPLES = [
+    { name: "dropdown_menu_default", title: "Padrão",
+      description: "Label, grupos, itens com atalhos. Setas navegam, typeahead busca por prefixo, Esc fecha." },
+    { name: "dropdown_menu_variants", title: "Inset, links e destrutivo",
+      description: "inset: alinha com itens que têm ícone; tag: :a vira link; variant: :destructive destaca ações perigosas." }
+  ].freeze
+
+  DROPDOWN_MENU_USAGE_HELPER = <<~ERB
+    <%= ui_dropdown_menu do %>
+      <%= ui_dropdown_menu_trigger(variant: :outline) { "Abrir" } %>
+      <%= ui_dropdown_menu_content do %>
+        <%= ui_dropdown_menu_label { "Minha conta" } %>
+        <%= ui_dropdown_menu_separator %>
+        <%= ui_dropdown_menu_item do %>
+          Perfil
+          <%= ui_dropdown_menu_shortcut { "⇧⌘P" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  DROPDOWN_MENU_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::DropdownMenuComponent.new do %>
+      <%= render Ui::DropdownMenu::TriggerComponent.new do %>
+        Abrir
+      <% end %>
+      <%= render Ui::DropdownMenu::ContentComponent.new do %>
+        <%= render Ui::DropdownMenu::ItemComponent.new(variant: :destructive) do %>
+          Excluir
+        <% end %>
+      <% end %>
+    <% end %>
+  ERB
+
+  DROPDOWN_MENU_COMPOSITION = <<~TEXT
+    DropdownMenu (data-controller="ui-dropdown-menu")
+    |-- DropdownMenu::Trigger (Button, aria-haspopup="menu")
+    `-- DropdownMenu::Content (role="menu")
+        |-- DropdownMenu::Label
+        |-- DropdownMenu::Separator
+        |-- DropdownMenu::Group
+        |   `-- DropdownMenu::Item (button/link) > DropdownMenu::Shortcut
+        `-- DropdownMenu::Item (variant: :destructive)
+
+    CheckboxItem, RadioItem e submenus ficam de fora desta versão.
+  TEXT
+
+  def dropdown_menu
+    @examples = DROPDOWN_MENU_EXAMPLES
+    @usage_helper = DROPDOWN_MENU_USAGE_HELPER
+    @usage_component = DROPDOWN_MENU_USAGE_COMPONENT
+    @composition = DROPDOWN_MENU_COMPOSITION
+  end
+
   def input
     @examples = INPUT_EXAMPLES
     @usage_helper = INPUT_USAGE_HELPER

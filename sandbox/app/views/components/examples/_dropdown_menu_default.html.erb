@@ -1,0 +1,17 @@
+<%= ui_dropdown_menu do %>
+  <%= ui_dropdown_menu_trigger(variant: :outline) { "Abrir" } %>
+  <%= ui_dropdown_menu_content(class: "w-56") do %>
+    <%= ui_dropdown_menu_label { "Minha conta" } %>
+    <%= ui_dropdown_menu_separator %>
+    <%= ui_dropdown_menu_group do %>
+      <%= ui_dropdown_menu_item do %>
+        Perfil
+        <%= ui_dropdown_menu_shortcut { "⇧⌘P" } %>
+      <% end %>
+      <%= ui_dropdown_menu_item do %>
+        Configurações
+        <%= ui_dropdown_menu_shortcut { "⌘," } %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

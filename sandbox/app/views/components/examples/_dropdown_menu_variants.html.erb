@@ -1,0 +1,15 @@
+<%= ui_dropdown_menu do %>
+  <%= ui_dropdown_menu_trigger(variant: :outline) { "Ações" } %>
+  <%= ui_dropdown_menu_content(class: "w-56") do %>
+    <%= ui_dropdown_menu_label(inset: true) { "Aplicação" } %>
+    <%= ui_dropdown_menu_item(inset: true) { "Duplicar" } %>
+    <%= ui_dropdown_menu_item(disabled: true, inset: true) { "Indisponível" } %>
+    <%= ui_dropdown_menu_separator %>
+    <%= ui_dropdown_menu_item(tag: :a, href: "#docs", inset: true) { "Documentação" } %>
+    <%= ui_dropdown_menu_separator %>
+    <%= ui_dropdown_menu_item(variant: :destructive) do %>
+      <%= ui_icon("trash-2") %>
+      Excluir
+    <% end %>
+  <% end %>
+<% end %>

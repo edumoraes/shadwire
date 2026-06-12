@@ -1,0 +1,125 @@
+<% content_for :title, "Dropdown Menu — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+  <header class="space-y-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-3xl font-bold tracking-tight">Dropdown Menu</h1>
+    <p class="text-lg text-muted-foreground">
+      Um menu de ações ou opções disparado por um botão.
+    </p>
+  </header>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <p class="text-sm text-muted-foreground">
+      O item
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">dropdown-menu</code> do
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">registry.json</code>
+      instala estes arquivos:
+    </p>
+    <ul class="space-y-1 text-sm">
+      <% %w[
+        app/components/ui_component.rb
+        app/components/ui/dropdown_menu_component.rb
+        app/components/ui/dropdown_menu/trigger_component.rb
+        app/components/ui/dropdown_menu/content_component.rb
+        app/components/ui/dropdown_menu/item_component.rb
+        app/components/ui/dropdown_menu/label_component.rb
+        app/components/ui/dropdown_menu/separator_component.rb
+        app/components/ui/dropdown_menu/group_component.rb
+        app/components/ui/dropdown_menu/shortcut_component.rb
+        app/components/ui/button_component.rb
+        app/helpers/ui_helper.rb
+        app/javascript/controllers/ui_dropdown_menu_controller.js
+        vendor/shadwire/shadwire.css
+      ].each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground">
+          <%= ui_icon("file-code", size: :sm) %>
+          <code><%= path %></code>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <p class="text-sm text-muted-foreground">
+      O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dropdown-menu</code>
+      implementa o padrão WAI-ARIA de menu: foco rotativo entre os itens,
+      <kbd class="rounded bg-muted px-1 text-xs">↑</kbd>/<kbd class="rounded bg-muted px-1 text-xs">↓</kbd> com wrap,
+      <kbd class="rounded bg-muted px-1 text-xs">Home</kbd>/<kbd class="rounded bg-muted px-1 text-xs">End</kbd>,
+      busca por digitação (typeahead) e fechamento por
+      <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>, Tab ou clique fora.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Ou renderize os componentes diretamente:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composição</h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <p class="text-sm text-muted-foreground">
+      Todas as partes aceitam <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Componente</th>
+            <th>Argumento</th>
+            <th>Padrão</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>DropdownMenu::Content</code></td>
+            <td><code>side</code>, <code>align</code></td>
+            <td><code>:bottom</code>, <code>:start</code></td>
+            <td>Posicionamento do menu por utilitários.</td>
+          </tr>
+          <tr>
+            <td><code>DropdownMenu::Item</code></td>
+            <td><code>variant</code></td>
+            <td><code>:default</code></td>
+            <td><code>:destructive</code> destaca ações perigosas.</td>
+          </tr>
+          <tr>
+            <td><code>DropdownMenu::Item</code></td>
+            <td><code>inset</code>, <code>disabled</code></td>
+            <td><code>false</code></td>
+            <td>Recuo para alinhar com ícones; desabilitado é pulado na navegação.</td>
+          </tr>
+          <tr>
+            <td><code>DropdownMenu::Item</code></td>
+            <td><code>tag</code></td>
+            <td><code>:button</code></td>
+            <td>Use <code>:a</code> com <code>href</code> para itens de link.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

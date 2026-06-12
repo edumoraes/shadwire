@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get "components/sheet", to: "components#sheet"
   get "components/tooltip", to: "components#tooltip"
   get "components/popover", to: "components#popover"
+  get "components/dropdown-menu", to: "components#dropdown_menu"
 
   # Defines the root path route ("/")
   root "showcase#index"
