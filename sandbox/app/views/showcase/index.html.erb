@@ -6,6 +6,13 @@
     </p>
   </header>
 
+  <nav aria-label="Blocks">
+    <%= link_to blocks_path, class: "group flex items-center justify-between rounded-lg border bg-card px-4 py-3 text-sm font-medium text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
+      <span class="flex items-center gap-2"><%= ui_icon("layout-dashboard", size: :sm) %>Blocks — composições prontas (ex.: sidebar-01)</span>
+      <span aria-hidden="true" class="text-muted-foreground transition-transform group-hover:translate-x-0.5">→</span>
+    <% end %>
+  </nav>
+
   <nav aria-label="Component documentation">
     <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
       <% [
@@ -31,6 +38,7 @@
         [ "Select", components_select_path ],
         [ "Separator", components_separator_path ],
         [ "Sheet", components_sheet_path ],
+        [ "Sidebar", components_sidebar_path ],
         [ "Skeleton", components_skeleton_path ],
         [ "Switch", components_switch_path ],
         [ "Table", components_table_path ],

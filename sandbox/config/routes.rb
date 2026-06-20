@@ -38,6 +38,11 @@ Rails.application.routes.draw do
   get "components/popover", to: "components#popover"
   get "components/dropdown-menu", to: "components#dropdown_menu"
   get "components/select", to: "components#select"
+  get "components/sidebar", to: "components#sidebar"
+
+  # Block documentation pages (composed, full-page layouts).
+  get "blocks", to: "blocks#index"
+  get "blocks/sidebar-01", to: "blocks#sidebar_01", as: :blocks_sidebar_01
 
   # Defines the root path route ("/")
   root "showcase#index"
