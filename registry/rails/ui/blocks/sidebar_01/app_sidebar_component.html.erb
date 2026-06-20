@@ -1,0 +1,25 @@
+<%= ui_sidebar(**sidebar_attrs) do %>
+  <%= ui_sidebar_header do %>
+    <%= render Ui::Blocks::Sidebar01::VersionSwitcherComponent.new(versions: versions, default_version: default_version) %>
+    <%= render Ui::Blocks::Sidebar01::SearchFormComponent.new %>
+  <% end %>
+
+  <%= ui_sidebar_content do %>
+    <% nav_main.each do |group| %>
+      <%= ui_sidebar_group do %>
+        <%= ui_sidebar_group_label { group[:title] } %>
+        <%= ui_sidebar_group_content do %>
+          <%= ui_sidebar_menu do %>
+            <% group[:items].each do |item| %>
+              <%= ui_sidebar_menu_item do %>
+                <%= ui_sidebar_menu_button(tag: :a, href: item[:url], is_active: item[:active]) { item[:title] } %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= ui_sidebar_rail %>
+<% end %>

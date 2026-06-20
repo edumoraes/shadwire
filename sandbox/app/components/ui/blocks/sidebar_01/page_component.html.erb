@@ -1,0 +1,30 @@
+<%= ui_sidebar_provider do %>
+  <%= render Ui::Blocks::Sidebar01::AppSidebarComponent.new %>
+
+  <%= ui_sidebar_inset do %>
+    <header class="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+      <%= ui_sidebar_trigger(class: "-ml-1") %>
+      <%= ui_separator(orientation: :vertical, class: "mr-2 h-4") %>
+      <%= ui_breadcrumb do %>
+        <%= ui_breadcrumb_list do %>
+          <%= ui_breadcrumb_item(class: "hidden md:block") do %>
+            <%= ui_breadcrumb_link(href: "#") { "Building Your Application" } %>
+          <% end %>
+          <%= ui_breadcrumb_separator(class: "hidden md:block") %>
+          <%= ui_breadcrumb_item do %>
+            <%= ui_breadcrumb_page { "Data Fetching" } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </header>
+
+    <div class="flex flex-1 flex-col gap-4 p-4">
+      <div class="grid auto-rows-min gap-4 md:grid-cols-3">
+        <div class="bg-muted/50 aspect-video rounded-xl"></div>
+        <div class="bg-muted/50 aspect-video rounded-xl"></div>
+        <div class="bg-muted/50 aspect-video rounded-xl"></div>
+      </div>
+      <div class="bg-muted/50 min-h-[100vh] flex-1 rounded-xl md:min-h-min"></div>
+    </div>
+  <% end %>
+<% end %>

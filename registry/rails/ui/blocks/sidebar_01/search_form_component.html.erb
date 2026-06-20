@@ -1,0 +1,9 @@
+<%= tag.form(role: "search") do %>
+  <%= ui_sidebar_group(class: "py-0") do %>
+    <div class="relative">
+      <%= ui_label(for: "sidebar-search", class: "sr-only") { "Search" } %>
+      <%= ui_sidebar_input(id: "sidebar-search", placeholder: "Search the docs...", class: "pl-8") %>
+      <%= ui_icon("search", class: "pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 opacity-50 select-none") %>
+    </div>
+  <% end %>
+<% end %>
