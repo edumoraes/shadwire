@@ -391,6 +391,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "placeholder"
   end
 
+  test "sidebar docs page renders preview usage and api" do
+    get components_sidebar_path
+
+    assert_response :success
+    assert_select "h1", text: "Sidebar"
+    assert_select "section#example-sidebar_basic [data-slot='sidebar'].bg-sidebar"
+    assert_select "section#example-sidebar_basic [data-slot='sidebar-menu-button'][data-active='true']"
+    assert_select "a[href='#{blocks_sidebar_01_path}']"
+    assert_select "code", text: "ui_sidebar_provider"
+    assert_select "table td code", text: "ui_sidebar_menu_button"
+  end
+
   test "showcase links every component docs page" do
     get root_path
 
