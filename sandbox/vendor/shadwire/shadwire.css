@@ -353,3 +353,14 @@ dialog[data-slot="sheet-content"]::backdrop {
 dialog[data-state="open"]::backdrop {
   animation: overlay-in 0.15s ease-out;
 }
+
+/* Sidebar menu-button tooltips surface only while the sidebar is collapsed to
+   icons. The ui-tooltip controller still toggles [hidden] on hover/focus, so
+   the gate keeps the content hidden in every other state. */
+[data-slot="sidebar-menu-button-tooltip-content"] {
+  display: none;
+}
+
+[data-collapsible="icon"] [data-slot="sidebar-menu-button-tooltip-content"]:not([hidden]) {
+  display: block;
+}
