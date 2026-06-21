@@ -3,21 +3,21 @@
   <%= tag.style rouge_stylesheet %>
 <% end %>
 
-<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+<article class="mx-auto w-full max-w-3xl space-y-12 px-5 py-12">
   <header class="space-y-3">
-    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+    <%= link_to components_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
       <%= ui_icon("arrow-left", size: :sm) %>
       Componentes
     <% end %>
-    <h1 class="text-3xl font-bold tracking-tight">Dialog</h1>
-    <p class="text-lg text-muted-foreground">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Dialog</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
       Uma janela sobreposta à página principal, construída sobre o elemento
       <code class="rounded bg-muted px-1 py-0.5 text-xs">&lt;dialog&gt;</code> nativo.
     </p>
   </header>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Instalação</h2>
     <p class="text-sm text-muted-foreground">
       O item
       <code class="rounded bg-muted px-1 py-0.5 text-xs">dialog</code> do
@@ -50,7 +50,7 @@
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>
     <p class="text-sm text-muted-foreground">
       <code class="rounded bg-muted px-1 py-0.5 text-xs">showModal()</code> entrega
       focus trap, top layer, <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd> e
@@ -66,19 +66,19 @@
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composição</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Composição</h2>
     <%= docs_code_block(@composition) %>
   </section>
 
   <section class="space-y-8">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Exemplos</h2>
     <% @examples.each do |example| %>
       <%= render "components/example", **example %>
     <% end %>
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Referência da API</h2>
     <p class="text-sm text-muted-foreground">
       Todas as partes aceitam <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e

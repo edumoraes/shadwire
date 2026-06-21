@@ -1034,6 +1034,181 @@
           "target": "app/javascript/controllers/ui_select_controller.js"
         }
       ]
+    },
+    {
+      "name": "sidebar",
+      "type": "component",
+      "registryDependencies": [
+        "button",
+        "separator",
+        "input",
+        "skeleton",
+        "tooltip",
+        "icon"
+      ],
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar_component.rb",
+          "target": "app/components/ui/sidebar_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/provider_component.rb",
+          "target": "app/components/ui/sidebar/provider_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/trigger_component.rb",
+          "target": "app/components/ui/sidebar/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/rail_component.rb",
+          "target": "app/components/ui/sidebar/rail_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/inset_component.rb",
+          "target": "app/components/ui/sidebar/inset_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/input_component.rb",
+          "target": "app/components/ui/sidebar/input_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/header_component.rb",
+          "target": "app/components/ui/sidebar/header_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/footer_component.rb",
+          "target": "app/components/ui/sidebar/footer_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/separator_component.rb",
+          "target": "app/components/ui/sidebar/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/content_component.rb",
+          "target": "app/components/ui/sidebar/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/group_component.rb",
+          "target": "app/components/ui/sidebar/group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/group_label_component.rb",
+          "target": "app/components/ui/sidebar/group_label_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/group_action_component.rb",
+          "target": "app/components/ui/sidebar/group_action_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/group_content_component.rb",
+          "target": "app/components/ui/sidebar/group_content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/menu_component.rb",
+          "target": "app/components/ui/sidebar/menu_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/menu_item_component.rb",
+          "target": "app/components/ui/sidebar/menu_item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/menu_button_component.rb",
+          "target": "app/components/ui/sidebar/menu_button_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/menu_action_component.rb",
+          "target": "app/components/ui/sidebar/menu_action_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/menu_badge_component.rb",
+          "target": "app/components/ui/sidebar/menu_badge_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/menu_skeleton_component.rb",
+          "target": "app/components/ui/sidebar/menu_skeleton_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/menu_sub_component.rb",
+          "target": "app/components/ui/sidebar/menu_sub_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/menu_sub_item_component.rb",
+          "target": "app/components/ui/sidebar/menu_sub_item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/sidebar/menu_sub_button_component.rb",
+          "target": "app/components/ui/sidebar/menu_sub_button_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_sidebar_controller.js",
+          "target": "app/javascript/controllers/ui_sidebar_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "sidebar-01",
+      "type": "block",
+      "registryDependencies": [
+        "sidebar",
+        "breadcrumb",
+        "separator",
+        "label",
+        "dropdown-menu"
+      ],
+      "files": [
+        {
+          "source": "registry/rails/ui/blocks/sidebar_01/page_component.rb",
+          "target": "app/components/ui/blocks/sidebar_01/page_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/blocks/sidebar_01/page_component.html.erb",
+          "target": "app/components/ui/blocks/sidebar_01/page_component.html.erb"
+        },
+        {
+          "source": "registry/rails/ui/blocks/sidebar_01/app_sidebar_component.rb",
+          "target": "app/components/ui/blocks/sidebar_01/app_sidebar_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/blocks/sidebar_01/app_sidebar_component.html.erb",
+          "target": "app/components/ui/blocks/sidebar_01/app_sidebar_component.html.erb"
+        },
+        {
+          "source": "registry/rails/ui/blocks/sidebar_01/version_switcher_component.rb",
+          "target": "app/components/ui/blocks/sidebar_01/version_switcher_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/blocks/sidebar_01/version_switcher_component.html.erb",
+          "target": "app/components/ui/blocks/sidebar_01/version_switcher_component.html.erb"
+        },
+        {
+          "source": "registry/rails/ui/blocks/sidebar_01/search_form_component.rb",
+          "target": "app/components/ui/blocks/sidebar_01/search_form_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/blocks/sidebar_01/search_form_component.html.erb",
+          "target": "app/components/ui/blocks/sidebar_01/search_form_component.html.erb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
     }
   ]
 }

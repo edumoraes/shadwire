@@ -3,20 +3,20 @@
   <%= tag.style rouge_stylesheet %>
 <% end %>
 
-<article class="mx-auto flex w-full max-w-3xl flex-col gap-12 pb-16">
+<article class="mx-auto flex w-full max-w-3xl flex-col gap-12 px-5 py-12">
   <header class="flex flex-col gap-3">
-    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+    <%= link_to components_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
       <%= ui_icon("arrow-left", size: :sm) %>
       Componentes
     <% end %>
-    <h1 class="text-3xl font-bold tracking-tight">Accordion</h1>
-    <p class="text-lg text-muted-foreground">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Accordion</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
       Um conjunto vertical de cabeçalhos interativos que revelam seções de conteúdo.
     </p>
   </header>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Instalação</h2>
     <p class="text-sm text-muted-foreground">
       Como no shadcn/ui, o componente é copiado para a aplicação como código aberto.
       O item <code class="rounded bg-muted px-1 py-0.5 text-xs">accordion</code>
@@ -44,7 +44,7 @@
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>
     <p class="text-sm text-muted-foreground">
       Use a composição <code class="rounded bg-muted px-1 py-0.5 text-xs">Root > Item > Header > Trigger + Content</code>.
       O helper <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion</code>
@@ -58,7 +58,7 @@
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composição</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Composição</h2>
     <p class="text-sm text-muted-foreground">
       A anatomia segue a referência Base UI usada pelo shadcn: item, cabeçalho,
       trigger e painel de conteúdo. <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion_panel</code>
@@ -68,14 +68,14 @@
   </section>
 
   <section class="flex flex-col gap-8">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Exemplos</h2>
     <% @examples.each do |example| %>
       <%= render "components/example", **example %>
     <% end %>
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Referência da API</h2>
     <p class="text-sm text-muted-foreground">
       Os helpers encapsulam os componentes ViewComponent e preservam atributos HTML livres,
       incluindo <code class="rounded bg-muted px-1 py-0.5 text-xs">data:</code> e

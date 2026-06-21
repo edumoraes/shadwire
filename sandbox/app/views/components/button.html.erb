@@ -3,20 +3,20 @@
   <%= tag.style rouge_stylesheet %>
 <% end %>
 
-<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+<article class="mx-auto w-full max-w-3xl space-y-12 px-5 py-12">
   <header class="space-y-3">
-    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+    <%= link_to components_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
       <%= ui_icon("arrow-left", size: :sm) %>
       Componentes
     <% end %>
-    <h1 class="text-3xl font-bold tracking-tight">Button</h1>
-    <p class="text-lg text-muted-foreground">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Button</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
       Exibe um botão ou um elemento que se parece com um botão.
     </p>
   </header>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Instalação</h2>
     <p class="text-sm text-muted-foreground">
       O Shadwire segue o modelo <em>open-code</em> do shadcn/ui: você copia o
       código-fonte do componente para a sua aplicação e passa a ser dono dele. A
@@ -41,7 +41,7 @@
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>
     <p class="text-sm text-muted-foreground">
       Use o helper <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_button</code>
       em qualquer view — ele aceita os mesmos argumentos do componente.
@@ -56,14 +56,14 @@
   </section>
 
   <section class="space-y-8">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Exemplos</h2>
     <% @examples.each do |example| %>
       <%= render "components/example", **example %>
     <% end %>
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Referência da API</h2>
     <p class="text-sm text-muted-foreground">
       <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_button(**options, &block)</code>
       encapsula

@@ -2,6 +2,10 @@
 
 # Serves the component documentation pages of the sandbox.
 class ComponentsController < ApplicationController
+  # Catálogo e páginas de documentação compartilham o mesmo shell de navegação
+  # (header e footer) definido pelo layout "home".
+  layout "home"
+
   BUTTON_EXAMPLES = [
     { name: "default", title: "Padrão",
       description: "A variante padrão, usada para a ação primária da tela." },
@@ -1028,5 +1032,71 @@ class ComponentsController < ApplicationController
     @composition = SCROLL_AREA_COMPOSITION
     @usage_horizontal = SCROLL_AREA_USAGE_HORIZONTAL
     @rtl_usage = SCROLL_AREA_RTL
+  end
+
+  SIDEBAR_EXAMPLES = [
+    { name: "sidebar_basic", title: "Preview",
+      description: "Um sidebar contido (collapsible: :none) com header, grupos e menu. " \
+                   "O bloco completo, com colapso e drawer mobile, está em /blocks/sidebar-01." }
+  ].freeze
+
+  SIDEBAR_USAGE_HELPER = <<~ERB
+    <%= ui_sidebar_provider do %>
+      <%= ui_sidebar do %>
+        <%= ui_sidebar_content do %>
+          <%= ui_sidebar_group do %>
+            <%= ui_sidebar_group_label { "Aplicação" } %>
+            <%= ui_sidebar_group_content do %>
+              <%= ui_sidebar_menu do %>
+                <%= ui_sidebar_menu_item do %>
+                  <%= ui_sidebar_menu_button(tag: :a, href: "#", is_active: true) { "Início" } %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+        <%= ui_sidebar_rail %>
+      <% end %>
+      <%= ui_sidebar_inset do %>
+        <%= ui_sidebar_trigger %>
+      <% end %>
+    <% end %>
+  ERB
+
+  SIDEBAR_USAGE_COMPONENT = <<~ERB
+    <%= render Ui::Sidebar::ProviderComponent.new do %>
+      <%= render Ui::SidebarComponent.new(collapsible: :icon) do %>
+        <%= render Ui::Sidebar::ContentComponent.new do %>
+          <%= render Ui::Sidebar::MenuComponent.new do %>
+            <%= render Ui::Sidebar::MenuItemComponent.new do %>
+              <%= render Ui::Sidebar::MenuButtonComponent.new(tooltip: "Início") { "Início" } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <%= render Ui::Sidebar::InsetComponent.new do %>
+        <%= render Ui::Sidebar::TriggerComponent.new %>
+      <% end %>
+    <% end %>
+  ERB
+
+  SIDEBAR_COMPOSITION = <<~TEXT
+    Sidebar::Provider (data-controller="ui-sidebar"; define as larguras via CSS vars)
+    |-- Sidebar (peer/group; data-state/collapsible/side/variant/mobile)
+    |   |-- Sidebar::Header  (ex.: switcher + Sidebar::Input)
+    |   |-- Sidebar::Content
+    |   |   `-- Sidebar::Group > Sidebar::GroupLabel + Sidebar::GroupContent
+    |   |       `-- Sidebar::Menu > Sidebar::MenuItem
+    |   |           > Sidebar::MenuButton (+ MenuAction / MenuBadge / MenuSub)
+    |   |-- Sidebar::Footer
+    |   `-- Sidebar::Rail
+    `-- Sidebar::Inset (Sidebar::Trigger abre/fecha; Cmd/Ctrl+B alterna)
+  TEXT
+
+  def sidebar
+    @examples = SIDEBAR_EXAMPLES
+    @usage_helper = SIDEBAR_USAGE_HELPER
+    @usage_component = SIDEBAR_USAGE_COMPONENT
+    @composition = SIDEBAR_COMPOSITION
   end
 end

@@ -1,0 +1,36 @@
+<% content_for :title, "Blocks — Shadwire" %>
+
+<section class="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 py-16">
+  <header class="flex flex-col gap-3">
+    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Início
+    <% end %>
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Blocks</h1>
+    <p class="max-w-2xl text-lg leading-snug text-muted-foreground">
+      Composições prontas a partir dos componentes do Shadwire — portadas dos
+      <a href="https://ui.shadcn.com/blocks" class="font-medium underline underline-offset-4">blocks do shadcn/ui</a>.
+    </p>
+  </header>
+
+  <ul class="flex flex-col gap-10">
+    <% @blocks.each do |block| %>
+      <li class="flex flex-col gap-3">
+        <div class="flex flex-wrap items-end justify-between gap-2">
+          <div class="space-y-1">
+            <h2 class="text-2xl font-bold tracking-[-0.01em] leading-tight"><%= block[:title] %></h2>
+            <p class="text-sm text-muted-foreground"><%= block[:description] %></p>
+          </div>
+          <%= link_to "Abrir em tela cheia", send(block[:path_helper]),
+                class: "inline-flex items-center gap-1 rounded-md border bg-card px-3 py-1.5 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground" %>
+        </div>
+        <div class="overflow-hidden rounded-xl border bg-background shadow-sm">
+          <iframe src="<%= send(block[:path_helper]) %>"
+                  title="<%= block[:title] %> preview"
+                  loading="lazy"
+                  class="h-[520px] w-full"></iframe>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</section>

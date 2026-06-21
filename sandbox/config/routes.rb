@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Component documentation pages.
+  # Component catalog index and documentation pages.
+  get "components", to: "components#index"
   get "components/button", to: "components#button"
   get "components/badge", to: "components#badge"
   get "components/card", to: "components#card"
@@ -38,6 +39,11 @@ Rails.application.routes.draw do
   get "components/popover", to: "components#popover"
   get "components/dropdown-menu", to: "components#dropdown_menu"
   get "components/select", to: "components#select"
+  get "components/sidebar", to: "components#sidebar"
+
+  # Block documentation pages (composed, full-page layouts).
+  get "blocks", to: "blocks#index"
+  get "blocks/sidebar-01", to: "blocks#sidebar_01", as: :blocks_sidebar_01
 
   # Defines the root path route ("/")
   root "showcase#index"

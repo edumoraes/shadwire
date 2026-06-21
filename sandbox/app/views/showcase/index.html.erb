@@ -1,50 +1,149 @@
-<section class="mx-auto flex w-full max-w-4xl flex-col gap-8 p-8">
-  <header class="flex flex-col gap-3">
-    <h1 class="text-3xl font-bold tracking-normal">Shadwire</h1>
-    <p class="max-w-2xl text-muted-foreground">
-      Rails ViewComponent ports of shadcn/ui components. Use the links below to open each component's documentation page.
-    </p>
-  </header>
+<% content_for :title, "Shadwire — componentes shadcn/ui para Ruby on Rails" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
 
-  <nav aria-label="Component documentation">
-    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+<%# 1. Hero %>
+<section class="border-b border-border/60">
+  <div class="mx-auto max-w-6xl px-5 py-20 text-center sm:py-28">
+    <%= ui_badge(variant: :secondary, class: "mb-6") do %>
+      <%= ui_icon("sparkles", size: :sm) %>v0.2.0 · Rails + ViewComponent
+    <% end %>
+    <h1 class="mx-auto max-w-4xl text-balance text-5xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-6xl lg:text-7xl">
+      Componentes shadcn/ui que viram <span class="text-primary">código seu</span>
+    </h1>
+    <p class="mx-auto mt-6 max-w-2xl text-balance text-xl leading-[1.2] tracking-[-0.006em] text-muted-foreground sm:text-2xl">
+      Shadwire porta o modelo <strong class="font-medium text-foreground">Open Code</strong> do
+      shadcn/ui para o Ruby on Rails: código de componentes ViewComponent aberto e copiável,
+      que seu app instala e passa a possuir — sem nenhuma gem em runtime.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <%= ui_button(tag: :a, href: components_path, size: :lg) do %>
+        Ver componentes<%= ui_icon("arrow-right", size: :sm) %>
+      <% end %>
+      <%= ui_button(tag: :a, href: "https://github.com/edumoraes/shadwire", target: "_blank", rel: "noopener", variant: :outline, size: :lg) do %>
+        <%= ui_icon("github", size: :sm) %>Ver no GitHub
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<%# 2. Construído com (prova social / stack) %>
+<section class="border-b border-border/60 bg-muted/30">
+  <div class="mx-auto max-w-6xl px-5 py-14">
+    <p class="text-center text-sm font-medium uppercase tracking-wide text-muted-foreground">
+      Construído sobre uma base sólida
+    </p>
+    <ul class="mt-8 flex flex-wrap items-center justify-center gap-3">
       <% [
-        [ "Accordion", components_accordion_path ],
-        [ "Alert", components_alert_path ],
-        [ "Alert Dialog", components_alert_dialog_path ],
-        [ "Avatar", components_avatar_path ],
-        [ "Badge", components_badge_path ],
-        [ "Breadcrumb", components_breadcrumb_path ],
-        [ "Button", components_button_path ],
-        [ "Card", components_card_path ],
-        [ "Checkbox", components_checkbox_path ],
-        [ "Dialog", components_dialog_path ],
-        [ "Dropdown Menu", components_dropdown_menu_path ],
-        [ "Icon", components_icon_path ],
-        [ "Input", components_input_path ],
-        [ "Label", components_label_path ],
-        [ "Pagination", components_pagination_path ],
-        [ "Popover", components_popover_path ],
-        [ "Progress", components_progress_path ],
-        [ "Radio Group", components_radio_group_path ],
-        [ "Scroll Area", components_scroll_area_path ],
-        [ "Select", components_select_path ],
-        [ "Separator", components_separator_path ],
-        [ "Sheet", components_sheet_path ],
-        [ "Skeleton", components_skeleton_path ],
-        [ "Switch", components_switch_path ],
-        [ "Table", components_table_path ],
-        [ "Tabs", components_tabs_path ],
-        [ "Textarea", components_textarea_path ],
-        [ "Tooltip", components_tooltip_path ]
-      ].each do |label, path| %>
+        "Ruby on Rails 8.1",
+        "ViewComponent 4",
+        "Tailwind CSS v4",
+        "shadcn/ui",
+        "Lucide",
+        "Stimulus · Turbo"
+      ].each do |label| %>
         <li>
-          <%= link_to path, class: "group flex items-center justify-between rounded-lg border bg-card px-4 py-3 text-sm font-medium text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
-            <span><%= label %></span>
-            <span aria-hidden="true" class="text-muted-foreground transition-transform group-hover:translate-x-0.5">→</span>
-          <% end %>
+          <span class="inline-flex items-center rounded-full border bg-card px-4 py-1.5 text-sm font-medium text-card-foreground shadow-xs">
+            <%= label %>
+          </span>
         </li>
       <% end %>
     </ul>
-  </nav>
+  </div>
+</section>
+
+<%# 3. Tudo que você precisa (showcase com preview + código) %>
+<section class="border-b border-border/60">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Tudo que você precisa</h2>
+      <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
+        Um conjunto completo de componentes acessíveis — de botões e formulários a diálogos
+        e sidebars — prontos para copiar. Veja alguns ao vivo, com o código ao lado.
+      </p>
+    </div>
+
+    <div class="mx-auto mt-12 max-w-2xl">
+      <%= ui_tabs(default_value: @showcase.first[:name], class: "w-full") do %>
+        <%= ui_tabs_list(class: "mx-auto flex w-fit flex-wrap") do %>
+          <% @showcase.each do |example| %>
+            <%= ui_tabs_trigger(value: example[:name]) { example[:title] } %>
+          <% end %>
+        <% end %>
+        <% @showcase.each do |example| %>
+          <%= ui_tabs_content(value: example[:name]) do %>
+            <%= render "components/example", **example %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<%# 4. O código é seu (filosofia / Open Code) %>
+<section class="border-b border-border/60 bg-muted/30">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">O código é seu</h2>
+      <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
+        Shadwire não é uma gem de runtime. Você instala o código-fonte dos componentes no
+        seu app e passa a mantê-lo — com total liberdade para adaptar.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-3">
+      <% [
+        { icon: "package-open", title: "Você é dono",
+          description: "Os arquivos são copiados para o seu projeto e funcionam sem nenhuma dependência do Shadwire." },
+        { icon: "accessibility", title: "Acessível por padrão",
+          description: "Semântica ARIA e padrões do APG embutidos em cada componente." },
+        { icon: "palette", title: "Tokens semânticos",
+          description: "Estilizado com tokens shadcn (bg-primary, text-muted-foreground…) e dark mode pronto." }
+      ].each do |principle| %>
+        <%= ui_card(class: "h-full") do %>
+          <%= ui_card_header do %>
+            <%= ui_card_title(class: "flex items-center gap-2") do %>
+              <%= ui_icon(principle[:icon], class: "text-primary") %><%= principle[:title] %>
+            <% end %>
+            <%= ui_card_description { principle[:description] } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>
+
+<%# 5. Comece agora (getting started) %>
+<section>
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Comece agora</h2>
+      <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
+        Explore o catálogo, veja composições prontas ou acompanhe o projeto no GitHub.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-6 sm:grid-cols-3">
+      <% [
+        { icon: "blocks", title: "Componentes", description: "Navegue pelos 29 componentes documentados, com exemplos e referência de API.", cta: "Ver catálogo", path: components_path, external: false },
+        { icon: "layout-dashboard", title: "Blocks", description: "Composições prontas a partir dos componentes — como a sidebar-01.", cta: "Ver blocks", path: blocks_path, external: false },
+        { icon: "github", title: "GitHub", description: "Veja o código-fonte, o registry e contribua com o projeto.", cta: "Abrir repositório", path: "https://github.com/edumoraes/shadwire", external: true }
+      ].each do |card| %>
+        <%= link_to card[:path],
+              **(card[:external] ? { target: "_blank", rel: "noopener" } : {}),
+              class: "group flex h-full flex-col gap-3 rounded-xl border bg-card p-6 text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
+          <span class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+            <%= ui_icon(card[:icon], size: :lg) %>
+          </span>
+          <span class="text-lg font-bold tracking-[-0.01em]"><%= card[:title] %></span>
+          <span class="text-sm text-muted-foreground group-hover:text-accent-foreground"><%= card[:description] %></span>
+          <span class="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-medium">
+            <%= card[:cta] %>
+            <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 </section>

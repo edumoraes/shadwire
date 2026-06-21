@@ -19,6 +19,37 @@ def inside_directory?(path, directory)
   relative.each_filename.first != ".."
 end
 
+# Expands a list of items to include every item named in their
+# `registryDependencies` (transitively). Lets a block reference the components
+# it composes instead of re-listing all of their files. Unknown names warn and
+# are skipped; missing source files are caught later by the per-file check.
+def expand_with_dependencies(items, items_by_name)
+  resolved = []
+  visited = {}
+  queue = items.dup
+
+  until queue.empty?
+    item = queue.shift
+    name = item.fetch("name")
+    next if visited[name]
+
+    visited[name] = true
+    resolved << item
+
+    Array(item["registryDependencies"]).each do |dep_name|
+      dep = items_by_name[dep_name]
+      unless dep
+        warn "Unknown registry dependency #{dep_name} (required by #{name})"
+        next
+      end
+
+      queue << dep unless visited[dep_name]
+    end
+  end
+
+  resolved
+end
+
 items = REGISTRY.fetch("items")
 items_by_name = items.to_h { |item| [item.fetch("name"), item] }
 
@@ -55,6 +86,7 @@ selected_items =
     ARGV.map { |name| items_by_name.fetch(name) }
   end
 
+selected_items = expand_with_dependencies(selected_items, items_by_name)
 files = selected_items.flat_map { |item| item.fetch("files") }.uniq
 targets = {}
 sync_files = files.map do |file|

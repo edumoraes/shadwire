@@ -14,6 +14,8 @@
 /sandbox/node_modules/
 /sandbox/public/assets/
 /sandbox/public/vite-dev/
+/sandbox/app/assets/builds/*
+!/sandbox/app/assets/builds/.keep
 /sandbox/.bundle/
 /sandbox/config/master.key
 

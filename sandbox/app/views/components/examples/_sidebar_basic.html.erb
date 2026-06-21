@@ -1,0 +1,28 @@
+<div class="flex h-80 w-full max-w-md overflow-hidden rounded-lg border bg-card text-left"
+     style="--sidebar-width: 14rem; --sidebar-width-icon: 3rem; --sidebar-width-mobile: 14rem;">
+  <%= ui_sidebar(collapsible: :none, class: "border-r") do %>
+    <%= ui_sidebar_header do %>
+      <div class="px-2 py-1.5 text-sm font-semibold">Acme Inc</div>
+    <% end %>
+    <%= ui_sidebar_content do %>
+      <%= ui_sidebar_group do %>
+        <%= ui_sidebar_group_label { "Aplicação" } %>
+        <%= ui_sidebar_group_content do %>
+          <%= ui_sidebar_menu do %>
+            <% [ [ "Caixa de entrada", "inbox", true ], [ "Projetos", "folder", false ], [ "Equipe", "users", false ] ].each do |label, icon, active| %>
+              <%= ui_sidebar_menu_item do %>
+                <%= ui_sidebar_menu_button(tag: :a, href: "#", is_active: active) do %>
+                  <%= ui_icon(icon) %>
+                  <span><%= label %></span>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <main class="flex flex-1 items-center justify-center p-4 text-sm text-muted-foreground">
+    Conteúdo
+  </main>
+</div>
