@@ -14,8 +14,11 @@ validates two layers: the registry manifest (root) and the `sandbox/` Rails app.
 ### CI jobs
 
 - **lint** — `bin/rubocop` (rails-omakase) in `sandbox/`.
-- **security** — `bin/bundler-audit`, `bin/importmap audit`, `bin/brakeman` (mirrors `sandbox/config/ci.rb`).
+- **security** — `bin/bundler-audit`, `bin/importmap audit`, and Brakeman. Mirrors
+  `sandbox/config/ci.rb`, except Brakeman runs via `bundle exec` (without `bin/brakeman`'s
+  `--ensure-latest`, which would fail CI whenever a newer Brakeman ships before Dependabot bumps it).
 - **test** — `bin/rails test test/components test/integration/ui_accessibility_test.rb` + seeds,
+  run with `PARALLEL_WORKERS=1` (the sandbox's parallel runner can deadlock with zombie workers),
   plus the root `registry_manifest_test.rb` and `registry_schema_test.rb`.
 - **registry_sync** — runs `bin/sync_registry` and fails if it produces a diff. This is the
   **drift guard**: `registry/` is the source of truth, `sandbox/app/...` is generated. Edit in
