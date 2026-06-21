@@ -1,0 +1,15 @@
+name: Labeler
+
+on: [pull_request_target]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      # Reads the changed-file globs in .github/labeler.yml and applies the
+      # matching area:* labels. Uses the API only — it does not run PR code.
+      - uses: actions/labeler@v5

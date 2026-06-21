@@ -1,0 +1,15 @@
+"area:registry":
+  - changed-files:
+      - any-glob-to-any-file: "registry/**"
+
+"area:sandbox":
+  - changed-files:
+      - any-glob-to-any-file: "sandbox/**"
+
+"area:docs":
+  - changed-files:
+      - any-glob-to-any-file: ["docs/**", "**/*.md"]
+
+"area:ci":
+  - changed-files:
+      - any-glob-to-any-file: [".github/**", "bin/setup_repo"]

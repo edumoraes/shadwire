@@ -1,0 +1,6 @@
+# Local/dev and placeholder hosts that are not meant to resolve in CI.
+^https?://localhost
+^https?://127\.0\.0\.1
+^https?://(.*\.)?example\.com
+# Project domain referenced in the registry schema; may not be live yet.
+^https?://(.*\.)?shadwire\.dev

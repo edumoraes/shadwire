@@ -1,0 +1,9 @@
+# Default owner for everything in the repo.
+*                 @edumoraes
+
+# Source of truth for components — review carefully.
+/registry/        @edumoraes
+
+# CI/CD, automation and repo governance.
+/.github/         @edumoraes
+/bin/             @edumoraes

@@ -21,6 +21,14 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
+  # Serve the app (and its generated URLs, asset paths, and importmap) under a
+  # sub-URI when exporting the docs site to GitHub Pages project pages
+  # (e.g. PAGES_BASE_PATH=/shadwire). Inert when the env var is unset, so normal
+  # production behaviour is unchanged. Pairs with the `map` block in config.ru.
+  if ENV["PAGES_BASE_PATH"].present?
+    config.relative_url_root = ENV["PAGES_BASE_PATH"]
+  end
+
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
