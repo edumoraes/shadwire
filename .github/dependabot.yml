@@ -1,0 +1,20 @@
+version: 2
+updates:
+  # Ruby gems live only in the sandbox; the repo root has no Gemfile.
+  - package-ecosystem: bundler
+    directory: /sandbox
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    groups:
+      bundler-minor-patch:
+        update-types: [minor, patch]
+
+  # Keep the GitHub Actions used by the workflows up to date.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions-minor-patch:
+        update-types: [minor, patch]

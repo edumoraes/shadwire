@@ -1,0 +1,171 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel superseded runs on feature branches, but never cancel a run on `main`
+# (it may be mid-deploy to GitHub Pages).
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: sandbox
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: Rubocop (rails-omakase)
+        working-directory: sandbox
+        run: bin/rubocop -f github
+
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: sandbox
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: Gem audit (bundler-audit)
+        working-directory: sandbox
+        run: bin/bundler-audit
+      - name: Importmap vulnerability audit
+        working-directory: sandbox
+        run: bin/importmap audit
+      - name: Brakeman static analysis
+        working-directory: sandbox
+        run: bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error
+
+  test:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: sandbox
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: Prepare test database
+        working-directory: sandbox
+        run: bin/rails db:prepare
+      - name: Component + accessibility tests
+        working-directory: sandbox
+        run: bin/rails test test/components test/integration/ui_accessibility_test.rb
+      - name: Seeds replant
+        working-directory: sandbox
+        run: bin/rails db:seed:replant
+      - name: Registry manifest test
+        run: ruby test/registry_manifest_test.rb
+      - name: Registry schema test
+        run: ruby test/registry_schema_test.rb
+
+  registry_sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: sandbox
+          ruby-version: .ruby-version
+      - name: Sync registry into the sandbox
+        run: bin/sync_registry
+      - name: Fail on drift between registry and sandbox
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::The sandbox is out of sync with registry/. Edit sources in registry/, run bin/sync_registry, and commit the result."
+            git --no-pager diff
+            git status --porcelain
+            exit 1
+          fi
+          echo "registry/ and sandbox/ are in sync."
+
+  docs_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Markdown lint
+        uses: DavidAnson/markdownlint-cli2-action@v19
+        with:
+          globs: "**/*.md"
+      - name: Link check (lenient)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: "--no-progress --cache --max-cache-age 1d './**/*.md'"
+          fail: false
+
+  deploy_pages:
+    needs: [lint, security, test, registry_sync, docs_lint]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    # Serialize Pages deploys; never cancel one in flight.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    env:
+      RAILS_ENV: production
+      # Project Pages are served under /<repo>/. Mount the app + asset/importmap
+      # paths under the same sub-URI (see config.ru and production.rb).
+      PAGES_BASE_PATH: /shadwire
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: sandbox
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - uses: actions/configure-pages@v5
+      - name: Generate a build secret
+        working-directory: sandbox
+        run: echo "SECRET_KEY_BASE=$(bin/rails secret)" >> "$GITHUB_ENV"
+      - name: Precompile assets and prepare database
+        working-directory: sandbox
+        run: |
+          bin/rails assets:precompile
+          bin/rails db:prepare
+      - name: Freeze the docs site to static HTML
+        working-directory: sandbox
+        run: |
+          bin/rails server -e production -b 127.0.0.1 -p 3000 > /tmp/server.log 2>&1 &
+          for i in $(seq 1 60); do
+            curl -sf http://127.0.0.1:3000/shadwire/up >/dev/null && break
+            sleep 1
+          done
+          rm -rf ../_site && mkdir -p ../_site
+          # Mirror every page reachable from the home page. Links/asset/importmap
+          # paths are already absolute under /shadwire/, so they resolve under the
+          # Pages base path. --cut-dirs strips the /shadwire prefix from filenames
+          # so the artifact root maps onto the Pages base.
+          wget --mirror --no-verbose -e robots=off \
+               --no-host-directories --cut-dirs=1 --include-directories=/shadwire \
+               --adjust-extension --directory-prefix=../_site \
+               http://127.0.0.1:3000/shadwire/
+          # wget does not follow ES module / importmap references, so copy the
+          # precompiled assets wholesale to guarantee every JS/CSS/font is present.
+          cp -r public/assets ../_site/assets
+          touch ../_site/.nojekyll
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

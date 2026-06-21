@@ -1,0 +1,19 @@
+{
+  // Omakase-style: keep the high-signal rules, relax the noisy ones.
+  "config": {
+    "default": true,
+    "MD013": false, // line length — prose wrapping is a style choice
+    "MD033": false, // inline HTML — used in README/docs
+    "MD041": false, // first line need not be a top-level heading
+    "MD024": { "siblings_only": true } // repeated headings ok under different sections
+  },
+  "globs": ["**/*.md"],
+  "ignores": [
+    "**/node_modules/**",
+    "**/vendor/**",
+    "sandbox/.bundle/**",
+    "**/tmp/**",
+    // Append-only AI planning records from the superpowers workflow — not hand-curated docs.
+    "docs/superpowers/**"
+  ]
+}

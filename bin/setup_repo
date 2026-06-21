@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Applies the repository settings that cannot be committed as files: branch
+# protection on `main`, the area:* labels used by the auto-labeler, and GitHub
+# Pages (built from GitHub Actions). Idempotent — safe to re-run.
+#
+# Requirements: the `gh` CLI authenticated with admin on the repo, and `jq`.
+# Usage: bin/setup_repo
+
+# These must match the job ids in .github/workflows/ci.yml.
+REQUIRED_CHECKS=(lint security test registry_sync docs_lint)
+
+command -v gh >/dev/null || { echo "gh CLI is required: https://cli.github.com"; exit 1; }
+command -v jq >/dev/null || { echo "jq is required: https://jqlang.github.io/jq"; exit 1; }
+
+repo="$(gh repo view --json nameWithOwner -q .nameWithOwner)"
+echo "Configuring ${repo}"
+
+echo "==> Creating area:* labels"
+create_label() { gh label create "$1" --color "$2" --description "$3" --force >/dev/null && echo "    $1"; }
+create_label "area:registry" "0e8a16" "Changes under registry/ (source of truth)"
+create_label "area:sandbox"  "1d76db" "Changes under sandbox/ (validation app)"
+create_label "area:docs"     "5319e7" "Documentation and Markdown"
+create_label "area:ci"       "fbca04" "CI/CD, workflows and automation"
+
+echo "==> Enabling GitHub Pages (source: GitHub Actions)"
+if gh api "repos/${repo}/pages" >/dev/null 2>&1; then
+  gh api --method PUT "repos/${repo}/pages" -f "build_type=workflow" >/dev/null
+else
+  gh api --method POST "repos/${repo}/pages" -f "build_type=workflow" >/dev/null || true
+fi
+echo "    Pages publishes from the deploy_pages job on merge to main."
+
+echo "==> Applying the 'main' branch ruleset"
+checks_json="$(printf '%s\n' "${REQUIRED_CHECKS[@]}" | jq -R '{context: .}' | jq -s '.')"
+ruleset_json="$(jq -n --argjson checks "$checks_json" '{
+  name: "main",
+  target: "branch",
+  enforcement: "active",
+  conditions: { ref_name: { include: ["~DEFAULT_BRANCH"], exclude: [] } },
+  rules: [
+    { type: "deletion" },
+    { type: "non_fast_forward" },
+    { type: "required_linear_history" },
+    { type: "pull_request", parameters: {
+        required_approving_review_count: 1,
+        dismiss_stale_reviews_on_push: true,
+        require_code_owner_review: false,
+        require_last_push_approval: false,
+        required_review_thread_resolution: true,
+        allowed_merge_methods: ["squash", "merge", "rebase"]
+      } },
+    { type: "required_status_checks", parameters: {
+        strict_required_status_checks_policy: true,
+        required_status_checks: $checks
+      } }
+  ]
+}')"
+
+existing_id="$(gh api "repos/${repo}/rulesets" -q '.[] | select(.name=="main") | .id' 2>/dev/null | head -n1 || true)"
+if [ -n "${existing_id}" ]; then
+  echo "    Updating existing ruleset #${existing_id}"
+  printf '%s' "$ruleset_json" | gh api --method PUT "repos/${repo}/rulesets/${existing_id}" --input - >/dev/null
+else
+  echo "    Creating ruleset"
+  printf '%s' "$ruleset_json" | gh api --method POST "repos/${repo}/rulesets" --input - >/dev/null
+fi
+
+echo
+echo "Done. Required status checks on main: ${REQUIRED_CHECKS[*]}"
+echo "Open a PR to confirm the checks appear and are enforced."
