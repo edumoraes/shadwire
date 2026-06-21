@@ -1201,6 +1201,10 @@
           "target": "app/components/ui/blocks/sidebar_01/search_form_component.html.erb"
         },
         {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
           "source": "registry/rails/ui/helpers/ui_helper.rb",
           "target": "app/helpers/ui_helper.rb"
         },
