@@ -5,14 +5,14 @@
 
 <%# 1. Hero %>
 <section class="border-b border-border/60">
-  <div class="mx-auto max-w-4xl px-5 py-20 text-center sm:py-28">
+  <div class="mx-auto max-w-6xl px-5 py-20 text-center sm:py-28">
     <%= ui_badge(variant: :secondary, class: "mb-6") do %>
       <%= ui_icon("sparkles", size: :sm) %>v0.2.0 · Rails + ViewComponent
     <% end %>
-    <h1 class="text-balance text-4xl font-bold tracking-tight sm:text-6xl">
+    <h1 class="mx-auto max-w-4xl text-balance text-5xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-6xl lg:text-7xl">
       Componentes shadcn/ui que viram <span class="text-primary">código seu</span>
     </h1>
-    <p class="mx-auto mt-6 max-w-2xl text-balance text-lg text-muted-foreground">
+    <p class="mx-auto mt-6 max-w-2xl text-balance text-xl leading-[1.2] tracking-[-0.006em] text-muted-foreground sm:text-2xl">
       Shadwire porta o modelo <strong class="font-medium text-foreground">Open Code</strong> do
       shadcn/ui para o Ruby on Rails: código de componentes ViewComponent aberto e copiável,
       que seu app instala e passa a possuir — sem nenhuma gem em runtime.
@@ -30,7 +30,7 @@
 
 <%# 2. Construído com (prova social / stack) %>
 <section class="border-b border-border/60 bg-muted/30">
-  <div class="mx-auto max-w-5xl px-5 py-14">
+  <div class="mx-auto max-w-6xl px-5 py-14">
     <p class="text-center text-sm font-medium uppercase tracking-wide text-muted-foreground">
       Construído sobre uma base sólida
     </p>
@@ -55,10 +55,10 @@
 
 <%# 3. Tudo que você precisa (showcase com preview + código) %>
 <section class="border-b border-border/60">
-  <div class="mx-auto max-w-5xl px-5 py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Tudo que você precisa</h2>
-      <p class="mt-4 text-lg text-muted-foreground">
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Tudo que você precisa</h2>
+      <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
         Um conjunto completo de componentes acessíveis — de botões e formulários a diálogos
         e sidebars — prontos para copiar. Veja alguns ao vivo, com o código ao lado.
       </p>
@@ -83,10 +83,10 @@
 
 <%# 4. O código é seu (filosofia / Open Code) %>
 <section class="border-b border-border/60 bg-muted/30">
-  <div class="mx-auto max-w-5xl px-5 py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">O código é seu</h2>
-      <p class="mt-4 text-lg text-muted-foreground">
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">O código é seu</h2>
+      <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
         Shadwire não é uma gem de runtime. Você instala o código-fonte dos componentes no
         seu app e passa a mantê-lo — com total liberdade para adaptar.
       </p>
@@ -116,10 +116,10 @@
 
 <%# 5. Comece agora (getting started) %>
 <section>
-  <div class="mx-auto max-w-5xl px-5 py-16 sm:py-24">
+  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Comece agora</h2>
-      <p class="mt-4 text-lg text-muted-foreground">
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Comece agora</h2>
+      <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
         Explore o catálogo, veja composições prontas ou acompanhe o projeto no GitHub.
       </p>
     </div>
@@ -136,7 +136,7 @@
           <span class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
             <%= ui_icon(card[:icon], size: :lg) %>
           </span>
-          <span class="text-lg font-semibold tracking-tight"><%= card[:title] %></span>
+          <span class="text-lg font-bold tracking-[-0.01em]"><%= card[:title] %></span>
           <span class="text-sm text-muted-foreground group-hover:text-accent-foreground"><%= card[:description] %></span>
           <span class="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-medium">
             <%= card[:cta] %>
