@@ -164,15 +164,24 @@ jobs:
           # Mirror every page reachable from the home page. Links/asset/importmap
           # paths are already absolute under /shadwire/, so they resolve under the
           # Pages base path. --cut-dirs strips the /shadwire prefix from filenames
-          # so the artifact root maps onto the Pages base.
+          # so the artifact root maps onto the Pages base. Skip /shadwire/assets:
+          # the precompiled assets are copied wholesale below, and crawling them
+          # would also choke on any broken asset reference in the docs.
           wget --mirror --no-verbose -e robots=off \
-               --no-host-directories --cut-dirs=1 --include-directories=/shadwire \
+               --no-host-directories --cut-dirs=1 \
+               --include-directories=/shadwire --exclude-directories=/shadwire/assets \
                --adjust-extension --directory-prefix=../_site \
-               http://127.0.0.1:3000/shadwire/
+               http://127.0.0.1:3000/shadwire/ || wget_ec=$?
+          # Exit 8 = a referenced resource returned 4xx (e.g. a broken image in a
+          # doc example). Tolerate it for a static snapshot, but fail on real errors.
+          if [ "${wget_ec:-0}" -ne 0 ] && [ "${wget_ec:-0}" -ne 8 ]; then
+            echo "::error::wget crawl failed (exit ${wget_ec})"; cat /tmp/server.log; exit "${wget_ec}"
+          fi
           # wget does not follow ES module / importmap references, so copy the
           # precompiled assets wholesale to guarantee every JS/CSS/font is present.
           cp -r public/assets ../_site/assets
           touch ../_site/.nojekyll
+          test -f ../_site/index.html || { echo "::error::no index.html produced"; cat /tmp/server.log; exit 1; }
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
