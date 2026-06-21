@@ -15,6 +15,7 @@ class BlocksController < ApplicationController
 
   def index
     @blocks = BLOCKS
+    render layout: "home"
   end
 
   def sidebar_01
