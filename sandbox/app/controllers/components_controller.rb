@@ -2,6 +2,12 @@
 
 # Serves the component documentation pages of the sandbox.
 class ComponentsController < ApplicationController
+  # Catálogo com todos os componentes. Usa o layout "home" (com header de
+  # navegação); as demais ações de documentação seguem no layout padrão.
+  def index
+    render layout: "home"
+  end
+
   BUTTON_EXAMPLES = [
     { name: "default", title: "Padrão",
       description: "A variante padrão, usada para a ação primária da tela." },

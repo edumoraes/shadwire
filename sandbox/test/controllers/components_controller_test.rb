@@ -403,11 +403,11 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "ui_sidebar_menu_button"
   end
 
-  test "showcase links every component docs page" do
-    get root_path
+  test "components catalog links every component docs page" do
+    get components_path
 
     assert_response :success
-    assert_select "nav[aria-label='Component documentation']"
+    assert_select "nav[aria-label='Componentes']"
 
     [
       [ "Accordion", components_accordion_path ],
