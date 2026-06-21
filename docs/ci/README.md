@@ -64,6 +64,13 @@ linear history, and no force-pushes or deletions.
 The required-check names must match the CI job ids. If you rename a job in `ci.yml`,
 update `REQUIRED_CHECKS` in `bin/setup_repo` and re-run it.
 
+### Dependency Review
+
+The `dependency-review` workflow needs the repository **Dependency graph** enabled. If
+the check reports "Dependency review is not supported on this repository", turn it on at
+`Settings → Code security and analysis → Dependency graph` (it goes green on the next PR).
+This check is intentionally **not** a required status check, so it never blocks a merge.
+
 ## Running it locally
 
 ```bash
