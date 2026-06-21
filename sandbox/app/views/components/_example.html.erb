@@ -1,7 +1,7 @@
 <%# Renders one documentation example: live preview on top, highlighted source below. %>
 <%# Locals: name (example partial slug), title, description. %>
 <section id="example-<%= name %>" class="scroll-mt-24 space-y-3">
-  <h3 class="text-lg font-semibold tracking-tight"><%= title %></h3>
+  <h3 class="text-lg font-bold tracking-[-0.01em]"><%= title %></h3>
   <% if local_assigns[:description].present? %>
     <p class="text-sm text-muted-foreground"><%= description %></p>
   <% end %>

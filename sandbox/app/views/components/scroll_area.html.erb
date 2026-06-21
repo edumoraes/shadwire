@@ -3,20 +3,20 @@
   <%= tag.style rouge_stylesheet %>
 <% end %>
 
-<article class="mx-auto flex w-full max-w-3xl flex-col gap-12 pb-16">
+<article class="mx-auto flex w-full max-w-3xl flex-col gap-12 px-5 py-12">
   <header class="flex flex-col gap-3">
     <%= link_to components_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
       <%= ui_icon("arrow-left", size: :sm) %>
       Componentes
     <% end %>
-    <h1 class="text-3xl font-bold tracking-tight">Scroll Area</h1>
-    <p class="text-lg text-muted-foreground">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Scroll Area</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
       Augments native scroll functionality for custom, cross-browser styling.
     </p>
   </header>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Installation</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Installation</h2>
     <p class="text-sm text-muted-foreground">
       The <code class="rounded bg-muted px-1 py-0.5 text-xs">scroll-area</code>
       registry item installs the component parts, helper, CSS, and Stimulus controller.
@@ -44,7 +44,7 @@
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Usage</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Usage</h2>
     <p class="text-sm text-muted-foreground">
       Use the helper in Rails views, or render the ViewComponent class directly when you need the object API.
     </p>
@@ -53,7 +53,7 @@
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composition</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Composition</h2>
     <p class="text-sm text-muted-foreground">
       The shadcn anatomy is <code class="rounded bg-muted px-1 py-0.5 text-xs">ScrollArea</code>
       with an optional <code class="rounded bg-muted px-1 py-0.5 text-xs">ScrollBar</code>.
@@ -64,11 +64,11 @@
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Examples</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Examples</h2>
     <%= render "components/example", **@examples.first %>
 
     <div class="flex flex-col gap-3">
-      <h3 class="text-xl font-semibold tracking-tight">Horizontal</h3>
+      <h3 class="text-xl font-bold tracking-[-0.01em]">Horizontal</h3>
       <p class="text-sm text-muted-foreground">
         Use <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_scroll_bar(orientation: :horizontal)</code>
         or pass <code class="rounded bg-muted px-1 py-0.5 text-xs">scrollbars: [ :horizontal ]</code>
@@ -80,7 +80,7 @@
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">RTL</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">RTL</h2>
     <p class="text-sm text-muted-foreground">
       Pass standard HTML direction attributes through the component when rendering right-to-left content.
     </p>
@@ -88,7 +88,7 @@
   </section>
 
   <section class="flex flex-col gap-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">API Reference</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">API Reference</h2>
     <p class="text-sm text-muted-foreground">
       This Rails port mirrors the Base UI-style parts with ViewComponent classes and data attributes.
       Helpers preserve free HTML attributes, including

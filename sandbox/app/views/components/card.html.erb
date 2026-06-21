@@ -3,20 +3,20 @@
   <%= tag.style rouge_stylesheet %>
 <% end %>
 
-<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+<article class="mx-auto w-full max-w-3xl space-y-12 px-5 py-12">
   <header class="space-y-3">
     <%= link_to components_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
       <%= ui_icon("arrow-left", size: :sm) %>
       Componentes
     <% end %>
-    <h1 class="text-3xl font-bold tracking-tight">Card</h1>
-    <p class="text-lg text-muted-foreground">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Card</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
       Uma superfície com borda para agrupar conteúdo relacionado.
     </p>
   </header>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Instalação</h2>
     <p class="text-sm text-muted-foreground">O item <code class="rounded bg-muted px-1 py-0.5 text-xs">card</code> instala estes arquivos:</p>
     <ul class="space-y-1 text-sm">
       <% %w[
@@ -36,26 +36,26 @@
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">Ou renderize os componentes diretamente:</p>
     <%= docs_code_block(@usage_component) %>
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Composição</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Composição</h2>
     <%= docs_code_block(@composition, language: :text) %>
   </section>
 
   <section class="space-y-8">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Exemplos</h2>
     <% @examples.each do |example| %>
       <%= render "components/example", **example %>
     <% end %>
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Referência da API</h2>
     <p class="text-sm text-muted-foreground">Helpers disponíveis: <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_card</code>, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_card_header</code>, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_card_title</code>, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_card_description</code>, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_card_content</code> e <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_card_footer</code>.</p>
     <%= ui_card(class: "overflow-x-auto") do %>
       <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">

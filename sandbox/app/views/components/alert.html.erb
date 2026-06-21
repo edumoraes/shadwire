@@ -3,20 +3,20 @@
   <%= tag.style rouge_stylesheet %>
 <% end %>
 
-<article class="mx-auto w-full max-w-3xl space-y-12 pb-16">
+<article class="mx-auto w-full max-w-3xl space-y-12 px-5 py-12">
   <header class="space-y-3">
     <%= link_to components_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
       <%= ui_icon("arrow-left", size: :sm) %>
       Componentes
     <% end %>
-    <h1 class="text-3xl font-bold tracking-tight">Alert</h1>
-    <p class="text-lg text-muted-foreground">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Alert</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
       Um bloco de aviso com semântica de alerta para mensagens importantes.
     </p>
   </header>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Instalação</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Instalação</h2>
     <p class="text-sm text-muted-foreground">O item <code class="rounded bg-muted px-1 py-0.5 text-xs">alert</code> instala estes arquivos:</p>
     <ul class="space-y-1 text-sm">
       <% %w[app/components/ui_component.rb app/components/ui/alert_component.rb app/helpers/ui_helper.rb vendor/shadwire/shadwire.css].each do |path| %>
@@ -26,21 +26,21 @@
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Uso</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">Ou renderize <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::AlertComponent</code> diretamente:</p>
     <%= docs_code_block(@usage_component) %>
   </section>
 
   <section class="space-y-8">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Exemplos</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Exemplos</h2>
     <% @examples.each do |example| %>
       <%= render "components/example", **example %>
     <% end %>
   </section>
 
   <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-semibold tracking-tight">Referência da API</h2>
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Referência da API</h2>
     <p class="text-sm text-muted-foreground"><code class="rounded bg-muted px-1 py-0.5 text-xs">ui_alert(**options, &block)</code> encapsula <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::AlertComponent.new(**options)</code>.</p>
     <%= ui_card(class: "overflow-x-auto") do %>
       <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
