@@ -20,3 +20,6 @@
 /sandbox/config/master.key
 
 /packages/cli/node_modules/
+
+# Static export produced by the Pages deploy job
+/_site/
