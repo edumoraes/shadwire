@@ -17,6 +17,7 @@ permissions:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
@@ -30,6 +31,7 @@ jobs:
 
   security:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
@@ -45,12 +47,18 @@ jobs:
         run: bin/importmap audit
       - name: Brakeman static analysis
         working-directory: sandbox
-        run: bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error
+        # Call brakeman directly to skip bin/brakeman's --ensure-latest, which
+        # fails CI whenever a newer Brakeman ships before Dependabot bumps it.
+        run: bundle exec brakeman --quiet --no-pager --exit-on-warn --exit-on-error
 
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       RAILS_ENV: test
+      # The sandbox's parallel test runner can deadlock with zombie workers, so
+      # run serially (matches the known-good local invocation).
+      PARALLEL_WORKERS: "1"
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
@@ -74,6 +82,7 @@ jobs:
 
   registry_sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
@@ -94,6 +103,7 @@ jobs:
 
   docs_lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - name: Markdown lint
@@ -110,6 +120,7 @@ jobs:
     needs: [lint, security, test, registry_sync, docs_lint]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     permissions:
       pages: write
       id-token: write
