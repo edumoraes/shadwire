@@ -24,10 +24,10 @@ class BlocksControllerTest < ActionDispatch::IntegrationTest
     assert_select "a[data-slot='sidebar-menu-button'][data-active='true']", text: "Data Fetching"
   end
 
-  test "blocks index is linked from the showcase" do
+  test "blocks index is linked from the landing page" do
     get root_path
 
     assert_response :success
-    assert_select "nav[aria-label='Blocks'] a[href='#{blocks_path}']"
+    assert_select "nav[aria-label='Principal'] a[href='#{blocks_path}']", text: "Blocks"
   end
 end
