@@ -49,6 +49,12 @@ Rails.application.routes.draw do
   get "components/button-group", to: "components#button_group"
   get "components/field", to: "components#field"
   get "components/native-select", to: "components#native_select"
+  get "components/collapsible", to: "components#collapsible"
+  get "components/toggle", to: "components#toggle"
+  get "components/toggle-group", to: "components#toggle_group"
+  get "components/slider", to: "components#slider"
+  get "components/hover-card", to: "components#hover_card"
+  get "components/input-otp", to: "components#input_otp"
 
   # Block documentation pages (composed, full-page layouts).
   get "blocks", to: "blocks#index"

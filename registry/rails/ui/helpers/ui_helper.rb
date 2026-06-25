@@ -660,4 +660,60 @@ module UiHelper
   def ui_native_select(**options, &block)
     render(Ui::NativeSelectComponent.new(**options), &block)
   end
+
+  def ui_collapsible(**options, &block)
+    render(Ui::CollapsibleComponent.new(**options), &block)
+  end
+
+  def ui_collapsible_trigger(**options, &block)
+    render(Ui::Collapsible::TriggerComponent.new(**options), &block)
+  end
+
+  def ui_collapsible_content(**options, &block)
+    render(Ui::Collapsible::ContentComponent.new(**options), &block)
+  end
+
+  def ui_toggle(**options, &block)
+    render(Ui::ToggleComponent.new(**options), &block)
+  end
+
+  def ui_toggle_group(**options, &block)
+    render(Ui::ToggleGroupComponent.new(**options), &block)
+  end
+
+  def ui_toggle_group_item(**options, &block)
+    render(Ui::ToggleGroup::ItemComponent.new(**options), &block)
+  end
+
+  def ui_slider(**options)
+    render(Ui::SliderComponent.new(**options))
+  end
+
+  def ui_hover_card(**options, &block)
+    render(Ui::HoverCardComponent.new(**options), &block)
+  end
+
+  def ui_hover_card_trigger(**options, &block)
+    render(Ui::HoverCard::TriggerComponent.new(**options), &block)
+  end
+
+  def ui_hover_card_content(**options, &block)
+    render(Ui::HoverCard::ContentComponent.new(**options), &block)
+  end
+
+  def ui_input_otp(**options, &block)
+    render(Ui::InputOtpComponent.new(**options), &block)
+  end
+
+  def ui_input_otp_group(**options, &block)
+    render(Ui::InputOtp::GroupComponent.new(**options), &block)
+  end
+
+  def ui_input_otp_slot(**options)
+    render(Ui::InputOtp::SlotComponent.new(**options))
+  end
+
+  def ui_input_otp_separator(**options)
+    render(Ui::InputOtp::SeparatorComponent.new(**options))
+  end
 end

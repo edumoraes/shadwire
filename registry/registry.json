@@ -1547,6 +1547,194 @@
           "target": "vendor/shadwire/shadwire.css"
         }
       ]
+    },
+    {
+      "name": "collapsible",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/collapsible_component.rb",
+          "target": "app/components/ui/collapsible_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/collapsible/trigger_component.rb",
+          "target": "app/components/ui/collapsible/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/collapsible/content_component.rb",
+          "target": "app/components/ui/collapsible/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_collapsible_controller.js",
+          "target": "app/javascript/controllers/ui_collapsible_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/toggle_component.rb",
+          "target": "app/components/ui/toggle_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_toggle_controller.js",
+          "target": "app/javascript/controllers/ui_toggle_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/toggle_group_component.rb",
+          "target": "app/components/ui/toggle_group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/toggle_group/item_component.rb",
+          "target": "app/components/ui/toggle_group/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_toggle_group_controller.js",
+          "target": "app/javascript/controllers/ui_toggle_group_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/slider_component.rb",
+          "target": "app/components/ui/slider_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_slider_controller.js",
+          "target": "app/javascript/controllers/ui_slider_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/hover_card_component.rb",
+          "target": "app/components/ui/hover_card_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/hover_card/trigger_component.rb",
+          "target": "app/components/ui/hover_card/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/hover_card/content_component.rb",
+          "target": "app/components/ui/hover_card/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_hover_card_controller.js",
+          "target": "app/javascript/controllers/ui_hover_card_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_otp_component.rb",
+          "target": "app/components/ui/input_otp_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_otp/group_component.rb",
+          "target": "app/components/ui/input_otp/group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_otp/slot_component.rb",
+          "target": "app/components/ui/input_otp/slot_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_otp/separator_component.rb",
+          "target": "app/components/ui/input_otp/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_input_otp_controller.js",
+          "target": "app/javascript/controllers/ui_input_otp_controller.js"
+        }
+      ]
     }
   ]
 }

@@ -1224,4 +1224,78 @@ class ComponentsController < ApplicationController
     @examples = [ { name: "native_select_default", title: "Padrão", description: "Select nativo com chevron e foco estilizados." } ]
     render "doc_page"
   end
+
+  def collapsible
+    @page_title = "Collapsible"
+    @page_subtitle = "Uma seção que expande e recolhe, controlada pelo controller ui-collapsible."
+    @usage_helper = <<~ERB
+      <%= ui_collapsible do %>
+        <%= ui_collapsible_trigger { "Mostrar mais" } %>
+        <%= ui_collapsible_content { "Conteúdo escondido." } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "collapsible_default", title: "Padrão", description: "Lista que revela itens adicionais." } ]
+    render "doc_page"
+  end
+
+  def toggle
+    @page_title = "Toggle"
+    @page_subtitle = "Um botão de dois estados com aria-pressed e data-state (on/off)."
+    @usage_helper = <<~ERB
+      <%= ui_toggle(variant: :outline, "aria-label": "Negrito") { ui_icon("bold") } %>
+    ERB
+    @examples = [ { name: "toggle_default", title: "Padrão", description: "Toggles de formatação, um deles pressionado." } ]
+    render "doc_page"
+  end
+
+  def toggle_group
+    @page_title = "Toggle Group"
+    @page_subtitle = "Um grupo de toggles com seleção única ou múltipla e navegação por setas."
+    @usage_helper = <<~ERB
+      <%= ui_toggle_group(type: :single) do %>
+        <%= ui_toggle_group_item(value: "left") { ui_icon("align-left") } %>
+        <%= ui_toggle_group_item(value: "center") { ui_icon("align-center") } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "toggle_group_default", title: "Padrão", description: "Seleção múltipla de formatação de texto." } ]
+    render "doc_page"
+  end
+
+  def slider
+    @page_title = "Slider"
+    @page_subtitle = "Um slider de um thumb (padrão WAI-ARIA) com valor espelhado em um input hidden."
+    @usage_helper = <<~ERB
+      <%= ui_slider(min: 0, max: 100, value: 50, name: "volume", label: "Volume") %>
+    ERB
+    @examples = [ { name: "slider_default", title: "Padrão", description: "Arraste o thumb ou use as setas do teclado." } ]
+    render "doc_page"
+  end
+
+  def hover_card
+    @page_title = "Hover Card"
+    @page_subtitle = "Conteúdo rico que abre ao passar o mouse ou focar o gatilho, com atrasos configuráveis."
+    @usage_helper = <<~ERB
+      <%= ui_hover_card do %>
+        <%= ui_hover_card_trigger(href: "#") { "@shadwire" } %>
+        <%= ui_hover_card_content { "Detalhes do perfil." } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "hover_card_default", title: "Padrão", description: "Cartão de perfil exibido no hover." } ]
+    render "doc_page"
+  end
+
+  def input_otp
+    @page_title = "Input OTP"
+    @page_subtitle = "Campo de código de uso único: slots de um caractere com avanço, backspace e colagem."
+    @usage_helper = <<~ERB
+      <%= ui_input_otp(name: "code") do %>
+        <%= ui_input_otp_group do %>
+          <%= ui_input_otp_slot %>
+          <%= ui_input_otp_slot %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "input_otp_default", title: "Padrão", description: "Dois grupos de três slots separados por um traço." } ]
+    render "doc_page"
+  end
 end
