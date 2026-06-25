@@ -1298,4 +1298,166 @@ class ComponentsController < ApplicationController
     @examples = [ { name: "input_otp_default", title: "Padrão", description: "Dois grupos de três slots separados por um traço." } ]
     render "doc_page"
   end
+
+  def drawer
+    @page_title = "Drawer"
+    @page_subtitle = "Um painel que desliza de uma borda, sobre um <dialog> nativo, com arrastar para fechar."
+    @usage_helper = <<~ERB
+      <%= ui_drawer do %>
+        <%= ui_drawer_trigger { "Abrir" } %>
+        <%= ui_drawer_content do %>
+          <%= ui_drawer_header do %>
+            <%= ui_drawer_title { "Título" } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "drawer_default", title: "Padrão", description: "Drawer inferior com cabeçalho, descrição e ações." } ]
+    render "doc_page"
+  end
+
+  def context_menu
+    @page_title = "Context Menu"
+    @page_subtitle = "Um menu aberto com o botão direito, posicionado no ponteiro, com navegação por teclado."
+    @usage_helper = <<~ERB
+      <%= ui_context_menu do %>
+        <%= ui_context_menu_trigger { "Clique com o botão direito" } %>
+        <%= ui_context_menu_content do %>
+          <%= ui_context_menu_item { "Voltar" } %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "context_menu_default", title: "Padrão", description: "Área que abre o menu no clique direito." } ]
+    render "doc_page"
+  end
+
+  def menubar
+    @page_title = "Menubar"
+    @page_subtitle = "Uma barra de menus horizontal (padrão WAI-ARIA menubar) coordenada por um controller."
+    @usage_helper = <<~ERB
+      <%= ui_menubar do %>
+        <%= ui_menubar_menu do %>
+          <%= ui_menubar_trigger { "Arquivo" } %>
+          <%= ui_menubar_content do %>
+            <%= ui_menubar_item { "Novo" } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "menubar_default", title: "Padrão", description: "Dois menus com itens, separadores e atalhos." } ]
+    render "doc_page"
+  end
+
+  def navigation_menu
+    @page_title = "Navigation Menu"
+    @page_subtitle = "Uma navegação com gatilhos que revelam painéis de conteúdo, um de cada vez."
+    @usage_helper = <<~ERB
+      <%= ui_navigation_menu do %>
+        <%= ui_navigation_menu_list do %>
+          <%= ui_navigation_menu_item do %>
+            <%= ui_navigation_menu_trigger { "Produtos" } %>
+            <%= ui_navigation_menu_content do %>
+              <%= ui_navigation_menu_link(href: "#") { "Item" } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "navigation_menu_default", title: "Padrão", description: "Gatilho com painel e um link simples." } ]
+    render "doc_page"
+  end
+
+  def command
+    @page_title = "Command"
+    @page_subtitle = "Uma paleta de comandos filtrável, com navegação por setas e Enter."
+    @usage_helper = <<~ERB
+      <%= ui_command do %>
+        <%= ui_command_input(placeholder: "Buscar...") %>
+        <%= ui_command_list do %>
+          <%= ui_command_empty { "Nada encontrado." } %>
+          <%= ui_command_group(heading: "Sugestões") do %>
+            <%= ui_command_item(value: "perfil") { "Perfil" } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "command_default", title: "Padrão", description: "Paleta com grupos, ícones e atalhos." } ]
+    render "doc_page"
+  end
+
+  def combobox
+    @page_title = "Combobox"
+    @page_subtitle = "Uma receita: Popover + Command. Não é um componente novo — instala popover e command."
+    @usage_helper = <<~ERB
+      <%= ui_popover do %>
+        <%= ui_popover_trigger(variant: :outline) { "Selecione" } %>
+        <%= ui_popover_content(class: "!p-0") do %>
+          <%= ui_command do %>
+            <%= ui_command_input(placeholder: "Buscar...") %>
+            <%= ui_command_list do %>
+              <%= ui_command_item(value: "rails") { "Rails" } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "combobox_default", title: "Padrão", description: "Gatilho de popover com uma lista de comandos buscável." } ]
+    render "doc_page"
+  end
+
+  def calendar
+    @page_title = "Calendar"
+    @page_subtitle = "Uma grade de mês construída no cliente: navegação de mês, seleção e teclado."
+    @usage_helper = <<~ERB
+      <%= ui_calendar(selected: Date.today, name: "date") %>
+    ERB
+    @examples = [ { name: "calendar_default", title: "Padrão", description: "Mês atual com o dia de hoje selecionado." } ]
+    render "doc_page"
+  end
+
+  def date_picker
+    @page_title = "Date Picker"
+    @page_subtitle = "Uma receita: Popover + Calendar. Não é um componente novo — instala popover e calendar."
+    @usage_helper = <<~ERB
+      <%= ui_popover do %>
+        <%= ui_popover_trigger(variant: :outline) { "Selecione uma data" } %>
+        <%= ui_popover_content(class: "!w-auto !p-0") do %>
+          <%= ui_calendar(name: "due_on") %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "date_picker_default", title: "Padrão", description: "Botão que abre um calendário em um popover." } ]
+    render "doc_page"
+  end
+
+  def resizable
+    @page_title = "Resizable"
+    @page_subtitle = "Painéis redimensionáveis com alças arrastáveis e ajuste por teclado."
+    @usage_helper = <<~ERB
+      <%= ui_resizable_panel_group(direction: :horizontal) do %>
+        <%= ui_resizable_panel(default_size: 50) { "Um" } %>
+        <%= ui_resizable_handle %>
+        <%= ui_resizable_panel(default_size: 50) { "Dois" } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "resizable_default", title: "Padrão", description: "Dois painéis horizontais com uma alça." } ]
+    render "doc_page"
+  end
+
+  def carousel
+    @page_title = "Carousel"
+    @page_subtitle = "Um carrossel de slides com controles anterior/próximo e navegação por setas."
+    @usage_helper = <<~ERB
+      <%= ui_carousel do %>
+        <%= ui_carousel_content do %>
+          <%= ui_carousel_item { "Slide 1" } %>
+          <%= ui_carousel_item { "Slide 2" } %>
+        <% end %>
+        <%= ui_carousel_previous %>
+        <%= ui_carousel_next %>
+      <% end %>
+    ERB
+    @examples = [ { name: "carousel_default", title: "Padrão", description: "Cinco slides numerados com controles." } ]
+    render "doc_page"
+  end
 end

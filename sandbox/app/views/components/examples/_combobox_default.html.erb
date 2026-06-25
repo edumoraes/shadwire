@@ -1,0 +1,20 @@
+<%# Combobox = Popover + Command (a composition recipe, not a new component). %>
+<%= ui_popover do %>
+  <%= ui_popover_trigger(variant: :outline, class: "w-72 justify-between font-normal") do %>
+    Selecione o framework
+    <%= ui_icon("chevrons-up-down", class: "opacity-50") %>
+  <% end %>
+  <%= ui_popover_content(class: "!p-0") do %>
+    <%= ui_command do %>
+      <%= ui_command_input(placeholder: "Buscar framework...") %>
+      <%= ui_command_list do %>
+        <%= ui_command_empty { "Nenhum framework encontrado." } %>
+        <%= ui_command_group do %>
+          <%= ui_command_item(value: "rails") { "Rails" } %>
+          <%= ui_command_item(value: "hotwire") { "Hotwire" } %>
+          <%= ui_command_item(value: "viewcomponent") { "ViewComponent" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

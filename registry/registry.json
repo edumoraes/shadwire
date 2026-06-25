@@ -1735,6 +1735,424 @@
           "target": "app/javascript/controllers/ui_input_otp_controller.js"
         }
       ]
+    },
+    {
+      "name": "drawer",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/drawer_component.rb",
+          "target": "app/components/ui/drawer_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/drawer/trigger_component.rb",
+          "target": "app/components/ui/drawer/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/drawer/content_component.rb",
+          "target": "app/components/ui/drawer/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/drawer/header_component.rb",
+          "target": "app/components/ui/drawer/header_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/drawer/footer_component.rb",
+          "target": "app/components/ui/drawer/footer_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/drawer/title_component.rb",
+          "target": "app/components/ui/drawer/title_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/drawer/description_component.rb",
+          "target": "app/components/ui/drawer/description_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/drawer/close_component.rb",
+          "target": "app/components/ui/drawer/close_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/button_component.rb",
+          "target": "app/components/ui/button_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_drawer_controller.js",
+          "target": "app/javascript/controllers/ui_drawer_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/context_menu_component.rb",
+          "target": "app/components/ui/context_menu_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/context_menu/trigger_component.rb",
+          "target": "app/components/ui/context_menu/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/context_menu/content_component.rb",
+          "target": "app/components/ui/context_menu/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/context_menu/item_component.rb",
+          "target": "app/components/ui/context_menu/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/context_menu/label_component.rb",
+          "target": "app/components/ui/context_menu/label_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/context_menu/separator_component.rb",
+          "target": "app/components/ui/context_menu/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/context_menu/group_component.rb",
+          "target": "app/components/ui/context_menu/group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/context_menu/shortcut_component.rb",
+          "target": "app/components/ui/context_menu/shortcut_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_context_menu_controller.js",
+          "target": "app/javascript/controllers/ui_context_menu_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "menubar",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/menubar_component.rb",
+          "target": "app/components/ui/menubar_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/menubar/menu_component.rb",
+          "target": "app/components/ui/menubar/menu_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/menubar/trigger_component.rb",
+          "target": "app/components/ui/menubar/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/menubar/content_component.rb",
+          "target": "app/components/ui/menubar/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/menubar/item_component.rb",
+          "target": "app/components/ui/menubar/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/menubar/separator_component.rb",
+          "target": "app/components/ui/menubar/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/menubar/label_component.rb",
+          "target": "app/components/ui/menubar/label_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/menubar/shortcut_component.rb",
+          "target": "app/components/ui/menubar/shortcut_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_menubar_controller.js",
+          "target": "app/javascript/controllers/ui_menubar_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/navigation_menu_component.rb",
+          "target": "app/components/ui/navigation_menu_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/navigation_menu/list_component.rb",
+          "target": "app/components/ui/navigation_menu/list_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/navigation_menu/item_component.rb",
+          "target": "app/components/ui/navigation_menu/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/navigation_menu/trigger_component.rb",
+          "target": "app/components/ui/navigation_menu/trigger_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/navigation_menu/content_component.rb",
+          "target": "app/components/ui/navigation_menu/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/navigation_menu/link_component.rb",
+          "target": "app/components/ui/navigation_menu/link_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/icon_component.rb",
+          "target": "app/components/ui/icon_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_navigation_menu_controller.js",
+          "target": "app/javascript/controllers/ui_navigation_menu_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/command_component.rb",
+          "target": "app/components/ui/command_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/command/input_component.rb",
+          "target": "app/components/ui/command/input_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/command/list_component.rb",
+          "target": "app/components/ui/command/list_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/command/empty_component.rb",
+          "target": "app/components/ui/command/empty_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/command/group_component.rb",
+          "target": "app/components/ui/command/group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/command/item_component.rb",
+          "target": "app/components/ui/command/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/command/separator_component.rb",
+          "target": "app/components/ui/command/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/command/shortcut_component.rb",
+          "target": "app/components/ui/command/shortcut_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_command_controller.js",
+          "target": "app/javascript/controllers/ui_command_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/calendar_component.rb",
+          "target": "app/components/ui/calendar_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_calendar_controller.js",
+          "target": "app/javascript/controllers/ui_calendar_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/resizable_panel_group_component.rb",
+          "target": "app/components/ui/resizable_panel_group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/resizable_panel_component.rb",
+          "target": "app/components/ui/resizable_panel_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/resizable_handle_component.rb",
+          "target": "app/components/ui/resizable_handle_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_resizable_controller.js",
+          "target": "app/javascript/controllers/ui_resizable_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "carousel",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/carousel_component.rb",
+          "target": "app/components/ui/carousel_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/carousel/content_component.rb",
+          "target": "app/components/ui/carousel/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/carousel/item_component.rb",
+          "target": "app/components/ui/carousel/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/carousel/previous_component.rb",
+          "target": "app/components/ui/carousel/previous_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/carousel/next_component.rb",
+          "target": "app/components/ui/carousel/next_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_carousel_controller.js",
+          "target": "app/javascript/controllers/ui_carousel_controller.js"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "component",
+      "registryDependencies": [
+        "popover",
+        "command",
+        "button"
+      ],
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "date-picker",
+      "type": "component",
+      "registryDependencies": [
+        "popover",
+        "calendar",
+        "button"
+      ],
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
     }
   ]
 }

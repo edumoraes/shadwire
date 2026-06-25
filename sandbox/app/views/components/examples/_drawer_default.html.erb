@@ -1,0 +1,13 @@
+<%= ui_drawer do %>
+  <%= ui_drawer_trigger(variant: :outline) { "Abrir drawer" } %>
+  <%= ui_drawer_content(class: "mx-auto max-w-md") do %>
+    <%= ui_drawer_header do %>
+      <%= ui_drawer_title { "Mover para a lixeira?" } %>
+      <%= ui_drawer_description { "Você poderá restaurar este item depois." } %>
+    <% end %>
+    <%= ui_drawer_footer do %>
+      <%= ui_button { "Confirmar" } %>
+      <%= ui_drawer_close(variant: :outline) { "Cancelar" } %>
+    <% end %>
+  <% end %>
+<% end %>

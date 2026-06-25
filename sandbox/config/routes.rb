@@ -55,6 +55,16 @@ Rails.application.routes.draw do
   get "components/slider", to: "components#slider"
   get "components/hover-card", to: "components#hover_card"
   get "components/input-otp", to: "components#input_otp"
+  get "components/drawer", to: "components#drawer"
+  get "components/context-menu", to: "components#context_menu"
+  get "components/menubar", to: "components#menubar"
+  get "components/navigation-menu", to: "components#navigation_menu"
+  get "components/command", to: "components#command"
+  get "components/combobox", to: "components#combobox"
+  get "components/calendar", to: "components#calendar"
+  get "components/date-picker", to: "components#date_picker"
+  get "components/resizable", to: "components#resizable"
+  get "components/carousel", to: "components#carousel"
 
   # Block documentation pages (composed, full-page layouts).
   get "blocks", to: "blocks#index"

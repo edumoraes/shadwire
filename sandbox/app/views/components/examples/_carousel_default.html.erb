@@ -1,0 +1,11 @@
+<%= ui_carousel(class: "mx-12 w-full max-w-xs") do %>
+  <%= ui_carousel_content do %>
+    <% (1..5).each do |n| %>
+      <%= ui_carousel_item(class: "p-1") do %>
+        <div class="flex aspect-square items-center justify-center rounded-md border bg-card text-4xl font-semibold"><%= n %></div>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= ui_carousel_previous %>
+  <%= ui_carousel_next %>
+<% end %>

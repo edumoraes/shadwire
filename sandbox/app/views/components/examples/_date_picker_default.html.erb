@@ -1,0 +1,10 @@
+<%# Date Picker = Popover + Calendar (a composition recipe, not a new component). %>
+<%= ui_popover do %>
+  <%= ui_popover_trigger(variant: :outline, class: "w-64 justify-start gap-2 font-normal") do %>
+    <%= ui_icon("calendar") %>
+    Selecione uma data
+  <% end %>
+  <%= ui_popover_content(class: "!w-auto !p-0") do %>
+    <%= ui_calendar(name: "due_on") %>
+  <% end %>
+<% end %>

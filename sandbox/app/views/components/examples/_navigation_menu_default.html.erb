@@ -1,0 +1,20 @@
+<%= ui_navigation_menu do %>
+  <%= ui_navigation_menu_list do %>
+    <%= ui_navigation_menu_item do %>
+      <%= ui_navigation_menu_trigger { "Produtos" } %>
+      <%= ui_navigation_menu_content(class: "w-64") do %>
+        <%= ui_navigation_menu_link(href: "#") do %>
+          <span class="text-sm font-medium">Componentes</span>
+          <span class="text-xs text-muted-foreground">Blocos prontos para usar.</span>
+        <% end %>
+        <%= ui_navigation_menu_link(href: "#") do %>
+          <span class="text-sm font-medium">Templates</span>
+          <span class="text-xs text-muted-foreground">Páginas completas.</span>
+        <% end %>
+      <% end %>
+    <% end %>
+    <%= ui_navigation_menu_item do %>
+      <%= ui_navigation_menu_link(href: "#", class: "inline-flex h-9 items-center px-4 font-medium") { "Documentação" } %>
+    <% end %>
+  <% end %>
+<% end %>
