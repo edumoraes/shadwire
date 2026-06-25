@@ -1213,6 +1213,340 @@
           "target": "vendor/shadwire/shadwire.css"
         }
       ]
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/aspect_ratio_component.rb",
+          "target": "app/components/ui/aspect_ratio_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/spinner_component.rb",
+          "target": "app/components/ui/spinner_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/kbd_component.rb",
+          "target": "app/components/ui/kbd_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/kbd/group_component.rb",
+          "target": "app/components/ui/kbd/group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/empty_component.rb",
+          "target": "app/components/ui/empty_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/empty/header_component.rb",
+          "target": "app/components/ui/empty/header_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/empty/media_component.rb",
+          "target": "app/components/ui/empty/media_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/empty/title_component.rb",
+          "target": "app/components/ui/empty/title_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/empty/description_component.rb",
+          "target": "app/components/ui/empty/description_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/empty/content_component.rb",
+          "target": "app/components/ui/empty/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item_component.rb",
+          "target": "app/components/ui/item_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item/group_component.rb",
+          "target": "app/components/ui/item/group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item/media_component.rb",
+          "target": "app/components/ui/item/media_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item/content_component.rb",
+          "target": "app/components/ui/item/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item/title_component.rb",
+          "target": "app/components/ui/item/title_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item/description_component.rb",
+          "target": "app/components/ui/item/description_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item/actions_component.rb",
+          "target": "app/components/ui/item/actions_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item/header_component.rb",
+          "target": "app/components/ui/item/header_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item/footer_component.rb",
+          "target": "app/components/ui/item/footer_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/item/separator_component.rb",
+          "target": "app/components/ui/item/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/separator_component.rb",
+          "target": "app/components/ui/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "input-group",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_group_component.rb",
+          "target": "app/components/ui/input_group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_group/addon_component.rb",
+          "target": "app/components/ui/input_group/addon_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_group/text_component.rb",
+          "target": "app/components/ui/input_group/text_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_group/input_component.rb",
+          "target": "app/components/ui/input_group/input_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_group/textarea_component.rb",
+          "target": "app/components/ui/input_group/textarea_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/input_group/button_component.rb",
+          "target": "app/components/ui/input_group/button_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "button-group",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/button_group_component.rb",
+          "target": "app/components/ui/button_group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/button_group/text_component.rb",
+          "target": "app/components/ui/button_group/text_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/button_group/separator_component.rb",
+          "target": "app/components/ui/button_group/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/separator_component.rb",
+          "target": "app/components/ui/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field_component.rb",
+          "target": "app/components/ui/field_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field/set_component.rb",
+          "target": "app/components/ui/field/set_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field/legend_component.rb",
+          "target": "app/components/ui/field/legend_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field/group_component.rb",
+          "target": "app/components/ui/field/group_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field/content_component.rb",
+          "target": "app/components/ui/field/content_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field/label_component.rb",
+          "target": "app/components/ui/field/label_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field/title_component.rb",
+          "target": "app/components/ui/field/title_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field/description_component.rb",
+          "target": "app/components/ui/field/description_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field/separator_component.rb",
+          "target": "app/components/ui/field/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/field/error_component.rb",
+          "target": "app/components/ui/field/error_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/separator_component.rb",
+          "target": "app/components/ui/separator_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
+    },
+    {
+      "name": "native-select",
+      "type": "component",
+      "files": [
+        {
+          "source": "registry/rails/ui/components/ui_component.rb",
+          "target": "app/components/ui_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/native_select_component.rb",
+          "target": "app/components/ui/native_select_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui_helper.rb",
+          "target": "app/helpers/ui_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
+        }
+      ]
     }
   ]
 }

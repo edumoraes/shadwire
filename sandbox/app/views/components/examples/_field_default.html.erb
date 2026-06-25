@@ -1,0 +1,7 @@
+<%= ui_field_group(class: "w-80") do %>
+  <%= ui_field do %>
+    <%= ui_field_label(for: "fld-email") { "Email" } %>
+    <%= ui_input(type: :email, id: "fld-email", placeholder: "voce@exemplo.com") %>
+    <%= ui_field_description { "Nunca compartilhamos seu email." } %>
+  <% end %>
+<% end %>

@@ -40,6 +40,15 @@ Rails.application.routes.draw do
   get "components/dropdown-menu", to: "components#dropdown_menu"
   get "components/select", to: "components#select"
   get "components/sidebar", to: "components#sidebar"
+  get "components/aspect-ratio", to: "components#aspect_ratio"
+  get "components/spinner", to: "components#spinner"
+  get "components/kbd", to: "components#kbd"
+  get "components/empty", to: "components#empty"
+  get "components/item", to: "components#item"
+  get "components/input-group", to: "components#input_group"
+  get "components/button-group", to: "components#button_group"
+  get "components/field", to: "components#field"
+  get "components/native-select", to: "components#native_select"
 
   # Block documentation pages (composed, full-page layouts).
   get "blocks", to: "blocks#index"

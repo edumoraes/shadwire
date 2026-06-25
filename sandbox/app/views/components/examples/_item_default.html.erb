@@ -1,0 +1,12 @@
+<%= ui_item_group(class: "w-80") do %>
+  <%= ui_item(variant: :outline) do %>
+    <%= ui_item_media(variant: :icon) { ui_icon("file-text") } %>
+    <%= ui_item_content do %>
+      <%= ui_item_title { "Relatório.pdf" } %>
+      <%= ui_item_description { "2,4 MB · atualizado há 2 dias" } %>
+    <% end %>
+    <%= ui_item_actions do %>
+      <%= ui_button(variant: :ghost, size: :icon) { ui_icon("ellipsis", label: "Ações") } %>
+    <% end %>
+  <% end %>
+<% end %>

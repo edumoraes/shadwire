@@ -1,0 +1,7 @@
+<%= ui_input_group(class: "w-80") do %>
+  <%= ui_input_group_addon { ui_icon("search") } %>
+  <%= ui_input_group_input(type: :search, placeholder: "Buscar...") %>
+  <%= ui_input_group_addon(align: :inline_end) do %>
+    <%= ui_kbd { "⌘K" } %>
+  <% end %>
+<% end %>

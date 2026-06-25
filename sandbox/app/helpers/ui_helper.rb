@@ -500,4 +500,164 @@ module UiHelper
   def ui_sidebar_menu_sub_button(**options, &block)
     render(Ui::Sidebar::MenuSubButtonComponent.new(**options), &block)
   end
+
+  def ui_aspect_ratio(**options, &block)
+    render(Ui::AspectRatioComponent.new(**options), &block)
+  end
+
+  def ui_spinner(**options)
+    render(Ui::SpinnerComponent.new(**options))
+  end
+
+  def ui_kbd(**options, &block)
+    render(Ui::KbdComponent.new(**options), &block)
+  end
+
+  def ui_kbd_group(**options, &block)
+    render(Ui::Kbd::GroupComponent.new(**options), &block)
+  end
+
+  def ui_empty(**options, &block)
+    render(Ui::EmptyComponent.new(**options), &block)
+  end
+
+  def ui_empty_header(**options, &block)
+    render(Ui::Empty::HeaderComponent.new(**options), &block)
+  end
+
+  def ui_empty_media(**options, &block)
+    render(Ui::Empty::MediaComponent.new(**options), &block)
+  end
+
+  def ui_empty_title(**options, &block)
+    render(Ui::Empty::TitleComponent.new(**options), &block)
+  end
+
+  def ui_empty_description(**options, &block)
+    render(Ui::Empty::DescriptionComponent.new(**options), &block)
+  end
+
+  def ui_empty_content(**options, &block)
+    render(Ui::Empty::ContentComponent.new(**options), &block)
+  end
+
+  def ui_item(**options, &block)
+    render(Ui::ItemComponent.new(**options), &block)
+  end
+
+  def ui_item_group(**options, &block)
+    render(Ui::Item::GroupComponent.new(**options), &block)
+  end
+
+  def ui_item_media(**options, &block)
+    render(Ui::Item::MediaComponent.new(**options), &block)
+  end
+
+  def ui_item_content(**options, &block)
+    render(Ui::Item::ContentComponent.new(**options), &block)
+  end
+
+  def ui_item_title(**options, &block)
+    render(Ui::Item::TitleComponent.new(**options), &block)
+  end
+
+  def ui_item_description(**options, &block)
+    render(Ui::Item::DescriptionComponent.new(**options), &block)
+  end
+
+  def ui_item_actions(**options, &block)
+    render(Ui::Item::ActionsComponent.new(**options), &block)
+  end
+
+  def ui_item_header(**options, &block)
+    render(Ui::Item::HeaderComponent.new(**options), &block)
+  end
+
+  def ui_item_footer(**options, &block)
+    render(Ui::Item::FooterComponent.new(**options), &block)
+  end
+
+  def ui_item_separator(**options)
+    render(Ui::Item::SeparatorComponent.new(**options))
+  end
+
+  def ui_input_group(**options, &block)
+    render(Ui::InputGroupComponent.new(**options), &block)
+  end
+
+  def ui_input_group_addon(**options, &block)
+    render(Ui::InputGroup::AddonComponent.new(**options), &block)
+  end
+
+  def ui_input_group_text(**options, &block)
+    render(Ui::InputGroup::TextComponent.new(**options), &block)
+  end
+
+  def ui_input_group_input(**options)
+    render(Ui::InputGroup::InputComponent.new(**options))
+  end
+
+  def ui_input_group_textarea(**options, &block)
+    render(Ui::InputGroup::TextareaComponent.new(**options), &block)
+  end
+
+  def ui_input_group_button(**options, &block)
+    render(Ui::InputGroup::ButtonComponent.new(**options), &block)
+  end
+
+  def ui_button_group(**options, &block)
+    render(Ui::ButtonGroupComponent.new(**options), &block)
+  end
+
+  def ui_button_group_text(**options, &block)
+    render(Ui::ButtonGroup::TextComponent.new(**options), &block)
+  end
+
+  def ui_button_group_separator(**options)
+    render(Ui::ButtonGroup::SeparatorComponent.new(**options))
+  end
+
+  def ui_field(**options, &block)
+    render(Ui::FieldComponent.new(**options), &block)
+  end
+
+  def ui_field_set(**options, &block)
+    render(Ui::Field::SetComponent.new(**options), &block)
+  end
+
+  def ui_field_legend(**options, &block)
+    render(Ui::Field::LegendComponent.new(**options), &block)
+  end
+
+  def ui_field_group(**options, &block)
+    render(Ui::Field::GroupComponent.new(**options), &block)
+  end
+
+  def ui_field_content(**options, &block)
+    render(Ui::Field::ContentComponent.new(**options), &block)
+  end
+
+  def ui_field_label(**options, &block)
+    render(Ui::Field::LabelComponent.new(**options), &block)
+  end
+
+  def ui_field_title(**options, &block)
+    render(Ui::Field::TitleComponent.new(**options), &block)
+  end
+
+  def ui_field_description(**options, &block)
+    render(Ui::Field::DescriptionComponent.new(**options), &block)
+  end
+
+  def ui_field_separator(**options, &block)
+    render(Ui::Field::SeparatorComponent.new(**options), &block)
+  end
+
+  def ui_field_error(**options, &block)
+    render(Ui::Field::ErrorComponent.new(**options), &block)
+  end
+
+  def ui_native_select(**options, &block)
+    render(Ui::NativeSelectComponent.new(**options), &block)
+  end
 end

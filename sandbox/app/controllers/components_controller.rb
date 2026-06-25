@@ -1099,4 +1099,129 @@ class ComponentsController < ApplicationController
     @usage_component = SIDEBAR_USAGE_COMPONENT
     @composition = SIDEBAR_COMPOSITION
   end
+
+  def aspect_ratio
+    @page_title = "Aspect Ratio"
+    @page_subtitle = "Mantém o conteúdo em uma proporção fixa usando a propriedade CSS aspect-ratio."
+    @usage_helper = <<~ERB
+      <%= ui_aspect_ratio(ratio: "16 / 9") do %>
+        <%= image_tag "cover.jpg", class: "h-full w-full object-cover" %>
+      <% end %>
+    ERB
+    @examples = [ { name: "aspect_ratio_default", title: "Padrão", description: "Restringe o conteúdo à proporção 16 / 9." } ]
+    render "doc_page"
+  end
+
+  def spinner
+    @page_title = "Spinner"
+    @page_subtitle = "Um indicador de carregamento giratório com role=\"status\" e rótulo acessível."
+    @usage_helper = <<~ERB
+      <%= ui_spinner %>
+      <%= ui_button(disabled: true) { ui_spinner(label: nil) + " Salvando" } %>
+    ERB
+    @examples = [ { name: "spinner_default", title: "Padrão", description: "Standalone (anuncia \"Carregando\") e composto dentro de um botão (decorativo)." } ]
+    render "doc_page"
+  end
+
+  def kbd
+    @page_title = "Kbd"
+    @page_subtitle = "Representa teclas do teclado. Agrupe várias com ui_kbd_group para exibir um atalho."
+    @usage_helper = <<~ERB
+      <%= ui_kbd_group do %>
+        <%= ui_kbd { "⌘" } %>
+        <%= ui_kbd { "K" } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "kbd_default", title: "Padrão", description: "Um grupo de teclas dentro de um texto." } ]
+    render "doc_page"
+  end
+
+  def empty
+    @page_title = "Empty"
+    @page_subtitle = "Um estado vazio: mídia, título, descrição e ações centralizados."
+    @usage_helper = <<~ERB
+      <%= ui_empty do %>
+        <%= ui_empty_header do %>
+          <%= ui_empty_media(variant: :icon) { ui_icon("inbox") } %>
+          <%= ui_empty_title { "Sem mensagens" } %>
+          <%= ui_empty_description { "Elas aparecem aqui." } %>
+        <% end %>
+        <%= ui_empty_content do %>
+          <%= ui_button(size: :sm) { "Atualizar" } %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "empty_default", title: "Padrão", description: "Estado vazio com ícone, textos e uma ação." } ]
+    render "doc_page"
+  end
+
+  def item
+    @page_title = "Item"
+    @page_subtitle = "Uma linha flexível: mídia + conteúdo (título/descrição) + ações. Agrupe com ui_item_group."
+    @usage_helper = <<~ERB
+      <%= ui_item(variant: :outline) do %>
+        <%= ui_item_media(variant: :icon) { ui_icon("file-text") } %>
+        <%= ui_item_content do %>
+          <%= ui_item_title { "Relatório.pdf" } %>
+          <%= ui_item_description { "2,4 MB" } %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "item_default", title: "Padrão", description: "Um item com mídia, conteúdo e ação." } ]
+    render "doc_page"
+  end
+
+  def input_group
+    @page_title = "Input Group"
+    @page_subtitle = "Combina um input/textarea com addons (ícones, texto, botões) no início ou fim."
+    @usage_helper = <<~ERB
+      <%= ui_input_group do %>
+        <%= ui_input_group_addon { ui_icon("search") } %>
+        <%= ui_input_group_input(placeholder: "Buscar...") %>
+        <%= ui_input_group_addon(align: :inline_end) { ui_kbd { "⌘K" } } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "input_group_default", title: "Padrão", description: "Addon de ícone à esquerda e atalho à direita." } ]
+    render "doc_page"
+  end
+
+  def button_group
+    @page_title = "Button Group"
+    @page_subtitle = "Junta visualmente uma sequência de botões, colapsando bordas e cantos internos."
+    @usage_helper = <<~ERB
+      <%= ui_button_group do %>
+        <%= ui_button(variant: :outline) { "Anterior" } %>
+        <%= ui_button(variant: :outline) { "Próximo" } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "button_group_default", title: "Padrão", description: "Dois botões unidos em um grupo horizontal." } ]
+    render "doc_page"
+  end
+
+  def field
+    @page_title = "Field"
+    @page_subtitle = "Compõe label, controle, descrição e erro de um campo de formulário."
+    @usage_helper = <<~ERB
+      <%= ui_field do %>
+        <%= ui_field_label(for: "email") { "Email" } %>
+        <%= ui_input(type: :email, id: "email") %>
+        <%= ui_field_description { "Nunca compartilhamos seu email." } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "field_default", title: "Padrão", description: "Um campo vertical com label, input e descrição." } ]
+    render "doc_page"
+  end
+
+  def native_select
+    @page_title = "Native Select"
+    @page_subtitle = "Um <select> nativo estilizado para combinar com os demais controles."
+    @usage_helper = <<~ERB
+      <%= ui_native_select(name: "fruit") do %>
+        <option value="apple">Maçã</option>
+        <option value="banana">Banana</option>
+      <% end %>
+    ERB
+    @examples = [ { name: "native_select_default", title: "Padrão", description: "Select nativo com chevron e foco estilizados." } ]
+    render "doc_page"
+  end
 end

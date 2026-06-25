@@ -1,0 +1,35 @@
+<%# Generic component documentation page driven by controller ivars: %>
+<%#   @page_title, @page_subtitle, @usage_helper (optional), @examples (array). %>
+<% content_for :title, "#{@page_title} — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="mx-auto w-full max-w-3xl space-y-12 px-5 py-12">
+  <header class="space-y-3">
+    <%= link_to components_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
+      <%= ui_icon("arrow-left", size: :sm) %>
+      Componentes
+    <% end %>
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]"><%= @page_title %></h1>
+    <% if @page_subtitle.present? %>
+      <p class="text-lg leading-snug text-muted-foreground"><%= @page_subtitle %></p>
+    <% end %>
+  </header>
+
+  <% if @usage_helper.present? %>
+    <section class="space-y-4">
+      <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>
+      <%= docs_code_block(@usage_helper) %>
+    </section>
+  <% end %>
+
+  <% if @examples.present? %>
+    <section class="space-y-8">
+      <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Exemplos</h2>
+      <% @examples.each do |example| %>
+        <%= render "components/example", **example %>
+      <% end %>
+    </section>
+  <% end %>
+</article>
