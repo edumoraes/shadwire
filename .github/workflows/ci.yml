@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           working-directory: sandbox
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           working-directory: sandbox
@@ -60,7 +60,7 @@ jobs:
       # run serially (matches the known-good local invocation).
       PARALLEL_WORKERS: "1"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           working-directory: sandbox
@@ -84,7 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           working-directory: sandbox
@@ -105,9 +105,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Markdown lint
-        uses: DavidAnson/markdownlint-cli2-action@v19
+        uses: DavidAnson/markdownlint-cli2-action@v23
         with:
           globs: "**/*.md"
       - name: Link check (lenient)
@@ -137,13 +137,13 @@ jobs:
       # paths under the same sub-URI (see config.ru and production.rb).
       PAGES_BASE_PATH: /shadwire
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           working-directory: sandbox
           ruby-version: .ruby-version
           bundler-cache: true
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
       - name: Generate a build secret
         working-directory: sandbox
         run: echo "SECRET_KEY_BASE=$(bin/rails secret)" >> "$GITHUB_ENV"
@@ -183,7 +183,7 @@ jobs:
           touch ../_site/.nojekyll
           test -f ../_site/index.html || { echo "::error::no index.html produced"; cat /tmp/server.log; exit 1; }
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _site
       - name: Deploy to GitHub Pages
