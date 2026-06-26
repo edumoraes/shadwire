@@ -96,9 +96,13 @@ export default class extends Controller {
         `${day}</button></div>`
     }
 
+    // Fixed 2.25rem (size-9) columns, not grid-cols-7's collapsible minmax(0,1fr):
+    // a calendar is a fixed-size widget, so it must keep its natural width even in
+    // a shrink-to-fit container (e.g. a w-auto popover positioned with left:50%).
+    const cols = "grid-template-columns:repeat(7,2.25rem)"
     this.gridTarget.innerHTML =
-      `<div role="row" class="grid grid-cols-7">${head}</div>` +
-      `<div role="rowgroup" class="grid grid-cols-7 gap-y-1 mt-1">${cells}</div>`
+      `<div role="row" class="grid" style="${cols}">${head}</div>` +
+      `<div role="rowgroup" class="grid gap-y-1 mt-1" style="${cols}">${cells}</div>`
 
     if (this.focusDate) {
       const target = this.gridTarget.querySelector(`[data-date='${this.focusDate}']`)
