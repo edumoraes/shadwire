@@ -2,4 +2,5 @@
 
 require_relative "shadwire/version"
 require_relative "shadwire/errors"
+require_relative "shadwire/config"
 require_relative "shadwire/cli"
