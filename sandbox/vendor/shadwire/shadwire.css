@@ -386,3 +386,19 @@ dialog[data-state="open"]::backdrop {
 [data-collapsible="icon"] [data-slot="sidebar-menu-button-tooltip-content"]:not([hidden]) {
   display: block;
 }
+
+/* Sonner toasts animate in/out by flipping data-state between the JS append
+   (closed) and the next frame (open), and back to closed on dismiss. */
+[data-slot="sonner-toast"] {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+[data-slot="sonner-toast"][data-state="closed"] {
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.98);
+}
+
+[data-slot="sonner-toast"][data-state="open"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}

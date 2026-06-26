@@ -1460,4 +1460,55 @@ class ComponentsController < ApplicationController
     @examples = [ { name: "carousel_default", title: "Padrão", description: "Cinco slides numerados com controles." } ]
     render "doc_page"
   end
+
+  def sonner
+    @page_title = "Sonner"
+    @page_subtitle = "Notificações temporárias empilhadas numa região live polida. Dispare com window.toast ou via Stimulus."
+    @usage_helper = <<~ERB
+      <%# Coloque um toaster no layout… %>
+      <%= ui_sonner %>
+
+      <%# …e dispare de qualquer lugar. %>
+      <%= ui_button(data: { action: "click->ui-sonner#toast",
+            "ui-sonner-title-param": "Evento criado",
+            "ui-sonner-description-param": "Domingo às 21h." }) { "Mostrar toast" } %>
+    ERB
+    @examples = [ { name: "sonner_default", title: "Padrão", description: "Variantes default, sucesso, erro e com ação." } ]
+    render "doc_page"
+  end
+
+  def chart
+    @page_title = "Chart"
+    @page_subtitle = "Gráficos com Chart.js. A paleta usa os tokens --chart-1..5 do tema. É a única dependência JS de terceiros."
+    @usage_helper = <<~ERB
+      <%= ui_chart(type: :bar, label: "Visitantes por mês",
+            data: { labels: %w[Jan Fev Mar],
+                    datasets: [ { label: "Desktop", data: [ 186, 305, 237 ] } ] }) %>
+    ERB
+    @examples = [
+      { name: "chart_bar", title: "Barras", description: "Dois conjuntos de dados com a paleta do tema." },
+      { name: "chart_line", title: "Linha", description: "Série temporal com tensão e área preenchida." },
+      { name: "chart_pie", title: "Pizza", description: "Distribuição categórica colorida por rótulo." }
+    ]
+    render "doc_page"
+  end
+
+  def data_table
+    @page_title = "Data Table"
+    @page_subtitle = "Tabela com filtro, ordenação, paginação, seleção de linhas e visibilidade de colunas — tudo no cliente."
+    @usage_helper = <<~ERB
+      <%= ui_data_table(
+            filter_key: :email,
+            columns: [
+              { key: :status, label: "Status" },
+              { key: :email, label: "E-mail", sortable: true },
+              { key: :amount, label: "Valor", sortable: true }
+            ],
+            rows: [
+              { id: 1, status: "Sucesso", email: "ada@example.com", amount: 316 }
+            ]) %>
+    ERB
+    @examples = [ { name: "data_table_default", title: "Padrão", description: "Filtro por e-mail, colunas ordenáveis e seleção de linhas." } ]
+    render "doc_page"
+  end
 end

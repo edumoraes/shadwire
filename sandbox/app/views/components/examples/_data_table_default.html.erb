@@ -1,0 +1,17 @@
+<%= ui_data_table(
+      filter_key: :email,
+      page_size: 5,
+      columns: [
+        { key: :status, label: "Status" },
+        { key: :email, label: "E-mail", sortable: true },
+        { key: :amount, label: "Valor", sortable: true, sort_value: :amount_value }
+      ],
+      rows: [
+        { id: "m5gr84i9", status: "Sucesso",  email: "ken99@example.com",    amount: "R$ 316", amount_value: 316 },
+        { id: "3u1reuv4", status: "Sucesso",  email: "abe45@example.com",    amount: "R$ 242", amount_value: 242 },
+        { id: "derv1ws0", status: "Processando", email: "monserrat44@example.com", amount: "R$ 837", amount_value: 837 },
+        { id: "5kma53ae", status: "Sucesso",  email: "silas22@example.com",   amount: "R$ 874", amount_value: 874 },
+        { id: "bhqecj4p", status: "Falhou",   email: "carmella@example.com",  amount: "R$ 721", amount_value: 721 },
+        { id: "p0r9hl2k", status: "Processando", email: "jason.bourne@example.com", amount: "R$ 459", amount_value: 459 },
+        { id: "x7nf2qa1", status: "Sucesso",  email: "noah.kahan@example.com", amount: "R$ 128", amount_value: 128 }
+      ]) %>

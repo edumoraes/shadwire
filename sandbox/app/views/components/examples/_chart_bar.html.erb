@@ -1,0 +1,11 @@
+<%= ui_chart(
+      type: :bar,
+      class: "w-full max-w-lg",
+      label: "Visitantes por mês: desktop e mobile",
+      data: {
+        labels: %w[Jan Fev Mar Abr Mai Jun],
+        datasets: [
+          { label: "Desktop", data: [ 186, 305, 237, 73, 209, 214 ] },
+          { label: "Mobile", data: [ 80, 200, 120, 190, 130, 140 ] }
+        ]
+      }) %>

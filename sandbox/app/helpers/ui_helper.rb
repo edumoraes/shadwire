@@ -904,4 +904,16 @@ module UiHelper
   def ui_carousel_next(**options)
     render(Ui::Carousel::NextComponent.new(**options))
   end
+
+  def ui_sonner(**options, &block)
+    render(Ui::SonnerComponent.new(**options), &block)
+  end
+
+  def ui_chart(**options)
+    render(Ui::ChartComponent.new(**options))
+  end
+
+  def ui_data_table(**options)
+    render(Ui::DataTableComponent.new(**options))
+  end
 end

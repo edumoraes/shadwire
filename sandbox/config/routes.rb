@@ -65,6 +65,9 @@ Rails.application.routes.draw do
   get "components/date-picker", to: "components#date_picker"
   get "components/resizable", to: "components#resizable"
   get "components/carousel", to: "components#carousel"
+  get "components/sonner", to: "components#sonner"
+  get "components/chart", to: "components#chart"
+  get "components/data-table", to: "components#data_table"
 
   # Block documentation pages (composed, full-page layouts).
   get "blocks", to: "blocks#index"
