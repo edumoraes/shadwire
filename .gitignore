@@ -23,3 +23,6 @@
 
 # Static export produced by the Pages deploy job
 /_site/
+
+# Published registry produced by bin/build_registry (regenerated in CI)
+/build/

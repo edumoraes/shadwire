@@ -1,0 +1,128 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Transforms registry/registry.json (the source of truth, with source->target
+# file entries) into the *published* registry consumed by the CLI over HTTP.
+# For each item it writes build/r/{name}.json with each file's content inlined
+# (no source paths), plus build/r/index.json carrying a catalog and the shared
+# `base` install used by `init`. Output goes to $BUILD_DIR (default build/).
+#
+# Mirrors bin/sync_registry conventions (Pathname, JSON, frozen string literal).
+
+require "fileutils"
+require "json"
+require "pathname"
+
+ROOT = Pathname.new(__dir__).join("..").expand_path
+REGISTRY = JSON.parse(ROOT.join("registry/registry.json").read)
+OUTPUT_DIR = Pathname.new(ENV.fetch("BUILD_DIR", ROOT.join("build").to_s)).join("r")
+
+# Shared install bundled into every item; published separately as `base` so the
+# CLI's `init` can lay it down once before adding components.
+BASE_FILES = [
+  { "source" => "registry/rails/ui/components/ui_component.rb", "target" => "app/components/ui_component.rb" },
+  { "source" => "registry/rails/ui/helpers/ui_helper.rb", "target" => "app/helpers/ui_helper.rb" },
+  { "source" => "registry/rails/ui/styles/shadwire.css", "target" => "vendor/shadwire/shadwire.css" }
+].freeze
+
+# Humanize a kebab-case item name for a fallback title/description, e.g.
+# "input-otp" => "Input Otp".
+def humanize(name)
+  name.split("-").map(&:capitalize).join(" ")
+end
+
+# Classify a file by its install target so the CLI knows where it belongs.
+def file_type(target)
+  case target
+  when %r{\Aapp/components/} then "component"
+  when %r{\Aapp/helpers/} then "helper"
+  when %r{\Aapp/javascript/} then "javascript"
+  when %r{\Avendor/} then "css"
+  else "file"
+  end
+end
+
+# Inline a source->target file entry into the published {target, content, type} shape.
+def inline_file(file)
+  source = ROOT.join(file.fetch("source"))
+  raise "Missing registry source: #{file.fetch("source")}" unless source.file?
+
+  {
+    "target" => file.fetch("target"),
+    "type" => file_type(file.fetch("target")),
+    "content" => source.read
+  }
+end
+
+# Resolve an item's registryDependencies to their full transitive closure of
+# item names (excluding the item itself), so the published data is internally
+# consistent. Mirrors the walk in bin/sync_registry's expand_with_dependencies.
+def transitive_dependencies(item, items_by_name)
+  resolved = []
+  seen = {}
+  queue = Array(item["registryDependencies"]).dup
+
+  until queue.empty?
+    dep_name = queue.shift
+    next if seen[dep_name]
+
+    seen[dep_name] = true
+    dep = items_by_name[dep_name]
+    unless dep
+      warn "Unknown registry dependency #{dep_name} (required by #{item.fetch("name")})"
+      next
+    end
+
+    resolved << dep_name
+    Array(dep["registryDependencies"]).each { |name| queue << name unless seen[name] }
+  end
+
+  resolved.sort
+end
+
+items = REGISTRY.fetch("items")
+items_by_name = items.to_h { |item| [item.fetch("name"), item] }
+
+FileUtils.mkdir_p(OUTPUT_DIR)
+
+items.each do |item|
+  name = item.fetch("name")
+  published = {
+    "name" => name,
+    "type" => item.fetch("type"),
+    "title" => item["title"] || humanize(name),
+    "description" => item["description"] || humanize(name),
+    "gems" => Array(item["gems"]),
+    "importmap" => Array(item["importmap"]),
+    "registryDependencies" => transitive_dependencies(item, items_by_name),
+    "files" => item.fetch("files").map { |file| inline_file(file) }
+  }
+
+  OUTPUT_DIR.join("#{name}.json").write(JSON.pretty_generate(published) + "\n")
+end
+
+index = {
+  "name" => REGISTRY.fetch("name"),
+  "version" => REGISTRY.fetch("version"),
+  "items" => items.map do |item|
+    name = item.fetch("name")
+    {
+      "name" => name,
+      "type" => item.fetch("type"),
+      "title" => item["title"] || humanize(name),
+      "description" => item["description"] || humanize(name)
+    }
+  end,
+  "base" => {
+    "files" => BASE_FILES.map { |file| inline_file(file) },
+    "gems" => Array(REGISTRY.fetch("gems")),
+    "tailwind" => {
+      "version" => REGISTRY.fetch("tailwind").fetch("version"),
+      "css" => File.basename(REGISTRY.fetch("tailwind").fetch("css"))
+    }
+  }
+}
+
+OUTPUT_DIR.join("index.json").write(JSON.pretty_generate(index) + "\n")
+
+puts "Built #{items.size} items + index into #{OUTPUT_DIR.relative_path_from(ROOT)}"
