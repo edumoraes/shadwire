@@ -1,0 +1,12 @@
+{
+  "name": "gamma",
+  "type": "component",
+  "title": "Gamma",
+  "description": "Depends on beta (chain level 3, transitively pulls alpha then beta)",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": ["beta"],
+  "files": [
+    { "target": "app/components/ui/gamma_component.rb", "type": "component", "content": "# gamma" }
+  ]
+}

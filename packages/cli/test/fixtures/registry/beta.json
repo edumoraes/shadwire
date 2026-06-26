@@ -1,0 +1,12 @@
+{
+  "name": "beta",
+  "type": "component",
+  "title": "Beta",
+  "description": "Depends on alpha",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": ["alpha"],
+  "files": [
+    { "target": "app/components/ui/beta_component.rb", "type": "component", "content": "# beta" }
+  ]
+}

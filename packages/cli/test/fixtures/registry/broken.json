@@ -1,0 +1,12 @@
+{
+  "name": "broken",
+  "type": "component",
+  "title": "Broken",
+  "description": "Has a registryDependency pointing at a missing item",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": ["nonexistent"],
+  "files": [
+    { "target": "app/components/ui/broken_component.rb", "type": "component", "content": "# broken" }
+  ]
+}
