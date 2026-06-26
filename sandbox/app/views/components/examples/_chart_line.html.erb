@@ -1,0 +1,10 @@
+<%= ui_chart(
+      type: :line,
+      class: "w-full max-w-lg",
+      label: "Visitantes por mês",
+      data: {
+        labels: %w[Jan Fev Mar Abr Mai Jun],
+        datasets: [
+          { label: "Visitantes", data: [ 186, 305, 237, 273, 209, 264 ], tension: 0.4, fill: true }
+        ]
+      }) %>

@@ -1,0 +1,13 @@
+<%= ui_context_menu do %>
+  <%= ui_context_menu_trigger(class: "flex h-32 w-72 items-center justify-center rounded-md border border-dashed text-sm text-muted-foreground") { "Clique com o botão direito aqui" } %>
+  <%= ui_context_menu_content(class: "w-48") do %>
+    <%= ui_context_menu_label { "Ações" } %>
+    <%= ui_context_menu_item do %>
+      Voltar
+      <%= ui_context_menu_shortcut { "⌘[" } %>
+    <% end %>
+    <%= ui_context_menu_item { "Avançar" } %>
+    <%= ui_context_menu_separator %>
+    <%= ui_context_menu_item(variant: :destructive) { "Excluir" } %>
+  <% end %>
+<% end %>

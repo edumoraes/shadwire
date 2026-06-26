@@ -1,0 +1,10 @@
+<%= ui_empty(class: "w-80 rounded-lg border") do %>
+  <%= ui_empty_header do %>
+    <%= ui_empty_media(variant: :icon) { ui_icon("inbox") } %>
+    <%= ui_empty_title { "Sem mensagens" } %>
+    <%= ui_empty_description { "Quando você receber mensagens, elas aparecem aqui." } %>
+  <% end %>
+  <%= ui_empty_content do %>
+    <%= ui_button(variant: :outline, size: :sm) { "Atualizar" } %>
+  <% end %>
+<% end %>

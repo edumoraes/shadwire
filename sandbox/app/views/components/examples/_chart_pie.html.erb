@@ -1,0 +1,10 @@
+<%= ui_chart(
+      type: :doughnut,
+      class: "mx-auto aspect-square w-full max-w-xs",
+      label: "Navegadores por participação",
+      data: {
+        labels: %w[Chrome Safari Firefox Edge Outros],
+        datasets: [
+          { label: "Participação", data: [ 275, 200, 187, 173, 90 ] }
+        ]
+      }) %>

@@ -1099,4 +1099,416 @@ class ComponentsController < ApplicationController
     @usage_component = SIDEBAR_USAGE_COMPONENT
     @composition = SIDEBAR_COMPOSITION
   end
+
+  def aspect_ratio
+    @page_title = "Aspect Ratio"
+    @page_subtitle = "Mantém o conteúdo em uma proporção fixa usando a propriedade CSS aspect-ratio."
+    @usage_helper = <<~ERB
+      <%= ui_aspect_ratio(ratio: "16 / 9") do %>
+        <%= image_tag "cover.jpg", class: "h-full w-full object-cover" %>
+      <% end %>
+    ERB
+    @examples = [ { name: "aspect_ratio_default", title: "Padrão", description: "Restringe o conteúdo à proporção 16 / 9." } ]
+    render "doc_page"
+  end
+
+  def spinner
+    @page_title = "Spinner"
+    @page_subtitle = "Um indicador de carregamento giratório com role=\"status\" e rótulo acessível."
+    @usage_helper = <<~ERB
+      <%= ui_spinner %>
+      <%= ui_button(disabled: true) { ui_spinner(label: nil) + " Salvando" } %>
+    ERB
+    @examples = [ { name: "spinner_default", title: "Padrão", description: "Standalone (anuncia \"Carregando\") e composto dentro de um botão (decorativo)." } ]
+    render "doc_page"
+  end
+
+  def kbd
+    @page_title = "Kbd"
+    @page_subtitle = "Representa teclas do teclado. Agrupe várias com ui_kbd_group para exibir um atalho."
+    @usage_helper = <<~ERB
+      <%= ui_kbd_group do %>
+        <%= ui_kbd { "⌘" } %>
+        <%= ui_kbd { "K" } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "kbd_default", title: "Padrão", description: "Um grupo de teclas dentro de um texto." } ]
+    render "doc_page"
+  end
+
+  def empty
+    @page_title = "Empty"
+    @page_subtitle = "Um estado vazio: mídia, título, descrição e ações centralizados."
+    @usage_helper = <<~ERB
+      <%= ui_empty do %>
+        <%= ui_empty_header do %>
+          <%= ui_empty_media(variant: :icon) { ui_icon("inbox") } %>
+          <%= ui_empty_title { "Sem mensagens" } %>
+          <%= ui_empty_description { "Elas aparecem aqui." } %>
+        <% end %>
+        <%= ui_empty_content do %>
+          <%= ui_button(size: :sm) { "Atualizar" } %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "empty_default", title: "Padrão", description: "Estado vazio com ícone, textos e uma ação." } ]
+    render "doc_page"
+  end
+
+  def item
+    @page_title = "Item"
+    @page_subtitle = "Uma linha flexível: mídia + conteúdo (título/descrição) + ações. Agrupe com ui_item_group."
+    @usage_helper = <<~ERB
+      <%= ui_item(variant: :outline) do %>
+        <%= ui_item_media(variant: :icon) { ui_icon("file-text") } %>
+        <%= ui_item_content do %>
+          <%= ui_item_title { "Relatório.pdf" } %>
+          <%= ui_item_description { "2,4 MB" } %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "item_default", title: "Padrão", description: "Um item com mídia, conteúdo e ação." } ]
+    render "doc_page"
+  end
+
+  def input_group
+    @page_title = "Input Group"
+    @page_subtitle = "Combina um input/textarea com addons (ícones, texto, botões) no início ou fim."
+    @usage_helper = <<~ERB
+      <%= ui_input_group do %>
+        <%= ui_input_group_addon { ui_icon("search") } %>
+        <%= ui_input_group_input(placeholder: "Buscar...") %>
+        <%= ui_input_group_addon(align: :inline_end) { ui_kbd { "⌘K" } } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "input_group_default", title: "Padrão", description: "Addon de ícone à esquerda e atalho à direita." } ]
+    render "doc_page"
+  end
+
+  def button_group
+    @page_title = "Button Group"
+    @page_subtitle = "Junta visualmente uma sequência de botões, colapsando bordas e cantos internos."
+    @usage_helper = <<~ERB
+      <%= ui_button_group do %>
+        <%= ui_button(variant: :outline) { "Anterior" } %>
+        <%= ui_button(variant: :outline) { "Próximo" } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "button_group_default", title: "Padrão", description: "Dois botões unidos em um grupo horizontal." } ]
+    render "doc_page"
+  end
+
+  def field
+    @page_title = "Field"
+    @page_subtitle = "Compõe label, controle, descrição e erro de um campo de formulário."
+    @usage_helper = <<~ERB
+      <%= ui_field do %>
+        <%= ui_field_label(for: "email") { "Email" } %>
+        <%= ui_input(type: :email, id: "email") %>
+        <%= ui_field_description { "Nunca compartilhamos seu email." } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "field_default", title: "Padrão", description: "Um campo vertical com label, input e descrição." } ]
+    render "doc_page"
+  end
+
+  def native_select
+    @page_title = "Native Select"
+    @page_subtitle = "Um <select> nativo estilizado para combinar com os demais controles."
+    @usage_helper = <<~ERB
+      <%= ui_native_select(name: "fruit") do %>
+        <option value="apple">Maçã</option>
+        <option value="banana">Banana</option>
+      <% end %>
+    ERB
+    @examples = [ { name: "native_select_default", title: "Padrão", description: "Select nativo com chevron e foco estilizados." } ]
+    render "doc_page"
+  end
+
+  def collapsible
+    @page_title = "Collapsible"
+    @page_subtitle = "Uma seção que expande e recolhe, controlada pelo controller ui-collapsible."
+    @usage_helper = <<~ERB
+      <%= ui_collapsible do %>
+        <%= ui_collapsible_trigger { "Mostrar mais" } %>
+        <%= ui_collapsible_content { "Conteúdo escondido." } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "collapsible_default", title: "Padrão", description: "Lista que revela itens adicionais." } ]
+    render "doc_page"
+  end
+
+  def toggle
+    @page_title = "Toggle"
+    @page_subtitle = "Um botão de dois estados com aria-pressed e data-state (on/off)."
+    @usage_helper = <<~ERB
+      <%= ui_toggle(variant: :outline, "aria-label": "Negrito") { ui_icon("bold") } %>
+    ERB
+    @examples = [ { name: "toggle_default", title: "Padrão", description: "Toggles de formatação, um deles pressionado." } ]
+    render "doc_page"
+  end
+
+  def toggle_group
+    @page_title = "Toggle Group"
+    @page_subtitle = "Um grupo de toggles com seleção única ou múltipla e navegação por setas."
+    @usage_helper = <<~ERB
+      <%= ui_toggle_group(type: :single) do %>
+        <%= ui_toggle_group_item(value: "left") { ui_icon("align-left") } %>
+        <%= ui_toggle_group_item(value: "center") { ui_icon("align-center") } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "toggle_group_default", title: "Padrão", description: "Seleção múltipla de formatação de texto." } ]
+    render "doc_page"
+  end
+
+  def slider
+    @page_title = "Slider"
+    @page_subtitle = "Um slider de um thumb (padrão WAI-ARIA) com valor espelhado em um input hidden."
+    @usage_helper = <<~ERB
+      <%= ui_slider(min: 0, max: 100, value: 50, name: "volume", label: "Volume") %>
+    ERB
+    @examples = [ { name: "slider_default", title: "Padrão", description: "Arraste o thumb ou use as setas do teclado." } ]
+    render "doc_page"
+  end
+
+  def hover_card
+    @page_title = "Hover Card"
+    @page_subtitle = "Conteúdo rico que abre ao passar o mouse ou focar o gatilho, com atrasos configuráveis."
+    @usage_helper = <<~ERB
+      <%= ui_hover_card do %>
+        <%= ui_hover_card_trigger(href: "#") { "@shadwire" } %>
+        <%= ui_hover_card_content { "Detalhes do perfil." } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "hover_card_default", title: "Padrão", description: "Cartão de perfil exibido no hover." } ]
+    render "doc_page"
+  end
+
+  def input_otp
+    @page_title = "Input OTP"
+    @page_subtitle = "Campo de código de uso único: slots de um caractere com avanço, backspace e colagem."
+    @usage_helper = <<~ERB
+      <%= ui_input_otp(name: "code") do %>
+        <%= ui_input_otp_group do %>
+          <%= ui_input_otp_slot %>
+          <%= ui_input_otp_slot %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "input_otp_default", title: "Padrão", description: "Dois grupos de três slots separados por um traço." } ]
+    render "doc_page"
+  end
+
+  def drawer
+    @page_title = "Drawer"
+    @page_subtitle = "Um painel que desliza de uma borda, sobre um <dialog> nativo, com arrastar para fechar."
+    @usage_helper = <<~ERB
+      <%= ui_drawer do %>
+        <%= ui_drawer_trigger { "Abrir" } %>
+        <%= ui_drawer_content do %>
+          <%= ui_drawer_header do %>
+            <%= ui_drawer_title { "Título" } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "drawer_default", title: "Padrão", description: "Drawer inferior com cabeçalho, descrição e ações." } ]
+    render "doc_page"
+  end
+
+  def context_menu
+    @page_title = "Context Menu"
+    @page_subtitle = "Um menu aberto com o botão direito, posicionado no ponteiro, com navegação por teclado."
+    @usage_helper = <<~ERB
+      <%= ui_context_menu do %>
+        <%= ui_context_menu_trigger { "Clique com o botão direito" } %>
+        <%= ui_context_menu_content do %>
+          <%= ui_context_menu_item { "Voltar" } %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "context_menu_default", title: "Padrão", description: "Área que abre o menu no clique direito." } ]
+    render "doc_page"
+  end
+
+  def menubar
+    @page_title = "Menubar"
+    @page_subtitle = "Uma barra de menus horizontal (padrão WAI-ARIA menubar) coordenada por um controller."
+    @usage_helper = <<~ERB
+      <%= ui_menubar do %>
+        <%= ui_menubar_menu do %>
+          <%= ui_menubar_trigger { "Arquivo" } %>
+          <%= ui_menubar_content do %>
+            <%= ui_menubar_item { "Novo" } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "menubar_default", title: "Padrão", description: "Dois menus com itens, separadores e atalhos." } ]
+    render "doc_page"
+  end
+
+  def navigation_menu
+    @page_title = "Navigation Menu"
+    @page_subtitle = "Uma navegação com gatilhos que revelam painéis de conteúdo, um de cada vez."
+    @usage_helper = <<~ERB
+      <%= ui_navigation_menu do %>
+        <%= ui_navigation_menu_list do %>
+          <%= ui_navigation_menu_item do %>
+            <%= ui_navigation_menu_trigger { "Produtos" } %>
+            <%= ui_navigation_menu_content do %>
+              <%= ui_navigation_menu_link(href: "#") { "Item" } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "navigation_menu_default", title: "Padrão", description: "Gatilho com painel e um link simples." } ]
+    render "doc_page"
+  end
+
+  def command
+    @page_title = "Command"
+    @page_subtitle = "Uma paleta de comandos filtrável, com navegação por setas e Enter."
+    @usage_helper = <<~ERB
+      <%= ui_command do %>
+        <%= ui_command_input(placeholder: "Buscar...") %>
+        <%= ui_command_list do %>
+          <%= ui_command_empty { "Nada encontrado." } %>
+          <%= ui_command_group(heading: "Sugestões") do %>
+            <%= ui_command_item(value: "perfil") { "Perfil" } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "command_default", title: "Padrão", description: "Paleta com grupos, ícones e atalhos." } ]
+    render "doc_page"
+  end
+
+  def combobox
+    @page_title = "Combobox"
+    @page_subtitle = "Uma receita: Popover + Command. Não é um componente novo — instala popover e command."
+    @usage_helper = <<~ERB
+      <%= ui_popover do %>
+        <%= ui_popover_trigger(variant: :outline) { "Selecione" } %>
+        <%= ui_popover_content(class: "!p-0") do %>
+          <%= ui_command do %>
+            <%= ui_command_input(placeholder: "Buscar...") %>
+            <%= ui_command_list do %>
+              <%= ui_command_item(value: "rails") { "Rails" } %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "combobox_default", title: "Padrão", description: "Gatilho de popover com uma lista de comandos buscável." } ]
+    render "doc_page"
+  end
+
+  def calendar
+    @page_title = "Calendar"
+    @page_subtitle = "Uma grade de mês construída no cliente: navegação de mês, seleção e teclado."
+    @usage_helper = <<~ERB
+      <%= ui_calendar(selected: Date.today, name: "date") %>
+    ERB
+    @examples = [ { name: "calendar_default", title: "Padrão", description: "Mês atual com o dia de hoje selecionado." } ]
+    render "doc_page"
+  end
+
+  def date_picker
+    @page_title = "Date Picker"
+    @page_subtitle = "Uma receita: Popover + Calendar. Não é um componente novo — instala popover e calendar."
+    @usage_helper = <<~ERB
+      <%= ui_popover do %>
+        <%= ui_popover_trigger(variant: :outline) { "Selecione uma data" } %>
+        <%= ui_popover_content(class: "!w-auto !p-0") do %>
+          <%= ui_calendar(name: "due_on") %>
+        <% end %>
+      <% end %>
+    ERB
+    @examples = [ { name: "date_picker_default", title: "Padrão", description: "Botão que abre um calendário em um popover." } ]
+    render "doc_page"
+  end
+
+  def resizable
+    @page_title = "Resizable"
+    @page_subtitle = "Painéis redimensionáveis com alças arrastáveis e ajuste por teclado."
+    @usage_helper = <<~ERB
+      <%= ui_resizable_panel_group(direction: :horizontal) do %>
+        <%= ui_resizable_panel(default_size: 50) { "Um" } %>
+        <%= ui_resizable_handle %>
+        <%= ui_resizable_panel(default_size: 50) { "Dois" } %>
+      <% end %>
+    ERB
+    @examples = [ { name: "resizable_default", title: "Padrão", description: "Dois painéis horizontais com uma alça." } ]
+    render "doc_page"
+  end
+
+  def carousel
+    @page_title = "Carousel"
+    @page_subtitle = "Um carrossel de slides com controles anterior/próximo e navegação por setas."
+    @usage_helper = <<~ERB
+      <%= ui_carousel do %>
+        <%= ui_carousel_content do %>
+          <%= ui_carousel_item { "Slide 1" } %>
+          <%= ui_carousel_item { "Slide 2" } %>
+        <% end %>
+        <%= ui_carousel_previous %>
+        <%= ui_carousel_next %>
+      <% end %>
+    ERB
+    @examples = [ { name: "carousel_default", title: "Padrão", description: "Cinco slides numerados com controles." } ]
+    render "doc_page"
+  end
+
+  def sonner
+    @page_title = "Sonner"
+    @page_subtitle = "Notificações temporárias empilhadas numa região live polida. Dispare com window.toast ou via Stimulus."
+    @usage_helper = <<~ERB
+      <%# Coloque um toaster no layout… %>
+      <%= ui_sonner %>
+
+      <%# …e dispare de qualquer lugar. %>
+      <%= ui_button(data: { action: "click->ui-sonner#toast",
+            "ui-sonner-title-param": "Evento criado",
+            "ui-sonner-description-param": "Domingo às 21h." }) { "Mostrar toast" } %>
+    ERB
+    @examples = [ { name: "sonner_default", title: "Padrão", description: "Variantes default, sucesso, erro e com ação." } ]
+    render "doc_page"
+  end
+
+  def chart
+    @page_title = "Chart"
+    @page_subtitle = "Gráficos com Chart.js. A paleta usa os tokens --chart-1..5 do tema. É a única dependência JS de terceiros."
+    @usage_helper = <<~ERB
+      <%= ui_chart(type: :bar, label: "Visitantes por mês",
+            data: { labels: %w[Jan Fev Mar],
+                    datasets: [ { label: "Desktop", data: [ 186, 305, 237 ] } ] }) %>
+    ERB
+    @examples = [
+      { name: "chart_bar", title: "Barras", description: "Dois conjuntos de dados com a paleta do tema." },
+      { name: "chart_line", title: "Linha", description: "Série temporal com tensão e área preenchida." },
+      { name: "chart_pie", title: "Pizza", description: "Distribuição categórica colorida por rótulo." }
+    ]
+    render "doc_page"
+  end
+
+  def data_table
+    @page_title = "Data Table"
+    @page_subtitle = "Tabela com filtro, ordenação, paginação, seleção de linhas e visibilidade de colunas — tudo no cliente."
+    @usage_helper = <<~ERB
+      <%= ui_data_table(
+            filter_key: :email,
+            columns: [
+              { key: :status, label: "Status" },
+              { key: :email, label: "E-mail", sortable: true },
+              { key: :amount, label: "Valor", sortable: true }
+            ],
+            rows: [
+              { id: 1, status: "Sucesso", email: "ada@example.com", amount: 316 }
+            ]) %>
+    ERB
+    @examples = [ { name: "data_table_default", title: "Padrão", description: "Filtro por e-mail, colunas ordenáveis e seleção de linhas." } ]
+    render "doc_page"
+  end
 end

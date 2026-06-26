@@ -1,0 +1,5 @@
+<%= ui_resizable_panel_group(direction: :horizontal, class: "h-48 max-w-md rounded-lg border") do %>
+  <%= ui_resizable_panel(default_size: 50, class: "flex items-center justify-center p-6 font-semibold") { "Um" } %>
+  <%= ui_resizable_handle(with_handle: true) %>
+  <%= ui_resizable_panel(default_size: 50, class: "flex items-center justify-center p-6 font-semibold") { "Dois" } %>
+<% end %>

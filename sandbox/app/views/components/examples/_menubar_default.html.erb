@@ -1,0 +1,21 @@
+<%= ui_menubar do %>
+  <%= ui_menubar_menu do %>
+    <%= ui_menubar_trigger { "Arquivo" } %>
+    <%= ui_menubar_content do %>
+      <%= ui_menubar_item do %>
+        Novo
+        <%= ui_menubar_shortcut { "⌘N" } %>
+      <% end %>
+      <%= ui_menubar_item { "Abrir" } %>
+      <%= ui_menubar_separator %>
+      <%= ui_menubar_item { "Imprimir" } %>
+    <% end %>
+  <% end %>
+  <%= ui_menubar_menu do %>
+    <%= ui_menubar_trigger { "Editar" } %>
+    <%= ui_menubar_content do %>
+      <%= ui_menubar_item { "Desfazer" } %>
+      <%= ui_menubar_item { "Refazer" } %>
+    <% end %>
+  <% end %>
+<% end %>

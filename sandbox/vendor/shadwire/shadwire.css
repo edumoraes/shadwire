@@ -51,6 +51,8 @@
   --animate-sheet-out-bottom: sheet-out-to-bottom 0.2s ease-in;
   --animate-tooltip-in: tooltip-in 0.15s ease-out;
   --animate-popover-in: popover-in 0.15s ease-out;
+  --animate-collapsible-down: collapsible-down 0.2s ease-out;
+  --animate-collapsible-up: collapsible-up 0.2s ease-out;
 }
 
 @keyframes accordion-down {
@@ -65,6 +67,24 @@
 @keyframes accordion-up {
   from {
     height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes collapsible-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes collapsible-up {
+  from {
+    height: var(--radix-collapsible-content-height);
   }
   to {
     height: 0;
@@ -340,13 +360,15 @@
 /* The ::backdrop pseudo-element cannot be styled with Tailwind utilities. */
 dialog[data-slot="dialog-content"]:not([open]),
 dialog[data-slot="alert-dialog-content"]:not([open]),
-dialog[data-slot="sheet-content"]:not([open]) {
+dialog[data-slot="sheet-content"]:not([open]),
+dialog[data-slot="drawer-content"]:not([open]) {
   display: none;
 }
 
 dialog[data-slot="dialog-content"]::backdrop,
 dialog[data-slot="alert-dialog-content"]::backdrop,
-dialog[data-slot="sheet-content"]::backdrop {
+dialog[data-slot="sheet-content"]::backdrop,
+dialog[data-slot="drawer-content"]::backdrop {
   background-color: oklch(0 0 0 / 0.5);
 }
 
@@ -363,4 +385,20 @@ dialog[data-state="open"]::backdrop {
 
 [data-collapsible="icon"] [data-slot="sidebar-menu-button-tooltip-content"]:not([hidden]) {
   display: block;
+}
+
+/* Sonner toasts animate in/out by flipping data-state between the JS append
+   (closed) and the next frame (open), and back to closed on dismiss. */
+[data-slot="sonner-toast"] {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+[data-slot="sonner-toast"][data-state="closed"] {
+  opacity: 0;
+  transform: translateY(0.75rem) scale(0.98);
+}
+
+[data-slot="sonner-toast"][data-state="open"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }

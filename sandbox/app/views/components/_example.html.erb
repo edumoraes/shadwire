@@ -6,11 +6,14 @@
     <p class="text-sm text-muted-foreground"><%= description %></p>
   <% end %>
 
-  <%= ui_card(class: "overflow-hidden") do %>
+  <%# The card itself must not clip: overlay examples (popover, command, menus) %>
+  <%# open absolutely-positioned content that would be cut off by overflow-hidden. %>
+  <%# The code block rounds/clips its own bottom corners instead. %>
+  <%= ui_card do %>
     <div class="flex min-h-[140px] flex-wrap items-center justify-center gap-3 p-8">
       <%= render "components/examples/#{name}" %>
     </div>
 
-    <%= docs_code_block(docs_example_source(name), frame: false, class_name: "border-t") %>
+    <%= docs_code_block(docs_example_source(name), frame: false, class_name: "border-t overflow-hidden rounded-b-xl") %>
   <% end %>
 </section>

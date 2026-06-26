@@ -1,0 +1,13 @@
+<%= ui_collapsible(open: true, class: "w-80 space-y-2") do %>
+  <div class="flex items-center justify-between gap-4">
+    <span class="text-sm font-semibold">@shadwire publicou 3 repositórios</span>
+    <%= ui_collapsible_trigger(open: true, class: "inline-flex size-8 items-center justify-center rounded-md border") do %>
+      <%= ui_icon("chevrons-up-down", label: "Alternar") %>
+    <% end %>
+  </div>
+  <div class="rounded-md border px-4 py-2 font-mono text-sm">@shadwire/ui</div>
+  <%= ui_collapsible_content(open: true, class: "space-y-2") do %>
+    <div class="rounded-md border px-4 py-2 font-mono text-sm">@shadwire/registry</div>
+    <div class="rounded-md border px-4 py-2 font-mono text-sm">@shadwire/cli</div>
+  <% end %>
+<% end %>

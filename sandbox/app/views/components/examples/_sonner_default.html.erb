@@ -1,0 +1,25 @@
+<%= ui_sonner do %>
+  <div class="flex flex-wrap gap-2">
+    <%= ui_button(variant: :outline, data: {
+          action: "click->ui-sonner#toast",
+          "ui-sonner-title-param": "Evento criado",
+          "ui-sonner-description-param": "Domingo, 25 de junho às 21h." }) { "Mostrar toast" } %>
+
+    <%= ui_button(variant: :outline, data: {
+          action: "click->ui-sonner#toast",
+          "ui-sonner-variant-param": "success",
+          "ui-sonner-title-param": "Tudo certo!",
+          "ui-sonner-description-param": "Suas alterações foram salvas." }) { "Sucesso" } %>
+
+    <%= ui_button(variant: :outline, data: {
+          action: "click->ui-sonner#toast",
+          "ui-sonner-variant-param": "error",
+          "ui-sonner-title-param": "Algo deu errado",
+          "ui-sonner-description-param": "Não foi possível salvar o registro." }) { "Erro" } %>
+
+    <%= ui_button(variant: :outline, data: {
+          action: "click->ui-sonner#toast",
+          "ui-sonner-title-param": "Arquivo movido para a lixeira",
+          "ui-sonner-action-label-param": "Desfazer" }) { "Com ação" } %>
+  </div>
+<% end %>

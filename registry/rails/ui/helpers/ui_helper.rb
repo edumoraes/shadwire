@@ -500,4 +500,420 @@ module UiHelper
   def ui_sidebar_menu_sub_button(**options, &block)
     render(Ui::Sidebar::MenuSubButtonComponent.new(**options), &block)
   end
+
+  def ui_aspect_ratio(**options, &block)
+    render(Ui::AspectRatioComponent.new(**options), &block)
+  end
+
+  def ui_spinner(**options)
+    render(Ui::SpinnerComponent.new(**options))
+  end
+
+  def ui_kbd(**options, &block)
+    render(Ui::KbdComponent.new(**options), &block)
+  end
+
+  def ui_kbd_group(**options, &block)
+    render(Ui::Kbd::GroupComponent.new(**options), &block)
+  end
+
+  def ui_empty(**options, &block)
+    render(Ui::EmptyComponent.new(**options), &block)
+  end
+
+  def ui_empty_header(**options, &block)
+    render(Ui::Empty::HeaderComponent.new(**options), &block)
+  end
+
+  def ui_empty_media(**options, &block)
+    render(Ui::Empty::MediaComponent.new(**options), &block)
+  end
+
+  def ui_empty_title(**options, &block)
+    render(Ui::Empty::TitleComponent.new(**options), &block)
+  end
+
+  def ui_empty_description(**options, &block)
+    render(Ui::Empty::DescriptionComponent.new(**options), &block)
+  end
+
+  def ui_empty_content(**options, &block)
+    render(Ui::Empty::ContentComponent.new(**options), &block)
+  end
+
+  def ui_item(**options, &block)
+    render(Ui::ItemComponent.new(**options), &block)
+  end
+
+  def ui_item_group(**options, &block)
+    render(Ui::Item::GroupComponent.new(**options), &block)
+  end
+
+  def ui_item_media(**options, &block)
+    render(Ui::Item::MediaComponent.new(**options), &block)
+  end
+
+  def ui_item_content(**options, &block)
+    render(Ui::Item::ContentComponent.new(**options), &block)
+  end
+
+  def ui_item_title(**options, &block)
+    render(Ui::Item::TitleComponent.new(**options), &block)
+  end
+
+  def ui_item_description(**options, &block)
+    render(Ui::Item::DescriptionComponent.new(**options), &block)
+  end
+
+  def ui_item_actions(**options, &block)
+    render(Ui::Item::ActionsComponent.new(**options), &block)
+  end
+
+  def ui_item_header(**options, &block)
+    render(Ui::Item::HeaderComponent.new(**options), &block)
+  end
+
+  def ui_item_footer(**options, &block)
+    render(Ui::Item::FooterComponent.new(**options), &block)
+  end
+
+  def ui_item_separator(**options)
+    render(Ui::Item::SeparatorComponent.new(**options))
+  end
+
+  def ui_input_group(**options, &block)
+    render(Ui::InputGroupComponent.new(**options), &block)
+  end
+
+  def ui_input_group_addon(**options, &block)
+    render(Ui::InputGroup::AddonComponent.new(**options), &block)
+  end
+
+  def ui_input_group_text(**options, &block)
+    render(Ui::InputGroup::TextComponent.new(**options), &block)
+  end
+
+  def ui_input_group_input(**options)
+    render(Ui::InputGroup::InputComponent.new(**options))
+  end
+
+  def ui_input_group_textarea(**options, &block)
+    render(Ui::InputGroup::TextareaComponent.new(**options), &block)
+  end
+
+  def ui_input_group_button(**options, &block)
+    render(Ui::InputGroup::ButtonComponent.new(**options), &block)
+  end
+
+  def ui_button_group(**options, &block)
+    render(Ui::ButtonGroupComponent.new(**options), &block)
+  end
+
+  def ui_button_group_text(**options, &block)
+    render(Ui::ButtonGroup::TextComponent.new(**options), &block)
+  end
+
+  def ui_button_group_separator(**options)
+    render(Ui::ButtonGroup::SeparatorComponent.new(**options))
+  end
+
+  def ui_field(**options, &block)
+    render(Ui::FieldComponent.new(**options), &block)
+  end
+
+  def ui_field_set(**options, &block)
+    render(Ui::Field::SetComponent.new(**options), &block)
+  end
+
+  def ui_field_legend(**options, &block)
+    render(Ui::Field::LegendComponent.new(**options), &block)
+  end
+
+  def ui_field_group(**options, &block)
+    render(Ui::Field::GroupComponent.new(**options), &block)
+  end
+
+  def ui_field_content(**options, &block)
+    render(Ui::Field::ContentComponent.new(**options), &block)
+  end
+
+  def ui_field_label(**options, &block)
+    render(Ui::Field::LabelComponent.new(**options), &block)
+  end
+
+  def ui_field_title(**options, &block)
+    render(Ui::Field::TitleComponent.new(**options), &block)
+  end
+
+  def ui_field_description(**options, &block)
+    render(Ui::Field::DescriptionComponent.new(**options), &block)
+  end
+
+  def ui_field_separator(**options, &block)
+    render(Ui::Field::SeparatorComponent.new(**options), &block)
+  end
+
+  def ui_field_error(**options, &block)
+    render(Ui::Field::ErrorComponent.new(**options), &block)
+  end
+
+  def ui_native_select(**options, &block)
+    render(Ui::NativeSelectComponent.new(**options), &block)
+  end
+
+  def ui_collapsible(**options, &block)
+    render(Ui::CollapsibleComponent.new(**options), &block)
+  end
+
+  def ui_collapsible_trigger(**options, &block)
+    render(Ui::Collapsible::TriggerComponent.new(**options), &block)
+  end
+
+  def ui_collapsible_content(**options, &block)
+    render(Ui::Collapsible::ContentComponent.new(**options), &block)
+  end
+
+  def ui_toggle(**options, &block)
+    render(Ui::ToggleComponent.new(**options), &block)
+  end
+
+  def ui_toggle_group(**options, &block)
+    render(Ui::ToggleGroupComponent.new(**options), &block)
+  end
+
+  def ui_toggle_group_item(**options, &block)
+    render(Ui::ToggleGroup::ItemComponent.new(**options), &block)
+  end
+
+  def ui_slider(**options)
+    render(Ui::SliderComponent.new(**options))
+  end
+
+  def ui_hover_card(**options, &block)
+    render(Ui::HoverCardComponent.new(**options), &block)
+  end
+
+  def ui_hover_card_trigger(**options, &block)
+    render(Ui::HoverCard::TriggerComponent.new(**options), &block)
+  end
+
+  def ui_hover_card_content(**options, &block)
+    render(Ui::HoverCard::ContentComponent.new(**options), &block)
+  end
+
+  def ui_input_otp(**options, &block)
+    render(Ui::InputOtpComponent.new(**options), &block)
+  end
+
+  def ui_input_otp_group(**options, &block)
+    render(Ui::InputOtp::GroupComponent.new(**options), &block)
+  end
+
+  def ui_input_otp_slot(**options)
+    render(Ui::InputOtp::SlotComponent.new(**options))
+  end
+
+  def ui_input_otp_separator(**options)
+    render(Ui::InputOtp::SeparatorComponent.new(**options))
+  end
+
+  def ui_drawer(**options, &block)
+    render(Ui::DrawerComponent.new(**options), &block)
+  end
+
+  def ui_drawer_trigger(**options, &block)
+    render(Ui::Drawer::TriggerComponent.new(**options), &block)
+  end
+
+  def ui_drawer_content(**options, &block)
+    render(Ui::Drawer::ContentComponent.new(**options), &block)
+  end
+
+  def ui_drawer_header(**options, &block)
+    render(Ui::Drawer::HeaderComponent.new(**options), &block)
+  end
+
+  def ui_drawer_footer(**options, &block)
+    render(Ui::Drawer::FooterComponent.new(**options), &block)
+  end
+
+  def ui_drawer_title(**options, &block)
+    render(Ui::Drawer::TitleComponent.new(**options), &block)
+  end
+
+  def ui_drawer_description(**options, &block)
+    render(Ui::Drawer::DescriptionComponent.new(**options), &block)
+  end
+
+  def ui_drawer_close(**options, &block)
+    render(Ui::Drawer::CloseComponent.new(**options), &block)
+  end
+
+  def ui_context_menu(**options, &block)
+    render(Ui::ContextMenuComponent.new(**options), &block)
+  end
+
+  def ui_context_menu_trigger(**options, &block)
+    render(Ui::ContextMenu::TriggerComponent.new(**options), &block)
+  end
+
+  def ui_context_menu_content(**options, &block)
+    render(Ui::ContextMenu::ContentComponent.new(**options), &block)
+  end
+
+  def ui_context_menu_item(**options, &block)
+    render(Ui::ContextMenu::ItemComponent.new(**options), &block)
+  end
+
+  def ui_context_menu_label(**options, &block)
+    render(Ui::ContextMenu::LabelComponent.new(**options), &block)
+  end
+
+  def ui_context_menu_separator(**options)
+    render(Ui::ContextMenu::SeparatorComponent.new(**options))
+  end
+
+  def ui_context_menu_group(**options, &block)
+    render(Ui::ContextMenu::GroupComponent.new(**options), &block)
+  end
+
+  def ui_context_menu_shortcut(**options, &block)
+    render(Ui::ContextMenu::ShortcutComponent.new(**options), &block)
+  end
+
+  def ui_menubar(**options, &block)
+    render(Ui::MenubarComponent.new(**options), &block)
+  end
+
+  def ui_menubar_menu(**options, &block)
+    render(Ui::Menubar::MenuComponent.new(**options), &block)
+  end
+
+  def ui_menubar_trigger(**options, &block)
+    render(Ui::Menubar::TriggerComponent.new(**options), &block)
+  end
+
+  def ui_menubar_content(**options, &block)
+    render(Ui::Menubar::ContentComponent.new(**options), &block)
+  end
+
+  def ui_menubar_item(**options, &block)
+    render(Ui::Menubar::ItemComponent.new(**options), &block)
+  end
+
+  def ui_menubar_separator(**options)
+    render(Ui::Menubar::SeparatorComponent.new(**options))
+  end
+
+  def ui_menubar_label(**options, &block)
+    render(Ui::Menubar::LabelComponent.new(**options), &block)
+  end
+
+  def ui_menubar_shortcut(**options, &block)
+    render(Ui::Menubar::ShortcutComponent.new(**options), &block)
+  end
+
+  def ui_navigation_menu(**options, &block)
+    render(Ui::NavigationMenuComponent.new(**options), &block)
+  end
+
+  def ui_navigation_menu_list(**options, &block)
+    render(Ui::NavigationMenu::ListComponent.new(**options), &block)
+  end
+
+  def ui_navigation_menu_item(**options, &block)
+    render(Ui::NavigationMenu::ItemComponent.new(**options), &block)
+  end
+
+  def ui_navigation_menu_trigger(**options, &block)
+    render(Ui::NavigationMenu::TriggerComponent.new(**options), &block)
+  end
+
+  def ui_navigation_menu_content(**options, &block)
+    render(Ui::NavigationMenu::ContentComponent.new(**options), &block)
+  end
+
+  def ui_navigation_menu_link(**options, &block)
+    render(Ui::NavigationMenu::LinkComponent.new(**options), &block)
+  end
+
+  def ui_command(**options, &block)
+    render(Ui::CommandComponent.new(**options), &block)
+  end
+
+  def ui_command_input(**options)
+    render(Ui::Command::InputComponent.new(**options))
+  end
+
+  def ui_command_list(**options, &block)
+    render(Ui::Command::ListComponent.new(**options), &block)
+  end
+
+  def ui_command_empty(**options, &block)
+    render(Ui::Command::EmptyComponent.new(**options), &block)
+  end
+
+  def ui_command_group(**options, &block)
+    render(Ui::Command::GroupComponent.new(**options), &block)
+  end
+
+  def ui_command_item(**options, &block)
+    render(Ui::Command::ItemComponent.new(**options), &block)
+  end
+
+  def ui_command_separator(**options)
+    render(Ui::Command::SeparatorComponent.new(**options))
+  end
+
+  def ui_command_shortcut(**options, &block)
+    render(Ui::Command::ShortcutComponent.new(**options), &block)
+  end
+
+  def ui_calendar(**options)
+    render(Ui::CalendarComponent.new(**options))
+  end
+
+  def ui_resizable_panel_group(**options, &block)
+    render(Ui::ResizablePanelGroupComponent.new(**options), &block)
+  end
+
+  def ui_resizable_panel(**options, &block)
+    render(Ui::ResizablePanelComponent.new(**options), &block)
+  end
+
+  def ui_resizable_handle(**options)
+    render(Ui::ResizableHandleComponent.new(**options))
+  end
+
+  def ui_carousel(**options, &block)
+    render(Ui::CarouselComponent.new(**options), &block)
+  end
+
+  def ui_carousel_content(**options, &block)
+    render(Ui::Carousel::ContentComponent.new(**options), &block)
+  end
+
+  def ui_carousel_item(**options, &block)
+    render(Ui::Carousel::ItemComponent.new(**options), &block)
+  end
+
+  def ui_carousel_previous(**options)
+    render(Ui::Carousel::PreviousComponent.new(**options))
+  end
+
+  def ui_carousel_next(**options)
+    render(Ui::Carousel::NextComponent.new(**options))
+  end
+
+  def ui_sonner(**options, &block)
+    render(Ui::SonnerComponent.new(**options), &block)
+  end
+
+  def ui_chart(**options)
+    render(Ui::ChartComponent.new(**options))
+  end
+
+  def ui_data_table(**options)
+    render(Ui::DataTableComponent.new(**options))
+  end
 end

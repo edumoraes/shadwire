@@ -1,0 +1,113 @@
+<%= tag.div(**root_attrs) do %>
+  <div class="flex items-center gap-2 py-4">
+    <% if @filter_key %>
+      <%= render(Ui::InputComponent.new(
+            type: :search,
+            placeholder: @filter_placeholder,
+            class: "max-w-sm",
+            aria: { label: @filter_placeholder },
+            data: { "ui-data-table-target": "filter", action: "input->ui-data-table#filter" })) %>
+    <% end %>
+
+    <%= render(Ui::DropdownMenuComponent.new(
+          class: "ml-auto",
+          data: { "ui-dropdown-menu-close-on-select-value": false })) do %>
+      <%= render(Ui::DropdownMenu::TriggerComponent.new(variant: :outline)) do %>
+        Colunas
+        <%= render(Ui::IconComponent.new("chevron-down")) %>
+      <% end %>
+      <%= render(Ui::DropdownMenu::ContentComponent.new(align: :end)) do %>
+        <% @columns.each do |column| %>
+          <%= render(Ui::DropdownMenu::ItemComponent.new(
+                role: "menuitemcheckbox",
+                aria: { checked: "true" },
+                class: "capitalize",
+                data: { column: column[:key], action: "click->ui-data-table#toggleColumn" })) do %>
+            <%= column[:label] %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="rounded-md border">
+    <%= render(Ui::TableComponent.new) do %>
+      <%= render(Ui::Table::HeaderComponent.new) do %>
+        <%= render(Ui::Table::RowComponent.new) do %>
+          <% if @selectable %>
+            <%= render(Ui::Table::HeadComponent.new(class: "w-10")) do %>
+              <%= render(Ui::CheckboxComponent.new(
+                    aria: { label: "Selecionar todas as linhas" },
+                    data: { "ui-data-table-target": "selectAll", action: "change->ui-data-table#toggleAll" })) %>
+            <% end %>
+          <% end %>
+          <% @columns.each do |column| %>
+            <%= render(Ui::Table::HeadComponent.new(
+                  aria: (column[:sortable] ? { sort: "none" } : {}),
+                  data: { column: column[:key] })) do %>
+              <% if column[:sortable] %>
+                <%= render(Ui::ButtonComponent.new(
+                      variant: :ghost,
+                      size: :sm,
+                      class: "-ml-3 h-8",
+                      data: { column: column[:key], "ui-data-table-target": "columnHeader",
+                              action: "click->ui-data-table#sort" })) do %>
+                  <%= column[:label] %>
+                  <%= render(Ui::IconComponent.new("chevrons-up-down", class: "text-muted-foreground")) %>
+                <% end %>
+              <% else %>
+                <%= column[:label] %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= render(Ui::Table::BodyComponent.new) do %>
+        <% @rows.each_with_index do |row, index| %>
+          <%= render(Ui::Table::RowComponent.new(
+                data: { "ui-data-table-target": "row", "row-id": row_identifier(row, index) })) do %>
+            <% if @selectable %>
+              <%= render(Ui::Table::CellComponent.new(class: "w-10")) do %>
+                <%= render(Ui::CheckboxComponent.new(
+                      aria: { label: "Selecionar linha" },
+                      data: { "ui-data-table-target": "rowCheckbox", action: "change->ui-data-table#toggleRow" })) %>
+              <% end %>
+            <% end %>
+            <% @columns.each do |column| %>
+              <%= render(Ui::Table::CellComponent.new(
+                    data: { column: column[:key], "sort-value": sort_value(row, column) })) do %>
+                <%= cell_value(row, column) %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+
+        <%= render(Ui::Table::RowComponent.new(
+              hidden: true,
+              data: { "ui-data-table-target": "emptyState" })) do %>
+          <%= render(Ui::Table::CellComponent.new(
+                colspan: column_count,
+                class: "h-24 text-center text-muted-foreground")) do %>
+            <%= @empty_text %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="flex items-center justify-between gap-4 py-4">
+    <div class="text-sm text-muted-foreground" data-ui-data-table-target="selectionInfo"></div>
+    <div class="flex items-center gap-2">
+      <span class="text-sm text-muted-foreground" data-ui-data-table-target="pageInfo"></span>
+      <%= render(Ui::ButtonComponent.new(
+            variant: :outline,
+            size: :sm,
+            data: { "ui-data-table-target": "previous", action: "click->ui-data-table#previousPage" })) { "Anterior" } %>
+      <%= render(Ui::ButtonComponent.new(
+            variant: :outline,
+            size: :sm,
+            data: { "ui-data-table-target": "next", action: "click->ui-data-table#nextPage" })) { "Próximo" } %>
+    </div>
+  </div>
+<% end %>
