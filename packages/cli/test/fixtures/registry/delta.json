@@ -1,0 +1,12 @@
+{
+  "name": "delta",
+  "type": "component",
+  "title": "Delta",
+  "description": "Depends on alpha (second diamond arm)",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": ["alpha"],
+  "files": [
+    { "target": "app/components/ui/delta_component.rb", "type": "component", "content": "# delta" }
+  ]
+}

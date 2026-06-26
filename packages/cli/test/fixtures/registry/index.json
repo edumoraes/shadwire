@@ -1,0 +1,19 @@
+{
+  "name": "shadwire",
+  "version": "0.1.0",
+  "items": [
+    { "name": "alpha", "type": "component", "title": "Alpha", "description": "Leaf component, no deps" },
+    { "name": "beta",  "type": "component", "title": "Beta",  "description": "Depends on alpha" },
+    { "name": "gamma", "type": "component", "title": "Gamma", "description": "Depends on beta (chain level 3)" },
+    { "name": "delta", "type": "component", "title": "Delta", "description": "Depends on alpha (diamond arm)" },
+    { "name": "epsilon", "type": "component", "title": "Epsilon", "description": "Depends on beta + delta (diamond apex)" },
+    { "name": "broken",  "type": "component", "title": "Broken", "description": "Has a missing registryDependency" }
+  ],
+  "base": {
+    "files": [
+      { "target": "app/components/ui_component.rb", "type": "component", "content": "# ui_component" }
+    ],
+    "gems": [],
+    "tailwind": { "version": "4", "css": "shadwire.css" }
+  }
+}

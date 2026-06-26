@@ -1,0 +1,12 @@
+{
+  "name": "epsilon",
+  "type": "component",
+  "title": "Epsilon",
+  "description": "Diamond apex: depends on beta + delta, both of which depend on alpha",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": ["beta", "delta"],
+  "files": [
+    { "target": "app/components/ui/epsilon_component.rb", "type": "component", "content": "# epsilon" }
+  ]
+}
