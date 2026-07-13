@@ -82,4 +82,54 @@ class RegistrySchemaTest < Minitest::Test
       end
     end
   end
+
+  def test_top_level_gems_is_an_array_of_non_empty_strings
+    gems = REGISTRY.fetch("gems")
+    assert gems.is_a?(Array), "top-level gems must be an array"
+    refute_empty gems, "top-level gems must list the base install gems"
+    gems.each do |gem|
+      assert gem.is_a?(String) && !gem.empty?, "top-level gems entry is not a non-empty string: #{gem.inspect}"
+    end
+  end
+
+  def test_optional_item_gems_are_non_empty_strings
+    REGISTRY.fetch("items").each do |item|
+      next unless item.key?("gems")
+
+      gems = item.fetch("gems")
+      assert gems.is_a?(Array), "#{item.fetch("name")} gems must be an array"
+      gems.each do |gem|
+        assert gem.is_a?(String) && !gem.empty?, "#{item.fetch("name")} gems entry is not a non-empty string: #{gem.inspect}"
+      end
+    end
+  end
+
+  def test_optional_item_importmap_pins_are_name_to_objects
+    REGISTRY.fetch("items").each do |item|
+      next unless item.key?("importmap")
+
+      pins = item.fetch("importmap")
+      assert pins.is_a?(Array), "#{item.fetch("name")} importmap must be an array"
+      refute_empty pins, "#{item.fetch("name")} importmap must not be empty when present"
+
+      pins.each do |pin|
+        assert pin.is_a?(Hash), "#{item.fetch("name")} importmap entry must be an object"
+        %w[name to].each do |key|
+          value = pin[key]
+          assert value.is_a?(String) && !value.empty?, "#{item.fetch("name")} importmap entry is missing a string #{key}: #{pin.inspect}"
+        end
+      end
+    end
+  end
+
+  def test_optional_item_title_and_description_are_strings
+    REGISTRY.fetch("items").each do |item|
+      %w[title description].each do |key|
+        next unless item.key?(key)
+
+        value = item.fetch(key)
+        assert value.is_a?(String) && !value.empty?, "#{item.fetch("name")} #{key} is not a non-empty string: #{value.inspect}"
+      end
+    end
+  end
 end

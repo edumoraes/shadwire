@@ -1,0 +1,12 @@
+{
+  "name": "alpha",
+  "type": "component",
+  "title": "Alpha",
+  "description": "Leaf component, no deps",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": [],
+  "files": [
+    { "target": "app/components/ui/alpha_component.rb", "type": "component", "content": "# alpha" }
+  ]
+}

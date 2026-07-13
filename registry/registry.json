@@ -9,6 +9,10 @@
     "view_component": ">= 4.0",
     "lucide-rails": ">= 0.7"
   },
+  "gems": [
+    "view_component",
+    "lucide-rails"
+  ],
   "tailwind": {
     "version": "4",
     "style": "default",
@@ -18,6 +22,8 @@
     {
       "name": "button",
       "type": "component",
+      "title": "Button",
+      "description": "Displays a button or a link styled as a button.",
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -62,6 +68,8 @@
     {
       "name": "card",
       "type": "component",
+      "title": "Card",
+      "description": "A container for grouping related content with header, body, and footer slots.",
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -660,6 +668,8 @@
     {
       "name": "dialog",
       "type": "component",
+      "title": "Dialog",
+      "description": "A modal dialog that interrupts the user with important content and actions.",
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -2183,8 +2193,13 @@
     {
       "name": "chart",
       "type": "component",
-      "dependencies": [
-        "chart.js"
+      "title": "Chart",
+      "description": "Composable charts built on Chart.js with shadcn theming.",
+      "importmap": [
+        {
+          "name": "chart.js/auto",
+          "to": "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/auto/+esm"
+        }
       ],
       "files": [
         {
@@ -2212,6 +2227,8 @@
     {
       "name": "data-table",
       "type": "component",
+      "title": "Data Table",
+      "description": "A sortable, filterable table built from the table, button, input, checkbox, and dropdown-menu components.",
       "registryDependencies": [
         "table",
         "button",

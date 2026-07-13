@@ -79,6 +79,8 @@ jobs:
         run: ruby test/registry_manifest_test.rb
       - name: Registry schema test
         run: ruby test/registry_schema_test.rb
+      - name: Registry build test
+        run: ruby test/registry_build_test.rb
 
   registry_sync:
     runs-on: ubuntu-latest
@@ -152,6 +154,8 @@ jobs:
         run: |
           bin/rails assets:precompile
           bin/rails db:prepare
+      - name: Build the published registry
+        run: bin/build_registry
       - name: Freeze the docs site to static HTML
         working-directory: sandbox
         run: |
@@ -182,6 +186,9 @@ jobs:
           cp -r public/assets ../_site/assets
           touch ../_site/.nojekyll
           test -f ../_site/index.html || { echo "::error::no index.html produced"; cat /tmp/server.log; exit 1; }
+      - name: Publish the registry into the Pages artifact
+        # Serve the built registry at /shadwire/r/... alongside the docs site.
+        run: cp -r build/r _site/r
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
