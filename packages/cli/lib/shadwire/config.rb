@@ -38,7 +38,8 @@ module Shadwire
       "installed" => {}
     }.freeze
 
-    attr_reader :root, :registry, :tailwind_css, :aliases, :installed
+    attr_reader :root, :tailwind_css, :aliases, :installed
+    attr_accessor :registry
 
     # Loads shadwire.json from the given app root, or returns a Config with
     # defaults when the file does not exist.

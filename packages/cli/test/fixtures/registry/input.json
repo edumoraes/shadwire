@@ -1,0 +1,15 @@
+{
+  "name": "input",
+  "type": "component",
+  "title": "Input",
+  "description": "A text input",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": [],
+  "files": [
+    { "target": "app/components/ui_component.rb", "type": "component", "content": "# ui_component\n" },
+    { "target": "app/helpers/ui_helper.rb", "type": "helper", "content": "# ui_helper\n" },
+    { "target": "vendor/shadwire/shadwire.css", "type": "css", "content": "/* shadwire */\n" },
+    { "target": "app/components/ui/input_component.rb", "type": "component", "content": "# input component\n" }
+  ]
+}
