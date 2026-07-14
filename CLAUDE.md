@@ -8,9 +8,11 @@ Shadwire ports the shadcn/ui "Open Code" model to Ruby on Rails: open, copyable
 Rails component source that an app installs and then owns. It is **not** a
 runtime gem/engine — installed files must work without any Shadwire dependency.
 
-The MVP builds the foundation only. The CLI is deferred (`packages/cli/` is a
-reserved placeholder). See `docs/superpowers/specs/2026-05-21-shadwire-mvp-design.md`
-for the full design and `docs/superpowers/plans/` for the phased implementation plans.
+`registry/` holds the component source; the `shadwire` CLI in `packages/cli/`
+installs it into a consuming app. The CLI is a development-time tool — a gem the
+consuming app runs, not something the *installed* components depend on at runtime.
+See `docs/superpowers/specs/2026-05-21-shadwire-mvp-design.md` for the full design
+and `docs/superpowers/plans/` for the phased implementation plans.
 
 ## Critical workflow rule
 
@@ -21,6 +23,10 @@ for the full design and `docs/superpowers/plans/` for the phased implementation 
 - Synced files under `sandbox/app/components/`, `sandbox/app/helpers/ui_helper.rb`,
   and `sandbox/vendor/shadwire/` are generated artifacts. Changes there are lost
   on the next sync. If validation surfaces a fix, apply it in `registry/` and re-sync.
+- `registry/` is also published for the CLI: `bin/build_registry` inlines each
+  item's file contents into `build/r/{name}.json` (plus `index.json`), the format
+  the CLI installs from over HTTP. `build/` is generated (gitignored) and rebuilt
+  in CI — never hand-edit it; fix the source in `registry/` and rebuild.
 
 ## Commands
 
@@ -29,6 +35,13 @@ Run from the repo root:
 ```bash
 bin/sync_registry                 # sync every registry item whose source files all exist
 bin/sync_registry button badge    # sync only the named items (errors on unknown names)
+bin/build_registry                # build the published registry the CLI installs from → build/r/
+```
+
+Run from `packages/cli/` (the CLI gem):
+
+```bash
+bundle exec rake test             # the shadwire CLI's Minitest suite (serial)
 ```
 
 Run from `sandbox/`:
@@ -62,6 +75,14 @@ Monorepo; the repo root is **not** a Rails app.
 - `bin/sync_registry` — copies registry files into the sandbox. With no args it
   skips items with missing source files (warns); validates that targets stay
   inside `sandbox/` and that no two sources map to the same target.
+- `bin/build_registry` — builds the *published* registry consumed by the CLI:
+  transforms `registry/registry.json` into `build/r/{name}.json` + `index.json`
+  with each file's `content` inlined (no source paths). The `deploy_pages` CI job
+  runs it and serves the output at `https://edumoraes.github.io/shadwire/r/...`.
+- `packages/cli/` — the `shadwire` CLI gem (Thor). Installs components from the
+  published registry into a consuming Rails app (`init`, `add`, `list`, `search`,
+  `info`, `diff`, `update`, `remove`); has its own serial Minitest suite. See
+  `packages/cli/README.md` for the command reference.
 
 Tailwind loads Shadwire tokens via `@import` in `sandbox/app/assets/tailwind/application.css`,
 pointing at the synced `vendor/shadwire/shadwire.css`.

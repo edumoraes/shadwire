@@ -56,6 +56,37 @@ components:
 <%= ui_button(size: :icon) { ui_icon("plus", label: "Add item") } %>
 ```
 
+## CLI
+
+Shadwire ships a `shadwire` CLI (`packages/cli/`) that installs component source
+into a Rails app and keeps it in sync with the registry — the shadcn Open Code
+flow. Installed files are yours; there is no runtime dependency on Shadwire.
+
+Add it to the consuming app (development only), or install it globally:
+
+```bash
+bundle add shadwire --group development   # run as `bundle exec shadwire`
+gem install shadwire                      # or globally, as `shadwire`
+```
+
+Bootstrap once, then add components by name:
+
+```bash
+shadwire init                 # writes shadwire.json + base files, installs base deps
+shadwire add button dialog    # installs components and their registry dependencies
+shadwire list                 # every component in the registry catalog
+```
+
+Components install from the hosted registry
+(`https://edumoraes.github.io/shadwire/r`) by default; override with `--registry`
+(an `https://` URL or a local `file://` path).
+
+**Agents / CI** — every command runs non-interactively with `--yes`, emits
+machine-readable output with `--json`, and can target another app with `--cwd`.
+`shadwire diff --exit-code` exits non-zero when an installed file has drifted
+from the registry, so CI can fail on drift. See
+[`packages/cli/README.md`](packages/cli/README.md) for the full command reference.
+
 ## Registry Workflow
 
 Edit source files in `registry/rails/ui`.
