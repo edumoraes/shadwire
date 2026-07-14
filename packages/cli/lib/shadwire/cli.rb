@@ -50,6 +50,35 @@ module Shadwire
       end
     end
 
+    desc "list", "List every component in the registry catalog"
+    method_option :registry, type: :string, desc: "Registry base URL to read from"
+    method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
+    def list
+      run_command do |root, ui|
+        Commands::List.new(root:, registry: options[:registry], json: options[:json], ui:).call
+      end
+    end
+
+    desc "search QUERY", "Search the catalog by name, title, or description"
+    method_option :registry, type: :string, desc: "Registry base URL to read from"
+    method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
+    def search(query = nil)
+      raise Shadwire::Error, "search requires a query" if query.nil? || query.strip.empty?
+
+      run_command do |root, ui|
+        Commands::Search.new(root:, query:, registry: options[:registry], json: options[:json], ui:).call
+      end
+    end
+
+    desc "info NAME", "Show a component's metadata (files, gems, pins, dependencies)"
+    method_option :registry, type: :string, desc: "Registry base URL to read from"
+    method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
+    def info(name)
+      run_command do |root, ui|
+        Commands::Info.new(root:, name:, registry: options[:registry], json: options[:json], ui:).call
+      end
+    end
+
     private
 
     def resolve_root
