@@ -9,7 +9,7 @@ set -euo pipefail
 # Usage: bin/setup_repo
 
 # These must match the job ids in .github/workflows/ci.yml.
-REQUIRED_CHECKS=(lint security test registry_sync docs_lint)
+REQUIRED_CHECKS=(lint security test registry_sync docs_lint cli)
 
 command -v gh >/dev/null || { echo "gh CLI is required: https://cli.github.com"; exit 1; }
 command -v jq >/dev/null || { echo "jq is required: https://jqlang.github.io/jq"; exit 1; }

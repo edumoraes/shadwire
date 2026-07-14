@@ -7,7 +7,7 @@ validates two layers: the registry manifest (root) and the `sandbox/` Rails app.
 
 | Workflow | Trigger | What it does |
 | --- | --- | --- |
-| `CI` (`ci.yml`) | PRs + push to `main` | `lint`, `security`, `test`, `registry_sync`, `docs_lint` jobs, then `deploy_pages` on `main`. |
+| `CI` (`ci.yml`) | PRs + push to `main` | `lint`, `security`, `test`, `registry_sync`, `docs_lint`, `cli` jobs, then `deploy_pages` on `main`. |
 | `Dependency Review` (`dependency-review.yml`) | PRs | Blocks PRs that introduce dependencies with known high-severity vulnerabilities. |
 | `Labeler` (`labeler.yml`) | PRs | Adds `area:*` labels based on changed paths (`.github/labeler.yml`). |
 
@@ -24,6 +24,8 @@ validates two layers: the registry manifest (root) and the `sandbox/` Rails app.
   **drift guard**: `registry/` is the source of truth, `sandbox/app/...` is generated. Edit in
   `registry/`, run `bin/sync_registry`, and commit the result.
 - **docs_lint** — markdownlint (blocking) + lychee link check (lenient).
+- **cli** — `bundle exec rake test` for the `packages/cli/` gem (serial Minitest),
+  run from `packages/cli` against its own `.ruby-version`.
 - **deploy_pages** — only on `main`, after every other job is green.
 
 `Dependabot` (`.github/dependabot.yml`) opens weekly grouped update PRs for the
@@ -42,7 +44,9 @@ and publishes to **project Pages** (`https://<owner>.github.io/shadwire/`):
 3. `wget --mirror` crawls every reachable page; `--cut-dirs=1` strips the prefix so the
    artifact root maps onto the Pages base path.
 4. Copies `public/assets` wholesale (wget does not follow importmap/ES modules).
-5. Uploads and deploys with `actions/deploy-pages`.
+5. Runs `bin/build_registry` and copies the result to `_site/r`, so the published
+   registry the CLI installs from is served at `https://<owner>.github.io/shadwire/r/<name>.json`.
+6. Uploads and deploys with `actions/deploy-pages`.
 
 > Known minor limitation: the default favicons are referenced at the domain root
 > (`/icon.png`), so they 404 under project Pages. Cosmetic only.
@@ -58,7 +62,7 @@ bin/setup_repo
 
 This creates the `area:*` labels, enables Pages with the **GitHub Actions** source,
 and applies a `main` ruleset: require a PR with 1 approval and resolved conversations,
-required status checks (`lint`, `security`, `test`, `registry_sync`, `docs_lint`),
+required status checks (`lint`, `security`, `test`, `registry_sync`, `docs_lint`, `cli`),
 linear history, and no force-pushes or deletions.
 
 The required-check names must match the CI job ids. If you rename a job in `ci.yml`,

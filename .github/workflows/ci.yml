@@ -118,8 +118,22 @@ jobs:
           args: "--no-progress --cache --max-cache-age 1d './**/*.md'"
           fail: false
 
+  cli:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: packages/cli
+          ruby-version: .ruby-version
+          bundler-cache: true
+      - name: CLI tests
+        working-directory: packages/cli
+        run: bundle exec rake test
+
   deploy_pages:
-    needs: [lint, security, test, registry_sync, docs_lint]
+    needs: [lint, security, test, registry_sync, docs_lint, cli]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 20
