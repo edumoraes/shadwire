@@ -5,6 +5,8 @@ module Shadwire
   # Gemfile / Gemfile.lock and a few conventional files. Pure filesystem reads —
   # never loads the app or Bundler.
   class Project
+    attr_reader :root
+
     def initialize(root)
       @root = root.to_s
     end
