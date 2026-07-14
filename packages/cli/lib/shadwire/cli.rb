@@ -79,6 +79,20 @@ module Shadwire
       end
     end
 
+    desc "diff [NAME...]", "Show how installed files have drifted from the registry"
+    method_option :registry, type: :string, desc: "Registry base URL to compare against"
+    method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
+    method_option :exit_code, type: :boolean, default: false,
+                              desc: "Exit non-zero when drift is found (for CI)"
+    def diff(*names)
+      run_command do |root, ui|
+        result = Commands::Diff.new(
+          root:, names:, registry: options[:registry], json: options[:json], ui:
+        ).call
+        exit 1 if options[:exit_code] && result[:drifted]
+      end
+    end
+
     private
 
     def resolve_root
