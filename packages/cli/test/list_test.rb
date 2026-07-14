@@ -23,14 +23,14 @@ class ListTest < Minitest::Test
       names = result.map { |item| item["name"] }
       assert_includes names, "button"
       assert_includes names, "data-table"
-      assert_equal 13, result.size
+      assert_equal 14, result.size
     end
   end
 
   def test_list_works_without_a_shadwire_json
     Dir.mktmpdir do |root|
       refute File.exist?(File.join(root, "shadwire.json"))
-      assert_equal 13, run_list(root:).size
+      assert_equal 14, run_list(root:).size
     end
   end
 
@@ -50,7 +50,7 @@ class ListTest < Minitest::Test
       result = run_list(root:, json: true, ui: silent_ui(out:))
 
       assert_equal result, JSON.parse(out.string)
-      assert_equal 13, JSON.parse(out.string).size
+      assert_equal 14, JSON.parse(out.string).size
     end
   end
 end

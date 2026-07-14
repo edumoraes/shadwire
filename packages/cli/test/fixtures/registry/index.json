@@ -14,7 +14,8 @@
     { "name": "table", "type": "component", "title": "Table", "description": "A table" },
     { "name": "dropdown-menu", "type": "component", "title": "Dropdown Menu", "description": "A dropdown menu" },
     { "name": "data-table", "type": "component", "title": "Data Table", "description": "A sortable, filterable table" },
-    { "name": "chart", "type": "component", "title": "Chart", "description": "A chart backed by chart.js" }
+    { "name": "chart", "type": "component", "title": "Chart", "description": "A chart backed by chart.js" },
+    { "name": "card", "type": "component", "title": "Card", "description": "A content container with header, title, and content slots" }
   ],
   "base": {
     "files": [

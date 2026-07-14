@@ -111,6 +111,21 @@ module Shadwire
       end
     end
 
+    desc "remove NAME...", "Uninstall components, deleting only their own files"
+    method_option :yes, type: :boolean, default: false, aliases: "-y",
+                        desc: "Delete without prompting"
+    method_option :registry, type: :string, desc: "Registry base URL to reconcile against"
+    method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
+    def remove(*names)
+      raise Shadwire::Error, "remove requires at least one component name" if names.empty?
+
+      run_command do |root, ui|
+        Commands::Remove.new(
+          root:, names:, yes: options[:yes], registry: options[:registry], json: options[:json], ui:
+        ).call
+      end
+    end
+
     private
 
     def resolve_root

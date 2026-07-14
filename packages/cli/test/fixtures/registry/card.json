@@ -1,0 +1,18 @@
+{
+  "name": "card",
+  "type": "component",
+  "title": "Card",
+  "description": "A content container with header, title, and content slots",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": [],
+  "files": [
+    { "target": "app/components/ui_component.rb", "type": "component", "content": "# ui_component\n" },
+    { "target": "app/helpers/ui_helper.rb", "type": "helper", "content": "# ui_helper\n" },
+    { "target": "vendor/shadwire/shadwire.css", "type": "css", "content": "/* shadwire */\n" },
+    { "target": "app/components/ui/card_component.rb", "type": "component", "content": "# card component\n" },
+    { "target": "app/components/ui/card/header_component.rb", "type": "component", "content": "# card header\n" },
+    { "target": "app/components/ui/card/title_component.rb", "type": "component", "content": "# card title\n" },
+    { "target": "app/components/ui/card/content_component.rb", "type": "component", "content": "# card content\n" }
+  ]
+}
