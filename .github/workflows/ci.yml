@@ -109,7 +109,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Markdown lint
-        uses: DavidAnson/markdownlint-cli2-action@v23
+        uses: DavidAnson/markdownlint-cli2-action@v24
         with:
           globs: "**/*.md"
       - name: Link check (lenient)
@@ -195,4 +195,4 @@ jobs:
           path: _site
       - name: Deploy to GitHub Pages
         id: deploy
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
