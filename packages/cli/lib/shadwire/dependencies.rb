@@ -40,9 +40,14 @@ module Shadwire
 
     # Ensures each pin ({ "name" =>, "to" => }) exists in config/importmap.rb.
     def ensure_importmap_pins(pins, yes:, confirm: nil)
-      return result(manual: pins.map { |p| manual_pin_instruction(p) }) unless @project.importmap?
-
+      # importmap? is true when the gem is in the Gemfile, but config/importmap.rb
+      # only exists once `importmap:install` has run — guard the read so an
+      # unconfigured app falls back to a manual instruction instead of crashing.
       path = @project.importmap_path
+      unless @project.importmap? && File.exist?(path)
+        return result(manual: pins.map { |p| manual_pin_instruction(p) })
+      end
+
       content = File.read(path)
       present, missing = pins.partition { |pin| pin_present?(content, pin) }
       return result(skipped: present.map { |p| p["name"] }) if missing.empty?

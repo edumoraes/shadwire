@@ -130,6 +130,23 @@ class DependenciesTest < Minitest::Test
     end
   end
 
+  # importmap-rails is in the Gemfile but `importmap:install` has not run, so
+  # config/importmap.rb does not exist yet. Fall back to a manual instruction
+  # instead of crashing on File.read (mirrors ensure_tailwind_import).
+  def test_ensure_importmap_pins_manual_when_gem_present_but_config_missing
+    Dir.mktmpdir do |root|
+      File.write(File.join(root, "Gemfile"), %(gem "rails"\ngem "importmap-rails"\n))
+      deps = Shadwire::Dependencies.new(Shadwire::Project.new(root))
+
+      result = deps.ensure_importmap_pins(
+        [{ "name" => "chart.js/auto", "to" => "https://cdn.example/x" }], yes: true
+      )
+
+      refute_empty result[:manual]
+      refute File.exist?(File.join(root, "config/importmap.rb"))
+    end
+  end
+
   # ── ensure_tailwind_import ───────────────────────────────────────────────────
 
   def test_ensure_tailwind_import_inserts_after_tailwindcss

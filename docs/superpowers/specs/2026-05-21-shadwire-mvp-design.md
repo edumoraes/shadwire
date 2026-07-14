@@ -12,7 +12,7 @@ Shadwire ports the shadcn/ui approach to Ruby on Rails. It provides open, copyab
 - Beautiful Defaults: Tailwind defaults match the shadcn visual system.
 - AI-Ready: files are flat, readable, and consistent enough for LLMs to inspect and modify.
 
-The MVP builds the foundation for that system. It does not implement the full CLI yet.
+The MVP builds the foundation for that system. It does not implement the full CLI — that shipped in a later phase (see Future Phases).
 
 ## Scope
 
@@ -30,7 +30,7 @@ The MVP includes:
 
 The MVP excludes:
 
-- A production CLI implementation.
+- A production CLI implementation. *(Delivered in a later phase — see Future Phases.)*
 - Automated upstream shadcn conversion.
 - Complex interactive components such as Dialog, DropdownMenu, Tabs, Accordion, Popover, and Select.
 - Runtime gem/engine distribution.
@@ -83,7 +83,7 @@ docs/
 
 `sandbox/` is a Rails app that consumes the registry files by local copy or sync. It proves the registry works in a real Rails, ViewComponent, Tailwind v4, and Hotwire environment.
 
-`packages/cli/` is reserved for the future CLI, but the MVP should shape `registry.json` so a CLI can later install the same files without redesigning the registry.
+`packages/cli/` now holds the delivered `shadwire` CLI. The MVP shaped `registry.json` so the CLI installs the same files without redesigning the registry; `bin/build_registry` publishes that manifest (with file contents inlined) as the static registry the CLI consumes over HTTP. See Future Phases.
 
 ## Component Model
 
@@ -261,11 +261,16 @@ Phase 2 adds a fuller registry workflow:
 - Update/diff strategy.
 - Documentation generated from registry metadata.
 
-Phase 3 adds the CLI:
+The CLI shipped after the MVP — it is **delivered**, not future. It installs
+components into Rails apps, adds styles/helpers/Stimulus controllers, preserves
+local app modifications, and supports alternate registry sources via `--registry`.
+A build-and-publish pipeline (`bin/build_registry` → GitHub Pages) backs it. The
+work is captured in five phase plans under `docs/superpowers/plans/`:
 
-- Install components into Rails apps.
-- Add styles, helpers, and Stimulus controllers.
-- Preserve local app modifications.
-- Support future registry sources.
+- `2026-06-26-shadwire-cli-phase-1-registry-build.md`
+- `2026-06-26-shadwire-cli-phase-2-gem-foundation.md`
+- `2026-06-26-shadwire-cli-phase-3-init-add.md`
+- `2026-06-26-shadwire-cli-phase-4-commands.md`
+- `2026-06-26-shadwire-cli-phase-5-ci-docs.md`
 
 Future component phases should add interactive components incrementally, starting with a small Stimulus-backed component before larger primitives such as Dialog and DropdownMenu.
