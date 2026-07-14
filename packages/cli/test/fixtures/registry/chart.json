@@ -1,0 +1,18 @@
+{
+  "name": "chart",
+  "type": "component",
+  "title": "Chart",
+  "description": "A chart backed by chart.js",
+  "gems": [],
+  "importmap": [
+    { "name": "chart.js/auto", "to": "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/auto/+esm" }
+  ],
+  "registryDependencies": [],
+  "files": [
+    { "target": "app/components/ui_component.rb", "type": "component", "content": "# ui_component\n" },
+    { "target": "app/helpers/ui_helper.rb", "type": "helper", "content": "# ui_helper\n" },
+    { "target": "vendor/shadwire/shadwire.css", "type": "css", "content": "/* shadwire */\n" },
+    { "target": "app/components/ui/chart_component.rb", "type": "component", "content": "# chart component\n" },
+    { "target": "app/javascript/controllers/ui_chart_controller.js", "type": "javascript", "content": "// chart controller\n" }
+  ]
+}

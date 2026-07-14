@@ -1,0 +1,16 @@
+{
+  "name": "data-table",
+  "type": "component",
+  "title": "Data Table",
+  "description": "A sortable, filterable table",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": ["table", "button", "input", "checkbox", "dropdown-menu"],
+  "files": [
+    { "target": "app/components/ui_component.rb", "type": "component", "content": "# ui_component\n" },
+    { "target": "app/helpers/ui_helper.rb", "type": "helper", "content": "# ui_helper\n" },
+    { "target": "vendor/shadwire/shadwire.css", "type": "css", "content": "/* shadwire */\n" },
+    { "target": "app/components/ui/data_table_component.rb", "type": "component", "content": "# data-table component\n" },
+    { "target": "app/javascript/controllers/ui_data_table_controller.js", "type": "javascript", "content": "// data-table controller\n" }
+  ]
+}

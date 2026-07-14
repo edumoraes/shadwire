@@ -7,13 +7,22 @@
     { "name": "gamma", "type": "component", "title": "Gamma", "description": "Depends on beta (chain level 3)" },
     { "name": "delta", "type": "component", "title": "Delta", "description": "Depends on alpha (diamond arm)" },
     { "name": "epsilon", "type": "component", "title": "Epsilon", "description": "Depends on beta + delta (diamond apex)" },
-    { "name": "broken",  "type": "component", "title": "Broken", "description": "Has a missing registryDependency" }
+    { "name": "broken",  "type": "component", "title": "Broken", "description": "Has a missing registryDependency" },
+    { "name": "button", "type": "component", "title": "Button", "description": "A button" },
+    { "name": "input", "type": "component", "title": "Input", "description": "A text input" },
+    { "name": "checkbox", "type": "component", "title": "Checkbox", "description": "A checkbox" },
+    { "name": "table", "type": "component", "title": "Table", "description": "A table" },
+    { "name": "dropdown-menu", "type": "component", "title": "Dropdown Menu", "description": "A dropdown menu" },
+    { "name": "data-table", "type": "component", "title": "Data Table", "description": "A sortable, filterable table" },
+    { "name": "chart", "type": "component", "title": "Chart", "description": "A chart backed by chart.js" }
   ],
   "base": {
     "files": [
-      { "target": "app/components/ui_component.rb", "type": "component", "content": "# ui_component" }
+      { "target": "app/components/ui_component.rb", "type": "component", "content": "# ui_component\n" },
+      { "target": "app/helpers/ui_helper.rb", "type": "helper", "content": "# ui_helper\n" },
+      { "target": "vendor/shadwire/shadwire.css", "type": "css", "content": "/* shadwire */\n" }
     ],
-    "gems": [],
+    "gems": ["view_component", "lucide-rails"],
     "tailwind": { "version": "4", "css": "shadwire.css" }
   }
 }

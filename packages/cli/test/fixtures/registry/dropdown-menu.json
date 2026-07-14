@@ -1,0 +1,16 @@
+{
+  "name": "dropdown-menu",
+  "type": "component",
+  "title": "Dropdown Menu",
+  "description": "A dropdown menu",
+  "gems": [],
+  "importmap": [],
+  "registryDependencies": [],
+  "files": [
+    { "target": "app/components/ui_component.rb", "type": "component", "content": "# ui_component\n" },
+    { "target": "app/helpers/ui_helper.rb", "type": "helper", "content": "# ui_helper\n" },
+    { "target": "vendor/shadwire/shadwire.css", "type": "css", "content": "/* shadwire */\n" },
+    { "target": "app/components/ui/dropdown_menu_component.rb", "type": "component", "content": "# dropdown-menu component\n" },
+    { "target": "app/javascript/controllers/ui_dropdown_menu_controller.js", "type": "javascript", "content": "// dropdown-menu controller\n" }
+  ]
+}
