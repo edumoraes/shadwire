@@ -93,6 +93,24 @@ module Shadwire
       end
     end
 
+    desc "update [NAME...]", "Re-apply the registry version of installed components"
+    method_option :yes, type: :boolean, default: false, aliases: "-y",
+                        desc: "Overwrite locally-modified files without prompting"
+    method_option :overwrite, type: :boolean, default: false,
+                              desc: "Overwrite locally-modified files without prompting"
+    method_option :deps, type: :boolean, default: true,
+                         desc: "Also update transitive registry dependencies (--no-deps to skip)"
+    method_option :registry, type: :string, desc: "Registry base URL to update from"
+    method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
+    def update(*names)
+      run_command do |root, ui|
+        Commands::Update.new(
+          root:, names:, yes: options[:yes], overwrite: options[:overwrite],
+          no_deps: !options[:deps], registry: options[:registry], json: options[:json], ui:
+        ).call
+      end
+    end
+
     private
 
     def resolve_root
