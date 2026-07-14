@@ -31,6 +31,25 @@ module Shadwire
       end
     end
 
+    desc "add NAME...", "Install components and their registry dependencies"
+    method_option :yes, type: :boolean, default: false, aliases: "-y",
+                        desc: "Apply file/dependency changes without prompting"
+    method_option :overwrite, type: :boolean, default: false,
+                              desc: "Overwrite locally-modified files without prompting"
+    method_option :deps, type: :boolean, default: true,
+                         desc: "Install transitive registry dependencies (--no-deps to skip)"
+    method_option :registry, type: :string, desc: "Registry base URL to install from"
+    def add(*names)
+      raise Shadwire::Error, "add requires at least one component name" if names.empty?
+
+      run_command do |root, ui|
+        Commands::Add.new(
+          root:, names:, yes: options[:yes], overwrite: options[:overwrite],
+          no_deps: !options[:deps], registry: options[:registry], ui:
+        ).call
+      end
+    end
+
     private
 
     def resolve_root
