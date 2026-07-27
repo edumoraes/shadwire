@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Defines build/install/release from shadwire.gemspec. `release` is what
+# rubygems/release-gem invokes in .github/workflows/release.yml — without this
+# the release job fails with "Don't know how to build task 'release'".
+require "bundler/gem_tasks"
 require "rake/testtask"
 
 Rake::TestTask.new(:test) do |t|
