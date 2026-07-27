@@ -13,6 +13,7 @@ require "fileutils"
 require "json"
 require "pathname"
 require_relative "../lib/shadwire_registry/api_extractor"
+require_relative "../lib/shadwire_registry/llms_writer"
 
 ROOT = Pathname.new(__dir__).join("..").expand_path
 REGISTRY = JSON.parse(ROOT.join("registry/registry.json").read)
@@ -138,6 +139,10 @@ validate_prose!(items)
 
 FileUtils.mkdir_p(OUTPUT_DIR)
 
+# Collected for llms.txt / llms-full.txt, which describe the same items in plain
+# text for agents that never install the CLI.
+published_items = []
+
 items.each do |item|
   name = item.fetch("name")
   published = {
@@ -156,6 +161,7 @@ items.each do |item|
   }
 
   OUTPUT_DIR.join("#{name}.json").write(JSON.pretty_generate(published) + "\n")
+  published_items << published
 end
 
 index = {
@@ -183,4 +189,11 @@ index = {
 
 OUTPUT_DIR.join("index.json").write(JSON.pretty_generate(index) + "\n")
 
-puts "Built #{items.size} items + index into #{OUTPUT_DIR.relative_path_from(ROOT)}"
+OUTPUT_DIR.join("llms.txt").write(
+  ShadwireRegistry::LlmsWriter.index(registry: REGISTRY, items: published_items)
+)
+OUTPUT_DIR.join("llms-full.txt").write(
+  ShadwireRegistry::LlmsWriter.full(registry: REGISTRY, items: published_items)
+)
+
+puts "Built #{items.size} items + index + llms.txt into #{OUTPUT_DIR.relative_path_from(ROOT)}"
