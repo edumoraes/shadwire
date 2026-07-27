@@ -37,6 +37,22 @@ module Shadwire
       path("config/importmap.rb")
     end
 
+    # Rails includes every app/helpers/**/*_helper.rb module into views unless an
+    # app opts out. When it does, the Ui::*Helper modules need per-controller
+    # `helper` calls, so `status` surfaces it.
+    def include_all_helpers?
+      config = path("config/application.rb")
+      return true unless File.exist?(config)
+
+      !File.read(config).match?(/include_all_helpers\s*=\s*false/)
+    end
+
+    # A monolithic app/helpers/ui_helper.rb left over from before helpers were
+    # split per item. No longer published; safe for the app to delete.
+    def legacy_helper?
+      File.exist?(path("app/helpers/ui_helper.rb"))
+    end
+
     def tailwind_css_path(relative = "app/assets/tailwind/application.css")
       path(relative)
     end

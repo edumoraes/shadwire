@@ -31,7 +31,34 @@ Run `shadwire help COMMAND` for the built-in usage of any command.
 | `diff [NAME...]` | Show how installed files have drifted from the registry (`unchanged` / `modified` / `missing`). | `--registry URL`, `--json`, `--exit-code` |
 | `update [NAME...]` | Re-apply the registry version of installed components (all, or the named ones). | `--yes`, `--overwrite`, `--no-deps`, `--registry URL`, `--json` |
 | `remove NAME...` | Uninstall components, deleting only their own files (never the shared base, never files still used by another component). | `--yes`, `--registry URL`, `--json` |
+| `status` | Report app context: stack detection, installed components with the helpers they define, and drift. | `--registry URL`, `--json` |
 | `version` | Print the installed CLI version. | — |
+
+### `status` and coding agents
+
+`status --json` is the one call that describes the whole install, which is why
+the Shadwire agent skill injects it:
+
+```json
+{
+  "rails": true, "configPresent": true, "registryVersion": "0.2.0",
+  "stack": { "importmap": true, "stimulus": true, "tailwindcssRails": true },
+  "helpers": { "includeAllHelpers": true, "legacyHelperPresent": false },
+  "installed": [
+    { "name": "card", "drift": "unchanged",
+      "helpers": ["ui_card", "ui_card_header", "ui_card_title"],
+      "classes": ["Ui::CardComponent", "Ui::Card::HeaderComponent"] }
+  ],
+  "availableCount": 58
+}
+```
+
+`installed[].helpers` lists the `ui_*` methods that actually exist in the app, so
+there is no guessing about which helpers are callable.
+
+`status` never raises: a directory that is not a Rails app, a missing
+`shadwire.json`, and an unreachable registry are all reported as fields
+(`"rails": false`, `"registryError": "..."`) with exit code 0.
 
 ### Flags
 
