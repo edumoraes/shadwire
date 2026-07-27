@@ -41,18 +41,48 @@ module Shadwire
       def human(payload)
         @ui.say("#{payload["name"]} (#{payload["type"]}) — #{payload["title"]}")
         @ui.say(payload["description"]) if payload["description"]
+        @ui.say("When to use: #{payload["whenToUse"]}") if payload["whenToUse"]
+
+        components(payload)
 
         @ui.say("Files:")
         payload["files"].each { |file| @ui.say("  #{file["target"]}") }
 
         section("Gems", payload["gems"])
         section("Registry dependencies", payload["registryDependencies"])
+        @ui.say("Requires Stimulus: yes (needs importmap with eager loading)") if payload["requiresStimulus"]
 
         pins = Array(payload["importmap"])
-        return if pins.empty?
+        unless pins.empty?
+          @ui.say("Importmap:")
+          pins.each { |pin| @ui.say("  #{pin["name"]} → #{pin["to"]}") }
+        end
 
-        @ui.say("Importmap:")
-        pins.each { |pin| @ui.say("  #{pin["name"]} → #{pin["to"]}") }
+        usage(payload)
+      end
+
+      # The generated API: what to call and what it accepts. Roots first, so the
+      # entry point is obvious before its composition parts.
+      def components(payload)
+        entries = Array(payload.dig("api", "components")).reject { |entry| entry["helper"].nil? }
+        return if entries.empty?
+
+        @ui.say("Components:")
+        entries.sort_by { |entry| entry["root"] ? 0 : 1 }.each do |entry|
+          @ui.say("  #{entry["class"]} — #{entry["helper"]}")
+          @ui.say("    variants: #{entry["variants"].join(" | ")}") if entry["variants"]&.any?
+          @ui.say("    sizes:    #{entry["sizes"].join(" | ")}") if entry["sizes"]&.any?
+          props = Array(entry["props"]).map { |prop| prop["default"] ? "#{prop["name"]}: #{prop["default"]}" : "#{prop["name"]}:" }
+          @ui.say("    props:    #{props.join(", ")}") unless props.empty?
+        end
+      end
+
+      def usage(payload)
+        snippets = Array(payload["usage"])
+        return if snippets.empty?
+
+        @ui.say("Usage:")
+        snippets.each { |snippet| @ui.say(snippet.lines.map { |line| "  #{line}" }.join.chomp) }
       end
 
       def section(label, values)

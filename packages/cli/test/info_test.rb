@@ -16,6 +16,51 @@ class InfoTest < Minitest::Test
     Shadwire::Commands::Info.new(root:, name:, registry: FILE_REGISTRY, ui:, **opts).call
   end
 
+  # An agent reads `info` before installing, so the generated API and the
+  # hand-written intent both have to survive into the payload.
+  def test_info_json_carries_api_intent_and_stimulus_flag
+    Dir.mktmpdir do |root|
+      result = run_info("button", root:, json: true)
+
+      assert_equal "Any clickable action.", result.fetch("whenToUse")
+      refute_empty result.fetch("usage")
+      assert_equal false, result.fetch("requiresStimulus")
+      assert_equal "ui_button", result.dig("api", "components", 0, "helper")
+      assert_includes result.dig("api", "components", 0, "variants"), "destructive"
+    end
+  end
+
+  def test_human_output_names_the_helper_variants_and_sizes
+    Dir.mktmpdir do |root|
+      out = StringIO.new
+      run_info("button", root:, ui: silent_ui(out:))
+
+      assert_match(/Ui::ButtonComponent/, out.string)
+      assert_match(/ui_button/, out.string)
+      assert_match(/destructive/, out.string)
+      assert_match(/icon/, out.string)
+    end
+  end
+
+  def test_human_output_includes_when_to_use_and_usage
+    Dir.mktmpdir do |root|
+      out = StringIO.new
+      run_info("button", root:, ui: silent_ui(out:))
+
+      assert_match(/When to use/, out.string)
+      assert_match(/<%= ui_button/, out.string)
+    end
+  end
+
+  # File bodies stay out: info is a manifest, not a payload.
+  def test_info_still_strips_file_content
+    Dir.mktmpdir do |root|
+      result = run_info("button", root:, json: true)
+
+      result.fetch("files").each { |file| refute file.key?("content"), "#{file["target"]} leaked content" }
+    end
+  end
+
   def test_info_returns_item_metadata
     Dir.mktmpdir do |root|
       result = run_info("data-table", root:)
