@@ -4,7 +4,7 @@ require "test_helper"
 
 class TooltipComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::TooltipHelper
 
     def call
       ui_tooltip(id: "save-tooltip", open_delay: 150) do

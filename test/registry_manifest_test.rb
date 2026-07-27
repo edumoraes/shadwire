@@ -28,13 +28,24 @@ class RegistryManifestTest < Minitest::Test
     end
   end
 
-  def test_each_item_includes_shared_component_helper_and_style
+  def test_each_item_includes_shared_component_and_style
     REGISTRY.fetch("items").each do |item|
       sources = item.fetch("files").map { |file| file.fetch("source") }
 
       assert_includes sources, "registry/rails/ui/components/ui_component.rb"
-      assert_includes sources, "registry/rails/ui/helpers/ui_helper.rb"
       assert_includes sources, "registry/rails/ui/styles/shadwire.css"
+    end
+  end
+
+  # Helpers are no longer shared: each item ships only the per-item modules for
+  # the components it bundles, so installing one component cannot define helpers
+  # for components that are not installed.
+  def test_no_item_ships_the_removed_monolithic_helper
+    REGISTRY.fetch("items").each do |item|
+      sources = item.fetch("files").map { |file| file.fetch("source") }
+
+      refute_includes sources, "registry/rails/ui/helpers/ui_helper.rb",
+                      "#{item.fetch("name")} still ships the removed monolithic helper"
     end
   end
 

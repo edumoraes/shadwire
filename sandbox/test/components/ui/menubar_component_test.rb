@@ -4,7 +4,7 @@ require "test_helper"
 
 class MenubarComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::MenubarHelper
 
     def call
       ui_menubar do

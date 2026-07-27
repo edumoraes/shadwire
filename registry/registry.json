@@ -34,8 +34,8 @@
           "target": "app/components/ui/button_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/button_helper.rb",
+          "target": "app/helpers/ui/button_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -56,8 +56,8 @@
           "target": "app/components/ui/badge_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/badge_helper.rb",
+          "target": "app/helpers/ui/badge_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -100,8 +100,8 @@
           "target": "app/components/ui/card/footer_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/card_helper.rb",
+          "target": "app/helpers/ui/card_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -122,8 +122,8 @@
           "target": "app/components/ui/alert_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/alert_helper.rb",
+          "target": "app/helpers/ui/alert_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -144,8 +144,8 @@
           "target": "app/components/ui/separator_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/separator_helper.rb",
+          "target": "app/helpers/ui/separator_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -166,8 +166,8 @@
           "target": "app/components/ui/avatar_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/avatar_helper.rb",
+          "target": "app/helpers/ui/avatar_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -212,16 +212,20 @@
           "target": "app/components/ui/icon_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/accordion_helper.rb",
+          "target": "app/helpers/ui/accordion_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/icon_helper.rb",
+          "target": "app/helpers/ui/icon_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_accordion_controller.js",
           "target": "app/javascript/controllers/ui_accordion_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -258,16 +262,16 @@
           "target": "app/components/ui/scroll_area/corner_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/scroll_area_helper.rb",
+          "target": "app/helpers/ui/scroll_area_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_scroll_area_controller.js",
           "target": "app/javascript/controllers/ui_scroll_area_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -284,8 +288,8 @@
           "target": "app/components/ui/icon_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/icon_helper.rb",
+          "target": "app/helpers/ui/icon_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -306,8 +310,8 @@
           "target": "app/components/ui/input_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/input_helper.rb",
+          "target": "app/helpers/ui/input_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -328,8 +332,8 @@
           "target": "app/components/ui/label_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/label_helper.rb",
+          "target": "app/helpers/ui/label_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -350,8 +354,8 @@
           "target": "app/components/ui/textarea_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/textarea_helper.rb",
+          "target": "app/helpers/ui/textarea_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -372,8 +376,8 @@
           "target": "app/components/ui/checkbox_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/checkbox_helper.rb",
+          "target": "app/helpers/ui/checkbox_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -398,8 +402,8 @@
           "target": "app/components/ui/radio_group/item_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/radio_group_helper.rb",
+          "target": "app/helpers/ui/radio_group_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -420,8 +424,8 @@
           "target": "app/components/ui/switch_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/switch_helper.rb",
+          "target": "app/helpers/ui/switch_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -442,8 +446,8 @@
           "target": "app/components/ui/skeleton_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/skeleton_helper.rb",
+          "target": "app/helpers/ui/skeleton_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -464,8 +468,8 @@
           "target": "app/components/ui/progress_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/progress_helper.rb",
+          "target": "app/helpers/ui/progress_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -514,8 +518,8 @@
           "target": "app/components/ui/table/caption_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/table_helper.rb",
+          "target": "app/helpers/ui/table_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -564,8 +568,12 @@
           "target": "app/components/ui/icon_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/breadcrumb_helper.rb",
+          "target": "app/helpers/ui/breadcrumb_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui/icon_helper.rb",
+          "target": "app/helpers/ui/icon_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -618,8 +626,16 @@
           "target": "app/components/ui/icon_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/pagination_helper.rb",
+          "target": "app/helpers/ui/pagination_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui/button_helper.rb",
+          "target": "app/helpers/ui/button_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui/icon_helper.rb",
+          "target": "app/helpers/ui/icon_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -652,16 +668,16 @@
           "target": "app/components/ui/tabs/content_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/tabs_helper.rb",
+          "target": "app/helpers/ui/tabs_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_tabs_controller.js",
           "target": "app/javascript/controllers/ui_tabs_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -716,16 +732,24 @@
           "target": "app/components/ui/icon_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/dialog_helper.rb",
+          "target": "app/helpers/ui/dialog_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/button_helper.rb",
+          "target": "app/helpers/ui/button_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui/icon_helper.rb",
+          "target": "app/helpers/ui/icon_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_dialog_controller.js",
           "target": "app/javascript/controllers/ui_dialog_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -778,16 +802,20 @@
           "target": "app/components/ui/button_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/alert_dialog_helper.rb",
+          "target": "app/helpers/ui/alert_dialog_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/button_helper.rb",
+          "target": "app/helpers/ui/button_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_dialog_controller.js",
           "target": "app/javascript/controllers/ui_dialog_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -840,16 +868,24 @@
           "target": "app/components/ui/icon_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/sheet_helper.rb",
+          "target": "app/helpers/ui/sheet_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/button_helper.rb",
+          "target": "app/helpers/ui/button_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui/icon_helper.rb",
+          "target": "app/helpers/ui/icon_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_dialog_controller.js",
           "target": "app/javascript/controllers/ui_dialog_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -878,16 +914,20 @@
           "target": "app/components/ui/button_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/tooltip_helper.rb",
+          "target": "app/helpers/ui/tooltip_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/button_helper.rb",
+          "target": "app/helpers/ui/button_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_tooltip_controller.js",
           "target": "app/javascript/controllers/ui_tooltip_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -916,16 +956,20 @@
           "target": "app/components/ui/button_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/popover_helper.rb",
+          "target": "app/helpers/ui/popover_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/button_helper.rb",
+          "target": "app/helpers/ui/button_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_popover_controller.js",
           "target": "app/javascript/controllers/ui_popover_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -974,16 +1018,20 @@
           "target": "app/components/ui/button_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/dropdown_menu_helper.rb",
+          "target": "app/helpers/ui/dropdown_menu_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/button_helper.rb",
+          "target": "app/helpers/ui/button_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_dropdown_menu_controller.js",
           "target": "app/javascript/controllers/ui_dropdown_menu_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1032,16 +1080,20 @@
           "target": "app/components/ui/icon_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/select_helper.rb",
+          "target": "app/helpers/ui/select_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/icon_helper.rb",
+          "target": "app/helpers/ui/icon_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_select_controller.js",
           "target": "app/javascript/controllers/ui_select_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1154,16 +1206,16 @@
           "target": "app/components/ui/sidebar/menu_sub_button_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/sidebar_helper.rb",
+          "target": "app/helpers/ui/sidebar_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_sidebar_controller.js",
           "target": "app/javascript/controllers/ui_sidebar_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1215,10 +1267,6 @@
           "target": "app/components/ui_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
           "source": "registry/rails/ui/styles/shadwire.css",
           "target": "vendor/shadwire/shadwire.css"
         }
@@ -1237,8 +1285,8 @@
           "target": "app/components/ui/aspect_ratio_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/aspect_ratio_helper.rb",
+          "target": "app/helpers/ui/aspect_ratio_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -1259,8 +1307,8 @@
           "target": "app/components/ui/spinner_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/spinner_helper.rb",
+          "target": "app/helpers/ui/spinner_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -1285,8 +1333,8 @@
           "target": "app/components/ui/kbd/group_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/kbd_helper.rb",
+          "target": "app/helpers/ui/kbd_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -1327,8 +1375,8 @@
           "target": "app/components/ui/empty/content_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/empty_helper.rb",
+          "target": "app/helpers/ui/empty_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -1389,8 +1437,12 @@
           "target": "app/components/ui/separator_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/item_helper.rb",
+          "target": "app/helpers/ui/item_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui/separator_helper.rb",
+          "target": "app/helpers/ui/separator_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -1431,8 +1483,8 @@
           "target": "app/components/ui/input_group/button_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/input_group_helper.rb",
+          "target": "app/helpers/ui/input_group_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -1465,8 +1517,12 @@
           "target": "app/components/ui/separator_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/button_group_helper.rb",
+          "target": "app/helpers/ui/button_group_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui/separator_helper.rb",
+          "target": "app/helpers/ui/separator_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -1527,8 +1583,12 @@
           "target": "app/components/ui/separator_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/field_helper.rb",
+          "target": "app/helpers/ui/field_helper.rb"
+        },
+        {
+          "source": "registry/rails/ui/helpers/ui/separator_helper.rb",
+          "target": "app/helpers/ui/separator_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -1549,8 +1609,8 @@
           "target": "app/components/ui/native_select_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/native_select_helper.rb",
+          "target": "app/helpers/ui/native_select_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -1579,16 +1639,16 @@
           "target": "app/components/ui/collapsible/content_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/collapsible_helper.rb",
+          "target": "app/helpers/ui/collapsible_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_collapsible_controller.js",
           "target": "app/javascript/controllers/ui_collapsible_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1605,16 +1665,16 @@
           "target": "app/components/ui/toggle_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/toggle_helper.rb",
+          "target": "app/helpers/ui/toggle_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_toggle_controller.js",
           "target": "app/javascript/controllers/ui_toggle_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1635,16 +1695,16 @@
           "target": "app/components/ui/toggle_group/item_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/toggle_group_helper.rb",
+          "target": "app/helpers/ui/toggle_group_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_toggle_group_controller.js",
           "target": "app/javascript/controllers/ui_toggle_group_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1661,16 +1721,16 @@
           "target": "app/components/ui/slider_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/slider_helper.rb",
+          "target": "app/helpers/ui/slider_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_slider_controller.js",
           "target": "app/javascript/controllers/ui_slider_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1695,16 +1755,16 @@
           "target": "app/components/ui/hover_card/content_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/hover_card_helper.rb",
+          "target": "app/helpers/ui/hover_card_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_hover_card_controller.js",
           "target": "app/javascript/controllers/ui_hover_card_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1733,16 +1793,16 @@
           "target": "app/components/ui/input_otp/separator_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/input_otp_helper.rb",
+          "target": "app/helpers/ui/input_otp_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_input_otp_controller.js",
           "target": "app/javascript/controllers/ui_input_otp_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1791,16 +1851,20 @@
           "target": "app/components/ui/button_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/drawer_helper.rb",
+          "target": "app/helpers/ui/drawer_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/button_helper.rb",
+          "target": "app/helpers/ui/button_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_drawer_controller.js",
           "target": "app/javascript/controllers/ui_drawer_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1845,16 +1909,16 @@
           "target": "app/components/ui/context_menu/shortcut_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/context_menu_helper.rb",
+          "target": "app/helpers/ui/context_menu_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_context_menu_controller.js",
           "target": "app/javascript/controllers/ui_context_menu_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1899,16 +1963,16 @@
           "target": "app/components/ui/menubar/shortcut_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/menubar_helper.rb",
+          "target": "app/helpers/ui/menubar_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_menubar_controller.js",
           "target": "app/javascript/controllers/ui_menubar_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -1949,16 +2013,20 @@
           "target": "app/components/ui/icon_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
+          "source": "registry/rails/ui/helpers/ui/navigation_menu_helper.rb",
+          "target": "app/helpers/ui/navigation_menu_helper.rb"
         },
         {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/icon_helper.rb",
+          "target": "app/helpers/ui/icon_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_navigation_menu_controller.js",
           "target": "app/javascript/controllers/ui_navigation_menu_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -2003,16 +2071,16 @@
           "target": "app/components/ui/command/shortcut_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/command_helper.rb",
+          "target": "app/helpers/ui/command_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_command_controller.js",
           "target": "app/javascript/controllers/ui_command_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -2029,16 +2097,16 @@
           "target": "app/components/ui/calendar_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/calendar_helper.rb",
+          "target": "app/helpers/ui/calendar_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_calendar_controller.js",
           "target": "app/javascript/controllers/ui_calendar_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -2063,16 +2131,16 @@
           "target": "app/components/ui/resizable_handle_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/resizable_helper.rb",
+          "target": "app/helpers/ui/resizable_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_resizable_controller.js",
           "target": "app/javascript/controllers/ui_resizable_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -2105,16 +2173,16 @@
           "target": "app/components/ui/carousel/next_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/carousel_helper.rb",
+          "target": "app/helpers/ui/carousel_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_carousel_controller.js",
           "target": "app/javascript/controllers/ui_carousel_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -2130,10 +2198,6 @@
         {
           "source": "registry/rails/ui/components/ui_component.rb",
           "target": "app/components/ui_component.rb"
-        },
-        {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",
@@ -2155,10 +2219,6 @@
           "target": "app/components/ui_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
           "source": "registry/rails/ui/styles/shadwire.css",
           "target": "vendor/shadwire/shadwire.css"
         }
@@ -2177,16 +2237,16 @@
           "target": "app/components/ui/sonner_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/sonner_helper.rb",
+          "target": "app/helpers/ui/sonner_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_sonner_controller.js",
           "target": "app/javascript/controllers/ui_sonner_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -2211,16 +2271,16 @@
           "target": "app/components/ui/chart_component.rb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/chart_helper.rb",
+          "target": "app/helpers/ui/chart_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_chart_controller.js",
           "target": "app/javascript/controllers/ui_chart_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     },
@@ -2250,16 +2310,16 @@
           "target": "app/components/ui/data_table_component.html.erb"
         },
         {
-          "source": "registry/rails/ui/helpers/ui_helper.rb",
-          "target": "app/helpers/ui_helper.rb"
-        },
-        {
-          "source": "registry/rails/ui/styles/shadwire.css",
-          "target": "vendor/shadwire/shadwire.css"
+          "source": "registry/rails/ui/helpers/ui/data_table_helper.rb",
+          "target": "app/helpers/ui/data_table_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_data_table_controller.js",
           "target": "app/javascript/controllers/ui_data_table_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/styles/shadwire.css",
+          "target": "vendor/shadwire/shadwire.css"
         }
       ]
     }

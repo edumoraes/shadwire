@@ -4,7 +4,7 @@ require "test_helper"
 
 class DrawerComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::DrawerHelper
 
     def call
       ui_drawer do

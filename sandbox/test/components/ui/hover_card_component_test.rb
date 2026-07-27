@@ -4,7 +4,7 @@ require "test_helper"
 
 class HoverCardComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::HoverCardHelper
 
     def call
       ui_hover_card(open_delay: 200) do

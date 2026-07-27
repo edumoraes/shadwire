@@ -4,7 +4,8 @@ require "test_helper"
 
 class ButtonGroupComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ButtonGroupHelper
+    include Ui::ButtonHelper
 
     def call
       ui_button_group do

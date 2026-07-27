@@ -4,7 +4,7 @@ require "test_helper"
 
 class LabelComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::LabelHelper
 
     def call
       ui_label(for: "email") { "Email" }

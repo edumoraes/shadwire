@@ -4,7 +4,7 @@ require "test_helper"
 
 class ScrollAreaComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ScrollAreaHelper
 
     def call
       ui_scroll_area(scrollbars: [ :vertical, :horizontal ], class: "h-48 w-80") do

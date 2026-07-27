@@ -8,7 +8,9 @@ module Ui
       # separator and a breadcrumb, followed by placeholder content. This is the
       # entry point you render in a view.
       class PageComponent < UiComponent
-        include UiHelper
+        include Ui::BreadcrumbHelper
+        include Ui::SeparatorHelper
+        include Ui::SidebarHelper
 
         def initialize(**attrs)
           @attrs = attrs

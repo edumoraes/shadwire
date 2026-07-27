@@ -4,7 +4,7 @@ require "test_helper"
 
 class RadioGroupComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::RadioGroupHelper
 
     def call
       ui_radio_group(aria: { label: "Plano" }) do

@@ -4,7 +4,7 @@ require "test_helper"
 
 class TabsComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::TabsHelper
 
     def call
       ui_tabs(default_value: :account, id: "settings-tabs") do

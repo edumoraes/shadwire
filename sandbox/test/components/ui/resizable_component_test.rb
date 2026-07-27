@@ -4,7 +4,7 @@ require "test_helper"
 
 class ResizableComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ResizableHelper
 
     def call
       ui_resizable_panel_group(direction: :horizontal, class: "h-40 rounded-lg border") do

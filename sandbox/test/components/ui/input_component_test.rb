@@ -4,7 +4,7 @@ require "test_helper"
 
 class InputComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::InputHelper
 
     def call
       ui_input(type: :email, name: "user[email]", placeholder: "voce@exemplo.com")

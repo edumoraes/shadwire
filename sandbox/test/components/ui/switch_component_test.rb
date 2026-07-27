@@ -4,7 +4,7 @@ require "test_helper"
 
 class SwitchComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::SwitchHelper
 
     def call
       ui_switch(id: "airplane-mode", name: "settings[airplane]", checked: true)

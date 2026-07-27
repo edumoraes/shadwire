@@ -4,7 +4,7 @@ require "test_helper"
 
 class TableComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::TableHelper
 
     def call
       ui_table do
