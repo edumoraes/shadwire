@@ -126,6 +126,15 @@ module Shadwire
       end
     end
 
+    desc "status", "Report app context: stack, installed components, helpers, drift"
+    method_option :registry, type: :string, desc: "Registry base URL to reconcile against"
+    method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
+    def status
+      run_command do |root, ui|
+        Commands::Status.new(root:, registry: options[:registry], json: options[:json], ui:).call
+      end
+    end
+
     private
 
     def resolve_root

@@ -7,9 +7,60 @@
   "importmap": [],
   "registryDependencies": [],
   "files": [
-    { "target": "app/components/ui_component.rb", "type": "component", "content": "# ui_component\n" },
-    { "target": "app/helpers/ui_helper.rb", "type": "helper", "content": "# ui_helper\n" },
-    { "target": "vendor/shadwire/shadwire.css", "type": "css", "content": "/* shadwire */\n" },
-    { "target": "app/components/ui/button_component.rb", "type": "component", "content": "# button component\n" }
-  ]
+    {
+      "target": "app/components/ui_component.rb",
+      "type": "component",
+      "content": "# ui_component\n"
+    },
+    {
+      "target": "app/helpers/ui_helper.rb",
+      "type": "helper",
+      "content": "# ui_helper\n"
+    },
+    {
+      "target": "vendor/shadwire/shadwire.css",
+      "type": "css",
+      "content": "/* shadwire */\n"
+    },
+    {
+      "target": "app/components/ui/button_component.rb",
+      "type": "component",
+      "content": "# button component\n"
+    }
+  ],
+  "whenToUse": "Any clickable action.",
+  "usage": [
+    "<%= ui_button { \"Save\" } %>"
+  ],
+  "requiresStimulus": false,
+  "api": {
+    "components": [
+      {
+        "class": "Ui::ButtonComponent",
+        "helper": "ui_button",
+        "root": true,
+        "variants": [
+          "default",
+          "destructive",
+          "outline"
+        ],
+        "sizes": [
+          "default",
+          "sm",
+          "icon"
+        ],
+        "props": [
+          {
+            "name": "variant",
+            "default": ":default"
+          },
+          {
+            "name": "tag",
+            "default": ":button"
+          }
+        ],
+        "attrs": true
+      }
+    ]
+  }
 }
