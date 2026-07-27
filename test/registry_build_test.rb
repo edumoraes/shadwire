@@ -142,6 +142,46 @@ class RegistryBuildTest < Minitest::Test
     end
   end
 
+  # The API block is generated from source by ShadwireRegistry::ApiExtractor, so
+  # an agent can read a component's real signature before installing it.
+  def test_item_carries_the_generated_api
+    button = item_json("button").fetch("api").fetch("components")
+                                .find { |component| component["class"] == "Ui::ButtonComponent" }
+
+    refute_nil button
+    assert_equal "ui_button", button.fetch("helper")
+    assert_equal true, button.fetch("root")
+    assert_includes button.fetch("variants"), "destructive"
+    assert_includes button.fetch("sizes"), "icon"
+    assert_equal true, button.fetch("attrs")
+  end
+
+  def test_subcomponents_are_published_as_non_root_entries
+    header = item_json("card").fetch("api").fetch("components")
+                              .find { |component| component["class"] == "Ui::Card::HeaderComponent" }
+
+    refute_nil header
+    assert_equal false, header.fetch("root")
+    assert_equal "ui_card_header", header.fetch("helper")
+  end
+
+  # 28 of 58 items ship a Stimulus controller and need importmap with eager
+  # loading; the flag lets an agent check before installing.
+  def test_stimulus_requirement_is_published
+    assert_equal true, item_json("dropdown-menu").fetch("requiresStimulus")
+    assert_equal false, item_json("button").fetch("requiresStimulus")
+  end
+
+  def test_every_published_component_resolves_a_helper
+    %w[button card dialog field sidebar].each do |name|
+      item_json(name).fetch("api").fetch("components").each do |component|
+        next if component["class"] == "UiComponent" # shared base, has no helper
+
+        refute_nil component["helper"], "#{name}: #{component["class"]} resolved no helper"
+      end
+    end
+  end
+
   def test_item_importmap_pins_are_published
     pins = item_json("chart").fetch("importmap")
     assert_equal "chart.js/auto", pins.first.fetch("name")
