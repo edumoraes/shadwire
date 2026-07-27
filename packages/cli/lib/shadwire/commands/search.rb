@@ -5,10 +5,14 @@ require "json"
 module Shadwire
   module Commands
     # Filters the registry catalog by a case-insensitive substring match on an
-    # item's name, title, or description. Read-only. With json: true it emits the
-    # matching catalog entries; otherwise a "name — title" line each.
+    # item's name, title, description, or whenToUse. Read-only. With json: true
+    # it emits the matching catalog entries; otherwise a "name — title" line each.
+    #
+    # whenToUse is searched because it is where the disambiguating vocabulary
+    # lives ("form", "modal", "overlay"); without it a search for "form" misses
+    # most of the form controls.
     class Search
-      SEARCHABLE = %w[name title description].freeze
+      SEARCHABLE = %w[name title description whenToUse].freeze
 
       def initialize(root:, query:, registry: nil, json: false, ui: UI.new)
         @root = root.to_s

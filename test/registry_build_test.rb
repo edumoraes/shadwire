@@ -101,10 +101,45 @@ class RegistryBuildTest < Minitest::Test
     assert_equal "Displays a button or a link styled as a button.", button.fetch("description")
   end
 
-  def test_absent_title_and_description_fall_back_to_a_humanized_name
+  # There is no humanized fallback any more: prose is published exactly as
+  # written, so a title like "Input OTP" survives instead of becoming "Input Otp".
+  def test_prose_is_published_verbatim
     otp = item_json("input-otp")
-    assert_equal "Input Otp", otp.fetch("title")
-    assert_equal "Input Otp", otp.fetch("description")
+    assert_equal "Input OTP", otp.fetch("title")
+    refute_equal "Input Otp", otp.fetch("description")
+  end
+
+  def test_when_to_use_and_usage_are_published
+    button = item_json("button")
+    assert_includes button.fetch("whenToUse"), "clickable action"
+    refute_empty button.fetch("usage")
+    assert_includes button.fetch("usage").first, "ui_button"
+  end
+
+  def test_index_entries_carry_when_to_use_for_search
+    entry = index_json.fetch("items").find { |item| item.fetch("name") == "dropdown-menu" }
+    refute_empty entry.fetch("whenToUse")
+  end
+
+  # The build must refuse to publish an item with placeholder prose rather than
+  # silently humanizing its name.
+  def test_build_fails_when_required_prose_is_missing
+    Dir.mktmpdir("shadwire-prose") do |dir|
+      source = JSON.parse(ROOT.join("registry/registry.json").read)
+      source.fetch("items").first.delete("whenToUse")
+
+      registry_dir = Pathname.new(dir).join("registry")
+      FileUtils.mkdir_p(registry_dir)
+      FileUtils.cp_r(ROOT.join("registry/rails").to_s, registry_dir.to_s)
+      registry_dir.join("registry.json").write(JSON.generate(source))
+      FileUtils.cp_r(ROOT.join("bin").to_s, dir)
+      FileUtils.cp_r(ROOT.join("lib").to_s, dir) if ROOT.join("lib").directory?
+
+      output = `cd #{dir.shellescape} && BUILD_DIR=#{dir.shellescape}/out ruby bin/build_registry 2>&1`
+
+      refute $?.success?, "build should fail on missing prose, got:\n#{output}"
+      assert_includes output, "missing required prose"
+    end
   end
 
   def test_item_importmap_pins_are_published

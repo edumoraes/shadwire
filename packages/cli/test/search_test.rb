@@ -27,6 +27,17 @@ class SearchTest < Minitest::Test
     end
   end
 
+  # whenToUse carries the disambiguating vocabulary ("form", "modal", "overlay"),
+  # so a term that appears nowhere in the name, title, or description still
+  # finds the right component.
+  def test_search_matches_when_to_use
+    Dir.mktmpdir do |root|
+      names = run_search("on/off choices", root:).map { |item| item["name"] }
+
+      assert_includes names, "checkbox"
+    end
+  end
+
   def test_search_is_case_insensitive
     Dir.mktmpdir do |root|
       names = run_search("BUTTON", root:).map { |item| item["name"] }
