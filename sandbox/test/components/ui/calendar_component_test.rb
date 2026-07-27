@@ -4,7 +4,7 @@ require "test_helper"
 
 class CalendarComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::CalendarHelper
 
     def call
       ui_calendar(month: "2026-06", selected: "2026-06-15", name: "due_on")

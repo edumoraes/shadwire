@@ -4,7 +4,7 @@ require "test_helper"
 
 class ToggleComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ToggleHelper
 
     def call
       ui_toggle(variant: :outline, pressed: true) { "B" }

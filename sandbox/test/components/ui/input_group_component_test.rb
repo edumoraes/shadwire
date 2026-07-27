@@ -4,7 +4,7 @@ require "test_helper"
 
 class InputGroupComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::InputGroupHelper
 
     def call
       ui_input_group do

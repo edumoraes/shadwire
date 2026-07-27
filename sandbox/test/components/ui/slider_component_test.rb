@@ -4,7 +4,7 @@ require "test_helper"
 
 class SliderComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::SliderHelper
 
     def call
       ui_slider(min: 0, max: 100, step: 5, value: 40, name: "volume", label: "Volume")

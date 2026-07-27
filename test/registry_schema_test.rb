@@ -13,6 +13,69 @@ class RegistrySchemaTest < Minitest::Test
   KEBAB = /\A[a-z0-9]+(?:-[a-z0-9]+)*\z/
   ITEM_TYPES = %w[component block].freeze
 
+  # Which item owns a component file, by its path under app/components/ui/.
+  # An item owns `<name>_component.rb`, anything under `<name>/`, and anything
+  # prefixed `<name>_` (resizable_panel_component.rb belongs to `resizable`).
+  # Longest prefix wins, so input_group_component.rb resolves to `input-group`
+  # rather than `input`.
+  PREFIXES = REGISTRY.fetch("items").to_h { |item|
+    snake = item.fetch("name").tr("-", "_")
+    [item.fetch("name"), item.fetch("type") == "block" ? "blocks/#{snake}" : snake]
+  }.freeze
+
+  def owner_for(path)
+    REGISTRY.fetch("items").select { |item|
+      prefix = PREFIXES[item.fetch("name")]
+      path == "#{prefix}_component.rb" || path.start_with?("#{prefix}/") || path.start_with?("#{prefix}_")
+    }.max_by { |item| PREFIXES[item.fetch("name")].length }&.fetch("name")
+  end
+
+  def helper_source_for(name)
+    ROOT.join("registry/rails/ui/helpers/ui/#{name.tr("-", "_")}_helper.rb")
+  end
+
+  # Every component file an item bundles must arrive with the helper module that
+  # wraps it, otherwise the install defines a component with no ui_* helper.
+  def test_items_ship_helpers_for_every_component_they_bundle
+    REGISTRY.fetch("items").each do |item|
+      targets = item.fetch("files").map { |file| file.fetch("target") }
+      helpers = targets.select { |target| target.start_with?("app/helpers/ui/") }
+
+      targets.select { |target| target.start_with?("app/components/ui/") }.each do |target|
+        owner = owner_for(target.sub("app/components/ui/", ""))
+        next unless owner && helper_source_for(owner).file?
+
+        assert_includes helpers, "app/helpers/ui/#{owner.tr("-", "_")}_helper.rb",
+                        "#{item.fetch("name")} ships #{target} without its helper module"
+      end
+    end
+  end
+
+  # The inverse: no item may ship a helper for a component it does not bundle.
+  def test_items_do_not_ship_orphan_helpers
+    REGISTRY.fetch("items").each do |item|
+      targets = item.fetch("files").map { |file| file.fetch("target") }
+      owners = targets.select { |target| target.start_with?("app/components/ui/") }
+                      .filter_map { |target| owner_for(target.sub("app/components/ui/", "")) }.uniq
+
+      targets.select { |target| target.start_with?("app/helpers/ui/") }.each do |helper|
+        name = File.basename(helper, "_helper.rb")
+        assert_includes owners.map { |owner| owner.tr("-", "_") }, name,
+                        "#{item.fetch("name")} ships #{helper} but none of its components need it"
+      end
+    end
+  end
+
+  def test_every_helper_module_source_exists_and_is_namespaced
+    Dir[ROOT.join("registry/rails/ui/helpers/ui/*.rb")].each do |file|
+      base = File.basename(file, "_helper.rb")
+      expected = base.split("_").map { |part| part[0].upcase + part[1..] }.join
+
+      assert_includes File.read(file), "module #{expected}Helper",
+                      "#{file} does not define Ui::#{expected}Helper"
+    end
+  end
+
   def test_top_level_keys_are_present
     %w[name version framework dependencies tailwind items].each do |key|
       assert REGISTRY.key?(key), "registry.json is missing top-level key: #{key}"

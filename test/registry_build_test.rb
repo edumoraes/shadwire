@@ -135,8 +135,9 @@ class RegistryBuildTest < Minitest::Test
 
     targets = base.fetch("files").map { |file| file.fetch("target") }
     assert_includes targets, "app/components/ui_component.rb"
-    assert_includes targets, "app/helpers/ui_helper.rb"
     assert_includes targets, "vendor/shadwire/shadwire.css"
+    # Helpers are per-item, not part of the shared base install.
+    refute_includes targets, "app/helpers/ui_helper.rb"
     base.fetch("files").each do |file|
       refute_empty file.fetch("content"), "base file #{file.fetch("target")} inlined empty content"
     end

@@ -15,7 +15,7 @@ class DataTableComponentTest < ViewComponent::TestCase
   ].freeze
 
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::DataTableHelper
 
     def call
       ui_data_table(columns: DataTableComponentTest::COLUMNS, rows: DataTableComponentTest::ROWS, filter_key: :email)

@@ -4,7 +4,7 @@ require "test_helper"
 
 class BreadcrumbComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::BreadcrumbHelper
 
     def call
       ui_breadcrumb do

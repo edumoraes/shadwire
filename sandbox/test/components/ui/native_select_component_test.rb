@@ -4,7 +4,7 @@ require "test_helper"
 
 class NativeSelectComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::NativeSelectHelper
 
     def call
       ui_native_select(name: "fruit", id: "fruit") do

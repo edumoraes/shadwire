@@ -4,7 +4,7 @@ require "test_helper"
 
 class ChartComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ChartHelper
 
     def call
       ui_chart(

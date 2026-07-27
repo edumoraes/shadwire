@@ -4,7 +4,8 @@ require "test_helper"
 
 class FieldComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::FieldHelper
+    include Ui::InputHelper
 
     def call
       ui_field_group do

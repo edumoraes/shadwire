@@ -6,7 +6,9 @@ module Ui
       # The header search field: a SidebarInput with an inset search icon,
       # wrapped in a labelled search form.
       class SearchFormComponent < UiComponent
-        include UiHelper
+        include Ui::IconHelper
+        include Ui::LabelHelper
+        include Ui::SidebarHelper
 
         def initialize(**attrs)
           @attrs = attrs

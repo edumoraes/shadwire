@@ -4,7 +4,7 @@ require "test_helper"
 
 class TextareaComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::TextareaHelper
 
     def call
       ui_textarea(name: "post[body]", placeholder: "Digite sua mensagem") { "Rascunho" }

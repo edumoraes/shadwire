@@ -4,7 +4,7 @@ require "test_helper"
 
 class NavigationMenuComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::NavigationMenuHelper
 
     def call
       ui_navigation_menu do

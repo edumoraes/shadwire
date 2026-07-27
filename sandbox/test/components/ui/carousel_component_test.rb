@@ -4,7 +4,7 @@ require "test_helper"
 
 class CarouselComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::CarouselHelper
 
     def call
       ui_carousel(class: "w-64") do

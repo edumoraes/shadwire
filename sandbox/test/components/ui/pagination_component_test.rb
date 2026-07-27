@@ -4,7 +4,7 @@ require "test_helper"
 
 class PaginationComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::PaginationHelper
 
     def call
       ui_pagination do

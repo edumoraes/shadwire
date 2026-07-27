@@ -4,7 +4,7 @@ require "test_helper"
 
 class ProgressComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ProgressHelper
 
     def call
       ui_progress(value: 33, aria: { label: "Enviando arquivo" })

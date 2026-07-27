@@ -4,7 +4,7 @@ require "test_helper"
 
 class ContextMenuComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ContextMenuHelper
 
     def call
       ui_context_menu do

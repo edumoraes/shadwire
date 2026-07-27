@@ -4,7 +4,7 @@ require "test_helper"
 
 class CollapsibleComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::CollapsibleHelper
 
     def call
       ui_collapsible(open: true) do

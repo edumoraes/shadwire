@@ -4,7 +4,7 @@ require "test_helper"
 
 class DropdownMenuComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::DropdownMenuHelper
 
     def call
       ui_dropdown_menu(id: "account-menu") do

@@ -4,7 +4,7 @@ require "test_helper"
 
 class EmptyComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::EmptyHelper
 
     def call
       ui_empty do
