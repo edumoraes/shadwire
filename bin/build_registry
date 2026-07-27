@@ -12,6 +12,7 @@
 require "fileutils"
 require "json"
 require "pathname"
+require_relative "../lib/shadwire_registry/api_extractor"
 
 ROOT = Pathname.new(__dir__).join("..").expand_path
 REGISTRY = JSON.parse(ROOT.join("registry/registry.json").read)
@@ -36,6 +37,49 @@ def validate_prose!(items)
 
     raise "Registry item #{item.fetch("name")} is missing required prose: #{missing.join(", ")}"
   end
+end
+
+# Component class => ui_* helper name, read from the per-item helper modules so
+# the published API can name the helper that wraps each component.
+def helper_index(root)
+  Dir[root.join("registry/rails/ui/helpers/ui/*.rb")].each_with_object({}) do |file, index|
+    # Each helper renders exactly one component, so pair the helper name with the
+    # first Ui::*Component constant that follows it. Indentation-independent on
+    # purpose: these modules nest one level deeper than the old flat helper.
+    File.read(file).scan(/def (ui_\w+)[\s\S]*?(Ui::[A-Za-z0-9:]*Component)/).each do |helper, klass|
+      index[klass] ||= helper
+    end
+  end
+end
+
+HELPERS = helper_index(ROOT).freeze
+
+# An item's root component is the one named after the item itself; everything
+# else it ships is a subcomponent used for composition.
+def root_component?(item, target)
+  snake = item.fetch("name").tr("-", "_")
+  target == "app/components/ui/#{snake}_component.rb"
+end
+
+# "helper" is null when a component is not exposed through a ui_* wrapper: the
+# shared UiComponent base, internal parts a parent renders itself (ScrollArea's
+# viewport/thumb/corner), and block components, which are rendered directly.
+def build_api(item)
+  # Components may ship an .html.erb template alongside the class; only the Ruby
+  # file carries the API.
+  components = item.fetch("files")
+                   .select { |file| file.fetch("target").start_with?("app/components/ui/") }
+                   .select { |file| file.fetch("target").end_with?(".rb") }
+                   .map do |file|
+    source = ROOT.join(file.fetch("source"))
+    api = ShadwireRegistry::ApiExtractor.call(source: source.read, path: file.fetch("source"))
+    api.merge(
+      "helper" => HELPERS[api["class"]],
+      "root" => root_component?(item, file.fetch("target"))
+    )
+  end
+
+  { "components" => components }
 end
 
 # Classify a file by its install target so the CLI knows where it belongs.
@@ -106,6 +150,8 @@ items.each do |item|
     "gems" => Array(item["gems"]),
     "importmap" => Array(item["importmap"]),
     "registryDependencies" => transitive_dependencies(item, items_by_name),
+    "requiresStimulus" => item.fetch("files").any? { |file| file.fetch("target").start_with?("app/javascript/") },
+    "api" => build_api(item),
     "files" => item.fetch("files").map { |file| inline_file(file) }
   }
 
