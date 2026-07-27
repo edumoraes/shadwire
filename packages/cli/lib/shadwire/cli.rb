@@ -22,11 +22,12 @@ module Shadwire
     method_option :registry, type: :string, desc: "Registry base URL to install from"
     method_option :force, type: :boolean, default: false,
                           desc: "Overwrite an existing shadwire.json"
+    method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
     def init
       run_command do |root, ui|
         Commands::Init.new(
           root:, registry: options[:registry], yes: options[:yes],
-          force: options[:force], ui:
+          force: options[:force], json: options[:json], ui:
         ).call
       end
     end
@@ -39,13 +40,14 @@ module Shadwire
     method_option :deps, type: :boolean, default: true,
                          desc: "Install transitive registry dependencies (--no-deps to skip)"
     method_option :registry, type: :string, desc: "Registry base URL to install from"
+    method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
     def add(*names)
-      raise Shadwire::Error, "add requires at least one component name" if names.empty?
-
       run_command do |root, ui|
+        raise Shadwire::Error, "add requires at least one component name" if names.empty?
+
         Commands::Add.new(
           root:, names:, yes: options[:yes], overwrite: options[:overwrite],
-          no_deps: !options[:deps], registry: options[:registry], ui:
+          no_deps: !options[:deps], registry: options[:registry], json: options[:json], ui:
         ).call
       end
     end
@@ -63,9 +65,9 @@ module Shadwire
     method_option :registry, type: :string, desc: "Registry base URL to read from"
     method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
     def search(query = nil)
-      raise Shadwire::Error, "search requires a query" if query.nil? || query.strip.empty?
-
       run_command do |root, ui|
+        raise Shadwire::Error, "search requires a query" if query.nil? || query.strip.empty?
+
         Commands::Search.new(root:, query:, registry: options[:registry], json: options[:json], ui:).call
       end
     end
@@ -117,9 +119,9 @@ module Shadwire
     method_option :registry, type: :string, desc: "Registry base URL to reconcile against"
     method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
     def remove(*names)
-      raise Shadwire::Error, "remove requires at least one component name" if names.empty?
-
       run_command do |root, ui|
+        raise Shadwire::Error, "remove requires at least one component name" if names.empty?
+
         Commands::Remove.new(
           root:, names:, yes: options[:yes], registry: options[:registry], json: options[:json], ui:
         ).call
@@ -147,6 +149,14 @@ module Shadwire
     rescue Shadwire::Error => e
       ui.error(e.message)
       exit 1
+    rescue Errno::EACCES, Errno::ENOENT, Errno::EROFS => e
+      # Filesystem problems in the consuming app: a read-only checkout, a
+      # deleted directory. Actionable as a sentence, not as a backtrace.
+      ui.error("Filesystem error: #{e.message}")
+      exit 1
+    rescue Interrupt
+      ui.error("Interrupted.")
+      exit 130
     end
   end
 end

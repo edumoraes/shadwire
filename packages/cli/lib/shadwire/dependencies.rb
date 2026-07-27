@@ -11,12 +11,29 @@ module Shadwire
   # and mutates nothing.
   #
   # Every method returns a normalized result hash:
-  #   { applied: [...], skipped: [...], pending: [...], manual: [...] }
+  #   { applied: [...], skipped: [...], pending: [...], manual: [...], failed: [...] }
+  #
+  # `failed` carries the things we tried to apply and could not — a `bundle add`
+  # that exited non-zero, above all. Callers must surface it and exit non-zero:
+  # reporting a gem as installed when it is not leaves the app raising
+  # `uninitialized constant ViewComponent` at request time, which looks unrelated
+  # to the install that caused it.
   class Dependencies
     # Runs a shell command in the app root, isolated from the CLI's own bundle.
     DEFAULT_RUNNER = lambda do |cmd, chdir:|
       require "bundler"
       Bundler.with_unbundled_env { system(*cmd, chdir: chdir) }
+    end
+
+    # Raises when any of the given result hashes reports something it failed to
+    # apply, so a command that could not install a dependency exits non-zero
+    # instead of claiming success.
+    def self.raise_on_failure!(*results)
+      failed = results.flat_map { |result| Array(result[:failed]) }.uniq
+      return if failed.empty?
+
+      raise Error, "Failed to install: #{failed.join(", ")}. " \
+                   "Run `bundle add #{failed.join(" ")}` in the app and re-run this command."
     end
 
     def initialize(project, runner: DEFAULT_RUNNER)
@@ -34,7 +51,10 @@ module Shadwire
         return result(skipped: present, pending: missing)
       end
 
-      @runner.call(["bundle", "add", *missing], chdir: @project.root)
+      # `system` returns false on a non-zero exit and nil when the command could
+      # not be run at all; neither means the gems landed.
+      return result(skipped: present, failed: missing) unless @runner.call(["bundle", "add", *missing], chdir: @project.root)
+
       result(applied: missing, skipped: present)
     end
 
@@ -86,8 +106,8 @@ module Shadwire
 
     private
 
-    def result(applied: [], skipped: [], pending: [], manual: [])
-      { applied:, skipped:, pending:, manual: }
+    def result(applied: [], skipped: [], pending: [], manual: [], failed: [])
+      { applied:, skipped:, pending:, manual:, failed: }
     end
 
     def apply?(yes, confirm, description)

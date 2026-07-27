@@ -41,7 +41,7 @@ module Shadwire
         raise RegistryError, missing_message(name, url)
       end
 
-      JSON.parse(File.read(local_path))
+      parse(File.read(local_path), url)
     end
 
     def fetch_http(url, name: nil)
@@ -55,7 +55,19 @@ module Shadwire
         raise RegistryError, missing_message(name, url, code: response.code)
       end
 
-      JSON.parse(response.body)
+      parse(response.body, url)
+    rescue SocketError, SystemCallError, Net::OpenTimeout, Net::ReadTimeout, OpenSSL::SSL::SSLError => e
+      # An offline machine, a DNS failure or a TLS problem is an ordinary
+      # condition here, not something to surface as a Ruby backtrace.
+      raise RegistryError, "Could not reach the registry at #{url}: #{e.message}"
+    end
+
+    # A registry that serves HTML (a 200 error page, a captive portal) would
+    # otherwise blow up as a bare JSON::ParserError.
+    def parse(body, url)
+      JSON.parse(body)
+    rescue JSON::ParserError => e
+      raise RegistryError, "Registry response from #{url} is not valid JSON: #{e.message}"
     end
 
     def missing_message(name, url, code: nil)

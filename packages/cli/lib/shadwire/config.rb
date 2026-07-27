@@ -45,8 +45,16 @@ module Shadwire
     # defaults when the file does not exist.
     def self.load(root)
       path = File.join(root, CONFIG_FILE)
-      data = File.exist?(path) ? JSON.parse(File.read(path)) : JSON.parse(JSON.generate(DEFAULTS))
+      data = File.exist?(path) ? parse(path) : JSON.parse(JSON.generate(DEFAULTS))
       new(root, data)
+    end
+
+    # A hand-edited shadwire.json is common enough that a raw JSON::ParserError
+    # backtrace is the wrong answer; name the file and the problem.
+    def self.parse(path)
+      JSON.parse(File.read(path))
+    rescue JSON::ParserError => e
+      raise ConfigError, "#{path} is not valid JSON: #{e.message}"
     end
 
     # Writes pretty JSON to <root>/shadwire.json.
