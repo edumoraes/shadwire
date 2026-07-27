@@ -3,6 +3,7 @@
 require "json"
 require "minitest/autorun"
 require "pathname"
+require "set"
 
 # Structural validation of registry/registry.json, complementing the file/target
 # checks in registry_manifest_test.rb. Encodes the invariants the publish
@@ -62,6 +63,59 @@ class RegistrySchemaTest < Minitest::Test
         name = File.basename(helper, "_helper.rb")
         assert_includes owners.map { |owner| owner.tr("-", "_") }, name,
                         "#{item.fetch("name")} ships #{helper} but none of its components need it"
+      end
+    end
+  end
+
+  # Prose an AST cannot infer. The published registry is the agent-facing
+  # discovery surface, so these are required rather than defaulted: a humanized
+  # fallback made `shadwire search form` match nothing while ten form components
+  # existed.
+  REQUIRED_PROSE = %w[title description whenToUse].freeze
+
+  def test_every_item_has_hand_written_prose
+    REGISTRY.fetch("items").each do |item|
+      REQUIRED_PROSE.each do |key|
+        value = item[key]
+
+        refute_nil value, "#{item.fetch("name")} is missing #{key}"
+        refute_empty value.to_s.strip, "#{item.fetch("name")} has an empty #{key}"
+      end
+    end
+  end
+
+  def test_descriptions_are_not_just_the_humanized_name
+    REGISTRY.fetch("items").each do |item|
+      humanized = item.fetch("name").split("-").map(&:capitalize).join(" ")
+
+      refute_equal humanized, item["description"],
+                   "#{item.fetch("name")} description is a placeholder"
+    end
+  end
+
+  def test_component_items_carry_erb_usage_snippets
+    REGISTRY.fetch("items").select { |item| item.fetch("type") == "component" }.each do |item|
+      snippets = Array(item["usage"])
+
+      refute_empty snippets, "#{item.fetch("name")} has no usage snippet"
+      snippets.each do |snippet|
+        assert_includes snippet, "<%", "#{item.fetch("name")} usage is not ERB: #{snippet}"
+      end
+    end
+  end
+
+  # A usage snippet that calls a helper nothing defines would teach an agent a
+  # method that raises at request time.
+  def test_usage_snippets_only_call_helpers_that_exist
+    defined_helpers = Dir[ROOT.join("registry/rails/ui/helpers/ui/*.rb")]
+                        .flat_map { |file| File.read(file).scan(/def (ui_\w+)/).flatten }.to_set
+
+    REGISTRY.fetch("items").each do |item|
+      Array(item["usage"]).each do |snippet|
+        snippet.scan(/\bui_[a-z_0-9]+\b(?!:)/).uniq.each do |helper|
+          assert_includes defined_helpers, helper,
+                          "#{item.fetch("name")} usage calls #{helper}, which no helper module defines"
+        end
       end
     end
   end

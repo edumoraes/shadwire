@@ -24,6 +24,11 @@
       "type": "component",
       "title": "Button",
       "description": "Displays a button or a link styled as a button.",
+      "whenToUse": "Any clickable action. Use tag: :a for a link that looks like a button, size: :icon for icon-only. For a set of related actions use button-group; for a menu of actions use dropdown-menu.",
+      "usage": [
+        "<%= ui_button(variant: :outline, size: :sm) { \"Save\" } %>",
+        "<%= ui_button(size: :icon, \"aria-label\": \"Add\") { ui_icon(\"plus\") } %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -46,6 +51,12 @@
     {
       "name": "badge",
       "type": "component",
+      "title": "Badge",
+      "description": "A small inline label for status, counts, or categories.",
+      "whenToUse": "Non-interactive status or metadata next to content. For a clickable pill use button with size: :sm; for a keyboard key use kbd.",
+      "usage": [
+        "<%= ui_badge(variant: :secondary) { \"Beta\" } %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -70,6 +81,10 @@
       "type": "component",
       "title": "Card",
       "description": "A container for grouping related content with header, body, and footer slots.",
+      "whenToUse": "Grouping related content into a bordered surface. For a compact list row use item; for a placeholder state use empty.",
+      "usage": [
+        "<%= ui_card do %>\n  <%= ui_card_header do %>\n    <%= ui_card_title { \"Team\" } %>\n    <%= ui_card_description { \"Manage members.\" } %>\n  <% end %>\n  <%= ui_card_content { \"Body\" } %>\n  <%= ui_card_footer { ui_button { \"Save\" } } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -112,6 +127,12 @@
     {
       "name": "alert",
       "type": "component",
+      "title": "Alert",
+      "description": "A callout for important inline messages.",
+      "whenToUse": "Persistent inline messages inside the page. For a message that interrupts the user use alert-dialog; for transient feedback use sonner.",
+      "usage": [
+        "<%= ui_alert(variant: :destructive) { \"Your session expired.\" } %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -134,6 +155,12 @@
     {
       "name": "separator",
       "type": "component",
+      "title": "Separator",
+      "description": "A thin rule that visually divides content.",
+      "whenToUse": "Dividing sections or menu groups. Inside a menu prefer that menu's own separator (ui_dropdown_menu_separator, ui_context_menu_separator).",
+      "usage": [
+        "<%= ui_separator %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -156,6 +183,12 @@
     {
       "name": "avatar",
       "type": "component",
+      "title": "Avatar",
+      "description": "A user or entity image with a text fallback.",
+      "whenToUse": "Representing a person or account. Always supply fallback for when the image fails to load.",
+      "usage": [
+        "<%= ui_avatar(src: user.avatar_url, alt: user.name, fallback: \"JD\") %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -178,6 +211,12 @@
     {
       "name": "accordion",
       "type": "component",
+      "title": "Accordion",
+      "description": "Vertically stacked sections that expand and collapse.",
+      "whenToUse": "Several collapsible sections, typically FAQs. For a single collapsible region use collapsible; for switching between peer views use tabs.",
+      "usage": [
+        "<%= ui_accordion(multiple: false) do %>\n  <%= ui_accordion_item(value: \"one\") do %>\n    <%= ui_accordion_trigger { \"Is it accessible?\" } %>\n    <%= ui_accordion_content { \"Yes.\" } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -232,6 +271,12 @@
     {
       "name": "scroll-area",
       "type": "component",
+      "title": "Scroll Area",
+      "description": "A scrollable region with styled scrollbars.",
+      "whenToUse": "Constraining a long list or panel to a fixed height with consistent scrollbars across browsers.",
+      "usage": [
+        "<%= ui_scroll_area(class: \"h-72 w-48 rounded-md border\") { \"Long content\" } %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -278,6 +323,13 @@
     {
       "name": "icon",
       "type": "component",
+      "title": "Icon",
+      "description": "A Lucide icon with shadcn-style size variants.",
+      "whenToUse": "Any icon. Names are Lucide kebab-case. Decorative by default (aria-hidden); pass label: when the icon carries meaning on its own.",
+      "usage": [
+        "<%= ui_icon(\"chevron-down\", size: :sm) %>",
+        "<%= ui_icon(\"trash-2\", label: \"Delete\") %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -300,6 +352,12 @@
     {
       "name": "input",
       "type": "component",
+      "title": "Input",
+      "description": "A single-line text field.",
+      "whenToUse": "Free-text entry. For multi-line use textarea; with an addon or button attached use input-group; wrap in field for a label and error.",
+      "usage": [
+        "<%= ui_input(type: :email, name: \"email\", placeholder: \"you@example.com\") %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -322,6 +380,12 @@
     {
       "name": "label",
       "type": "component",
+      "title": "Label",
+      "description": "An accessible caption bound to a form control.",
+      "whenToUse": "Labelling a standalone control. Inside a field block prefer ui_field_label, which wires the description and error for you.",
+      "usage": [
+        "<%= ui_label(for: \"email\") { \"Email\" } %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -344,6 +408,12 @@
     {
       "name": "textarea",
       "type": "component",
+      "title": "Textarea",
+      "description": "A multi-line text field.",
+      "whenToUse": "Free-text entry spanning several lines. For one line use input.",
+      "usage": [
+        "<%= ui_textarea(name: \"bio\", rows: 4, placeholder: \"About you\") %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -366,6 +436,12 @@
     {
       "name": "checkbox",
       "type": "component",
+      "title": "Checkbox",
+      "description": "A binary control for opting in or selecting many items.",
+      "whenToUse": "Independent on/off choices, or multi-select in a list. For a single setting that applies immediately use switch; for one-of-many use radio-group.",
+      "usage": [
+        "<%= ui_checkbox(name: \"terms\", value: \"1\") %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -388,6 +464,12 @@
     {
       "name": "radio-group",
       "type": "component",
+      "title": "Radio Group",
+      "description": "A set of mutually exclusive options.",
+      "whenToUse": "Picking exactly one of a few visible options. For many options use select; for a compact toolbar-style choice use toggle-group.",
+      "usage": [
+        "<%= ui_radio_group(name: \"plan\", value: \"pro\") do %>\n  <%= ui_radio_group_item(value: \"free\") %>\n  <%= ui_radio_group_item(value: \"pro\") %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -414,6 +496,12 @@
     {
       "name": "switch",
       "type": "component",
+      "title": "Switch",
+      "description": "A toggle for a setting that takes effect immediately.",
+      "whenToUse": "On/off settings, especially ones that apply instantly. For a value submitted with a form use checkbox.",
+      "usage": [
+        "<%= ui_switch(name: \"notifications\", checked: true) %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -436,6 +524,12 @@
     {
       "name": "skeleton",
       "type": "component",
+      "title": "Skeleton",
+      "description": "A placeholder block shown while content loads.",
+      "whenToUse": "Preserving layout during loading. For an indeterminate inline busy indicator use spinner; for measurable progress use progress.",
+      "usage": [
+        "<%= ui_skeleton(class: \"h-4 w-[250px]\") %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -458,6 +552,12 @@
     {
       "name": "progress",
       "type": "component",
+      "title": "Progress",
+      "description": "A bar showing completion toward a known total.",
+      "whenToUse": "Progress you can measure. When the duration is unknown use spinner; when you are waiting on content use skeleton.",
+      "usage": [
+        "<%= ui_progress(value: 60) %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -480,6 +580,12 @@
     {
       "name": "table",
       "type": "component",
+      "title": "Table",
+      "description": "A styled HTML table with header, body, and footer sections.",
+      "whenToUse": "Presenting rows of data you render yourself. For built-in sorting, filtering, pagination and row selection use data-table.",
+      "usage": [
+        "<%= ui_table do %>\n  <%= ui_table_header do %>\n    <%= ui_table_row { ui_table_head { \"Name\" } } %>\n  <% end %>\n  <%= ui_table_body do %>\n    <%= ui_table_row { ui_table_cell { \"Ada\" } } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -530,6 +636,12 @@
     {
       "name": "breadcrumb",
       "type": "component",
+      "title": "Breadcrumb",
+      "description": "A trail showing the current page's position in the hierarchy.",
+      "whenToUse": "Showing where the user is in a nested structure. For moving between top-level sections use navigation-menu.",
+      "usage": [
+        "<%= ui_breadcrumb do %>\n  <%= ui_breadcrumb_list do %>\n    <%= ui_breadcrumb_item { ui_breadcrumb_link(href: \"/\") { \"Home\" } } %>\n    <%= ui_breadcrumb_separator %>\n    <%= ui_breadcrumb_item { ui_breadcrumb_page { \"Settings\" } } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -584,6 +696,12 @@
     {
       "name": "pagination",
       "type": "component",
+      "title": "Pagination",
+      "description": "Navigation controls for moving between pages of results.",
+      "whenToUse": "Paging through server-rendered result sets. The data-table component brings its own pagination.",
+      "usage": [
+        "<%= ui_pagination do %>\n  <%= ui_pagination_content do %>\n    <%= ui_pagination_item { ui_pagination_previous(href: \"?page=1\") } %>\n    <%= ui_pagination_item { ui_pagination_link(href: \"?page=2\") { \"2\" } } %>\n    <%= ui_pagination_item { ui_pagination_next(href: \"?page=3\") } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -646,6 +764,12 @@
     {
       "name": "tabs",
       "type": "component",
+      "title": "Tabs",
+      "description": "Switches between peer views in the same space.",
+      "whenToUse": "Alternate views of comparable content. Triggers must live inside ui_tabs_list. For expanding sections that can be open at once use accordion.",
+      "usage": [
+        "<%= ui_tabs(default_value: \"account\") do %>\n  <%= ui_tabs_list do %>\n    <%= ui_tabs_trigger(value: \"account\") { \"Account\" } %>\n    <%= ui_tabs_trigger(value: \"password\") { \"Password\" } %>\n  <% end %>\n  <%= ui_tabs_content(value: \"account\") { \"Account settings\" } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -685,7 +809,11 @@
       "name": "dialog",
       "type": "component",
       "title": "Dialog",
-      "description": "A modal dialog that interrupts the user with important content and actions.",
+      "description": "A modal window overlaying the page.",
+      "whenToUse": "Focused tasks that interrupt the current flow. For a destructive confirmation use alert-dialog; for a side panel use sheet; for a bottom sheet use drawer. Always include ui_dialog_title, visually hidden if needed.",
+      "usage": [
+        "<%= ui_dialog do %>\n  <%= ui_dialog_trigger { ui_button { \"Open\" } } %>\n  <%= ui_dialog_content do %>\n    <%= ui_dialog_header do %>\n      <%= ui_dialog_title { \"Edit profile\" } %>\n      <%= ui_dialog_description { \"Update your details.\" } %>\n    <% end %>\n    <%= ui_dialog_footer { ui_button { \"Save\" } } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -756,6 +884,12 @@
     {
       "name": "alert-dialog",
       "type": "component",
+      "title": "Alert Dialog",
+      "description": "A modal that interrupts the user to confirm a consequential action.",
+      "whenToUse": "Confirming destructive or irreversible actions — it cannot be dismissed by clicking outside. For ordinary modal content use dialog.",
+      "usage": [
+        "<%= ui_alert_dialog do %>\n  <%= ui_alert_dialog_trigger { ui_button(variant: :destructive) { \"Delete\" } } %>\n  <%= ui_alert_dialog_content do %>\n    <%= ui_alert_dialog_header do %>\n      <%= ui_alert_dialog_title { \"Are you sure?\" } %>\n      <%= ui_alert_dialog_description { \"This cannot be undone.\" } %>\n    <% end %>\n    <%= ui_alert_dialog_footer do %>\n      <%= ui_alert_dialog_cancel { \"Cancel\" } %>\n      <%= ui_alert_dialog_action { \"Delete\" } %>\n    <% end %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -822,6 +956,12 @@
     {
       "name": "sheet",
       "type": "component",
+      "title": "Sheet",
+      "description": "A panel that slides in from an edge of the screen.",
+      "whenToUse": "Secondary content or forms alongside the page, anchored to an edge. For a centred modal use dialog; for app navigation use sidebar.",
+      "usage": [
+        "<%= ui_sheet do %>\n  <%= ui_sheet_trigger { ui_button(variant: :outline) { \"Open\" } } %>\n  <%= ui_sheet_content(side: :right) do %>\n    <%= ui_sheet_header { ui_sheet_title { \"Filters\" } } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -892,6 +1032,12 @@
     {
       "name": "tooltip",
       "type": "component",
+      "title": "Tooltip",
+      "description": "A short hint shown on hover or focus.",
+      "whenToUse": "Naming an icon-only control or adding a brief hint. Never put interactive content inside — use popover or hover-card for that.",
+      "usage": [
+        "<%= ui_tooltip do %>\n  <%= ui_tooltip_trigger { ui_button(size: :icon) { ui_icon(\"info\") } } %>\n  <%= ui_tooltip_content { \"More information\" } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -934,6 +1080,12 @@
     {
       "name": "popover",
       "type": "component",
+      "title": "Popover",
+      "description": "A floating panel anchored to a trigger.",
+      "whenToUse": "Rich or interactive content anchored to a control, opened by click. For a plain hint use tooltip; for a list of actions use dropdown-menu.",
+      "usage": [
+        "<%= ui_popover do %>\n  <%= ui_popover_trigger { ui_button(variant: :outline) { \"Open\" } } %>\n  <%= ui_popover_content { \"Panel content\" } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -976,6 +1128,12 @@
     {
       "name": "dropdown-menu",
       "type": "component",
+      "title": "Dropdown Menu",
+      "description": "A menu of actions or options triggered by a button.",
+      "whenToUse": "Row actions, overflow menus, and account menus. For right-click use context-menu; for an application menu bar use menubar; for choosing a form value use select.",
+      "usage": [
+        "<%= ui_dropdown_menu do %>\n  <%= ui_dropdown_menu_trigger { ui_button(variant: :outline) { \"Open\" } } %>\n  <%= ui_dropdown_menu_content do %>\n    <%= ui_dropdown_menu_label { \"My account\" } %>\n    <%= ui_dropdown_menu_separator %>\n    <%= ui_dropdown_menu_item { \"Profile\" } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1038,6 +1196,12 @@
     {
       "name": "select",
       "type": "component",
+      "title": "Select",
+      "description": "A styled control for choosing one option from a list.",
+      "whenToUse": "Choosing a single form value from many options. For a searchable list use combobox; for the plain browser control use native-select; for a few visible options use radio-group.",
+      "usage": [
+        "<%= ui_select(name: \"role\", placeholder: \"Select a role\") do %>\n  <%= ui_select_trigger { ui_select_value } %>\n  <%= ui_select_content do %>\n    <%= ui_select_item(value: \"admin\") { \"Admin\" } %>\n    <%= ui_select_item(value: \"member\") { \"Member\" } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1100,6 +1264,12 @@
     {
       "name": "sidebar",
       "type": "component",
+      "title": "Sidebar",
+      "description": "A composable, collapsible application sidebar.",
+      "whenToUse": "Primary application navigation. Wrap the app in ui_sidebar_provider and put page content in ui_sidebar_inset. For a temporary edge panel use sheet.",
+      "usage": [
+        "<%= ui_sidebar_provider do %>\n  <%= ui_sidebar do %>\n    <%= ui_sidebar_content do %>\n      <%= ui_sidebar_group do %>\n        <%= ui_sidebar_menu { ui_sidebar_menu_item { ui_sidebar_menu_button { \"Home\" } } } %>\n      <% end %>\n    <% end %>\n  <% end %>\n  <%= ui_sidebar_inset { ui_sidebar_trigger } %>\n<% end %>"
+      ],
       "registryDependencies": [
         "button",
         "separator",
@@ -1222,6 +1392,12 @@
     {
       "name": "sidebar-01",
       "type": "block",
+      "title": "Sidebar 01",
+      "description": "A documentation-style dashboard layout with a collapsible sidebar, version switcher, and search.",
+      "whenToUse": "Scaffolding a full dashboard page rather than assembling the sidebar yourself. Install the sidebar component instead when you want to compose your own layout.",
+      "usage": [
+        "<%= render Ui::Blocks::Sidebar01::PageComponent.new %>"
+      ],
       "registryDependencies": [
         "sidebar",
         "breadcrumb",
@@ -1275,6 +1451,12 @@
     {
       "name": "aspect-ratio",
       "type": "component",
+      "title": "Aspect Ratio",
+      "description": "Constrains its content to a fixed width-to-height ratio.",
+      "whenToUse": "Keeping images, video, or embeds at a consistent shape while they scale.",
+      "usage": [
+        "<%= ui_aspect_ratio(ratio: 16.0 / 9) { image_tag(\"cover.jpg\", class: \"size-full object-cover\") } %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1297,6 +1479,12 @@
     {
       "name": "spinner",
       "type": "component",
+      "title": "Spinner",
+      "description": "An indeterminate loading indicator.",
+      "whenToUse": "Waits of unknown length, including inside a button. For measurable progress use progress; for content placeholders use skeleton.",
+      "usage": [
+        "<%= ui_button(disabled: true) { ui_spinner + \" Saving\" } %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1319,6 +1507,12 @@
     {
       "name": "kbd",
       "type": "component",
+      "title": "Kbd",
+      "description": "Displays a keyboard key or shortcut.",
+      "whenToUse": "Documenting keyboard shortcuts. Inside a menu row prefer that menu's shortcut helper, such as ui_dropdown_menu_shortcut.",
+      "usage": [
+        "<%= ui_kbd_group { ui_kbd { \"⌘\" } + ui_kbd { \"K\" } } %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1345,6 +1539,12 @@
     {
       "name": "empty",
       "type": "component",
+      "title": "Empty",
+      "description": "A placeholder for when there is nothing to show.",
+      "whenToUse": "Empty lists, no search results, or first-run states. For loading use skeleton.",
+      "usage": [
+        "<%= ui_empty do %>\n  <%= ui_empty_header do %>\n    <%= ui_empty_media { ui_icon(\"inbox\") } %>\n    <%= ui_empty_title { \"No messages\" } %>\n    <%= ui_empty_description { \"You are all caught up.\" } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1387,6 +1587,12 @@
     {
       "name": "item",
       "type": "component",
+      "title": "Item",
+      "description": "A compact row with media, text, and trailing actions.",
+      "whenToUse": "List rows such as settings, files, or people. For a larger bordered surface use card.",
+      "usage": [
+        "<%= ui_item do %>\n  <%= ui_item_media { ui_icon(\"file\") } %>\n  <%= ui_item_content do %>\n    <%= ui_item_title { \"Report.pdf\" } %>\n    <%= ui_item_description { \"2.4 MB\" } %>\n  <% end %>\n  <%= ui_item_actions { ui_button(variant: :ghost, size: :icon) { ui_icon(\"download\") } } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1453,6 +1659,12 @@
     {
       "name": "input-group",
       "type": "component",
+      "title": "Input Group",
+      "description": "An input with attached addons, text, or buttons.",
+      "whenToUse": "Prefixes, suffixes, or buttons attached to a field. Use ui_input_group_input or ui_input_group_textarea inside, never a bare input.",
+      "usage": [
+        "<%= ui_input_group do %>\n  <%= ui_input_group_addon { ui_icon(\"search\") } %>\n  <%= ui_input_group_input(name: \"q\", placeholder: \"Search\") %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1495,6 +1707,12 @@
     {
       "name": "button-group",
       "type": "component",
+      "title": "Button Group",
+      "description": "Related buttons joined into a single control.",
+      "whenToUse": "Segmenting related actions such as previous/next. For selecting among options use toggle-group.",
+      "usage": [
+        "<%= ui_button_group do %>\n  <%= ui_button(variant: :outline) { \"Prev\" } %>\n  <%= ui_button_group_separator %>\n  <%= ui_button(variant: :outline) { \"Next\" } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1533,6 +1751,12 @@
     {
       "name": "field",
       "type": "component",
+      "title": "Field",
+      "description": "Form field layout with label, description, and error message.",
+      "whenToUse": "The standard wrapper for every form control — never lay out form rows with bare divs. Group related fields with ui_field_group, and related checkboxes or radios with ui_field_set plus ui_field_legend.",
+      "usage": [
+        "<%= ui_field do %>\n  <%= ui_field_label(for: \"email\") { \"Email\" } %>\n  <%= ui_input(type: :email, id: \"email\", name: \"email\") %>\n  <%= ui_field_description { \"We never share it.\" } %>\n  <%= ui_field_error { \"Enter a valid email.\" } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1599,6 +1823,12 @@
     {
       "name": "native-select",
       "type": "component",
+      "title": "Native Select",
+      "description": "The browser's native select element, styled to match.",
+      "whenToUse": "When you want native mobile pickers and no JavaScript. For a styled listbox use select; for search use combobox.",
+      "usage": [
+        "<%= ui_native_select(name: \"role\") do %>\n  <option value=\"admin\">Admin</option>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1621,6 +1851,12 @@
     {
       "name": "collapsible",
       "type": "component",
+      "title": "Collapsible",
+      "description": "A single region that expands and collapses.",
+      "whenToUse": "One show/hide region. For several coordinated sections use accordion.",
+      "usage": [
+        "<%= ui_collapsible do %>\n  <%= ui_collapsible_trigger { ui_button(variant: :ghost) { \"Toggle\" } } %>\n  <%= ui_collapsible_content { \"Hidden content\" } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1655,6 +1891,12 @@
     {
       "name": "toggle",
       "type": "component",
+      "title": "Toggle",
+      "description": "A two-state button that stays pressed.",
+      "whenToUse": "A single on/off control in a toolbar, such as bold. For several related toggles use toggle-group; for a settings switch use switch.",
+      "usage": [
+        "<%= ui_toggle(pressed: true, \"aria-label\": \"Bold\") { ui_icon(\"bold\") } %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1681,6 +1923,12 @@
     {
       "name": "toggle-group",
       "type": "component",
+      "title": "Toggle Group",
+      "description": "A set of toggle buttons acting as one control.",
+      "whenToUse": "Choosing between two to seven options in a compact toolbar. For form semantics use radio-group; for actions use button-group.",
+      "usage": [
+        "<%= ui_toggle_group(type: :single) do %>\n  <%= ui_toggle_group_item(value: \"left\") { ui_icon(\"align-left\") } %>\n  <%= ui_toggle_group_item(value: \"center\") { ui_icon(\"align-center\") } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1711,6 +1959,12 @@
     {
       "name": "slider",
       "type": "component",
+      "title": "Slider",
+      "description": "Selects a numeric value from a range by dragging.",
+      "whenToUse": "Imprecise numeric input such as volume or price. For an exact number use input with type: :number.",
+      "usage": [
+        "<%= ui_slider(name: \"volume\", min: 0, max: 100, value: 50) %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1737,6 +1991,12 @@
     {
       "name": "hover-card",
       "type": "component",
+      "title": "Hover Card",
+      "description": "A rich preview card shown on hover.",
+      "whenToUse": "Previewing linked content, such as a user profile. For a short hint use tooltip; for click-triggered content use popover.",
+      "usage": [
+        "<%= ui_hover_card do %>\n  <%= ui_hover_card_trigger { link_to \"@ada\", \"#\" } %>\n  <%= ui_hover_card_content { \"Ada Lovelace — mathematician\" } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1771,6 +2031,12 @@
     {
       "name": "input-otp",
       "type": "component",
+      "title": "Input OTP",
+      "description": "A segmented field for one-time passcodes.",
+      "whenToUse": "Verification codes split into boxes. For ordinary text use input.",
+      "usage": [
+        "<%= ui_input_otp(name: \"code\") do %>\n  <%= ui_input_otp_group do %>\n    <%= ui_input_otp_slot(index: 0) %>\n    <%= ui_input_otp_slot(index: 1) %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1809,6 +2075,12 @@
     {
       "name": "drawer",
       "type": "component",
+      "title": "Drawer",
+      "description": "A panel that slides up from the bottom of the screen.",
+      "whenToUse": "Mobile-friendly overlays anchored to the bottom edge. For a side panel use sheet; for a centred modal use dialog.",
+      "usage": [
+        "<%= ui_drawer do %>\n  <%= ui_drawer_trigger { ui_button(variant: :outline) { \"Open\" } } %>\n  <%= ui_drawer_content do %>\n    <%= ui_drawer_header { ui_drawer_title { \"Filters\" } } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1871,6 +2143,12 @@
     {
       "name": "context-menu",
       "type": "component",
+      "title": "Context Menu",
+      "description": "A menu opened by right-clicking a region.",
+      "whenToUse": "Right-click actions on an element. For a button-triggered menu use dropdown-menu.",
+      "usage": [
+        "<%= ui_context_menu do %>\n  <%= ui_context_menu_trigger { \"Right-click here\" } %>\n  <%= ui_context_menu_content do %>\n    <%= ui_context_menu_item { \"Copy\" } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1925,6 +2203,12 @@
     {
       "name": "menubar",
       "type": "component",
+      "title": "Menubar",
+      "description": "A horizontal application menu bar.",
+      "whenToUse": "Desktop-style application menus such as File and Edit. For a single button menu use dropdown-menu; for site navigation use navigation-menu.",
+      "usage": [
+        "<%= ui_menubar do %>\n  <%= ui_menubar_menu do %>\n    <%= ui_menubar_trigger { \"File\" } %>\n    <%= ui_menubar_content { ui_menubar_item { \"New\" } } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -1979,6 +2263,12 @@
     {
       "name": "navigation-menu",
       "type": "component",
+      "title": "Navigation Menu",
+      "description": "Site navigation with optional rich dropdown panels.",
+      "whenToUse": "Primary site navigation in a header. For application menus use menubar; for showing location use breadcrumb.",
+      "usage": [
+        "<%= ui_navigation_menu do %>\n  <%= ui_navigation_menu_list do %>\n    <%= ui_navigation_menu_item do %>\n      <%= ui_navigation_menu_trigger { \"Products\" } %>\n      <%= ui_navigation_menu_content { ui_navigation_menu_link(href: \"/a\") { \"Analytics\" } } %>\n    <% end %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -2033,6 +2323,12 @@
     {
       "name": "command",
       "type": "component",
+      "title": "Command",
+      "description": "A searchable, keyboard-driven list of commands.",
+      "whenToUse": "Command palettes and searchable pickers. Put it inside dialog for a ⌘K palette; combine with popover for a combobox.",
+      "usage": [
+        "<%= ui_command do %>\n  <%= ui_command_input(placeholder: \"Type a command…\") %>\n  <%= ui_command_list do %>\n    <%= ui_command_empty { \"No results.\" } %>\n    <%= ui_command_group(heading: \"Suggestions\") { ui_command_item { \"Calendar\" } } %>\n  <% end %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -2087,6 +2383,12 @@
     {
       "name": "calendar",
       "type": "component",
+      "title": "Calendar",
+      "description": "A month grid for selecting dates.",
+      "whenToUse": "Showing an inline month view. For a date field with a popover use date-picker.",
+      "usage": [
+        "<%= ui_calendar(name: \"starts_on\", selected: Date.current) %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -2113,6 +2415,12 @@
     {
       "name": "resizable",
       "type": "component",
+      "title": "Resizable",
+      "description": "Panels the user can resize by dragging a handle.",
+      "whenToUse": "Split layouts with user-adjustable panes, such as a list and detail view.",
+      "usage": [
+        "<%= ui_resizable_panel_group(direction: :horizontal) do %>\n  <%= ui_resizable_panel { \"List\" } %>\n  <%= ui_resizable_handle %>\n  <%= ui_resizable_panel { \"Detail\" } %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -2147,6 +2455,12 @@
     {
       "name": "carousel",
       "type": "component",
+      "title": "Carousel",
+      "description": "A horizontally or vertically swipeable set of slides.",
+      "whenToUse": "Browsing images or cards one at a time. For a scrollable region without slide semantics use scroll-area.",
+      "usage": [
+        "<%= ui_carousel do %>\n  <%= ui_carousel_content do %>\n    <%= ui_carousel_item { \"Slide 1\" } %>\n    <%= ui_carousel_item { \"Slide 2\" } %>\n  <% end %>\n  <%= ui_carousel_previous %>\n  <%= ui_carousel_next %>\n<% end %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -2189,6 +2503,12 @@
     {
       "name": "combobox",
       "type": "component",
+      "title": "Combobox",
+      "description": "A searchable single-select built from popover, command, and button.",
+      "whenToUse": "Choosing one option from a long list where typing to filter matters. For short lists use select; for the native control use native-select. This item installs its parts rather than a Ui::ComboboxComponent — compose them yourself.",
+      "usage": [
+        "<%= ui_popover do %>\n  <%= ui_popover_trigger { ui_button(variant: :outline) { \"Select framework…\" } } %>\n  <%= ui_popover_content do %>\n    <%= ui_command do %>\n      <%= ui_command_input(placeholder: \"Search…\") %>\n      <%= ui_command_list { ui_command_item { \"Rails\" } } %>\n    <% end %>\n  <% end %>\n<% end %>"
+      ],
       "registryDependencies": [
         "popover",
         "command",
@@ -2208,6 +2528,12 @@
     {
       "name": "date-picker",
       "type": "component",
+      "title": "Date Picker",
+      "description": "A date field that opens a calendar in a popover.",
+      "whenToUse": "Picking a date from a form field. For an always-visible month grid use calendar. This item installs its parts rather than a Ui::DatePickerComponent — compose them yourself.",
+      "usage": [
+        "<%= ui_popover do %>\n  <%= ui_popover_trigger { ui_button(variant: :outline) { \"Pick a date\" } } %>\n  <%= ui_popover_content { ui_calendar(name: \"due_on\") } %>\n<% end %>"
+      ],
       "registryDependencies": [
         "popover",
         "calendar",
@@ -2227,6 +2553,12 @@
     {
       "name": "sonner",
       "type": "component",
+      "title": "Sonner",
+      "description": "Transient toast notifications.",
+      "whenToUse": "Brief confirmations that do not need acknowledgement. For messages that stay on the page use alert; for ones requiring a decision use alert-dialog.",
+      "usage": [
+        "<%= ui_sonner %>"
+      ],
       "files": [
         {
           "source": "registry/rails/ui/components/ui_component.rb",
@@ -2254,7 +2586,11 @@
       "name": "chart",
       "type": "component",
       "title": "Chart",
-      "description": "Composable charts built on Chart.js with shadcn theming.",
+      "description": "Chart.js charts using the Shadwire theme tokens.",
+      "whenToUse": "Visualising series data. Pins chart.js via importmap and needs Stimulus. For plain tabular numbers use table.",
+      "usage": [
+        "<%= ui_chart(type: :bar, data: { labels: %w[Jan Feb], datasets: [{ label: \"Sales\", data: [12, 19] }] }) %>"
+      ],
       "importmap": [
         {
           "name": "chart.js/auto",
@@ -2288,7 +2624,11 @@
       "name": "data-table",
       "type": "component",
       "title": "Data Table",
-      "description": "A sortable, filterable table built from the table, button, input, checkbox, and dropdown-menu components.",
+      "description": "A table with sorting, filtering, pagination, and row selection.",
+      "whenToUse": "Tabular data that needs interaction out of the box. When you only need markup and styling use table.",
+      "usage": [
+        "<%= ui_data_table(columns: [{ key: :name, label: \"Name\" }], rows: @users.map { |u| { name: u.name } }, filter_key: :name) %>"
+      ],
       "registryDependencies": [
         "table",
         "button",
