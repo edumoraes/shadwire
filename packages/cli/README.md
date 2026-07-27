@@ -23,8 +23,8 @@ Run `shadwire help COMMAND` for the built-in usage of any command.
 
 | Command | What it does | Flags (besides `--cwd`) |
 | --- | --- | --- |
-| `init` | Bootstrap Shadwire: write `shadwire.json`, install the shared base files (`ui_component.rb`, `ui_helper.rb`, `shadwire.css`) and base gems, add the Tailwind `@import`. | `--yes`, `--registry URL`, `--force` |
-| `add NAME...` | Install one or more components and their registry dependencies; apply their gems and importmap pins; record them in `shadwire.json`. | `--yes`, `--overwrite`, `--no-deps`, `--registry URL` |
+| `init` | Bootstrap Shadwire: write `shadwire.json`, install the shared base files (`ui_component.rb`, `shadwire.css`) and base gems, add the Tailwind `@import`. | `--yes`, `--registry URL`, `--force`, `--json` |
+| `add NAME...` | Install one or more components and their registry dependencies; apply their gems and importmap pins; record them in `shadwire.json`. | `--yes`, `--overwrite`, `--no-deps`, `--registry URL`, `--json` |
 | `list` | List every component in the registry catalog. | `--registry URL`, `--json` |
 | `search QUERY` | Search the catalog by name, title, or description. | `--registry URL`, `--json` |
 | `info NAME` | Show a component's metadata: files, gems, importmap pins, registry dependencies. | `--registry URL`, `--json` |

@@ -8,13 +8,14 @@ module Shadwire
     # named component in shadwire.json.
     class Add
       def initialize(root:, names:, yes: false, overwrite: false, no_deps: false,
-                     registry: nil, ui: UI.new(yes:), runner: Dependencies::DEFAULT_RUNNER)
+                     registry: nil, json: false, ui: UI.new(yes:), runner: Dependencies::DEFAULT_RUNNER)
         @root = root.to_s
         @names = names
         @yes = yes
         @overwrite = overwrite
         @no_deps = no_deps
         @registry_override = registry
+        @json = json
         @ui = ui
         @runner = runner
       end
@@ -38,8 +39,11 @@ module Shadwire
         record_installed(config, client, items)
         config.save
 
-        print_summary(report, gems, pins)
-        { report:, gems:, pins: }
+        result = { report:, gems:, pins: }
+        emit(result)
+        Dependencies.raise_on_failure!(gems, pins)
+
+        result
       end
 
       private
@@ -82,12 +86,36 @@ module Shadwire
         end
       end
 
+      def emit(result)
+        return @ui.say(JSON.generate(json_payload(result))) if @json
+
+        print_summary(result[:report], result[:gems], result[:pins])
+      end
+
+      def json_payload(result)
+        {
+          "added" => @names,
+          "written" => result[:report][:written],
+          "skipped" => result[:report][:skipped],
+          "gems" => slice_deps(result[:gems]),
+          "pins" => slice_deps(result[:pins])
+        }
+      end
+
+      def slice_deps(deps)
+        { "applied" => deps[:applied], "pending" => deps[:pending],
+          "failed" => deps[:failed], "manual" => deps[:manual] }
+      end
+
       def print_summary(report, gems, pins)
         @ui.say("Added #{@names.join(", ")}.")
         report[:written].each { |t| @ui.say("  write   #{t}") }
         report[:skipped].each { |t| @ui.say("  skip    #{t}") }
-        (gems[:applied] + gems[:pending]).each { |g| @ui.say("  gem     #{g}") }
-        (pins[:applied] + pins[:pending]).each { |p| @ui.say("  pin     #{p}") }
+        gems[:applied].each { |g| @ui.say("  gem     #{g}") }
+        gems[:pending].each { |g| @ui.say("  pending #{g} (not installed — run: bundle add #{g})") }
+        gems[:failed].each { |g| @ui.say("  FAILED  #{g} (bundle add failed)") }
+        pins[:applied].each { |p| @ui.say("  pin     #{p}") }
+        pins[:pending].each { |p| @ui.say("  pending pin #{p}") }
         (gems[:manual] + pins[:manual]).each { |m| @ui.say("  manual  #{m}") }
       end
     end

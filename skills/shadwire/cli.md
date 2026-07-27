@@ -140,35 +140,41 @@ Deletes only files unique to the removed components — never the shared base, a
 never a file another installed component still uses. Importmap pins that nothing
 uses any more are reported, not removed.
 
-## Known gaps to work around
+## Error handling
 
-Real behaviour of the current CLI. Do not trust output that these affect.
+**Exit code 0 means it worked.** A command that could not install a dependency
+reports it and exits non-zero:
 
-**`bundle add` failure is reported as success.** `init` and `add` print gems as
-applied and exit 0 even when `bundle add` failed. After either command, verify:
-
-```bash
-grep -E 'view_component|lucide-rails' Gemfile
+```console
+$ shadwire init --yes
+Initialized shadwire (2 base files).
+  create  app/components/ui_component.rb
+  FAILED  view_component (bundle add failed)
+Failed to install: view_component. Run `bundle add view_component` in the app
+and re-run this command.
+$ echo $?
+1
 ```
 
-If they are missing, add them yourself. Otherwise the app raises
-`uninitialized constant ViewComponent` at request time, which looks unrelated.
+So you can trust the exit code rather than re-checking the Gemfile.
 
-**`init` and `add` have no `--json`.** Passing `--json` to `add` is parsed as a
-component name and fails with `Registry item "--json" not found`. Parse the
-human output, or run `status --json` afterwards.
+**Errors are sentences, not backtraces.** A malformed `shadwire.json`, an
+unreachable registry, a registry serving HTML, and a missing argument each
+produce one actionable line on stderr with a non-zero exit:
 
-**`update --yes --json` does not report what it overwrote.** The human output
-prints the diff of clobbered edits; the JSON payload omits it. Run
-`shadwire diff --json` *before* updating if you need to know.
+```text
+shadwire.json is not valid JSON: expected object key, got 'not' at line 1 column 3
+Could not reach the registry at https://…/index.json: getaddrinfo(3): Name or service not known
+add requires at least one component name
+```
 
-**Some errors surface as Ruby backtraces.** A malformed `shadwire.json` raises
-`JSON::ParserError` and an unreachable host raises a socket error, both with a
-stack trace. Exit code is still non-zero, so trust the exit code over the output
-shape. `status` is the exception — it degrades gracefully by design.
+**`update` discloses what it overwrote.** Both the human output and
+`--json` report it — `overwritten` lists the files whose local edits were
+replaced, and `diffs` carries the patch for each. Still run `shadwire diff`
+first when you care about local changes.
 
-**Missing arguments print a backtrace.** `shadwire add` with no names raises
-outside the error handler. The message is on the first line; ignore the trace.
+**`status` never fails at all** — it reports `"rails": false` or
+`"registryError"` and exits 0, so it is always safe to inject.
 
 ## Registry resolution
 

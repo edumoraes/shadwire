@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
+require "json"
+
 module Shadwire
   module Commands
     # Bootstraps a consuming Rails app: writes shadwire.json, installs the base
     # files, and applies the base gems + the Tailwind @import (confirm-then-apply,
     # auto on yes:). Idempotent on re-run; --force resets shadwire.json.
     class Init
-      def initialize(root:, registry: nil, yes: false, force: false,
+      def initialize(root:, registry: nil, yes: false, force: false, json: false,
                      ui: UI.new(yes:), runner: Dependencies::DEFAULT_RUNNER)
         @root = root.to_s
         @registry_override = registry
         @yes = yes
         @force = force
+        @json = json
         @ui = ui
         @runner = runner
       end
@@ -35,9 +38,11 @@ module Shadwire
 
         config.save
         warn_missing_stack(project)
-        print_summary(report, gems, tailwind)
+        result = { config:, report:, gems:, tailwind: }
+        emit(result)
+        Dependencies.raise_on_failure!(gems)
 
-        { config:, report:, gems:, tailwind: }
+        result
       end
 
       private
@@ -66,10 +71,28 @@ module Shadwire
         end
       end
 
+      def emit(result)
+        return @ui.say(JSON.generate(json_payload(result))) if @json
+
+        print_summary(result[:report], result[:gems], result[:tailwind])
+      end
+
+      def json_payload(result)
+        {
+          "created" => result[:report][:written],
+          "gems" => { "applied" => result[:gems][:applied], "pending" => result[:gems][:pending],
+                      "failed" => result[:gems][:failed] },
+          "tailwind" => { "applied" => result[:tailwind][:applied], "manual" => result[:tailwind][:manual] },
+          "registry" => result[:config].registry
+        }
+      end
+
       def print_summary(report, gems, tailwind)
         @ui.say("Initialized shadwire (#{report[:written].size} base files).")
         report[:written].each { |t| @ui.say("  create  #{t}") }
-        (gems[:applied] + gems[:pending]).each { |g| @ui.say("  gem     #{g}") }
+        gems[:applied].each { |g| @ui.say("  gem     #{g}") }
+        gems[:pending].each { |g| @ui.say("  pending #{g} (not installed — run: bundle add #{g})") }
+        gems[:failed].each { |g| @ui.say("  FAILED  #{g} (bundle add failed)") }
         (tailwind[:applied]).each { |i| @ui.say("  tailwind #{i}") }
         tailwind[:manual].each { |m| @ui.say("  manual  #{m}") }
       end

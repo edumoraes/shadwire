@@ -47,6 +47,8 @@ module Shadwire
 
         result = { updated: targets, report:, gems:, pins:, diffs: }
         emit(result)
+        Dependencies.raise_on_failure!(gems, pins)
+
         result
       end
 
@@ -117,13 +119,20 @@ module Shadwire
         human(result)
       end
 
+      # `overwritten` is the whole point: update clobbers local edits, and the
+      # human path prints the diff. Omitting it from JSON let an agent destroy
+      # customizations without ever being told they existed.
       def json_payload(result)
         {
           updated: result[:updated],
           written: result[:report][:written],
           skipped: result[:report][:skipped],
+          overwritten: result[:diffs].keys & result[:report][:written],
+          diffs: result[:diffs],
           gems: result[:gems][:applied],
-          pins: result[:pins][:applied]
+          gemsFailed: result[:gems][:failed],
+          pins: result[:pins][:applied],
+          pinsFailed: result[:pins][:failed]
         }
       end
 

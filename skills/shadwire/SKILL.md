@@ -124,9 +124,9 @@ that names the alternatives.
    the exact helper names, variants, sizes and props. Do not guess a prop.
 4. **Install** — `shadwire add <name> --yes`. Registry dependencies come along
    automatically.
-5. **Verify the install actually landed.** `add` reports gem installs as applied
-   even when `bundle add` failed (see [cli.md](./cli.md)); confirm
-   `view_component` and `lucide-rails` are in the Gemfile.
+5. **Trust the exit code.** A non-zero exit means something did not land — most
+   often `bundle add` — and the message says how to recover. Do not carry on
+   as if it had succeeded.
 6. **Re-read context** — `shadwire status --json` to confirm the new helpers.
 7. **Write the view**, following the Critical Rules.
 8. **Check your work** — render the page or run the app's component tests.
@@ -136,8 +136,9 @@ that names the alternatives.
 The files are the app's. Edit them directly — that is the Open Code model.
 
 `shadwire diff` reports how they have drifted from the registry. Run it **before**
-`shadwire update`: update overwrites, and with `--yes` it does so without showing
-the diff. See [cli.md](./cli.md).
+`shadwire update`: update overwrites. It does tell you what it replaced —
+`overwritten` and `diffs` in the JSON payload — but that is after the fact. See
+[cli.md](./cli.md).
 
 ## Quick Reference
 

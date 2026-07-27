@@ -1,0 +1,24 @@
+{
+  "name": "with-gems",
+  "type": "component",
+  "title": "With Gems",
+  "description": "Fixture item that declares gems.",
+  "whenToUse": "Only used to exercise dependency failure handling.",
+  "usage": [],
+  "gems": [
+    "fixture_gem"
+  ],
+  "importmap": [],
+  "registryDependencies": [],
+  "requiresStimulus": false,
+  "api": {
+    "components": []
+  },
+  "files": [
+    {
+      "target": "app/components/ui/button_component.rb",
+      "type": "component",
+      "content": "# button component\n"
+    }
+  ]
+}
