@@ -42,6 +42,17 @@ jobs:
           fi
           echo "Publishing shadwire ${gem_version}"
 
+      # rubygems/release-gem runs `bundle exec rake release`, which only exists
+      # when the Rakefile requires bundler/gem_tasks. Fail here with a clear
+      # message rather than deep inside the publish step.
+      - name: Verify the release task exists
+        working-directory: packages/cli
+        run: |
+          if ! bundle exec rake -T | grep -q '^rake release'; then
+            echo "::error::rake release is not defined — packages/cli/Rakefile must require \"bundler/gem_tasks\""
+            exit 1
+          fi
+
       - name: CLI tests
         working-directory: packages/cli
         env:
