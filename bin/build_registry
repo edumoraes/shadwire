@@ -24,10 +24,18 @@ BASE_FILES = [
   { "source" => "registry/rails/ui/styles/shadwire.css", "target" => "vendor/shadwire/shadwire.css" }
 ].freeze
 
-# Humanize a kebab-case item name for a fallback title/description, e.g.
-# "input-otp" => "Input Otp".
-def humanize(name)
-  name.split("-").map(&:capitalize).join(" ")
+# Prose an AST cannot infer, and the agent-facing discovery surface. Required
+# rather than defaulted: a humanized fallback used to publish
+# description == title == name, which made search useless.
+REQUIRED_PROSE = %w[title description whenToUse].freeze
+
+def validate_prose!(items)
+  items.each do |item|
+    missing = REQUIRED_PROSE.reject { |key| item[key].to_s.strip != "" }
+    next if missing.empty?
+
+    raise "Registry item #{item.fetch("name")} is missing required prose: #{missing.join(", ")}"
+  end
 end
 
 # Classify a file by its install target so the CLI knows where it belongs.
@@ -82,6 +90,8 @@ end
 items = REGISTRY.fetch("items")
 items_by_name = items.to_h { |item| [item.fetch("name"), item] }
 
+validate_prose!(items)
+
 FileUtils.mkdir_p(OUTPUT_DIR)
 
 items.each do |item|
@@ -89,8 +99,10 @@ items.each do |item|
   published = {
     "name" => name,
     "type" => item.fetch("type"),
-    "title" => item["title"] || humanize(name),
-    "description" => item["description"] || humanize(name),
+    "title" => item.fetch("title"),
+    "description" => item.fetch("description"),
+    "whenToUse" => item.fetch("whenToUse"),
+    "usage" => Array(item["usage"]),
     "gems" => Array(item["gems"]),
     "importmap" => Array(item["importmap"]),
     "registryDependencies" => transitive_dependencies(item, items_by_name),
@@ -108,8 +120,9 @@ index = {
     {
       "name" => name,
       "type" => item.fetch("type"),
-      "title" => item["title"] || humanize(name),
-      "description" => item["description"] || humanize(name)
+      "title" => item.fetch("title"),
+      "description" => item.fetch("description"),
+      "whenToUse" => item.fetch("whenToUse")
     }
   end,
   "base" => {
