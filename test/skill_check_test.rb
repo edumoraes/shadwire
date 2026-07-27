@@ -122,6 +122,10 @@ class SkillCheckTest < Minitest::Test
 
   # The end-to-end proof: the workflow the skill documents actually works, and
   # installing one component installs only that component's helper.
+  #
+  # Hermetic by design. The app's Gemfile already declares the base gems, so
+  # `init` finds them present and never shells out to `bundle add` — no network,
+  # and no dependency on the runner's gem environment.
   def test_documented_workflow_runs_end_to_end
     build_dir = Dir.mktmpdir("shadwire-skill-build")
 
@@ -129,30 +133,39 @@ class SkillCheckTest < Minitest::Test
       FileUtils.mkdir_p(File.join(app, "config"))
       FileUtils.mkdir_p(File.join(app, "app/assets/tailwind"))
       File.write(File.join(app, "config/application.rb"), "# rails\n")
-      File.write(File.join(app, "Gemfile"), %(source "https://rubygems.org"\ngem "rails"\n))
+      File.write(File.join(app, "Gemfile"), <<~GEMFILE)
+        source "https://rubygems.org"
+        gem "rails"
+        gem "view_component"
+        gem "lucide-rails"
+      GEMFILE
       File.write(File.join(app, "app/assets/tailwind/application.css"), %(@import "tailwindcss";\n))
 
       assert system({ "BUILD_DIR" => build_dir }, ROOT.join("bin/build_registry").to_s, out: File::NULL),
              "bin/build_registry failed"
 
       registry = "file://#{build_dir}/r"
+      # Run through the CLI's own bundle so thor resolves the same way it does
+      # for the gem's suite, rather than relying on the ambient gem path.
+      env = { "BUNDLE_GEMFILE" => ROOT.join("packages/cli/Gemfile").to_s }
       shadwire = lambda do |*args|
         command = [
-          "ruby", "-I#{ROOT.join("packages/cli/lib")}", ROOT.join("packages/cli/exe/shadwire").to_s,
+          "bundle", "exec", "ruby", "-I#{ROOT.join("packages/cli/lib")}",
+          ROOT.join("packages/cli/exe/shadwire").to_s,
           *args.map(&:to_s), "--cwd", app, "--registry", registry
         ]
-        output = IO.popen(command, err: [:child, :out], &:read)
+        output = IO.popen(env, command, err: [:child, :out], &:read)
         [output, $?.success?]
       end
 
-      _, ok = shadwire.call("init", "--yes")
-      assert ok, "init failed"
+      out, ok = shadwire.call("init", "--yes")
+      assert ok, "init failed:\n#{out}"
 
-      _, ok = shadwire.call("add", "button", "--yes")
-      assert ok, "add failed"
+      out, ok = shadwire.call("add", "button", "--yes")
+      assert ok, "add failed:\n#{out}"
 
       raw, ok = shadwire.call("status", "--json")
-      assert ok, "status failed"
+      assert ok, "status failed:\n#{raw}"
       status = JSON.parse(raw.lines.last)
 
       assert_equal true, status.fetch("rails")
