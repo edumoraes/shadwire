@@ -132,8 +132,27 @@ jobs:
         working-directory: packages/cli
         run: bundle exec rake test
 
+  skill_check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          working-directory: packages/cli
+          bundler-cache: true
+      - name: Component API extractor
+        run: ruby test/api_extractor_test.rb
+      - name: llms.txt writer
+        run: ruby test/llms_writer_test.rb
+      # Asserts the agent skill still matches the registry and CLI it documents,
+      # and runs the workflow it teaches end to end.
+      - name: Skill accuracy + workflow smoke test
+        run: ruby test/skill_check_test.rb
+
   deploy_pages:
-    needs: [lint, security, test, registry_sync, docs_lint, cli]
+    needs: [lint, security, test, registry_sync, docs_lint, cli, skill_check]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 20
