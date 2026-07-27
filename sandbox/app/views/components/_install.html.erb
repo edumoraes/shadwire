@@ -1,0 +1,48 @@
+<%# Install section for a component documentation page.
+    Everything here is derived from registry/registry.json at render time, so the
+    documented file list can never drift from what the registry installs.
+    Renders nothing when the page has no matching registry item. %>
+<% if registry_item(name) %>
+<section class="flex flex-col gap-4">
+  <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Instalação</h2>
+
+  <p class="text-sm text-muted-foreground">
+    O Shadwire segue o modelo <em>open-code</em> do shadcn/ui: o código-fonte do
+    componente é copiado para a sua aplicação e passa a ser seu. Instale com a CLI:
+  </p>
+
+  <%= docs_code_block("#{registry_install_command(name)} --yes", language: :shell) %>
+
+  <% targets = registry_install_targets(name) %>
+  <% if targets.any? %>
+    <p class="text-sm text-muted-foreground">
+      O item <code class="rounded bg-muted px-1 py-0.5 text-xs"><%= name %></code>
+      do registry instala estes arquivos:
+    </p>
+
+    <ul class="flex flex-col gap-1 text-sm">
+      <% targets.each do |path| %>
+        <li class="flex items-center gap-2 text-muted-foreground">
+          <%= ui_icon("file-code", size: :sm) %>
+          <code><%= path %></code>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if registry_requires_stimulus?(name) %>
+    <p class="text-sm text-muted-foreground">
+      Este componente usa Stimulus: a aplicação precisa de
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">importmap-rails</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">stimulus-rails</code>
+      com carregamento automático de controllers.
+    </p>
+  <% end %>
+
+  <p class="text-sm text-muted-foreground">
+    Ainda não instalou a CLI?
+    <code class="rounded bg-muted px-1 py-0.5 text-xs">gem install shadwire</code>
+    e depois <code class="rounded bg-muted px-1 py-0.5 text-xs">shadwire init</code>.
+  </p>
+</section>
+<% end %>

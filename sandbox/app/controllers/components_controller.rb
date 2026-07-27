@@ -215,10 +215,6 @@ class ComponentsController < ApplicationController
       description: "Use dir: \"rtl\" when rendering right-to-left content." }
   ].freeze
 
-  SCROLL_AREA_INSTALL = <<~SH
-    bin/sync_registry scroll-area
-  SH
-
   SCROLL_AREA_USAGE_HELPER = <<~ERB
     <%= ui_scroll_area(class: "h-[200px] w-[350px] rounded-md border p-4") do %>
       Your scrollable content here.
@@ -1026,7 +1022,6 @@ class ComponentsController < ApplicationController
 
   def scroll_area
     @examples = SCROLL_AREA_EXAMPLES
-    @install_command = SCROLL_AREA_INSTALL
     @usage_helper = SCROLL_AREA_USAGE_HELPER
     @usage_component = SCROLL_AREA_USAGE_COMPONENT
     @composition = SCROLL_AREA_COMPOSITION

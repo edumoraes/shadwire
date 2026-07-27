@@ -10,6 +10,6 @@ task :test do
   ruby "test/llms_writer_test.rb"
   ruby "test/skill_check_test.rb"
   Dir.chdir("sandbox") do
-    sh "bin/rails test test/components test/integration/ui_accessibility_test.rb"
+    sh "bin/rails test test/components test/integration"
   end
 end

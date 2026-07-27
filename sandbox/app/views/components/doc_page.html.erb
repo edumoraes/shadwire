@@ -17,6 +17,9 @@
     <% end %>
   </header>
 
+  <%# The action name is the item name: `aspect_ratio` documents `aspect-ratio`. %>
+  <%= render "components/install", name: action_name.tr("_", "-") %>
+
   <% if @usage_helper.present? %>
     <section class="space-y-4">
       <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>
