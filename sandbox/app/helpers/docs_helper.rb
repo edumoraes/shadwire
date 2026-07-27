@@ -3,12 +3,41 @@
 # Helpers for the component documentation pages.
 #
 # Sandbox-only — this file is not part of the Shadwire registry, so it is never
-# overwritten by bin/sync_registry (unlike app/helpers/ui_helper.rb).
+# overwritten by bin/sync_registry (unlike the Ui::*Helper modules under
+# app/helpers/ui/).
 module DocsHelper
   EXAMPLES_DIR = Rails.root.join("app/views/components/examples")
+  # The publish manifest, one directory up from the sandbox. Read at render time
+  # so the documented install never drifts from what the registry actually
+  # installs — these lists were hand-maintained and still named a helper file
+  # that had been removed.
+  REGISTRY_MANIFEST = Rails.root.join("../registry/registry.json")
   CODE_BLOCK_COLLAPSED_LINES = 8
   CODE_BLOCK_MAX_HEIGHT_REM = 32
   CODE_BLOCK_LINE_HEIGHT_REM = 1.625
+
+  # The registry item a documentation page describes, or nil when the page has
+  # no matching item.
+  def registry_item(name)
+    registry_items[name.to_s]
+  end
+
+  # Install targets for an item, in manifest order.
+  def registry_install_targets(name)
+    item = registry_item(name)
+    return [] unless item
+
+    item.fetch("files").map { |file| file.fetch("target") }
+  end
+
+  # `shadwire add <name>` — the command that installs the component.
+  def registry_install_command(name)
+    "shadwire add #{name}"
+  end
+
+  def registry_requires_stimulus?(name)
+    registry_install_targets(name).any? { |target| target.start_with?("app/javascript/") }
+  end
 
   # Highlights an ERB snippet for display in a documentation code block.
   def highlight_erb(code)
@@ -48,6 +77,19 @@ module DocsHelper
   end
 
   private
+
+  # Memoized per request rather than per process: the manifest is small, and
+  # caching it across requests would serve stale file lists in development after
+  # editing registry.json.
+  def registry_items
+    @registry_items ||= JSON.parse(REGISTRY_MANIFEST.read)
+                            .fetch("items")
+                            .to_h { |item| [ item.fetch("name"), item ] }
+  rescue Errno::ENOENT, JSON::ParserError
+    # The docs site is only ever served from the monorepo, but a missing or
+    # broken manifest must not take the whole page down.
+    @registry_items = {}
+  end
 
   def highlight_code(code, language:)
     formatter = Rouge::Formatters::HTML.new

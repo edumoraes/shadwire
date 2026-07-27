@@ -16,38 +16,7 @@
     </p>
   </header>
 
-  <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Instalação</h2>
-    <p class="text-sm text-muted-foreground">
-      O item
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">dialog</code> do
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">registry.json</code>
-      instala estes arquivos:
-    </p>
-    <ul class="space-y-1 text-sm">
-      <% %w[
-        app/components/ui_component.rb
-        app/components/ui/dialog_component.rb
-        app/components/ui/dialog/trigger_component.rb
-        app/components/ui/dialog/content_component.rb
-        app/components/ui/dialog/header_component.rb
-        app/components/ui/dialog/footer_component.rb
-        app/components/ui/dialog/title_component.rb
-        app/components/ui/dialog/description_component.rb
-        app/components/ui/dialog/close_component.rb
-        app/components/ui/button_component.rb
-        app/components/ui/icon_component.rb
-        app/helpers/ui_helper.rb
-        app/javascript/controllers/ui_dialog_controller.js
-        vendor/shadwire/shadwire.css
-      ].each do |path| %>
-        <li class="flex items-center gap-2 text-muted-foreground">
-          <%= ui_icon("file-code", size: :sm) %>
-          <code><%= path %></code>
-        </li>
-      <% end %>
-    </ul>
-  </section>
+  <%= render "components/install", name: "dialog" %>
 
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>

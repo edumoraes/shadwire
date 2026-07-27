@@ -24,32 +24,7 @@
           class: "inline-flex shrink-0 items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90" %>
   <% end %>
 
-  <section class="space-y-4">
-    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Instalação</h2>
-    <p class="text-sm text-muted-foreground">
-      O item <code class="rounded bg-muted px-1 py-0.5 text-xs">sidebar</code> do
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">registry.json</code> instala o componente raiz, os
-      subcomponentes em <code class="rounded bg-muted px-1 py-0.5 text-xs">ui/sidebar/</code>, o controller
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_sidebar_controller.js</code> e, via
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">registryDependencies</code>, os componentes
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">button</code>, <code class="rounded bg-muted px-1 py-0.5 text-xs">separator</code>,
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">input</code>, <code class="rounded bg-muted px-1 py-0.5 text-xs">skeleton</code>,
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">tooltip</code> e <code class="rounded bg-muted px-1 py-0.5 text-xs">icon</code>.
-    </p>
-    <ul class="space-y-1 text-sm">
-      <% %w[
-        app/components/ui/sidebar_component.rb
-        app/components/ui/sidebar/provider_component.rb
-        app/components/ui/sidebar/menu_button_component.rb
-        app/helpers/ui_helper.rb
-        app/javascript/controllers/ui_sidebar_controller.js
-        vendor/shadwire/shadwire.css
-      ].each do |path| %>
-        <li class="flex items-center gap-2 text-muted-foreground"><%= ui_icon("file-code", size: :sm) %><code><%= path %></code></li>
-      <% end %>
-      <li class="flex items-center gap-2 text-muted-foreground"><%= ui_icon("file-code", size: :sm) %><span>+ demais subcomponentes em <code>app/components/ui/sidebar/</code></span></li>
-    </ul>
-  </section>
+  <%= render "components/install", name: "sidebar" %>
 
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>

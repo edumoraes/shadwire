@@ -71,7 +71,7 @@ jobs:
         run: bin/rails db:prepare
       - name: Component + accessibility tests
         working-directory: sandbox
-        run: bin/rails test test/components test/integration/ui_accessibility_test.rb
+        run: bin/rails test test/components test/integration
       - name: Seeds replant
         working-directory: sandbox
         run: bin/rails db:seed:replant
