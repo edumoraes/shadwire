@@ -1,0 +1,54 @@
+name: Release
+
+# Publishes the shadwire gem to RubyGems when a vN.N.N tag is pushed.
+# Uses RubyGems trusted publishing (OIDC), so no API key is stored in the repo.
+# The trusted publisher must be configured once on rubygems.org for this
+# repository, this workflow file, and the `rubygems` environment.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  id-token: write # required for trusted publishing
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: rubygems
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          working-directory: packages/cli
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      # A tag that disagrees with Shadwire::VERSION would publish a version
+      # nobody can correlate with the source. Fail before building.
+      - name: Verify the tag matches the gem version
+        working-directory: packages/cli
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          gem_version="$(ruby -Ilib -e 'require "shadwire/version"; print Shadwire::VERSION')"
+          tag_version="${TAG_NAME#v}"
+          if [ "$gem_version" != "$tag_version" ]; then
+            echo "::error::tag ${tag_version} does not match Shadwire::VERSION ${gem_version}"
+            exit 1
+          fi
+          echo "Publishing shadwire ${gem_version}"
+
+      - name: CLI tests
+        working-directory: packages/cli
+        env:
+          PARALLEL_WORKERS: "1"
+        run: bundle exec rake test
+
+      - name: Publish to RubyGems
+        uses: rubygems/release-gem@v1
+        with:
+          working-directory: packages/cli

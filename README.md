@@ -6,36 +6,69 @@ The source of truth is `registry/`. The Rails app in `sandbox/` consumes copied 
 
 ## Components
 
-The registry currently includes:
+58 components, listed with `shadwire list`. Search by what you need
+(`shadwire search form`), then read a component API with `shadwire info button`.
 
-- `Ui::AccordionComponent`
-- `Ui::AlertComponent`
-- `Ui::AlertDialogComponent`
-- `Ui::AvatarComponent`
-- `Ui::BadgeComponent`
-- `Ui::BreadcrumbComponent`
-- `Ui::ButtonComponent`
-- `Ui::CardComponent`
-- `Ui::CheckboxComponent`
-- `Ui::DialogComponent`
-- `Ui::DropdownMenuComponent`
-- `Ui::IconComponent`
-- `Ui::InputComponent`
-- `Ui::LabelComponent`
-- `Ui::PaginationComponent`
-- `Ui::PopoverComponent`
-- `Ui::ProgressComponent`
-- `Ui::RadioGroupComponent`
-- `Ui::ScrollAreaComponent`
-- `Ui::SelectComponent`
-- `Ui::SeparatorComponent`
-- `Ui::SheetComponent`
-- `Ui::SkeletonComponent`
-- `Ui::SwitchComponent`
-- `Ui::TableComponent`
-- `Ui::TabsComponent`
-- `Ui::TextareaComponent`
-- `Ui::TooltipComponent`
+| Component | Description |
+| --- | --- |
+| `button` | Displays a button or a link styled as a button. |
+| `badge` | A small inline label for status, counts, or categories. |
+| `card` | A container for grouping related content with header, body, and footer slots. |
+| `alert` | A callout for important inline messages. |
+| `separator` | A thin rule that visually divides content. |
+| `avatar` | A user or entity image with a text fallback. |
+| `accordion` | Vertically stacked sections that expand and collapse. |
+| `scroll-area` | A scrollable region with styled scrollbars. |
+| `icon` | A Lucide icon with shadcn-style size variants. |
+| `input` | A single-line text field. |
+| `label` | An accessible caption bound to a form control. |
+| `textarea` | A multi-line text field. |
+| `checkbox` | A binary control for opting in or selecting many items. |
+| `radio-group` | A set of mutually exclusive options. |
+| `switch` | A toggle for a setting that takes effect immediately. |
+| `skeleton` | A placeholder block shown while content loads. |
+| `progress` | A bar showing completion toward a known total. |
+| `table` | A styled HTML table with header, body, and footer sections. |
+| `breadcrumb` | A trail showing the current page's position in the hierarchy. |
+| `pagination` | Navigation controls for moving between pages of results. |
+| `tabs` | Switches between peer views in the same space. |
+| `dialog` | A modal window overlaying the page. |
+| `alert-dialog` | A modal that interrupts the user to confirm a consequential action. |
+| `sheet` | A panel that slides in from an edge of the screen. |
+| `tooltip` | A short hint shown on hover or focus. |
+| `popover` | A floating panel anchored to a trigger. |
+| `dropdown-menu` | A menu of actions or options triggered by a button. |
+| `select` | A styled control for choosing one option from a list. |
+| `sidebar` | A composable, collapsible application sidebar. |
+| `sidebar-01` | A documentation-style dashboard layout with a collapsible sidebar, version switcher, and search. |
+| `aspect-ratio` | Constrains its content to a fixed width-to-height ratio. |
+| `spinner` | An indeterminate loading indicator. |
+| `kbd` | Displays a keyboard key or shortcut. |
+| `empty` | A placeholder for when there is nothing to show. |
+| `item` | A compact row with media, text, and trailing actions. |
+| `input-group` | An input with attached addons, text, or buttons. |
+| `button-group` | Related buttons joined into a single control. |
+| `field` | Form field layout with label, description, and error message. |
+| `native-select` | The browser's native select element, styled to match. |
+| `collapsible` | A single region that expands and collapses. |
+| `toggle` | A two-state button that stays pressed. |
+| `toggle-group` | A set of toggle buttons acting as one control. |
+| `slider` | Selects a numeric value from a range by dragging. |
+| `hover-card` | A rich preview card shown on hover. |
+| `input-otp` | A segmented field for one-time passcodes. |
+| `drawer` | A panel that slides up from the bottom of the screen. |
+| `context-menu` | A menu opened by right-clicking a region. |
+| `menubar` | A horizontal application menu bar. |
+| `navigation-menu` | Site navigation with optional rich dropdown panels. |
+| `command` | A searchable, keyboard-driven list of commands. |
+| `calendar` | A month grid for selecting dates. |
+| `resizable` | Panels the user can resize by dragging a handle. |
+| `carousel` | A horizontally or vertically swipeable set of slides. |
+| `combobox` | A searchable single-select built from popover, command, and button. |
+| `date-picker` | A date field that opens a calendar in a popover. |
+| `sonner` | Transient toast notifications. |
+| `chart` | Chart.js charts using the Shadwire theme tokens. |
+| `data-table` | A table with sorting, filtering, pagination, and row selection. |
 
 Helpers use the `ui_*` prefix.
 
@@ -83,9 +116,32 @@ Components install from the hosted registry
 
 **Agents / CI** — every command runs non-interactively with `--yes`, emits
 machine-readable output with `--json`, and can target another app with `--cwd`.
+`shadwire status --json` reports the whole install in one call, and
 `shadwire diff --exit-code` exits non-zero when an installed file has drifted
 from the registry, so CI can fail on drift. See
 [`packages/cli/README.md`](packages/cli/README.md) for the full command reference.
+
+## Agent skill
+
+Coding agents — Claude Code, Codex, Cursor, OpenCode and ~20 others — can install
+the Shadwire skill for full context on the CLI and components:
+
+```bash
+npx skills add edumoraes/shadwire
+```
+
+The skill lives in [`skills/shadwire/`](skills/shadwire/). It carries workflow and
+conventions, not data: component names, variants, props and helper names are
+pulled at runtime from `shadwire status --json` and `shadwire info --json`, so it
+always reflects what is actually installed. CI verifies that everything the skill
+names still exists.
+
+Agents that cannot install the skill can read the same catalog as plain text:
+
+- [`/r/llms.txt`](https://edumoraes.github.io/shadwire/r/llms.txt) — every
+  component with when to use it
+- [`/r/llms-full.txt`](https://edumoraes.github.io/shadwire/r/llms-full.txt) —
+  every component's full API and usage
 
 ## Registry Workflow
 
