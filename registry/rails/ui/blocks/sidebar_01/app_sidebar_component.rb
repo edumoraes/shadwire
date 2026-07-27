@@ -7,7 +7,7 @@ module Ui
       # version switcher and search in the header, four static groups of links,
       # and a rail. Sample data mirrors the shadcn block.
       class AppSidebarComponent < UiComponent
-        include UiHelper
+        include Ui::SidebarHelper
 
         VERSIONS = [ "1.0.1", "1.1.0-alpha", "2.0.0-beta1" ].freeze
 

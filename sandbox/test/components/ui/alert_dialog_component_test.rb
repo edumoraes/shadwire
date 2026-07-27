@@ -4,7 +4,7 @@ require "test_helper"
 
 class AlertDialogComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::AlertDialogHelper
 
     def call
       ui_alert_dialog(id: "delete-dialog") do

@@ -4,7 +4,7 @@ require "test_helper"
 
 class SkeletonComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::SkeletonHelper
 
     def call
       ui_skeleton(class: "h-4 w-48")

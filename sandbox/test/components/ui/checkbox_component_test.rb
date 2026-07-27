@@ -4,7 +4,7 @@ require "test_helper"
 
 class CheckboxComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::CheckboxHelper
 
     def call
       ui_checkbox(name: "user[terms]", id: "user_terms")

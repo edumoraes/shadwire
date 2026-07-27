@@ -4,7 +4,7 @@ require "test_helper"
 
 class ToggleGroupComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ToggleGroupHelper
 
     def call
       ui_toggle_group(type: :multiple, variant: :outline) do

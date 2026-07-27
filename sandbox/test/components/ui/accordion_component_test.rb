@@ -4,7 +4,7 @@ require "test_helper"
 
 class AccordionComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::AccordionHelper
 
     def call
       ui_accordion(default_value: :details) do

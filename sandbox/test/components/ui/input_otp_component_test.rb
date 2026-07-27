@@ -4,7 +4,7 @@ require "test_helper"
 
 class InputOtpComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::InputOtpHelper
 
     def call
       ui_input_otp(name: "code") do

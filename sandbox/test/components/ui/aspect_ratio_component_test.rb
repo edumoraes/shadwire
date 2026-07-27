@@ -4,7 +4,7 @@ require "test_helper"
 
 class AspectRatioComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::AspectRatioHelper
 
     def call
       ui_aspect_ratio(ratio: "16 / 9", class: "rounded-md") { "media" }

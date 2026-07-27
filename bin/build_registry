@@ -21,7 +21,6 @@ OUTPUT_DIR = Pathname.new(ENV.fetch("BUILD_DIR", ROOT.join("build").to_s)).join(
 # CLI's `init` can lay it down once before adding components.
 BASE_FILES = [
   { "source" => "registry/rails/ui/components/ui_component.rb", "target" => "app/components/ui_component.rb" },
-  { "source" => "registry/rails/ui/helpers/ui_helper.rb", "target" => "app/helpers/ui_helper.rb" },
   { "source" => "registry/rails/ui/styles/shadwire.css", "target" => "vendor/shadwire/shadwire.css" }
 ].freeze
 

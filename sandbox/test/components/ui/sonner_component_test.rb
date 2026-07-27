@@ -4,7 +4,8 @@ require "test_helper"
 
 class SonnerComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ButtonHelper
+    include Ui::SonnerHelper
 
     def call
       ui_sonner(position: :"top-center") do

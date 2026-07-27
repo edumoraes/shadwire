@@ -7,7 +7,9 @@ module Ui
       # SidebarMenuButton wired as a dropdown-menu trigger. The selection is
       # static in this demo (no client state); the active version shows a check.
       class VersionSwitcherComponent < UiComponent
-        include UiHelper
+        include Ui::DropdownMenuHelper
+        include Ui::IconHelper
+        include Ui::SidebarHelper
 
         def initialize(versions:, default_version:)
           @versions = versions

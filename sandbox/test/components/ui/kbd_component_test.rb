@@ -4,7 +4,7 @@ require "test_helper"
 
 class KbdComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::KbdHelper
 
     def call
       ui_kbd_group do

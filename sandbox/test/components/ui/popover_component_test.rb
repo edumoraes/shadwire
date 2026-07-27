@@ -4,7 +4,7 @@ require "test_helper"
 
 class PopoverComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::PopoverHelper
 
     def call
       ui_popover(id: "dims-popover") do

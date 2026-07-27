@@ -4,7 +4,7 @@ require "test_helper"
 
 class ItemComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::ItemHelper
 
     def call
       ui_item_group do

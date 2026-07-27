@@ -4,7 +4,7 @@ require "test_helper"
 
 class DialogComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::DialogHelper
 
     def call
       ui_dialog(id: "profile-dialog") do

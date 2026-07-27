@@ -4,7 +4,7 @@ require "test_helper"
 
 class SpinnerComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::SpinnerHelper
 
     def call
       ui_spinner(class: "size-6")

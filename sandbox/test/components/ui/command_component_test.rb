@@ -4,7 +4,7 @@ require "test_helper"
 
 class CommandComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::CommandHelper
 
     def call
       ui_command do

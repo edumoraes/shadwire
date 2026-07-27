@@ -4,7 +4,7 @@ require "test_helper"
 
 class SheetComponentTest < ViewComponent::TestCase
   class HelperHarnessComponent < ViewComponent::Base
-    include UiHelper
+    include Ui::SheetHelper
 
     def call
       ui_sheet(id: "filters-sheet") do
