@@ -78,7 +78,7 @@ Monorepo; the repo root is **not** a Rails app.
 - `bin/build_registry` — builds the *published* registry consumed by the CLI:
   transforms `registry/registry.json` into `build/r/{name}.json` + `index.json`
   with each file's `content` inlined (no source paths). The `deploy_pages` CI job
-  runs it and serves the output at `https://edumoraes.github.io/shadwire/r/...`.
+  runs it and serves the output at `https://shadwire.edumoraes.dev.br/r/...`.
 - `packages/cli/` — the `shadwire` CLI gem (Thor). Installs components from the
   published registry into a consuming Rails app (`init`, `add`, `list`, `search`,
   `info`, `diff`, `update`, `remove`); has its own serial Minitest suite. See
