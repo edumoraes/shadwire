@@ -24,6 +24,17 @@ class SwitchComponentTest < ViewComponent::TestCase
     assert_selector "input[role='switch'][checked][disabled]"
   end
 
+  # `checked:bg-primary` and `dark:bg-input/80` have the same specificity, and
+  # Tailwind emits the dark variant later — so without this companion the track
+  # reads as off in dark mode no matter the state.
+  def test_the_on_state_survives_dark_mode
+    render_inline(Ui::SwitchComponent.new)
+
+    classes = page.find("input[role='switch']", visible: :all)[:class].split
+    assert_includes classes, "checked:bg-primary"
+    assert_includes classes, "dark:checked:bg-primary"
+  end
+
   def test_renders_form_attrs_and_custom_class
     render_inline(Ui::SwitchComponent.new(name: "settings[beta]", id: "beta", value: "on", class: "ml-2"))
 

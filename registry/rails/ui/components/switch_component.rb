@@ -31,7 +31,7 @@ module Ui
     end
 
     def base_classes
-      "shadwire-switch inline-flex h-[1.15rem] w-8 shrink-0 appearance-none items-center rounded-full border border-transparent bg-input shadow-xs transition-colors outline-none checked:bg-primary disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-1 focus-visible:ring-ring dark:bg-input/80"
+      "shadwire-switch inline-flex h-[1.15rem] w-8 shrink-0 appearance-none items-center rounded-full border border-transparent bg-input shadow-xs transition-colors outline-none checked:bg-primary disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-1 focus-visible:ring-ring dark:bg-input/80 dark:checked:bg-primary"
     end
   end
 end
