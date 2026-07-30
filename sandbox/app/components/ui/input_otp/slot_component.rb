@@ -45,7 +45,7 @@ module Ui
       end
 
       def base_classes
-        "border-input relative flex h-9 w-9 items-center justify-center border-y border-r text-center text-sm shadow-xs outline-none transition-all first:rounded-l-md first:border-l last:rounded-r-md focus:z-10 focus:border-ring focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50"
+        "border-input dark:bg-input/30 relative flex h-9 w-9 items-center justify-center border-y border-r text-center text-sm shadow-xs outline-none transition-all first:rounded-l-md first:border-l last:rounded-r-md focus:z-10 focus:border-ring focus:ring-[3px] focus:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50"
       end
     end
   end
