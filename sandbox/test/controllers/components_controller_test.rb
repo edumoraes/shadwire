@@ -365,6 +365,53 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "table td code", text: "align"
   end
 
+  test "calendar docs page renders every selection mode and documents its api" do
+    get components_calendar_path
+
+    assert_response :success
+    assert_select "h1", text: "Calendar"
+    assert_select "section#example-calendar_default [data-controller='ui-calendar'].border"
+    assert_select "section#example-calendar_range [data-ui-calendar-mode-value='range'][data-ui-calendar-number-of-months-value='2']"
+    assert_select "section#example-calendar_range input[type='hidden'][name='trip[ends_on]']"
+    assert_select "section#example-calendar_dropdown [data-ui-calendar-caption-layout-value='dropdown']"
+    assert_select "table td code", text: "caption_layout"
+    assert_select "table td code", text: "end_name"
+  end
+
+  test "date picker docs page documents all eight shadcn recipes" do
+    get components_date_picker_path
+
+    assert_response :success
+    assert_select "h1", text: "Date Picker"
+    %w[default field range dob input time natural rtl].each do |recipe|
+      assert_select "section#example-date_picker_#{recipe}", count: 1
+    end
+    assert_select "table td code", text: "natural-language-value"
+  end
+
+  test "date picker recipes wire the field to the calendar" do
+    get components_date_picker_path
+
+    assert_select "section#example-date_picker_default [data-controller='ui-date-picker'] [data-controller='ui-popover'] [data-controller='ui-calendar']"
+    assert_select "section#example-date_picker_default [data-ui-date-picker-target='label'][data-empty='true']"
+    # The calendar grid does not fit the popover's default w-72 with padding.
+    assert_select "section#example-date_picker_default [data-slot='popover-content'][class*='w-auto!'][class*='p-0!']"
+
+    assert_select "section#example-date_picker_range [data-ui-calendar-mode-value='range'][data-ui-calendar-number-of-months-value='2']"
+    assert_select "section#example-date_picker_range input[type='hidden'][name='stay[to]']"
+
+    assert_select "section#example-date_picker_dob [data-ui-calendar-caption-layout-value='dropdown']"
+
+    assert_select "section#example-date_picker_input input[data-ui-date-picker-target='input'][autocomplete='off']"
+    assert_select "section#example-date_picker_time input[type='time'][step='1']"
+
+    assert_select "section#example-date_picker_natural [data-ui-date-picker-natural-language-value='true']"
+    assert_select "section#example-date_picker_natural [data-ui-date-picker-target='preview']"
+
+    assert_select "section#example-date_picker_rtl [dir='rtl'] [data-slot='calendar'][dir='rtl']"
+    assert_select "section#example-date_picker_rtl [data-ui-calendar-month-names-value]"
+  end
+
   test "dropdown menu docs page renders examples and api" do
     get components_dropdown_menu_path
 

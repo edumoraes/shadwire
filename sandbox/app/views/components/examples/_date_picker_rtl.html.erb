@@ -1,0 +1,19 @@
+<%# `dir: :rtl` espelha a grade, as setas de navegação e as teclas ←/→.
+    `month_names:`/`day_names:` traduzem a legenda e o cabeçalho das colunas;
+    `lang` e `locale-value` cuidam da data formatada e dos rótulos ARIA. %>
+<% month_names = %w[يناير فبراير مارس أبريل مايو يونيو يوليو أغسطس سبتمبر أكتوبر نوفمبر ديسمبر] %>
+<% day_names = %w[أحد إثنين ثلاثاء أربعاء خميس جمعة سبت] %>
+
+<div dir="rtl" lang="ar" data-controller="ui-date-picker" data-ui-date-picker-locale-value="ar-EG">
+  <%= ui_popover do %>
+    <%= ui_popover_trigger(variant: :outline, class: "w-[212px] justify-between font-normal") do %>
+      <span data-ui-date-picker-target="label" data-empty="true" class="data-[empty=true]:text-muted-foreground">
+        اختر تاريخًا
+      </span>
+      <%= ui_icon("chevron-down", class: "opacity-50") %>
+    <% end %>
+    <%= ui_popover_content(align: :end, class: "w-auto! p-0!") do %>
+      <%= ui_calendar(name: "rtl_date", dir: :rtl, month_names: month_names, day_names: day_names) %>
+    <% end %>
+  <% end %>
+</div>

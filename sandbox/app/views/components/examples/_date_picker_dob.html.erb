@@ -1,0 +1,17 @@
+<%# `caption_layout: :dropdown` troca o rótulo do mês por selects de mês e ano —
+    indispensável quando o alvo está a décadas de distância. `max:` limita o
+    calendário e, de quebra, o intervalo oferecido no select de ano. %>
+<%= ui_field(class: "w-52", data: { controller: "ui-date-picker", ui_date_picker_format_value: "short" }) do %>
+  <%= ui_field_label(for: "born-on") { "Data de nascimento" } %>
+  <%= ui_popover do %>
+    <%= ui_popover_trigger(id: "born-on", variant: :outline, class: "justify-between font-normal") do %>
+      <span data-ui-date-picker-target="label" data-empty="true" class="data-[empty=true]:text-muted-foreground">
+        Selecione a data
+      </span>
+      <%= ui_icon("chevron-down", class: "opacity-50") %>
+    <% end %>
+    <%= ui_popover_content(align: :start, class: "w-auto! p-0!") do %>
+      <%= ui_calendar(name: "profile[born_on]", caption_layout: :dropdown, max: Date.current) %>
+    <% end %>
+  <% end %>
+<% end %>

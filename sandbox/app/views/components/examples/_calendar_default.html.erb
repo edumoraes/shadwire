@@ -1,1 +1,3 @@
-<%= ui_calendar(selected: Date.today, name: "date") %>
+<%# Inline o calendário desenha o próprio quadro; dentro de um popover é o
+    popover que faz esse papel, por isso a borda fica a cargo de quem usa. %>
+<%= ui_calendar(selected: Date.today, name: "date", class: "border") %>
