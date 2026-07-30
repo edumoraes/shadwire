@@ -28,6 +28,8 @@ jobs:
       - name: Rubocop (rails-omakase)
         working-directory: sandbox
         run: bin/rubocop -f github
+      - name: Theme lint
+        run: ruby test/theme_lint_test.rb
 
   security:
     runs-on: ubuntu-latest
