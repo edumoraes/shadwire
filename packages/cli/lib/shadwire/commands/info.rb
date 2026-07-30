@@ -82,7 +82,12 @@ module Shadwire
         return if snippets.empty?
 
         @ui.say("Usage:")
-        snippets.each { |snippet| @ui.say(snippet.lines.map { |line| "  #{line}" }.join.chomp) }
+        # Blank line between snippets: items that document several recipes
+        # (date-picker) would otherwise print as one wall of ERB.
+        snippets.each_with_index do |snippet, index|
+          @ui.say("") unless index.zero?
+          @ui.say(snippet.lines.map { |line| "  #{line}" }.join.chomp)
+        end
       end
 
       def section(label, values)
