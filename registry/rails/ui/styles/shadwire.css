@@ -215,6 +215,10 @@
 }
 
 :root {
+  /* The theme is a class, not a media query, so the browser cannot infer it.
+     Without this, UA-painted chrome — select popups, scrollbars, the date and
+     time input pickers, autofill — stays light while the page goes dark. */
+  color-scheme: light;
   --radius: 0.5rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -251,6 +255,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
