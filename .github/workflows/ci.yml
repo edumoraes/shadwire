@@ -72,6 +72,22 @@ jobs:
       - name: Component + accessibility tests
         working-directory: sandbox
         run: bin/rails test test/components test/integration
+      - name: Docs page tests
+        working-directory: sandbox
+        run: bin/rails test test/controllers
+      # Runs headless Chrome, which ubuntu-latest ships; selenium-webdriver
+      # fetches its own driver. Adds roughly 90s to this job — worth it, since
+      # the controllers that make the components work are only exercised here.
+      - name: System tests
+        working-directory: sandbox
+        run: bin/rails test:system
+      - name: Capybara failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: capybara-screenshots
+          path: sandbox/tmp/screenshots
+          if-no-files-found: ignore
       - name: Seeds replant
         working-directory: sandbox
         run: bin/rails db:seed:replant
