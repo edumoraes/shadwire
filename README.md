@@ -61,7 +61,7 @@ The source of truth is `registry/`. The Rails app in `sandbox/` consumes copied 
 | `menubar` | A horizontal application menu bar. |
 | `navigation-menu` | Site navigation with optional rich dropdown panels. |
 | `command` | A searchable, keyboard-driven list of commands. |
-| `calendar` | A month grid for selecting dates. |
+| `calendar` | A month grid for selecting a date or a date range. |
 | `resizable` | Panels the user can resize by dragging a handle. |
 | `carousel` | A horizontally or vertically swipeable set of slides. |
 | `combobox` | A searchable single-select built from popover, command, and button. |
