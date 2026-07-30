@@ -309,9 +309,13 @@
     display: none;
   }
 
-  /* Native inputs cannot render pseudo-element glyphs in Firefox, so the
-     check glyph ships as a background image. Data URIs cannot reference CSS
-     variables, so the .dark override repeats it in the dark token color. */
+  /* Native inputs cannot render pseudo-element glyphs in Firefox, so the check
+     ships as a background image. A stroked path has no gradient equivalent and
+     a data URI cannot read a custom property, so this glyph — alone among the
+     control indicators — stays a literal, kept in step with
+     --primary-foreground by hand. Re-theming that token does not reach it;
+     making it follow would mean overlaying a real <svg>, which would break the
+     `peer` relationship the labels rely on. */
   .shadwire-checkbox:checked {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fafafa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
     background-size: 0.75rem;
@@ -320,22 +324,21 @@
   }
 
   .dark .shadwire-checkbox:checked {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b1b1b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23171717' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E");
   }
 
+  /* A gradient can read a custom property where a data URI cannot, so the dot
+     is --primary in both modes and needs no .dark twin. The half-pixel ramp is
+     antialiasing, not geometry: the dot is 0.5rem across, as upstream. */
   .shadwire-radio:checked {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='6' fill='%231b1b1b'/%3E%3C/svg%3E");
+    background-image: radial-gradient(circle at center, var(--primary) 0 calc(0.25rem - 0.5px), transparent 0.25rem);
     background-size: 1rem;
     background-position: center;
     background-repeat: no-repeat;
   }
 
-  .dark .shadwire-radio:checked {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='6' fill='%23e6e6e6'/%3E%3C/svg%3E");
-  }
-
   .shadwire-switch {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23ffffff'/%3E%3C/svg%3E");
+    background-image: radial-gradient(circle at center, var(--background) 0 calc(0.5rem - 0.5px), transparent 0.5rem);
     background-size: 1rem 1rem;
     background-position: left 1px center;
     background-repeat: no-repeat;
@@ -347,11 +350,11 @@
   }
 
   .dark .shadwire-switch {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%23fafafa'/%3E%3C/svg%3E");
+    background-image: radial-gradient(circle at center, var(--foreground) 0 calc(0.5rem - 0.5px), transparent 0.5rem);
   }
 
   .dark .shadwire-switch:checked {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%231b1b1b'/%3E%3C/svg%3E");
+    background-image: radial-gradient(circle at center, var(--primary-foreground) 0 calc(0.5rem - 0.5px), transparent 0.5rem);
   }
 }
 
