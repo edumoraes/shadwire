@@ -40,7 +40,7 @@ export default class extends Controller {
     item.dataset.variant = variant
     item.setAttribute("role", variant === "error" ? "alert" : "status")
     item.className =
-      "pointer-events-auto relative flex w-full items-start gap-3 overflow-hidden rounded-md border bg-background p-4 pr-8 text-foreground shadow-lg"
+      "pointer-events-auto relative flex w-full items-start gap-3 overflow-hidden rounded-md border bg-popover p-4 pr-8 text-popover-foreground shadow-lg"
 
     if (ICON[variant]) {
       const glyph = document.createElement("span")
