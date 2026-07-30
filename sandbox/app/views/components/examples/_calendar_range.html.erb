@@ -1,0 +1,8 @@
+<%= ui_calendar(
+      mode: :range,
+      selected: Date.current..(Date.current + 12),
+      number_of_months: 2,
+      name: "trip[starts_on]",
+      end_name: "trip[ends_on]",
+      class: "border"
+    ) %>

@@ -1,0 +1,35 @@
+<%# `natural_language_value: true` liga o vocabulário relativo do controller:
+    "hoje", "amanhã", "em 2 semanas", "próxima sexta" — além dos formatos
+    01/08/2026, 2026-08-01 e "1 de agosto de 2026". A tabela de frases é código
+    seu: edite o controller para atender o idioma que você publica. %>
+<%= ui_field(class: "max-w-xs", data: { controller: "ui-date-picker", ui_date_picker_natural_language_value: "true" }) do %>
+  <%= ui_field_label(for: "publish-on") { "Agendar publicação" } %>
+  <%= ui_input_group do %>
+    <%= ui_input_group_input(
+          id: "publish-on",
+          value: "em 2 dias",
+          placeholder: "amanhã ou próxima sexta",
+          autocomplete: "off",
+          data: { ui_date_picker_target: "input" }
+        ) %>
+    <%= ui_input_group_addon(align: :inline_end) do %>
+      <%= ui_popover do %>
+        <%= ui_popover_trigger(
+              variant: :ghost,
+              size: :icon,
+              class: "size-6! rounded-sm",
+              aria: { label: "Escolher data" }
+            ) do %>
+          <%= ui_icon("calendar", size: :sm) %>
+        <% end %>
+        <%= ui_popover_content(align: :end, class: "w-auto! p-0!") do %>
+          <%= ui_calendar(name: "post[publish_on]", caption_layout: :dropdown, selected: Date.current + 2) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <%= ui_field_description do %>
+    Sua publicação sai em
+    <span class="font-medium text-foreground" data-ui-date-picker-target="preview"></span>.
+  <% end %>
+<% end %>

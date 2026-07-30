@@ -1400,29 +1400,80 @@ class ComponentsController < ApplicationController
     render "doc_page"
   end
 
+  CALENDAR_EXAMPLES = [
+    { name: "calendar_default", title: "Padrão",
+      description: "Mês atual com o dia de hoje selecionado. Setas percorrem os dias, Home/End vão às pontas da semana e PageUp/PageDown trocam de mês." },
+    { name: "calendar_range", title: "Intervalo",
+      description: "mode: :range grava duas datas; passar o mouse depois do primeiro clique prevê o intervalo. number_of_months: 2 mostra dois meses lado a lado." },
+    { name: "calendar_dropdown", title: "Legenda com selects",
+      description: "caption_layout: :dropdown troca o nome do mês por selects de mês e ano — o caminho curto para anos distantes." }
+  ].freeze
+
+  CALENDAR_USAGE_HELPER = <<~ERB
+    <%= ui_calendar(selected: Date.current, name: "date", class: "border") %>
+
+    <%# Intervalo: duas datas, dois inputs, dois meses. %>
+    <%= ui_calendar(
+          mode: :range,
+          selected: Date.current..(Date.current + 7),
+          number_of_months: 2,
+          name: "trip[starts_on]",
+          end_name: "trip[ends_on]"
+        ) %>
+  ERB
+
   def calendar
-    @page_title = "Calendar"
-    @page_subtitle = "Uma grade de mês construída no cliente: navegação de mês, seleção e teclado."
-    @usage_helper = <<~ERB
-      <%= ui_calendar(selected: Date.today, name: "date") %>
-    ERB
-    @examples = [ { name: "calendar_default", title: "Padrão", description: "Mês atual com o dia de hoje selecionado." } ]
-    render "doc_page"
+    @examples = CALENDAR_EXAMPLES
+    @usage_helper = CALENDAR_USAGE_HELPER
   end
 
-  def date_picker
-    @page_title = "Date Picker"
-    @page_subtitle = "Uma receita: Popover + Calendar. Não é um componente novo — instala popover e calendar."
-    @usage_helper = <<~ERB
+  DATE_PICKER_EXAMPLES = [
+    { name: "date_picker_default", title: "Padrão",
+      description: "Botão que abre o calendário em um popover e passa a exibir a data escolhida." },
+    { name: "date_picker_field", title: "Com rótulo",
+      description: "O mesmo gatilho dentro de um Field, associado ao rótulo por id." },
+    { name: "date_picker_range", title: "Intervalo",
+      description: "Duas datas em um gatilho só. O popover fecha quando a segunda ponta entra, não na primeira." },
+    { name: "date_picker_dob", title: "Data de nascimento",
+      description: "Legenda com selects de mês e ano e max: hoje — ninguém nasceu semana que vem." },
+    { name: "date_picker_input", title: "Com campo de texto",
+      description: "Digite a data ou escolha no calendário: o texto vira data e a data volta formatada. ↓ abre o popover." },
+    { name: "date_picker_time", title: "Data e hora",
+      description: "O picker resolve o dia; um input type=\"time\" nativo resolve a hora." },
+    { name: "date_picker_natural", title: "Linguagem natural",
+      description: "Aceita \"hoje\", \"amanhã\", \"em 2 semanas\", \"próxima sexta\". A tabela de frases mora no controller — é código seu." },
+    { name: "date_picker_rtl", title: "RTL",
+      description: "dir: :rtl espelha a grade, as setas e as teclas ←/→; month_names:/day_names: traduzem a legenda." }
+  ].freeze
+
+  DATE_PICKER_USAGE_HELPER = <<~ERB
+    <div data-controller="ui-date-picker" data-ui-date-picker-format-value="long">
       <%= ui_popover do %>
-        <%= ui_popover_trigger(variant: :outline) { "Selecione uma data" } %>
-        <%= ui_popover_content(class: "!w-auto !p-0") do %>
+        <%= ui_popover_trigger(variant: :outline, class: "w-[212px] justify-between font-normal") do %>
+          <span data-ui-date-picker-target="label" data-empty="true"
+                class="data-[empty=true]:text-muted-foreground">Selecione uma data</span>
+          <%= ui_icon("chevron-down", class: "opacity-50") %>
+        <% end %>
+        <%= ui_popover_content(align: :start, class: "w-auto! p-0!") do %>
           <%= ui_calendar(name: "due_on") %>
         <% end %>
       <% end %>
-    ERB
-    @examples = [ { name: "date_picker_default", title: "Padrão", description: "Botão que abre um calendário em um popover." } ]
-    render "doc_page"
+    </div>
+  ERB
+
+  DATE_PICKER_COMPOSITION = <<~TEXT
+    data-controller="ui-date-picker"   ligação: formata o rótulo, lê o que é digitado, fecha o popover
+    `-- Popover
+        |-- Popover::Trigger           o campo visível: um Button ou um InputGroup
+        |   `-- [data-ui-date-picker-target="label" | "input"]
+        `-- Popover::Content (w-auto! p-0!)
+            `-- Calendar               name:/end_name: gravam o valor no formulário
+  TEXT
+
+  def date_picker
+    @examples = DATE_PICKER_EXAMPLES
+    @usage_helper = DATE_PICKER_USAGE_HELPER
+    @composition = DATE_PICKER_COMPOSITION
   end
 
   def resizable

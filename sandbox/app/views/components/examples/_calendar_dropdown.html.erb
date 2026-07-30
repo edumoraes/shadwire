@@ -1,0 +1,8 @@
+<%# `min:`/`max:` desabilitam os dias fora da faixa e delimitam o select de ano. %>
+<%= ui_calendar(
+      caption_layout: :dropdown,
+      name: "born_on",
+      min: Date.new(1930, 1, 1),
+      max: Date.current,
+      class: "border"
+    ) %>

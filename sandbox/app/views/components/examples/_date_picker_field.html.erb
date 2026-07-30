@@ -1,0 +1,14 @@
+<%# O gatilho é um botão comum, então `for:`/`id:` o associam ao rótulo do campo. %>
+<%= ui_field(class: "w-48", data: { controller: "ui-date-picker" }) do %>
+  <%= ui_field_label(for: "checkin") { "Data" } %>
+  <%= ui_popover do %>
+    <%= ui_popover_trigger(id: "checkin", variant: :outline, class: "justify-start font-normal") do %>
+      <span data-ui-date-picker-target="label" data-empty="true" class="data-[empty=true]:text-muted-foreground">
+        Selecione uma data
+      </span>
+    <% end %>
+    <%= ui_popover_content(align: :start, class: "w-auto! p-0!") do %>
+      <%= ui_calendar(name: "checkin_on") %>
+    <% end %>
+  <% end %>
+<% end %>

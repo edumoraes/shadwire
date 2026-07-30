@@ -1,0 +1,29 @@
+<%# Campo de texto + calendário: o que for digitado é interpretado e leva o
+    calendário até a data; o que for escolhido no calendário volta formatado
+    para o campo. ↓ no campo abre o popover. %>
+<%= ui_field(class: "w-60", data: { controller: "ui-date-picker" }) do %>
+  <%= ui_field_label(for: "subscribed-on") { "Data da assinatura" } %>
+  <%= ui_input_group do %>
+    <%= ui_input_group_input(
+          id: "subscribed-on",
+          placeholder: "1 de junho de 2026",
+          autocomplete: "off",
+          data: { ui_date_picker_target: "input" }
+        ) %>
+    <%= ui_input_group_addon(align: :inline_end) do %>
+      <%= ui_popover do %>
+        <%= ui_popover_trigger(
+              variant: :ghost,
+              size: :icon,
+              class: "size-6! rounded-sm",
+              aria: { label: "Escolher data" }
+            ) do %>
+          <%= ui_icon("calendar", size: :sm) %>
+        <% end %>
+        <%= ui_popover_content(align: :end, class: "w-auto! p-0!") do %>
+          <%= ui_calendar(name: "subscribed_on", selected: Date.current) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
