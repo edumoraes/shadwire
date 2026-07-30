@@ -26,7 +26,7 @@ module Ui
       def provider_attrs
         html_attrs.dup.tap do |attrs|
           attrs[:style] = [ STYLE, attrs[:style] ].compact_blank.join(" ")
-          attrs[:class] = class_names("group/sidebar-wrapper flex min-h-svh w-full", @class_name)
+          attrs[:class] = class_names("group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar", @class_name)
           attrs[:data] = provider_data(attrs[:data])
         end
       end
