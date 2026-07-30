@@ -13,7 +13,7 @@ module Ui
       def call
         render(Ui::SeparatorComponent.new(
           orientation: @orientation,
-          class: class_names("bg-input relative !m-0 self-stretch data-[orientation=vertical]:h-auto", @class_name),
+          class: class_names("bg-input relative m-0! self-stretch data-[orientation=vertical]:h-auto", @class_name),
           data: { slot: "button-group-separator" },
           **html_attrs
         ))
