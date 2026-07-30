@@ -29,9 +29,18 @@ export default class extends Controller {
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
   ]
   static DAY_NAMES = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+  // `appearance-none` is not cosmetic: a UA-painted select keeps the light
+  // widget chrome inside a dark popover, so the control has to draw itself.
   static SELECT_CLASS =
-    "h-7 rounded-md border border-input bg-transparent px-1.5 text-sm font-medium " +
+    "h-7 appearance-none rounded-md border border-input bg-transparent pl-1.5 pr-5 " +
+    "text-sm font-medium text-popover-foreground " +
     "focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+  // Lucide's chevron-down, inlined: the caption is built here, not in Ruby.
+  static CHEVRON =
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" ` +
+    `stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ` +
+    `class="pointer-events-none absolute top-1/2 right-1.5 size-3.5 -translate-y-1/2 opacity-50">` +
+    `<path d="m6 9 6 6 6-6"></path></svg>`
   static DAY_CLASS =
     "size-9 rounded-md text-sm font-normal transition-colors " +
     "hover:bg-accent hover:text-accent-foreground " +
@@ -233,7 +242,6 @@ export default class extends Controller {
   }
 
   dropdownCaption(year, month) {
-    const klass = this.constructor.SELECT_CLASS
     const months = this.monthLabels
       .map((name, index) => `<option value="${index}"${index === month ? " selected" : ""}>${name}</option>`)
       .join("")
@@ -247,9 +255,19 @@ export default class extends Controller {
 
     return (
       `<div class="flex h-7 items-center justify-center gap-1">` +
-      `<select aria-label="Mês" class="${klass}" data-action="change->ui-calendar#changeMonth">${months}</select>` +
-      `<select aria-label="Ano" class="${klass}" data-action="change->ui-calendar#changeYear">${years}</select>` +
+      this.dropdown("Mês", "changeMonth", months) +
+      this.dropdown("Ano", "changeYear", years) +
       `</div>`
+    )
+  }
+
+  dropdown(label, action, options) {
+    return (
+      `<span class="relative inline-flex items-center">` +
+      `<select aria-label="${label}" class="${this.constructor.SELECT_CLASS}" ` +
+      `data-action="change->ui-calendar#${action}">${options}</select>` +
+      this.constructor.CHEVRON +
+      `</span>`
     )
   }
 
