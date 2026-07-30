@@ -56,8 +56,10 @@ class SelectComponentTest < ApplicationSystemTestCase
       find("button[role='combobox']").send_keys :enter
     end
 
-    # The preselected EST option is highlighted on open.
-    assert_match(/Leste/, page.find("#example-select_groups [role='option'][data-highlighted]", visible: :all).text)
+    # The preselected EST option is highlighted on open. `assert_selector` waits
+    # for the text to land; `find(visible: :all).text` only waited for the node
+    # to exist and read it back blank while the panel was still coming up.
+    assert_selector "#example-select_groups [role='option'][data-highlighted]", text: /Leste/
   end
 
   private
