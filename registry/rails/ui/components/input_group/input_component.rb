@@ -25,7 +25,7 @@ module Ui
       end
 
       def base_classes
-        "flex-1 rounded-none border-0 bg-transparent px-3 shadow-none outline-none h-full w-full min-w-0 text-base md:text-sm placeholder:text-muted-foreground focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-transparent"
+        "flex-1 rounded-none border-0 bg-transparent px-3 shadow-none outline-none h-full w-full min-w-0 text-base md:text-sm placeholder:text-muted-foreground focus-visible:ring-0 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-transparent selection:bg-primary selection:text-primary-foreground file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground"
       end
     end
   end
