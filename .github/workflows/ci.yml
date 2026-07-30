@@ -186,9 +186,10 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     env:
       RAILS_ENV: production
-      # Project Pages are served under /<repo>/. Mount the app + asset/importmap
-      # paths under the same sub-URI (see config.ru and production.rb).
-      PAGES_BASE_PATH: /shadwire
+      # The site is served from the custom domain (shadwire.edumoraes.dev.br) at
+      # the domain root, not under /<repo>/, so generated links and asset paths
+      # must carry no sub-URI prefix. Leaving PAGES_BASE_PATH unset keeps the
+      # `map` in config.ru and relative_url_root in production.rb inert.
     steps:
       - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
@@ -212,21 +213,19 @@ jobs:
         run: |
           bin/rails server -e production -b 127.0.0.1 -p 3000 > /tmp/server.log 2>&1 &
           for i in $(seq 1 60); do
-            curl -sf http://127.0.0.1:3000/shadwire/up >/dev/null && break
+            curl -sf http://127.0.0.1:3000/up >/dev/null && break
             sleep 1
           done
           rm -rf ../_site && mkdir -p ../_site
           # Mirror every page reachable from the home page. Links/asset/importmap
-          # paths are already absolute under /shadwire/, so they resolve under the
-          # Pages base path. --cut-dirs strips the /shadwire prefix from filenames
-          # so the artifact root maps onto the Pages base. Skip /shadwire/assets:
-          # the precompiled assets are copied wholesale below, and crawling them
-          # would also choke on any broken asset reference in the docs.
+          # paths are absolute from the site root, so the artifact root maps
+          # straight onto the domain root. Skip /assets: the precompiled assets
+          # are copied wholesale below, and crawling them would also choke on any
+          # broken asset reference in the docs.
           wget --mirror --no-verbose -e robots=off \
-               --no-host-directories --cut-dirs=1 \
-               --include-directories=/shadwire --exclude-directories=/shadwire/assets \
+               --no-host-directories --exclude-directories=/assets \
                --adjust-extension --directory-prefix=../_site \
-               http://127.0.0.1:3000/shadwire/ || wget_ec=$?
+               http://127.0.0.1:3000/ || wget_ec=$?
           # Exit 8 = a referenced resource returned 4xx (e.g. a broken image in a
           # doc example). Tolerate it for a static snapshot, but fail on real errors.
           if [ "${wget_ec:-0}" -ne 0 ] && [ "${wget_ec:-0}" -ne 8 ]; then
