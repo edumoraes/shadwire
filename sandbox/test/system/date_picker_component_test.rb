@@ -54,6 +54,23 @@ class DatePickerComponentTest < ApplicationSystemTestCase
     assert_selector "#example-date_picker_dob [data-date^='#{year}-']"
   end
 
+  # The options inherit `color` from the select — near-white under the dark
+  # theme — so if their own background falls through to the UA surface the popup
+  # is white text on white. Pinning it is the whole fix; the exact system colour
+  # is the browser's business.
+  test "the caption select popup does not fall through to the browser surface" do
+    visit components_date_picker_path
+    page.execute_script("document.documentElement.classList.add('dark')")
+    find("#born-on").click
+
+    background = page.evaluate_script(<<~JS)
+      getComputedStyle(document.querySelector("#example-date_picker_dob select[aria-label='Ano'] option")).backgroundColor
+    JS
+
+    refute_equal "rgba(0, 0, 0, 0)", background,
+                 "the option must paint its own surface, not inherit the UA's"
+  end
+
   test "typing a date moves the calendar and picking one writes it back" do
     visit components_date_picker_path
 
