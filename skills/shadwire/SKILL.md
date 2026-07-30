@@ -99,7 +99,7 @@ Always enforced. Each links to a file with Wrong/Right pairs.
 | Pick several | `checkbox`, `toggle-group` |
 | On/off setting | `switch`, `toggle` |
 | Numeric range | `slider` |
-| Dates | `calendar`, `date-picker` |
+| Dates | `calendar` (inline month, single or range), `date-picker` (field + popover) |
 | Modal / overlay | `dialog`, `alert-dialog` (confirm), `sheet` (side), `drawer` (bottom) |
 | Anchored floating content | `popover`, `tooltip` (hint), `hover-card` (preview) |
 | Data display | `table`, `data-table` (sort/filter/paginate), `card`, `item`, `badge`, `avatar` |

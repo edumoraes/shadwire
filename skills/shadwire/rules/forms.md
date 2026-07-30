@@ -101,8 +101,44 @@ submit a value when unchecked:
 | Setting applied immediately | `ui_switch` |
 | Imprecise number | `ui_slider` |
 | Exact number | `ui_input(type: :number)` |
-| Date | `date-picker`, or `ui_calendar` inline |
+| Date or date range | `date-picker`, or `ui_calendar` inline |
 | One-time passcode | `ui_input_otp` |
+
+## The date picker is a recipe
+
+There is no `Ui::DatePickerComponent`. A date field is `ui_popover` +
+`ui_calendar`, with the `ui-date-picker` controller writing the picked date into
+the trigger and closing the popover. The calendar owns the value: `name:`
+renders the hidden input, so it posts like any other field.
+
+```erb
+<div data-controller="ui-date-picker" data-ui-date-picker-format-value="long">
+  <%= ui_popover do %>
+    <%= ui_popover_trigger(variant: :outline, class: "w-[212px] justify-between font-normal") do %>
+      <span data-ui-date-picker-target="label" data-empty="true"
+            class="data-[empty=true]:text-muted-foreground">Pick a date</span>
+      <%= ui_icon("chevron-down", class: "opacity-50") %>
+    <% end %>
+    <%= ui_popover_content(align: :start, class: "w-auto! p-0!") do %>
+      <%= ui_calendar(name: "due_on") %>
+    <% end %>
+  <% end %>
+</div>
+```
+
+The popover needs `w-auto! p-0!` — its default `w-72` with padding is too narrow
+for the grid. From there the variants are calendar arguments, not new markup:
+
+| Variant | What changes |
+| --- | --- |
+| Range | `mode: :range, number_of_months: 2`, plus `end_name:` for the second input |
+| Date of birth | `caption_layout: :dropdown, max: Date.current` |
+| Typed input | trigger an `ui_input_group`; mark the input `data-ui-date-picker-target="input"` |
+| Date and time | the picker for the day, `ui_input(type: :time, step: 1)` beside it |
+| Natural language | `data-ui-date-picker-natural-language-value="true"` |
+| RTL | `dir: :rtl`, with `month_names:`/`day_names:` for the locale |
+
+`shadwire info date-picker` prints all of them.
 
 ## Input groups take their own control
 
