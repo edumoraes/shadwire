@@ -309,6 +309,15 @@
     display: none;
   }
 
+  /* The select popup is drawn by the browser, but its options inherit `color`
+     from the page. Pinning both to the system pair keeps the popup internally
+     consistent instead of painting app-token text onto a UA canvas. */
+  [data-slot="native-select"] option,
+  [data-slot="native-select"] optgroup {
+    background-color: Canvas;
+    color: CanvasText;
+  }
+
   /* Native inputs cannot render pseudo-element glyphs in Firefox, so the check
      ships as a background image. A stroked path has no gradient equivalent and
      a data URI cannot read a custom property, so this glyph — alone among the
