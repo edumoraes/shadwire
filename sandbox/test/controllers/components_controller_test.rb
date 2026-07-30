@@ -151,16 +151,16 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Scroll Area"
-    assert_select "p", text: /Augments native scroll functionality/
-    assert_select "h2", text: "Installation"
-    assert_select "h2", text: "Usage"
-    assert_select "h2", text: "Composition"
-    assert_select "h2", text: "Examples"
+    assert_select "p", text: /Aprimora a rolagem nativa/
+    assert_select "h2", text: "Instalação"
+    assert_select "h2", text: "Uso"
+    assert_select "h2", text: "Composição"
+    assert_select "h2", text: "Exemplos"
     assert_select "h3", text: "Horizontal"
     assert_select "h2", text: "RTL"
     assert_select "section#example-scroll_area_rtl", text: /التمرير/
     assert_select "section#example-scroll_area_rtl [data-controller~='clipboard']"
-    assert_select "h2", text: "API Reference"
+    assert_select "h2", text: "Referência da API"
     assert_select "[data-controller='ui-scroll-area']"
     assert_select "[data-slot='scroll-area'][dir='rtl']", text: /التمرير/
     assert_select "[data-slot='scroll-area-scrollbar'][data-orientation='vertical']"
