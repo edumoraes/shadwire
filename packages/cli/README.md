@@ -78,7 +78,7 @@ files install (aliases), the Tailwind entrypoint, and what is installed:
 
 ```json
 {
-  "registry": "https://edumoraes.github.io/shadwire/r",
+  "registry": "https://shadwire.edumoraes.dev.br/r",
   "tailwind": { "css": "app/assets/tailwind/application.css" },
   "aliases": {
     "components":  "app/components",
@@ -104,7 +104,7 @@ For any command, the registry base URL is resolved in this order:
 
 1. the `--registry` flag, if given;
 2. the `registry` field in the app's `shadwire.json`;
-3. the built-in default, `https://edumoraes.github.io/shadwire/r`.
+3. the built-in default, `https://shadwire.edumoraes.dev.br/r`.
 
 Both `https://` and local `file://` bases are supported. Point `--registry` at a
 `file://` path to install from a registry built locally with `bin/build_registry`

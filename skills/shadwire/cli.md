@@ -180,7 +180,7 @@ first when you care about local changes.
 
 1. `--registry` flag
 2. `registry` in the app's `shadwire.json`
-3. built-in default: `https://edumoraes.github.io/shadwire/r`
+3. built-in default: `https://shadwire.edumoraes.dev.br/r`
 
 `file://` bases work, which is how you test against a locally built registry.
 
@@ -189,8 +189,8 @@ first when you care about local changes.
 If the gem is not installed and cannot be, the same catalog is published as
 plain text:
 
-- `https://edumoraes.github.io/shadwire/r/llms.txt` — catalog with when-to-use
-- `https://edumoraes.github.io/shadwire/r/llms-full.txt` — every component's API
+- `https://shadwire.edumoraes.dev.br/r/llms.txt` — catalog with when-to-use
+- `https://shadwire.edumoraes.dev.br/r/llms-full.txt` — every component's API
 
 Installing by hand from these is possible but leaves `shadwire.json` inaccurate,
 so `diff`, `update` and `remove` stop working correctly. Prefer the CLI.

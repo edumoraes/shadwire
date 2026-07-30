@@ -111,7 +111,7 @@ shadwire list                 # every component in the registry catalog
 ```
 
 Components install from the hosted registry
-(`https://edumoraes.github.io/shadwire/r`) by default; override with `--registry`
+(`https://shadwire.edumoraes.dev.br/r`) by default; override with `--registry`
 (an `https://` URL or a local `file://` path).
 
 **Agents / CI** — every command runs non-interactively with `--yes`, emits
@@ -138,9 +138,9 @@ names still exists.
 
 Agents that cannot install the skill can read the same catalog as plain text:
 
-- [`/r/llms.txt`](https://edumoraes.github.io/shadwire/r/llms.txt) — every
+- [`/r/llms.txt`](https://shadwire.edumoraes.dev.br/r/llms.txt) — every
   component with when to use it
-- [`/r/llms-full.txt`](https://edumoraes.github.io/shadwire/r/llms-full.txt) —
+- [`/r/llms-full.txt`](https://shadwire.edumoraes.dev.br/r/llms-full.txt) —
   every component's full API and usage
 
 ## Registry Workflow

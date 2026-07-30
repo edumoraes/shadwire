@@ -9,7 +9,7 @@ module Shadwire
   # On-disk JSON shape (mirrors shadcn's components.json conventions):
   #
   #   {
-  #     "registry": "https://edumoraes.github.io/shadwire/r",
+  #     "registry": "https://shadwire.edumoraes.dev.br/r",
   #     "tailwind": { "css": "app/assets/tailwind/application.css" },
   #     "aliases": {
   #       "components":  "app/components",
@@ -26,7 +26,7 @@ module Shadwire
     CONFIG_FILE = "shadwire.json"
 
     DEFAULTS = {
-      "registry" => "https://edumoraes.github.io/shadwire/r",
+      "registry" => "https://shadwire.edumoraes.dev.br/r",
       "tailwind" => { "css" => "app/assets/tailwind/application.css" },
       "aliases" => {
         "components"  => "app/components",

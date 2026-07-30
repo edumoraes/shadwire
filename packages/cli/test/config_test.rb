@@ -9,7 +9,7 @@ class ConfigTest < Minitest::Test
     Dir.mktmpdir do |root|
       config = Shadwire::Config.load(root)
 
-      assert_equal "https://edumoraes.github.io/shadwire/r", config.registry
+      assert_equal "https://shadwire.edumoraes.dev.br/r", config.registry
       assert_equal "app/assets/tailwind/application.css", config.tailwind_css
       assert_equal "app/components",          config.aliases["components"]
       assert_equal "app/components/ui",       config.aliases["ui"]
@@ -40,7 +40,7 @@ class ConfigTest < Minitest::Test
       raw = File.read(File.join(root, "shadwire.json"))
       assert raw.end_with?("\n"), "expected file to end with newline"
       parsed = JSON.parse(raw)
-      assert_equal "https://edumoraes.github.io/shadwire/r", parsed["registry"]
+      assert_equal "https://shadwire.edumoraes.dev.br/r", parsed["registry"]
     end
   end
 
