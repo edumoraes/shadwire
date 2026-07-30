@@ -264,7 +264,8 @@ export default class extends Controller {
   dropdown(label, action, options) {
     return (
       `<span class="relative inline-flex items-center">` +
-      `<select aria-label="${label}" class="${this.constructor.SELECT_CLASS}" ` +
+      `<select aria-label="${label}" data-slot="calendar-caption-select" ` +
+      `class="${this.constructor.SELECT_CLASS}" ` +
       `data-action="change->ui-calendar#${action}">${options}</select>` +
       this.constructor.CHEVRON +
       `</span>`

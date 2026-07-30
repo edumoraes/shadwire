@@ -310,10 +310,13 @@
   }
 
   /* The select popup is drawn by the browser, but its options inherit `color`
-     from the page. Pinning both to the system pair keeps the popup internally
-     consistent instead of painting app-token text onto a UA canvas. */
+     from the select — a near-white token in dark mode — while their own
+     background stays transparent, so the UA paints its light surface behind
+     white text. Pinning both to the system pair keeps the popup legible and in
+     step with `color-scheme`. Every select the registry styles needs this. */
   [data-slot="native-select"] option,
-  [data-slot="native-select"] optgroup {
+  [data-slot="native-select"] optgroup,
+  [data-slot="calendar-caption-select"] option {
     background-color: Canvas;
     color: CanvasText;
   }
