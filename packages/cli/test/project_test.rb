@@ -138,4 +138,21 @@ class ProjectTest < Minitest::Test
       assert_match(/rails/i, err.message)
     end
   end
+
+  # ── #binstub? ────────────────────────────────────────────────────────────────
+
+  def test_binstub_false_without_the_file
+    with_app do |root|
+      refute Shadwire::Project.new(root).binstub?
+    end
+  end
+
+  def test_binstub_true_when_bin_shadwire_exists
+    with_app do |root|
+      FileUtils.mkdir_p(File.join(root, "bin"))
+      File.write(File.join(root, "bin/shadwire"), "#!/usr/bin/env ruby\n")
+
+      assert Shadwire::Project.new(root).binstub?
+    end
+  end
 end

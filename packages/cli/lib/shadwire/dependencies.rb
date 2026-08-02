@@ -28,12 +28,25 @@ module Shadwire
     # Raises when any of the given result hashes reports something it failed to
     # apply, so a command that could not install a dependency exits non-zero
     # instead of claiming success.
+    # Each result carries its own `group:`, so the recovery command it suggests
+    # matches the one that failed. Collapsing them would tell the user to
+    # `bundle add shadwire`, landing the development-only CLI in the app's
+    # runtime dependencies.
     def self.raise_on_failure!(*results)
-      failed = results.flat_map { |result| Array(result[:failed]) }.uniq
-      return if failed.empty?
+      failing = results.reject { |result| Array(result[:failed]).empty? }
+      return if failing.empty?
 
-      raise Error, "Failed to install: #{failed.join(", ")}. " \
-                   "Run `bundle add #{failed.join(" ")}` in the app and re-run this command."
+      names = failing.flat_map { |result| Array(result[:failed]) }.uniq
+      commands = failing.map { |result| bundle_add_command(result) }
+
+      raise Error, "Failed to install: #{names.join(", ")}. " \
+                   "Run `#{commands.join("` and `")}` in the app and re-run this command."
+    end
+
+    # `bundle add <names...>` for a result, with its group when it has one.
+    def self.bundle_add_command(result)
+      suffix = result[:group] ? " --group #{result[:group]}" : ""
+      "bundle add #{Array(result[:failed]).join(" ")}#{suffix}"
     end
 
     def initialize(project, runner: DEFAULT_RUNNER)
@@ -42,20 +55,26 @@ module Shadwire
     end
 
     # Ensures each gem name is present, running `bundle add <missing...>`.
-    def ensure_gems(names, yes:, confirm: nil)
+    # `group:` adds them to a bundler group — used for the shadwire CLI itself,
+    # which belongs in development, not in the app's runtime dependencies.
+    def ensure_gems(names, yes:, confirm: nil, group: nil)
       present = names.select { |name| @project.gem?(name) }
       missing = names - present
       return result(skipped: present) if missing.empty?
 
-      unless apply?(yes, confirm, "Add gems: #{missing.join(", ")} (bundle add)")
-        return result(skipped: present, pending: missing)
+      suffix = group ? " --group #{group}" : ""
+      unless apply?(yes, confirm, "Add gems: #{missing.join(", ")} (bundle add#{suffix})")
+        return result(skipped: present, pending: missing, group:)
       end
+
+      command = ["bundle", "add", *missing]
+      command.push("--group", group.to_s) if group
 
       # `system` returns false on a non-zero exit and nil when the command could
       # not be run at all; neither means the gems landed.
-      return result(skipped: present, failed: missing) unless @runner.call(["bundle", "add", *missing], chdir: @project.root)
+      return result(skipped: present, failed: missing, group:) unless @runner.call(command, chdir: @project.root)
 
-      result(applied: missing, skipped: present)
+      result(applied: missing, skipped: present, group:)
     end
 
     # Ensures each pin ({ "name" =>, "to" => }) exists in config/importmap.rb.
@@ -106,8 +125,8 @@ module Shadwire
 
     private
 
-    def result(applied: [], skipped: [], pending: [], manual: [], failed: [])
-      { applied:, skipped:, pending:, manual:, failed: }
+    def result(applied: [], skipped: [], pending: [], manual: [], failed: [], group: nil)
+      { applied:, skipped:, pending:, manual:, failed:, group: }
     end
 
     def apply?(yes, confirm, description)

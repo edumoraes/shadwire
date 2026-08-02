@@ -85,6 +85,57 @@ class DependenciesTest < Minitest::Test
     end
   end
 
+  # Telling someone to run `bundle add shadwire` drops the group and lands the
+  # development-only CLI in the app's runtime dependencies — the exact outcome
+  # the group exists to prevent.
+  def test_raise_on_failure_keeps_the_group_in_the_recovery_command
+    err = assert_raises(Shadwire::Error) do
+      Shadwire::Dependencies.raise_on_failure!({ failed: ["shadwire"], group: "development" })
+    end
+
+    assert_match(/bundle add shadwire --group development/, err.message)
+  end
+
+  def test_raise_on_failure_omits_the_group_when_there_is_none
+    err = assert_raises(Shadwire::Error) do
+      Shadwire::Dependencies.raise_on_failure!({ failed: ["view_component"] })
+    end
+
+    assert_match(/bundle add view_component`/, err.message)
+  end
+
+  def test_ensure_gems_records_the_group_in_its_result
+    with_app do |root|
+      deps = Shadwire::Dependencies.new(Shadwire::Project.new(root), runner: recording_runner.first)
+
+      assert_equal "development", deps.ensure_gems(["shadwire"], yes: true, group: "development")[:group]
+      assert_nil deps.ensure_gems(["lucide-rails"], yes: true)[:group]
+    end
+  end
+
+  def test_ensure_gems_passes_the_group_to_bundle_add
+    with_app do |root|
+      runner, calls = recording_runner
+      deps = Shadwire::Dependencies.new(Shadwire::Project.new(root), runner:)
+
+      result = deps.ensure_gems(["shadwire"], yes: true, group: "development")
+
+      assert_equal ["bundle", "add", "shadwire", "--group", "development"], calls.first[:cmd]
+      assert_includes result[:applied], "shadwire"
+    end
+  end
+
+  def test_ensure_gems_omits_the_group_flag_by_default
+    with_app do |root|
+      runner, calls = recording_runner
+      deps = Shadwire::Dependencies.new(Shadwire::Project.new(root), runner:)
+
+      deps.ensure_gems(["shadwire"], yes: true)
+
+      assert_equal ["bundle", "add", "shadwire"], calls.first[:cmd]
+    end
+  end
+
   # ── ensure_importmap_pins ────────────────────────────────────────────────────
 
   def test_ensure_importmap_pins_appends_missing_pin

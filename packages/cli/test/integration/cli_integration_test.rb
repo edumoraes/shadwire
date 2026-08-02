@@ -13,8 +13,9 @@ require "stringio"
 # init → browse → add → diff → update → remove workflow.
 #
 # The scaffolded app pre-declares the base gems (view_component, lucide-rails)
-# so `ensure_gems` finds them present and the CLI never shells out to bundler;
-# no fixture item declares its own gems, so the suite runs without a real bundle.
+# and the CLI gem itself, so `ensure_gems` finds them present and the CLI never
+# shells out to bundler; no fixture item declares its own gems, so the suite runs
+# without a real bundle.
 class CliIntegrationTest < Minitest::Test
   FILE_REGISTRY = "file://#{File.expand_path("../fixtures/registry", __dir__)}"
 
@@ -141,6 +142,7 @@ class CliIntegrationTest < Minitest::Test
       gem "tailwindcss-rails"
       gem "view_component"
       gem "lucide-rails"
+      gem "shadwire"
     RUBY
     File.write(File.join(app, "config/application.rb"), <<~RUBY)
       require "rails"

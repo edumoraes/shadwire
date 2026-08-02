@@ -31,6 +31,19 @@ class SkillCheckTest < Minitest::Test
 
   CLI_COMMANDS = %w[init add list search info diff update remove status version help].freeze
 
+  # `init` is excluded by definition: it is the command that creates the binstub,
+  # so it is the one thing you necessarily run before the binstub exists. Same
+  # for `version` and `help`, which are not app-scoped at all.
+  CANONICAL_COMMANDS = (CLI_COMMANDS - %w[init version help]).freeze
+
+  # Two places legitimately name a non-canonical form: the bootstrap prose that
+  # tells the agent how to create a missing binstub, and the injection block,
+  # which must name all three forms by construction. Both are delimited with
+  # explicit markers rather than matched by heuristic, so a stray bare example
+  # can never smuggle itself past the check by resembling one of them.
+  EXEMPT_START = "<!-- canonical-exempt:start -->"
+  EXEMPT_END = "<!-- canonical-exempt:end -->"
+
   # Tokens that look like helper calls but are not, and must stay out of the
   # helper check: file names, the bare glob used in prose, and one name cited
   # precisely because it does not exist.
@@ -51,9 +64,16 @@ class SkillCheckTest < Minitest::Test
   end
 
   # The whole point of the injected block: without it the skill would have to
-  # hardcode what is installed.
+  # hardcode what is installed. It chains the three invocation forms by exit
+  # code, because it is a static string that must return data in any app —
+  # including apps initialized before bin/shadwire existed.
   def test_skill_injects_live_project_context
-    assert_includes SKILL_DIR.join("SKILL.md").read, "!`shadwire status --json`"
+    body = SKILL_DIR.join("SKILL.md").read
+
+    assert_includes body, "bin/shadwire status --json"
+    assert_includes body, "bundle exec shadwire status --json"
+    assert_includes body, "shadwire status --json"
+    assert_includes body, %("cliMissing":true), "the injection must always emit parseable JSON"
   end
 
   def test_every_helper_mentioned_in_the_skill_exists
@@ -94,6 +114,7 @@ class SkillCheckTest < Minitest::Test
     cited = SKILL_TEXT.scan(/`?shadwire ([a-z][a-z-]*)/).flatten.uniq
     unknown = cited.reject { |command| CLI_COMMANDS.include?(command) }
 
+    refute_empty cited, "the command scan matched nothing — the regex no longer sees the examples"
     assert_empty unknown, "skill references unknown CLI commands: #{unknown.inspect}"
   end
 
@@ -108,6 +129,77 @@ class SkillCheckTest < Minitest::Test
         end
       end
     end
+  end
+
+  def test_every_command_example_is_canonical
+    checked = 0
+
+    offenders = SKILL_FILES.flat_map do |file|
+      exempt = false
+
+      File.readlines(file).each_with_index.filter_map do |line, index|
+        exempt = true if line.include?(EXEMPT_START)
+        skip_line = exempt
+        exempt = false if line.include?(EXEMPT_END)
+        next if skip_line
+
+        checked += 1
+        next unless line.match?(/(?<!bin\/)\bshadwire (#{CANONICAL_COMMANDS.join("|")})\b/)
+
+        "#{File.basename(file)}:#{index + 1}: #{line.strip}"
+      end
+    end
+
+    total = SKILL_FILES.sum { |file| File.readlines(file).size }
+
+    assert_empty offenders, "command examples must be written as `bin/shadwire`:\n#{offenders.join("\n")}"
+    assert_operator checked, :>=, (total * 0.9).floor,
+                    "#{total - checked} of #{total} lines were exempted — the markers are too broad"
+  end
+
+  # Counting the markers is not enough: an END before a START balances, and then
+  # the stray START exempts everything to the end of the file.
+  def test_exempt_markers_are_properly_nested
+    SKILL_FILES.each do |file|
+      name = File.basename(file)
+      open_at = nil
+
+      File.readlines(file).each_with_index do |line, index|
+        if line.include?(EXEMPT_START)
+          assert_nil open_at, "#{name}:#{index + 1}: canonical-exempt opened while one was already open"
+          open_at = index + 1
+        elsif line.include?(EXEMPT_END)
+          refute_nil open_at, "#{name}:#{index + 1}: canonical-exempt closed without being opened"
+          open_at = nil
+        end
+      end
+
+      assert_nil open_at, "#{name}:#{open_at}: canonical-exempt region is never closed"
+    end
+  end
+
+  # Every distinct way the skill text tells an agent to reach the CLI.
+  INVOCATION = /((?:bundle exec )?[.\/a-z_-]*shadwire) (?:#{CLI_COMMANDS.join("|")})\b/
+
+  # The check that would have caught the original bug report: a form the skill
+  # tells the agent to run, with no matching allowed-tools pattern, prompts on
+  # every call.
+  #
+  # The forms are derived from the skill text rather than listed here. A
+  # hardcoded list compared against a hardcoded frontmatter line is two
+  # constants agreeing with each other, and would still pass after someone adds
+  # a new invocation to the prose — the exact scenario this exists to catch.
+  def test_allowed_tools_covers_every_form_the_skill_runs
+    frontmatter = SKILL_DIR.join("SKILL.md").read[/\A---\n(.*?)\n---\n/m, 1].to_s
+    granted = frontmatter[/^allowed-tools:(.*)$/, 1].to_s.scan(/Bash\(([^)]*?) \*\)/).flatten
+    forms = SKILL_TEXT.scan(INVOCATION).flatten.uniq
+
+    refute_empty forms, "no invocation forms found — INVOCATION no longer matches the skill text"
+
+    ungranted = forms.reject { |form| granted.include?(form) }
+    assert_empty ungranted,
+                 "the skill tells the agent to run these, but allowed-tools does not grant them, " \
+                 "so every call prompts: #{ungranted.inspect}"
   end
 
   def test_referenced_skill_files_exist
@@ -138,6 +230,7 @@ class SkillCheckTest < Minitest::Test
         gem "rails"
         gem "view_component"
         gem "lucide-rails"
+        gem "shadwire"
       GEMFILE
       File.write(File.join(app, "app/assets/tailwind/application.css"), %(@import "tailwindcss";\n))
 
@@ -175,6 +268,11 @@ class SkillCheckTest < Minitest::Test
       out, ok = shadwire.call("diff")
       assert ok, "diff failed: #{out}"
       refute_match(/^(modified|missing)/, out, "a fresh install should not have drifted")
+
+      # The canonical entry point the skill documents.
+      binstub = File.join(app, "bin/shadwire")
+      assert_path_exists binstub
+      assert_equal 0o755, File.stat(binstub).mode & 0o777
 
       # The point of the per-item helper split: only what you installed.
       assert_path_exists File.join(app, "app/helpers/ui/button_helper.rb")

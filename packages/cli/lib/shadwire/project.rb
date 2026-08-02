@@ -33,6 +33,12 @@ module Shadwire
       gem?("stimulus-rails") || File.exist?(path("app/javascript/controllers/index.js"))
     end
 
+    # The canonical CLI entry point. `status` reports it so the agent skill can
+    # name one invocation instead of guessing from the Gemfile.
+    def binstub?
+      Binstub.exist?(@root)
+    end
+
     def importmap_path
       path("config/importmap.rb")
     end

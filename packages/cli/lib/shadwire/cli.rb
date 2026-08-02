@@ -21,7 +21,7 @@ module Shadwire
                         desc: "Apply dependency changes without prompting"
     method_option :registry, type: :string, desc: "Registry base URL to install from"
     method_option :force, type: :boolean, default: false,
-                          desc: "Overwrite an existing shadwire.json"
+                          desc: "Reset shadwire.json and rewrite bin/shadwire, overwriting both"
     method_option :json, type: :boolean, default: false, desc: "Emit machine-readable JSON"
     def init
       run_command do |root, ui|

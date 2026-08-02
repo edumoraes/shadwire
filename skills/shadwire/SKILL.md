@@ -2,7 +2,7 @@
 name: shadwire
 description: Manages shadcn/ui components in Ruby on Rails apps via the shadwire CLI — adding, searching, composing, theming and updating ViewComponent-based UI. Applies to any Rails project with a shadwire.json, or when asked to add, build, style or fix UI components in a Rails app.
 user-invocable: false
-allowed-tools: Bash(shadwire *), Bash(bundle exec shadwire *)
+allowed-tools: Bash(bin/shadwire *), Bash(./bin/shadwire *), Bash(bundle exec shadwire *), Bash(shadwire *)
 ---
 
 # Shadwire
@@ -14,29 +14,40 @@ no runtime dependency on Shadwire — edit them freely.
 Components are ViewComponent classes in the `Ui` namespace. Each has a `ui_*`
 helper wrapper. Both are equivalent; prefer the helper in views.
 
-> Run the CLI as `shadwire` if it is installed globally, or `bundle exec shadwire`
-> when it is in the app's Gemfile. Check `Gemfile` for `gem "shadwire"`.
+<!-- canonical-exempt:start -->
+> Run the CLI as `bin/shadwire`. If `cli.binstub` is false in the context below,
+> create it once with `bundle exec shadwire init` when `cli.gem` is true, or with
+> `shadwire init` when the gem is only installed globally. After that there is
+> one entry point and everything below applies as written.
+<!-- canonical-exempt:end -->
 
 ## Current Project Context
 
-```json
-!`shadwire status --json`
+<!-- canonical-exempt:start -->
+```!
+bin/shadwire status --json 2>/dev/null || bundle exec shadwire status --json 2>/dev/null || shadwire status --json 2>/dev/null || echo '{"rails":false,"cliMissing":true}'
 ```
+<!-- canonical-exempt:end -->
 
-Read this before anything else. The two fields that decide what you can write:
+Read this before anything else. The three fields that decide what you can write:
 
 - **`installed[].helpers`** — the `ui_*` methods that actually exist in this app.
   A helper for a component that is not installed **does not exist**; calling it
   raises `NoMethodError`. Install the component first.
 - **`stack.importmap`** / **`stack.stimulus`** — whether interactive components
   will work. 28 of 58 components ship a Stimulus controller.
+- **`cli.binstub`** — whether `bin/shadwire` exists yet. False means run `init`
+  once before anything else, so the rest of this file applies as written.
 
-If the block above is empty or errored, the CLI is not installed or this is not
-a Rails app. Say so rather than guessing.
+The block always returns parseable JSON. `cliMissing` means no form of the CLI
+resolved here, and `rails: false` means this is not a Rails app — say so rather
+than guessing. `configError` means `shadwire.json` is unreadable and the rest of
+the payload fell back to defaults: `installed` will be empty even if components
+are on disk, so fix the file before trusting it.
 
 ## Principles
 
-1. **Use an existing component before writing markup.** Run `shadwire search`
+1. **Use an existing component before writing markup.** Run `bin/shadwire search`
    first; the catalog covers most UI needs.
 2. **Compose, don't reinvent.** A settings page is `card` + `field` + form
    controls. A dashboard is `sidebar` + `card` + `chart` + `table`.
@@ -54,7 +65,7 @@ Always enforced. Each links to a file with Wrong/Right pairs.
 - **Check `installed[].helpers` before calling any `ui_*` method.** Each component
   installs its own helper module (`app/helpers/ui/button_helper.rb`). Not
   installed means the method does not exist.
-- **Never hand-fetch component files from GitHub.** Use `shadwire add`, so
+- **Never hand-fetch component files from GitHub.** Use `bin/shadwire add`, so
   `shadwire.json` bookkeeping stays correct.
 
 ### Composition → [rules/composition.md](./rules/composition.md)
@@ -112,22 +123,22 @@ Always enforced. Each links to a file with Wrong/Right pairs.
 | Keyboard shortcut | `kbd` |
 | Full dashboard scaffold | `sidebar-01` |
 
-Unsure between neighbours? `shadwire info <name>` prints a `When to use` line
+Unsure between neighbours? `bin/shadwire info <name>` prints a `When to use` line
 that names the alternatives.
 
 ## Workflow
 
 1. **Read the project context above.** Know what is installed before planning.
-2. **Find the component** — `shadwire search <term>`. Search matches the
+2. **Find the component** — `bin/shadwire search <term>`. Search matches the
    when-to-use text, so terms like `form`, `modal`, `loading` work.
-3. **Read its API before writing ERB** — `shadwire info <name> --json`. This gives
+3. **Read its API before writing ERB** — `bin/shadwire info <name> --json`. This gives
    the exact helper names, variants, sizes and props. Do not guess a prop.
-4. **Install** — `shadwire add <name> --yes`. Registry dependencies come along
+4. **Install** — `bin/shadwire add <name> --yes`. Registry dependencies come along
    automatically.
 5. **Trust the exit code.** A non-zero exit means something did not land — most
    often `bundle add` — and the message says how to recover. Do not carry on
    as if it had succeeded.
-6. **Re-read context** — `shadwire status --json` to confirm the new helpers.
+6. **Re-read context** — `bin/shadwire status --json` to confirm the new helpers.
 7. **Write the view**, following the Critical Rules.
 8. **Check your work** — render the page or run the app's component tests.
 
@@ -135,23 +146,23 @@ that names the alternatives.
 
 The files are the app's. Edit them directly — that is the Open Code model.
 
-`shadwire diff` reports how they have drifted from the registry. Run it **before**
-`shadwire update`: update overwrites. It does tell you what it replaced —
+`bin/shadwire diff` reports how they have drifted from the registry. Run it **before**
+`bin/shadwire update`: update overwrites. It does tell you what it replaced —
 `overwritten` and `diffs` in the JSON payload — but that is after the fact. See
 [cli.md](./cli.md).
 
 ## Quick Reference
 
 ```bash
-shadwire status --json           # project context: stack, installed, helpers, drift
-shadwire search <term>           # find a component by name, description or use
-shadwire info <name> --json      # full API: helpers, variants, sizes, props, usage
-shadwire add <name> --yes        # install, with registry dependencies
-shadwire list                    # whole catalog
-shadwire diff [name]             # local drift vs the registry
-shadwire diff --exit-code        # non-zero when drift exists (CI)
-shadwire update [name] --yes     # re-apply the registry version (overwrites!)
-shadwire remove <name> --yes     # uninstall, keeping shared and still-used files
+bin/shadwire status --json           # project context: stack, installed, helpers, drift
+bin/shadwire search <term>           # find a component by name, description or use
+bin/shadwire info <name> --json      # full API: helpers, variants, sizes, props, usage
+bin/shadwire add <name> --yes        # install, with registry dependencies
+bin/shadwire list                    # whole catalog
+bin/shadwire diff [name]             # local drift vs the registry
+bin/shadwire diff --exit-code        # non-zero when drift exists (CI)
+bin/shadwire update [name] --yes     # re-apply the registry version (overwrites!)
+bin/shadwire remove <name> --yes     # uninstall, keeping shared and still-used files
 ```
 
 Every command takes `--cwd DIR` to target another app and `--registry URL` to

@@ -23,8 +23,9 @@ module Shadwire
 
       def call
         project = Project.new(@root)
-        config = Config.load(@root)
+        config, config_error = load_config
         result = context(project, config)
+        result["configError"] = config_error if config_error
 
         begin
           client = RegistryClient.new(@registry_override || config.registry)
@@ -41,6 +42,16 @@ module Shadwire
 
       private
 
+      # A hand-edited shadwire.json must not raise here. The agent skill injects
+      # this command and discards stderr while it chains invocation forms, so a
+      # non-zero exit would reach the agent as "no CLI here" with the real
+      # diagnostic thrown away. Report it and carry on with defaults instead.
+      def load_config
+        [Config.load(@root), nil]
+      rescue Shadwire::Error => e
+        [Config.new(@root, JSON.parse(JSON.generate(Config::DEFAULTS))), e.message]
+      end
+
       def context(project, config)
         {
           "rails" => project.rails?,
@@ -56,6 +67,12 @@ module Shadwire
           "gems" => {
             "view_component" => project.gem?("view_component"),
             "lucide-rails" => project.gem?("lucide-rails")
+          },
+          # The canonical entry point, so the skill can name one invocation
+          # rather than inspecting the Gemfile to guess at one.
+          "cli" => {
+            "gem" => project.gem?("shadwire"),
+            "binstub" => project.binstub?
           },
           "tailwind" => {
             "css" => config.tailwind_css,
@@ -120,11 +137,13 @@ module Shadwire
         @ui.say("Stack:      importmap=#{result.dig("stack", "importmap")} " \
                 "stimulus=#{result.dig("stack", "stimulus")} " \
                 "tailwindcss-rails=#{result.dig("stack", "tailwindcssRails")}")
+        @ui.say("CLI:        binstub=#{result.dig("cli", "binstub")} gem=#{result.dig("cli", "gem")}")
         @ui.say("Installed (#{result["installed"].size} of #{result["availableCount"] || "?"}):")
         result["installed"].each do |item|
           @ui.say("  #{item["drift"].ljust(9)} #{item["name"]}  #{item["helpers"].join(", ")}")
         end
 
+        @ui.warn("shadwire.json unreadable, using defaults: #{result["configError"]}") if result["configError"]
         @ui.warn("Registry unavailable: #{result["registryError"]}") if result["registryError"]
         return unless result.dig("helpers", "legacyHelperPresent")
 
