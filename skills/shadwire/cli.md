@@ -1,7 +1,9 @@
 # CLI reference
 
-Run as `shadwire` (installed globally) or `bundle exec shadwire` (in the app's
-Gemfile). Check the app's `Gemfile` for `gem "shadwire"`.
+<!-- canonical-exempt:start -->
+Run the CLI as `bin/shadwire`. `shadwire init` writes that binstub; until it
+exists, reach the CLI as `bundle exec shadwire` (Gemfile) or `shadwire` (global).
+<!-- canonical-exempt:end -->
 
 Every command accepts:
 
@@ -17,7 +19,7 @@ Every command accepts:
 Project context in one call — the command to run first.
 
 ```bash
-shadwire status --json
+bin/shadwire status --json
 ```
 
 ```json
@@ -48,8 +50,8 @@ unreachable registry becomes `"registryError"`. Exit code is always 0.
 ### `search QUERY`
 
 ```bash
-shadwire search form
-shadwire search modal --json
+bin/shadwire search form
+bin/shadwire search modal --json
 ```
 
 Matches name, title, description **and** when-to-use text, so conceptual terms
@@ -60,7 +62,7 @@ work: `form`, `modal`, `overlay`, `loading`, `right-click`, `navigation`.
 The component's full API. Read this before writing ERB.
 
 ```bash
-shadwire info dialog --json
+bin/shadwire info dialog --json
 ```
 
 Returns `whenToUse`, `usage` snippets, `requiresStimulus`, `registryDependencies`,
@@ -75,7 +77,7 @@ File bodies are stripped; `info` is a manifest, not a payload.
 ### `list`
 
 ```bash
-shadwire list --json
+bin/shadwire list --json
 ```
 
 The whole catalog. Prefer `search` when you know what you are looking for.
@@ -87,13 +89,18 @@ shadwire init --yes
 ```
 
 Writes `shadwire.json`, installs the shared base (`ui_component.rb`,
-`shadwire.css`), adds the base gems and the Tailwind `@import`. Idempotent;
-`--force` resets `shadwire.json`.
+`shadwire.css`), adds the base gems, adds `shadwire` itself to the `development`
+group, writes the `bin/shadwire` binstub, and adds the Tailwind `@import`.
+Idempotent; an existing binstub is left alone. `--force` resets `shadwire.json`
+and rewrites the binstub.
+
+The binstub is the reason `init` is the one command you run un-prefixed: it is
+what creates the canonical entry point every later command goes through.
 
 ### `add NAME...`
 
 ```bash
-shadwire add button dialog --yes
+bin/shadwire add button dialog --yes
 ```
 
 Installs components and their registry dependencies, applies gems and importmap
@@ -112,9 +119,9 @@ everything is skipped — safe, but nothing is installed.
 ### `diff [NAME...]`
 
 ```bash
-shadwire diff
-shadwire diff --json
-shadwire diff --exit-code    # non-zero when drift exists — for CI
+bin/shadwire diff
+bin/shadwire diff --json
+bin/shadwire diff --exit-code    # non-zero when drift exists — for CI
 ```
 
 Reports `unchanged` / `modified` / `missing` per file, with a unified diff for
@@ -123,8 +130,8 @@ modified ones. Read-only.
 ### `update [NAME...]`
 
 ```bash
-shadwire diff button          # look first
-shadwire update button --yes  # then overwrite
+bin/shadwire diff button          # look first
+bin/shadwire update button --yes  # then overwrite
 ```
 
 Re-applies the registry version. **This overwrites local edits.** Always run
@@ -133,7 +140,7 @@ Re-applies the registry version. **This overwrites local edits.** Always run
 ### `remove NAME...`
 
 ```bash
-shadwire remove chart --yes
+bin/shadwire remove chart --yes
 ```
 
 Deletes only files unique to the removed components — never the shared base, and
@@ -170,7 +177,7 @@ add requires at least one component name
 
 **`update` discloses what it overwrote.** Both the human output and
 `--json` report it — `overwritten` lists the files whose local edits were
-replaced, and `diffs` carries the patch for each. Still run `shadwire diff`
+replaced, and `diffs` carries the patch for each. Still run `bin/shadwire diff`
 first when you care about local changes.
 
 **`status` never fails at all** — it reports `"rails": false` or

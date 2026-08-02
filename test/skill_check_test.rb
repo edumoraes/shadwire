@@ -31,6 +31,19 @@ class SkillCheckTest < Minitest::Test
 
   CLI_COMMANDS = %w[init add list search info diff update remove status version help].freeze
 
+  # `init` is excluded by definition: it is the command that creates the binstub,
+  # so it is the one thing you necessarily run before the binstub exists. Same
+  # for `version` and `help`, which are not app-scoped at all.
+  CANONICAL_COMMANDS = (CLI_COMMANDS - %w[init version help]).freeze
+
+  # Two places legitimately name a non-canonical form: the bootstrap prose that
+  # tells the agent how to create a missing binstub, and the injection block,
+  # which must name all three forms by construction. Both are delimited with
+  # explicit markers rather than matched by heuristic, so a stray bare example
+  # can never smuggle itself past the check by resembling one of them.
+  EXEMPT_START = "<!-- canonical-exempt:start -->"
+  EXEMPT_END = "<!-- canonical-exempt:end -->"
+
   # Tokens that look like helper calls but are not, and must stay out of the
   # helper check: file names, the bare glob used in prose, and one name cited
   # precisely because it does not exist.
@@ -51,9 +64,16 @@ class SkillCheckTest < Minitest::Test
   end
 
   # The whole point of the injected block: without it the skill would have to
-  # hardcode what is installed.
+  # hardcode what is installed. It chains the three invocation forms by exit
+  # code, because it is a static string that must return data in any app —
+  # including apps initialized before bin/shadwire existed.
   def test_skill_injects_live_project_context
-    assert_includes SKILL_DIR.join("SKILL.md").read, "!`shadwire status --json`"
+    body = SKILL_DIR.join("SKILL.md").read
+
+    assert_includes body, "bin/shadwire status --json"
+    assert_includes body, "bundle exec shadwire status --json"
+    assert_includes body, "shadwire status --json"
+    assert_includes body, %("cliMissing":true), "the injection must always emit parseable JSON"
   end
 
   def test_every_helper_mentioned_in_the_skill_exists
@@ -94,6 +114,7 @@ class SkillCheckTest < Minitest::Test
     cited = SKILL_TEXT.scan(/`?shadwire ([a-z][a-z-]*)/).flatten.uniq
     unknown = cited.reject { |command| CLI_COMMANDS.include?(command) }
 
+    refute_empty cited, "the command scan matched nothing — the regex no longer sees the examples"
     assert_empty unknown, "skill references unknown CLI commands: #{unknown.inspect}"
   end
 
@@ -107,6 +128,51 @@ class SkillCheckTest < Minitest::Test
                           "#{item.fetch("name")} usage calls #{helper}, which no helper module defines"
         end
       end
+    end
+  end
+
+  def test_every_command_example_is_canonical
+    checked = 0
+
+    offenders = SKILL_FILES.flat_map do |file|
+      exempt = false
+
+      File.readlines(file).each_with_index.filter_map do |line, index|
+        exempt = true if line.include?(EXEMPT_START)
+        skip_line = exempt
+        exempt = false if line.include?(EXEMPT_END)
+        next if skip_line
+
+        checked += 1
+        next unless line.match?(/(?<!bin\/)\bshadwire (#{CANONICAL_COMMANDS.join("|")})\b/)
+
+        "#{File.basename(file)}:#{index + 1}: #{line.strip}"
+      end
+    end
+
+    assert_empty offenders, "command examples must be written as `bin/shadwire`:\n#{offenders.join("\n")}"
+    assert_operator checked, :>, 100, "almost everything was exempted — the markers are too broad"
+  end
+
+  def test_exempt_markers_are_balanced
+    SKILL_FILES.each do |file|
+      body = File.read(file)
+
+      assert_equal body.scan(EXEMPT_START).size, body.scan(EXEMPT_END).size,
+                   "#{File.basename(file)} has an unclosed canonical-exempt region"
+    end
+  end
+
+  # The check that would have caught the original bug report: a form the skill
+  # tells the agent to run, with no matching allowed-tools pattern, prompts on
+  # every call.
+  def test_allowed_tools_covers_every_form_the_skill_runs
+    frontmatter = SKILL_DIR.join("SKILL.md").read[/\A---\n(.*?)\n---\n/m, 1].to_s
+    granted = frontmatter[/^allowed-tools:(.*)$/, 1].to_s
+
+    ["bin/shadwire", "./bin/shadwire", "bundle exec shadwire", "shadwire"].each do |form|
+      assert_includes granted, "Bash(#{form} *)",
+                      "allowed-tools must grant `#{form}` or every call prompts"
     end
   end
 

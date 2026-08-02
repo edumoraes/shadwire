@@ -82,7 +82,7 @@ renders a `<button>` by default and an `<a>` with `tag: :a`.
 Check what exists before writing classes:
 
 ```bash
-shadwire info button
+bin/shadwire info button
 #   variants: default | destructive | outline | secondary | ghost | link
 #   sizes:    default | sm | lg | icon
 ```

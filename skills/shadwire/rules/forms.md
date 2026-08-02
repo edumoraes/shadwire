@@ -138,7 +138,7 @@ for the grid. From there the variants are calendar arguments, not new markup:
 | Natural language | `data-ui-date-picker-natural-language-value="true"` |
 | RTL | `dir: :rtl`, with `month_names:`/`day_names:` for the locale |
 
-`shadwire info date-picker` prints all of them.
+`bin/shadwire info date-picker` prints all of them.
 
 ## Input groups take their own control
 

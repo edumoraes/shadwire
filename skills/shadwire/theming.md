@@ -133,14 +133,14 @@ VARIANTS = {
 <%= ui_button(variant: :success) { "Publish" } %>
 ```
 
-This is a local edit, so `shadwire diff` will report the file as `modified` and
-`shadwire update` would overwrite it. That is expected — see
+This is a local edit, so `bin/shadwire diff` will report the file as `modified` and
+`bin/shadwire update` would overwrite it. That is expected — see
 [cli.md](./cli.md).
 
 ## Keeping edits through updates
 
-1. `shadwire diff <name>` — see exactly what you changed.
-2. `shadwire update <name>` **without** `--yes` — it prompts per modified file
+1. `bin/shadwire diff <name>` — see exactly what you changed.
+2. `bin/shadwire update <name>` **without** `--yes` — it prompts per modified file
    and shows the diff.
 3. Re-apply your edits on top.
 

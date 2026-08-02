@@ -16,10 +16,10 @@ A helper for a component that is not installed simply does not exist.
 
 ```bash
 # Right — install it first, then call it
-shadwire add carousel --yes
+bin/shadwire add carousel --yes
 ```
 
-Check `installed[].helpers` in `shadwire status --json` before calling anything.
+Check `installed[].helpers` in `bin/shadwire status --json` before calling anything.
 
 If `helpers.legacyHelperPresent` is true, the app still has a pre-split
 `app/helpers/ui_helper.rb` from an older install. It defines helpers for
@@ -47,7 +47,7 @@ slots in this codebase and no content props.
 <% end %>
 ```
 
-Use `shadwire info <name>` to list a component's subcomponent helpers. Don't
+Use `bin/shadwire info <name>` to list a component's subcomponent helpers. Don't
 invent names — `ui_card_body` does not exist, `ui_card_content` does.
 
 ## Use the full composition
@@ -121,7 +121,7 @@ screen readers, even when the design does not show one.
 
 ## Interactive components need Stimulus
 
-28 of 58 components ship a Stimulus controller. `shadwire info <name>` reports
+28 of 58 components ship a Stimulus controller. `bin/shadwire info <name>` reports
 `Requires Stimulus`, and `status.stack` reports whether the app has importmap and
 stimulus-rails.
 

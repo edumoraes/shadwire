@@ -5,7 +5,7 @@ port of Lucide — shadcn/ui's icon set. `ui_icon` wraps its `lucide_icon` helpe
 with shadcn size variants.
 
 The consuming app must have `gem "lucide-rails"`. `shadwire init` adds it;
-`shadwire status --json` reports it under `gems`.
+`bin/shadwire status --json` reports it under `gems`.
 
 ## Names are Lucide kebab-case
 
