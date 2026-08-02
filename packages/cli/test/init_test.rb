@@ -67,9 +67,20 @@ class InitTest < Minitest::Test
       runner, calls = recording_runner
       run_init(root, runner:)
 
-      assert_equal 1, calls.size
+      assert_equal 2, calls.size
       assert_equal ["bundle", "add", "view_component", "lucide-rails"], calls.first[:cmd]
       assert_equal root, calls.first[:chdir]
+    end
+  end
+
+  # The CLI gem itself is development-only, and is not part of the registry's
+  # base gems: installed component files carry no Shadwire dependency.
+  def test_adds_the_cli_gem_to_the_development_group
+    with_app do |root|
+      runner, calls = recording_runner
+      run_init(root, runner:)
+
+      assert_equal ["bundle", "add", "shadwire", "--group", "development"], calls.last[:cmd]
     end
   end
 
@@ -143,6 +154,69 @@ class InitTest < Minitest::Test
 
       config = JSON.parse(File.read(File.join(root, "shadwire.json")))
       assert_equal({}, config["installed"])
+    end
+  end
+
+  # ── binstub ──────────────────────────────────────────────────────────────────
+
+  def test_writes_an_executable_binstub
+    with_app do |root|
+      run_init(root)
+
+      path = File.join(root, "bin/shadwire")
+      assert_path_exists path
+      assert_equal 0o755, File.stat(path).mode & 0o777
+      assert_includes File.read(path), %(load Gem.bin_path("shadwire", "shadwire"))
+    end
+  end
+
+  def test_leaves_an_existing_binstub_alone
+    with_app do |root|
+      FileUtils.mkdir_p(File.join(root, "bin"))
+      File.write(File.join(root, "bin/shadwire"), "# from bundle binstubs\n")
+
+      run_init(root)
+
+      assert_equal "# from bundle binstubs\n", File.read(File.join(root, "bin/shadwire"))
+    end
+  end
+
+  def test_force_rewrites_the_binstub
+    with_app do |root|
+      FileUtils.mkdir_p(File.join(root, "bin"))
+      File.write(File.join(root, "bin/shadwire"), "# from bundle binstubs\n")
+
+      run_init(root, force: true)
+
+      assert_includes File.read(File.join(root, "bin/shadwire")), "bundler/setup"
+    end
+  end
+
+  # A bundler binstub raises Gem::LoadError when the gem is not in the Gemfile,
+  # so a declined confirm must not leave a broken entry point behind.
+  def test_skips_the_binstub_when_the_cli_gem_was_declined
+    with_app do |root|
+      ui = Shadwire::UI.new(out: StringIO.new, err: StringIO.new, yes: false, confirm_proc: ->(_) { false })
+
+      Shadwire::Commands::Init.new(
+        root:, registry: FILE_REGISTRY, yes: false, ui:, runner: recording_runner.first
+      ).call
+
+      refute_path_exists File.join(root, "bin/shadwire")
+    end
+  end
+
+  def test_json_reports_the_binstub
+    with_app do |root|
+      out = StringIO.new
+      ui = Shadwire::UI.new(out:, err: StringIO.new, yes: true)
+
+      run_init(root, ui:, json: true)
+
+      payload = JSON.parse(out.string.lines.last)
+      assert_equal "bin/shadwire", payload.dig("binstub", "path")
+      assert_equal true, payload.dig("binstub", "written")
+      assert_equal false, payload.dig("binstub", "skipped")
     end
   end
 end

@@ -138,6 +138,7 @@ class SkillCheckTest < Minitest::Test
         gem "rails"
         gem "view_component"
         gem "lucide-rails"
+        gem "shadwire"
       GEMFILE
       File.write(File.join(app, "app/assets/tailwind/application.css"), %(@import "tailwindcss";\n))
 
@@ -175,6 +176,11 @@ class SkillCheckTest < Minitest::Test
       out, ok = shadwire.call("diff")
       assert ok, "diff failed: #{out}"
       refute_match(/^(modified|missing)/, out, "a fresh install should not have drifted")
+
+      # The canonical entry point the skill documents.
+      binstub = File.join(app, "bin/shadwire")
+      assert_path_exists binstub
+      assert_equal 0o755, File.stat(binstub).mode & 0o777
 
       # The point of the per-item helper split: only what you installed.
       assert_path_exists File.join(app, "app/helpers/ui/button_helper.rb")
