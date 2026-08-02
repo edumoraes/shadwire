@@ -85,6 +85,29 @@ class DependenciesTest < Minitest::Test
     end
   end
 
+  def test_ensure_gems_passes_the_group_to_bundle_add
+    with_app do |root|
+      runner, calls = recording_runner
+      deps = Shadwire::Dependencies.new(Shadwire::Project.new(root), runner:)
+
+      result = deps.ensure_gems(["shadwire"], yes: true, group: "development")
+
+      assert_equal ["bundle", "add", "shadwire", "--group", "development"], calls.first[:cmd]
+      assert_includes result[:applied], "shadwire"
+    end
+  end
+
+  def test_ensure_gems_omits_the_group_flag_by_default
+    with_app do |root|
+      runner, calls = recording_runner
+      deps = Shadwire::Dependencies.new(Shadwire::Project.new(root), runner:)
+
+      deps.ensure_gems(["shadwire"], yes: true)
+
+      assert_equal ["bundle", "add", "shadwire"], calls.first[:cmd]
+    end
+  end
+
   # ── ensure_importmap_pins ────────────────────────────────────────────────────
 
   def test_ensure_importmap_pins_appends_missing_pin

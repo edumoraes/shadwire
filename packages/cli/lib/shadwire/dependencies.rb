@@ -42,18 +42,24 @@ module Shadwire
     end
 
     # Ensures each gem name is present, running `bundle add <missing...>`.
-    def ensure_gems(names, yes:, confirm: nil)
+    # `group:` adds them to a bundler group — used for the shadwire CLI itself,
+    # which belongs in development, not in the app's runtime dependencies.
+    def ensure_gems(names, yes:, confirm: nil, group: nil)
       present = names.select { |name| @project.gem?(name) }
       missing = names - present
       return result(skipped: present) if missing.empty?
 
-      unless apply?(yes, confirm, "Add gems: #{missing.join(", ")} (bundle add)")
+      suffix = group ? " --group #{group}" : ""
+      unless apply?(yes, confirm, "Add gems: #{missing.join(", ")} (bundle add#{suffix})")
         return result(skipped: present, pending: missing)
       end
 
+      command = ["bundle", "add", *missing]
+      command.push("--group", group.to_s) if group
+
       # `system` returns false on a non-zero exit and nil when the command could
       # not be run at all; neither means the gems landed.
-      return result(skipped: present, failed: missing) unless @runner.call(["bundle", "add", *missing], chdir: @project.root)
+      return result(skipped: present, failed: missing) unless @runner.call(command, chdir: @project.root)
 
       result(applied: missing, skipped: present)
     end
