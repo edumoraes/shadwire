@@ -27,6 +27,7 @@ bin/shadwire status --json
   "rails": true, "configPresent": true, "registryVersion": "0.2.0",
   "stack": { "importmap": true, "stimulus": true, "tailwindcssRails": true },
   "gems": { "view_component": true, "lucide-rails": true },
+  "cli": { "gem": true, "binstub": true },
   "tailwind": { "css": "app/assets/tailwind/application.css", "importPresent": true },
   "helpers": { "includeAllHelpers": true, "legacyHelperPresent": false },
   "installed": [
@@ -39,6 +40,7 @@ bin/shadwire status --json
 
 - `installed[].helpers` — the `ui_*` methods that exist. Check before calling.
 - `installed[].drift` — `unchanged`, `modified`, `missing`, or `unknown`.
+- `cli.binstub` — whether `bin/shadwire` exists. False means run `init` once.
 - `helpers.includeAllHelpers` — `false` means the app disabled Rails' automatic
   helper inclusion, so `Ui::*Helper` modules need per-controller `helper` calls.
 - `helpers.legacyHelperPresent` — a pre-split `app/helpers/ui_helper.rb` is still

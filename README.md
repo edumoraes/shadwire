@@ -95,19 +95,20 @@ Shadwire ships a `shadwire` CLI (`packages/cli/`) that installs component source
 into a Rails app and keeps it in sync with the registry — the shadcn Open Code
 flow. Installed files are yours; there is no runtime dependency on Shadwire.
 
-Add it to the consuming app (development only), or install it globally:
+Install it globally, or add it to the consuming app directly:
 
 ```bash
-bundle add shadwire --group development   # run as `bundle exec shadwire`
-gem install shadwire                      # or globally, as `shadwire`
+gem install shadwire                      # or: bundle add shadwire --group development
 ```
 
-Bootstrap once, then add components by name:
+Bootstrap once. `init` adds `shadwire` to the app's `development` group and
+writes the `bin/shadwire` binstub, which is how you run the CLI from then on —
+one entry point, pinned to the app's bundle:
 
 ```bash
-shadwire init                 # writes shadwire.json + base files, installs base deps
-shadwire add button dialog    # installs components and their registry dependencies
-shadwire list                 # every component in the registry catalog
+shadwire init                     # writes shadwire.json + base files + bin/shadwire
+bin/shadwire add button dialog    # installs components and their registry dependencies
+bin/shadwire list                 # every component in the registry catalog
 ```
 
 Components install from the hosted registry
@@ -116,8 +117,8 @@ Components install from the hosted registry
 
 **Agents / CI** — every command runs non-interactively with `--yes`, emits
 machine-readable output with `--json`, and can target another app with `--cwd`.
-`shadwire status --json` reports the whole install in one call, and
-`shadwire diff --exit-code` exits non-zero when an installed file has drifted
+`bin/shadwire status --json` reports the whole install in one call, and
+`bin/shadwire diff --exit-code` exits non-zero when an installed file has drifted
 from the registry, so CI can fail on drift. See
 [`packages/cli/README.md`](packages/cli/README.md) for the full command reference.
 
@@ -132,9 +133,17 @@ npx skills add edumoraes/shadwire
 
 The skill lives in [`skills/shadwire/`](skills/shadwire/). It carries workflow and
 conventions, not data: component names, variants, props and helper names are
-pulled at runtime from `shadwire status --json` and `shadwire info --json`, so it
-always reflects what is actually installed. CI verifies that everything the skill
-names still exists.
+pulled at runtime from `bin/shadwire status --json` and `bin/shadwire info --json`,
+so it always reflects what is actually installed. CI verifies that everything the
+skill names still exists.
+
+The skill's `allowed-tools` grant covers only the turn that invokes it, so it
+stops the permission prompts for that turn and no longer. To silence them for
+good, add an allow rule to the consuming app's `.claude/settings.json`:
+
+```json
+{ "permissions": { "allow": ["Bash(bin/shadwire *)"] } }
+```
 
 Agents that cannot install the skill can read the same catalog as plain text:
 

@@ -11,19 +11,24 @@ registry the CLI installs from over HTTP.
 ## Install
 
 ```bash
-bundle add shadwire --group development   # then run: bundle exec shadwire
-gem install shadwire                      # or globally, then run: shadwire
+gem install shadwire                      # or: bundle add shadwire --group development
+shadwire init                             # writes bin/shadwire; use it from then on
 ```
+
+`init` adds `shadwire` to the app's `development` group and writes the
+`bin/shadwire` binstub. That binstub is the canonical entry point: it is pinned to
+the app's bundle, so every developer and CI job runs the same CLI version. `init`
+is the one command you run un-prefixed, because it is what creates the binstub.
 
 Requires Ruby >= 3.2 and a Rails app (>= 7.1) using ViewComponent and Tailwind CSS.
 
 ## Commands
 
-Run `shadwire help COMMAND` for the built-in usage of any command.
+Run `bin/shadwire help COMMAND` for the built-in usage of any command.
 
 | Command | What it does | Flags (besides `--cwd`) |
 | --- | --- | --- |
-| `init` | Bootstrap Shadwire: write `shadwire.json`, install the shared base files (`ui_component.rb`, `shadwire.css`) and base gems, add the Tailwind `@import`. | `--yes`, `--registry URL`, `--force`, `--json` |
+| `init` | Bootstrap Shadwire: write `shadwire.json`, install the shared base files (`ui_component.rb`, `shadwire.css`) and base gems, add `shadwire` to the `development` group, write the `bin/shadwire` binstub, add the Tailwind `@import`. | `--yes`, `--registry URL`, `--force`, `--json` |
 | `add NAME...` | Install one or more components and their registry dependencies; apply their gems and importmap pins; record them in `shadwire.json`. | `--yes`, `--overwrite`, `--no-deps`, `--registry URL`, `--json` |
 | `list` | List every component in the registry catalog. | `--registry URL`, `--json` |
 | `search QUERY` | Search the catalog by name, title, or description. | `--registry URL`, `--json` |
@@ -43,6 +48,7 @@ the Shadwire agent skill injects it:
 {
   "rails": true, "configPresent": true, "registryVersion": "0.2.0",
   "stack": { "importmap": true, "stimulus": true, "tailwindcssRails": true },
+  "cli": { "gem": true, "binstub": true },
   "helpers": { "includeAllHelpers": true, "legacyHelperPresent": false },
   "installed": [
     { "name": "card", "drift": "unchanged",
