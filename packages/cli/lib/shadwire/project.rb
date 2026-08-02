@@ -36,7 +36,7 @@ module Shadwire
     # The canonical CLI entry point. `status` reports it so the agent skill can
     # name one invocation instead of guessing from the Gemfile.
     def binstub?
-      File.exist?(path(Binstub::PATH))
+      Binstub.exist?(@root)
     end
 
     def importmap_path

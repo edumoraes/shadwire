@@ -206,6 +206,47 @@ class InitTest < Minitest::Test
     end
   end
 
+  # Collapsing the two bundle results would advise `bundle add shadwire`, which
+  # lands the development-only CLI in the app's runtime dependencies.
+  def test_failed_cli_gem_recovery_keeps_the_development_group
+    with_app do |root|
+      only_cli_fails = ->(cmd, chdir:) { !cmd.include?("shadwire") }
+
+      err = assert_raises(Shadwire::Error) { run_init(root, runner: only_cli_fails) }
+
+      assert_match(/bundle add shadwire --group development/, err.message)
+      refute_path_exists File.join(root, "bin/shadwire")
+    end
+  end
+
+  def test_failed_base_gem_recovery_has_no_group
+    with_app do |root|
+      only_base_fails = ->(cmd, chdir:) { cmd.include?("shadwire") }
+
+      err = assert_raises(Shadwire::Error) { run_init(root, runner: only_base_fails) }
+
+      assert_match(/bundle add view_component lucide-rails`/, err.message)
+    end
+  end
+
+  # Telling someone to create a file that is already there is worse than saying
+  # nothing; the real problem is that the binstub cannot run without the gem.
+  def test_reports_an_existing_binstub_as_unusable_without_the_gem
+    with_app do |root|
+      FileUtils.mkdir_p(File.join(root, "bin"))
+      File.write(File.join(root, "bin/shadwire"), "# from bundle binstubs\n")
+      out = StringIO.new
+      ui = Shadwire::UI.new(out:, err: StringIO.new, yes: false, confirm_proc: ->(_) { false })
+
+      Shadwire::Commands::Init.new(
+        root:, registry: FILE_REGISTRY, yes: false, ui:, runner: recording_runner.first
+      ).call
+
+      refute_match(/add `gem "shadwire"` to the Gemfile, then re-run/, out.string)
+      assert_match(/bin\/shadwire exists but/, out.string)
+    end
+  end
+
   def test_json_reports_the_binstub
     with_app do |root|
       out = StringIO.new

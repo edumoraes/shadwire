@@ -172,6 +172,37 @@ class StatusTest < Minitest::Test
     end
   end
 
+  # The agent skill injects this command and swallows stderr while chaining
+  # invocation forms, so a hand-edited shadwire.json has to come back as data.
+  # Exiting non-zero here leaves an agent with no context and no diagnostic.
+  def test_a_broken_config_is_data_not_an_exception
+    Dir.mktmpdir do |root|
+      FileUtils.mkdir_p(File.join(root, "config"))
+      File.write(File.join(root, "config/application.rb"), "# rails\n")
+      File.write(File.join(root, "shadwire.json"), "not json")
+
+      result = status(root)
+
+      assert_equal true, result["rails"]
+      assert_match(/not valid JSON/, result["configError"])
+      assert_empty result["installed"]
+    end
+  end
+
+  def test_a_broken_config_still_reports_the_cli_entry_point
+    Dir.mktmpdir do |root|
+      FileUtils.mkdir_p(File.join(root, "config"))
+      File.write(File.join(root, "config/application.rb"), "# rails\n")
+      File.write(File.join(root, "shadwire.json"), "{")
+      FileUtils.mkdir_p(File.join(root, "bin"))
+      File.write(File.join(root, "bin/shadwire"), "#!/usr/bin/env ruby\n")
+
+      result = status(root)
+
+      assert_equal true, result.dig("cli", "binstub")
+    end
+  end
+
   # ── cli entry point ──────────────────────────────────────────────────────────
 
   def test_reports_the_binstub_after_init

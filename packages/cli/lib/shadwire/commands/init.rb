@@ -11,7 +11,7 @@ module Shadwire
       # The CLI gem is a development-time tool for the app, deliberately kept out
       # of registry.json: the registry's gems are what the *components* need at
       # runtime, and installed files carry no Shadwire dependency.
-      CLI_GEM = "shadwire"
+      CLI_GEM = Binstub::GEM
       CLI_GEM_GROUP = "development"
 
       def initialize(root:, registry: nil, yes: false, force: false, json: false,
@@ -47,9 +47,11 @@ module Shadwire
 
         config.save
         warn_missing_stack(project)
-        result = { config:, report:, gems:, tailwind:, binstub: }
+        result = { config:, report:, gems:, gem_results: [base_gems, cli_gem], tailwind:, binstub: }
         emit(result)
-        Dependencies.raise_on_failure!(gems)
+        # Passed separately, not merged: each result carries its own group, so
+        # the recovery command it suggests matches the one that failed.
+        Dependencies.raise_on_failure!(base_gems, cli_gem)
 
         result
       end
@@ -77,7 +79,10 @@ module Shadwire
       # `bundle add` writing a line the Project#gem? regex recognizes.
       def write_binstub(cli_gem)
         present = (cli_gem[:applied] + cli_gem[:skipped]).include?(CLI_GEM)
-        return { status: :unavailable } unless present
+        # An existing binstub without the gem is a different problem from a
+        # missing one: telling someone to create a file that is already there
+        # buries the real issue, which is that it cannot run.
+        return { status: Binstub.exist?(@root) ? :unusable : :unavailable } unless present
 
         Binstub.write(@root, force: @force)[:written] ? { status: :written } : { status: :skipped }
       end
@@ -101,7 +106,7 @@ module Shadwire
       def emit(result)
         return @ui.say(JSON.generate(json_payload(result))) if @json
 
-        print_summary(result[:report], result[:gems], result[:tailwind], result[:binstub])
+        print_summary(result[:report], result[:gem_results], result[:tailwind], result[:binstub])
       end
 
       def json_payload(result)
@@ -117,21 +122,31 @@ module Shadwire
         }
       end
 
-      def print_summary(report, gems, tailwind, binstub)
+      def print_summary(report, gem_results, tailwind, binstub)
         @ui.say("Initialized shadwire (#{report[:written].size} base files).")
         report[:written].each { |t| @ui.say("  create  #{t}") }
-        gems[:applied].each { |g| @ui.say("  gem     #{g}") }
-        gems[:pending].each { |g| @ui.say("  pending #{g} (not installed — run: bundle add #{g})") }
-        gems[:failed].each { |g| @ui.say("  FAILED  #{g} (bundle add failed)") }
+        gem_results.each { |result| print_gems(result) }
         (tailwind[:applied]).each { |i| @ui.say("  tailwind #{i}") }
         tailwind[:manual].each { |m| @ui.say("  manual  #{m}") }
         print_binstub(binstub)
+      end
+
+      # Each result prints its own group, so the command it tells you to run is
+      # the one that would actually have worked.
+      def print_gems(result)
+        suffix = result[:group] ? " --group #{result[:group]}" : ""
+        result[:applied].each { |g| @ui.say("  gem     #{g}") }
+        result[:pending].each { |g| @ui.say("  pending #{g} (not installed — run: bundle add #{g}#{suffix})") }
+        result[:failed].each { |g| @ui.say("  FAILED  #{g} (bundle add failed)") }
       end
 
       def print_binstub(binstub)
         case binstub[:status]
         when :written then @ui.say("  create  #{Binstub::PATH}")
         when :skipped then @ui.say("  skip    #{Binstub::PATH} (already exists)")
+        when :unusable
+          @ui.say("  warn    #{Binstub::PATH} exists but `gem \"#{CLI_GEM}\"` is not in the " \
+                  "Gemfile — it will not run until it is")
         when :unavailable
           @ui.say("  manual  #{Binstub::PATH} (add `gem \"#{CLI_GEM}\"` to the Gemfile, then re-run init)")
         end

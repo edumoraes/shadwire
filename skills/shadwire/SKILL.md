@@ -16,17 +16,16 @@ helper wrapper. Both are equivalent; prefer the helper in views.
 
 <!-- canonical-exempt:start -->
 > Run the CLI as `bin/shadwire`. If `cli.binstub` is false in the context below,
-> run `shadwire init` once to create it — the app then has one entry point.
+> create it once with `bundle exec shadwire init` when `cli.gem` is true, or with
+> `shadwire init` when the gem is only installed globally. After that there is
+> one entry point and everything below applies as written.
 <!-- canonical-exempt:end -->
 
 ## Current Project Context
 
 <!-- canonical-exempt:start -->
 ```!
-bin/shadwire status --json 2>/dev/null \
-  || bundle exec shadwire status --json 2>/dev/null \
-  || shadwire status --json 2>/dev/null \
-  || echo '{"rails":false,"cliMissing":true}'
+bin/shadwire status --json 2>/dev/null || bundle exec shadwire status --json 2>/dev/null || shadwire status --json 2>/dev/null || echo '{"rails":false,"cliMissing":true}'
 ```
 <!-- canonical-exempt:end -->
 
@@ -42,7 +41,9 @@ Read this before anything else. The three fields that decide what you can write:
 
 The block always returns parseable JSON. `cliMissing` means no form of the CLI
 resolved here, and `rails: false` means this is not a Rails app — say so rather
-than guessing.
+than guessing. `configError` means `shadwire.json` is unreadable and the rest of
+the payload fell back to defaults: `installed` will be empty even if components
+are on disk, so fix the file before trusting it.
 
 ## Principles
 

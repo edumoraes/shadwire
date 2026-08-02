@@ -11,14 +11,19 @@ registry the CLI installs from over HTTP.
 ## Install
 
 ```bash
-gem install shadwire                      # or: bundle add shadwire --group development
-shadwire init                             # writes bin/shadwire; use it from then on
+gem install shadwire                       # global — then: shadwire init
+bundle add shadwire --group development    # in the app — then: bundle exec shadwire init
 ```
 
-`init` adds `shadwire` to the app's `development` group and writes the
-`bin/shadwire` binstub. That binstub is the canonical entry point: it is pinned to
-the app's bundle, so every developer and CI job runs the same CLI version. `init`
-is the one command you run un-prefixed, because it is what creates the binstub.
+`init` adds `shadwire` to the app's `development` group (if it is not there
+already) and writes the `bin/shadwire` binstub. That binstub is the canonical
+entry point: it resolves through the app's bundle, so everyone who installs the
+development group runs the same CLI version. `init` is the one command you run
+un-prefixed, because it is what creates the binstub.
+
+A bundle installed with `--without development` (common for deploy, and for some
+CI jobs) has no `shadwire`, so `bin/shadwire` will not run there. Install the
+development group in any job that runs the CLI — the drift check below, for one.
 
 Requires Ruby >= 3.2 and a Rails app (>= 7.1) using ViewComponent and Tailwind CSS.
 

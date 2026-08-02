@@ -46,8 +46,10 @@ bin/shadwire status --json
 - `helpers.legacyHelperPresent` — a pre-split `app/helpers/ui_helper.rb` is still
   around. It defines helpers for components that are not installed; safe to delete.
 
-`status` never fails: outside a Rails app it returns `"rails": false`, and an
-unreachable registry becomes `"registryError"`. Exit code is always 0.
+`status` never fails: outside a Rails app it returns `"rails": false`, an
+unreachable registry becomes `"registryError"`, and an unreadable `shadwire.json`
+becomes `"configError"` with the rest of the payload falling back to defaults.
+Exit code is always 0.
 
 ### `search QUERY`
 
@@ -182,8 +184,8 @@ add requires at least one component name
 replaced, and `diffs` carries the patch for each. Still run `bin/shadwire diff`
 first when you care about local changes.
 
-**`status` never fails at all** — it reports `"rails": false` or
-`"registryError"` and exits 0, so it is always safe to inject.
+**`status` never fails at all** — it reports `"rails": false`, `"registryError"`
+or `"configError"` and exits 0, so it is always safe to inject.
 
 ## Registry resolution
 

@@ -150,30 +150,56 @@ class SkillCheckTest < Minitest::Test
       end
     end
 
+    total = SKILL_FILES.sum { |file| File.readlines(file).size }
+
     assert_empty offenders, "command examples must be written as `bin/shadwire`:\n#{offenders.join("\n")}"
-    assert_operator checked, :>, 100, "almost everything was exempted — the markers are too broad"
+    assert_operator checked, :>=, (total * 0.9).floor,
+                    "#{total - checked} of #{total} lines were exempted — the markers are too broad"
   end
 
-  def test_exempt_markers_are_balanced
+  # Counting the markers is not enough: an END before a START balances, and then
+  # the stray START exempts everything to the end of the file.
+  def test_exempt_markers_are_properly_nested
     SKILL_FILES.each do |file|
-      body = File.read(file)
+      name = File.basename(file)
+      open_at = nil
 
-      assert_equal body.scan(EXEMPT_START).size, body.scan(EXEMPT_END).size,
-                   "#{File.basename(file)} has an unclosed canonical-exempt region"
+      File.readlines(file).each_with_index do |line, index|
+        if line.include?(EXEMPT_START)
+          assert_nil open_at, "#{name}:#{index + 1}: canonical-exempt opened while one was already open"
+          open_at = index + 1
+        elsif line.include?(EXEMPT_END)
+          refute_nil open_at, "#{name}:#{index + 1}: canonical-exempt closed without being opened"
+          open_at = nil
+        end
+      end
+
+      assert_nil open_at, "#{name}:#{open_at}: canonical-exempt region is never closed"
     end
   end
+
+  # Every distinct way the skill text tells an agent to reach the CLI.
+  INVOCATION = /((?:bundle exec )?[.\/a-z_-]*shadwire) (?:#{CLI_COMMANDS.join("|")})\b/
 
   # The check that would have caught the original bug report: a form the skill
   # tells the agent to run, with no matching allowed-tools pattern, prompts on
   # every call.
+  #
+  # The forms are derived from the skill text rather than listed here. A
+  # hardcoded list compared against a hardcoded frontmatter line is two
+  # constants agreeing with each other, and would still pass after someone adds
+  # a new invocation to the prose — the exact scenario this exists to catch.
   def test_allowed_tools_covers_every_form_the_skill_runs
     frontmatter = SKILL_DIR.join("SKILL.md").read[/\A---\n(.*?)\n---\n/m, 1].to_s
-    granted = frontmatter[/^allowed-tools:(.*)$/, 1].to_s
+    granted = frontmatter[/^allowed-tools:(.*)$/, 1].to_s.scan(/Bash\(([^)]*?) \*\)/).flatten
+    forms = SKILL_TEXT.scan(INVOCATION).flatten.uniq
 
-    ["bin/shadwire", "./bin/shadwire", "bundle exec shadwire", "shadwire"].each do |form|
-      assert_includes granted, "Bash(#{form} *)",
-                      "allowed-tools must grant `#{form}` or every call prompts"
-    end
+    refute_empty forms, "no invocation forms found — INVOCATION no longer matches the skill text"
+
+    ungranted = forms.reject { |form| granted.include?(form) }
+    assert_empty ungranted,
+                 "the skill tells the agent to run these, but allowed-tools does not grant them, " \
+                 "so every call prompts: #{ungranted.inspect}"
   end
 
   def test_referenced_skill_files_exist

@@ -26,6 +26,13 @@ module Shadwire
       load Gem.bin_path("shadwire", "shadwire")
     RUBY
 
+    # The gem that backs the binstub. `init` adds it, `status` reports it.
+    GEM = "shadwire"
+
+    def self.exist?(root)
+      File.exist?(File.join(root.to_s, PATH))
+    end
+
     # Writes bin/shadwire unless it already exists.
     #
     # An existing binstub is left alone: `bundle binstubs shadwire` produces a

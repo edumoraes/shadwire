@@ -23,8 +23,9 @@ module Shadwire
 
       def call
         project = Project.new(@root)
-        config = Config.load(@root)
+        config, config_error = load_config
         result = context(project, config)
+        result["configError"] = config_error if config_error
 
         begin
           client = RegistryClient.new(@registry_override || config.registry)
@@ -40,6 +41,16 @@ module Shadwire
       end
 
       private
+
+      # A hand-edited shadwire.json must not raise here. The agent skill injects
+      # this command and discards stderr while it chains invocation forms, so a
+      # non-zero exit would reach the agent as "no CLI here" with the real
+      # diagnostic thrown away. Report it and carry on with defaults instead.
+      def load_config
+        [Config.load(@root), nil]
+      rescue Shadwire::Error => e
+        [Config.new(@root, JSON.parse(JSON.generate(Config::DEFAULTS))), e.message]
+      end
 
       def context(project, config)
         {
@@ -132,6 +143,7 @@ module Shadwire
           @ui.say("  #{item["drift"].ljust(9)} #{item["name"]}  #{item["helpers"].join(", ")}")
         end
 
+        @ui.warn("shadwire.json unreadable, using defaults: #{result["configError"]}") if result["configError"]
         @ui.warn("Registry unavailable: #{result["registryError"]}") if result["registryError"]
         return unless result.dig("helpers", "legacyHelperPresent")
 

@@ -98,18 +98,23 @@ flow. Installed files are yours; there is no runtime dependency on Shadwire.
 Install it globally, or add it to the consuming app directly:
 
 ```bash
-gem install shadwire                      # or: bundle add shadwire --group development
+gem install shadwire                       # global — bootstrap with `shadwire init`
+bundle add shadwire --group development    # in the app — bootstrap with `bundle exec shadwire init`
 ```
 
-Bootstrap once. `init` adds `shadwire` to the app's `development` group and
-writes the `bin/shadwire` binstub, which is how you run the CLI from then on —
-one entry point, pinned to the app's bundle:
+Bootstrap once. `init` adds `shadwire` to the app's `development` group (if it is
+not there already) and writes the `bin/shadwire` binstub. That binstub is how you
+run the CLI from then on — one entry point, pinned to the app's bundle:
 
 ```bash
 shadwire init                     # writes shadwire.json + base files + bin/shadwire
 bin/shadwire add button dialog    # installs components and their registry dependencies
 bin/shadwire list                 # every component in the registry catalog
 ```
+
+`init` is the one command you run un-prefixed, because it is what creates the
+binstub. Use `bundle exec shadwire init` when the gem is in the Gemfile rather
+than installed globally.
 
 Components install from the hosted registry
 (`https://shadwire.edumoraes.dev.br/r`) by default; override with `--registry`

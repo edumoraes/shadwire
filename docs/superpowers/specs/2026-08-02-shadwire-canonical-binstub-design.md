@@ -334,6 +334,40 @@ text:
 
 A feature addition to the CLI: `0.3.0`.
 
+## Post-review amendments
+
+An adversarial review of the implementation (PR #58) found three things this
+design got wrong. Recorded here so the spec does not outlive its own errors.
+
+**The `status` contract was aspirational, not true.** §6 builds the injection on
+"`status` emits valid JSON and exits 0 whenever it runs", citing the 2026-07-27
+design. That contract was never fully implemented: `Commands::Status#call` loaded
+the config outside its `rescue`, so a hand-edited `shadwire.json` raised
+`ConfigError` and exited 1. Chaining on exit code turned that into a false
+`cliMissing`, with `2>/dev/null` discarding the real diagnostic — strictly worse
+than the single hardcoded command it replaced, which at least surfaced the error.
+Fixed at the source: a config failure is now reported as `configError` data and
+`status` exits 0, making the cited contract true.
+
+**The recovery message dropped the group.** §4 routes the CLI gem through
+`ensure_gems`, but `Dependencies.raise_on_failure!` had no notion of groups and
+produced `Run \`bundle add shadwire\``, putting the development-only CLI in the
+app's runtime dependencies — the outcome `CLI_GEM_GROUP` exists to prevent. Each
+result now carries its own `group:` and `init` passes the two results separately
+rather than merged.
+
+**The bootstrap instruction was un-runnable in the state it targets.** §6's
+one-form rule said "run `shadwire init` once to create it", but the state it
+addresses is *gem in the Gemfile, no binstub* — where bare `shadwire` is not on
+PATH. It now names `bundle exec shadwire init` for that case.
+
+Two design details also changed under review: the `!` injection is a single
+physical line, since whether a fenced `` ```! `` block is handed to a shell as
+one script or run line-by-line is undocumented and a line continuation would
+break it either way; and §8's allowed-tools check derives the invocation forms
+from the skill text instead of comparing two hardcoded lists, which was a
+tautology that could not catch the bug it was written for.
+
 ## Appendix — verified facts
 
 | Claim | How verified |
