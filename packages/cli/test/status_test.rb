@@ -171,4 +171,45 @@ class StatusTest < Minitest::Test
       assert_match(/ui_button/, out.string)
     end
   end
+
+  # ── cli entry point ──────────────────────────────────────────────────────────
+
+  def test_reports_the_binstub_after_init
+    initialized_app do |root|
+      result = status(root)
+
+      assert_equal true, result.dig("cli", "binstub")
+    end
+  end
+
+  def test_reports_a_missing_binstub
+    initialized_app do |root|
+      FileUtils.rm_f(File.join(root, "bin/shadwire"))
+
+      result = status(root)
+
+      assert_equal false, result.dig("cli", "binstub")
+    end
+  end
+
+  # The recording runner never mutates the Gemfile, so after init the gem is
+  # still absent there — which is exactly the state this field must report.
+  def test_reports_the_cli_gem_from_the_gemfile
+    initialized_app do |root|
+      assert_equal false, status(root).dig("cli", "gem")
+
+      File.write(File.join(root, "Gemfile"), %(gem "shadwire"\n), mode: "a")
+
+      assert_equal true, status(root).dig("cli", "gem")
+    end
+  end
+
+  def test_plain_directory_reports_no_cli
+    Dir.mktmpdir do |root|
+      result = status(root)
+
+      assert_equal false, result.dig("cli", "gem")
+      assert_equal false, result.dig("cli", "binstub")
+    end
+  end
 end

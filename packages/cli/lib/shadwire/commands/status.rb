@@ -57,6 +57,12 @@ module Shadwire
             "view_component" => project.gem?("view_component"),
             "lucide-rails" => project.gem?("lucide-rails")
           },
+          # The canonical entry point, so the skill can name one invocation
+          # rather than inspecting the Gemfile to guess at one.
+          "cli" => {
+            "gem" => project.gem?("shadwire"),
+            "binstub" => project.binstub?
+          },
           "tailwind" => {
             "css" => config.tailwind_css,
             "importPresent" => tailwind_import?(config)
@@ -120,6 +126,7 @@ module Shadwire
         @ui.say("Stack:      importmap=#{result.dig("stack", "importmap")} " \
                 "stimulus=#{result.dig("stack", "stimulus")} " \
                 "tailwindcss-rails=#{result.dig("stack", "tailwindcssRails")}")
+        @ui.say("CLI:        binstub=#{result.dig("cli", "binstub")} gem=#{result.dig("cli", "gem")}")
         @ui.say("Installed (#{result["installed"].size} of #{result["availableCount"] || "?"}):")
         result["installed"].each do |item|
           @ui.say("  #{item["drift"].ljust(9)} #{item["name"]}  #{item["helpers"].join(", ")}")
