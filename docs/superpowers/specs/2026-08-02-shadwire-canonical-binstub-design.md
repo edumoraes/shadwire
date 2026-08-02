@@ -133,13 +133,22 @@ Between the existing gem/Tailwind step and `config.save`, `init` gains:
    registry's `base["gems"]`, for the reason under Non-goals. It flows through
    the same `Dependencies#ensure_gems` machinery, so it inherits the existing
    confirm-then-apply behaviour and the `--yes` path.
-2. **Re-check `project.gem?("shadwire")`, then write the binstub.** `Project`
-   caches nothing and re-reads the Gemfile per call, so the re-check observes
-   what `bundle add` just did. This ordering is load-bearing: a bundler binstub
-   written while the gem is absent from the Gemfile raises `Gem::LoadError` on
-   first run. When the gem is not present — the user declined the confirm, or
-   `bundle add` failed — the binstub is skipped and reported as a manual
-   instruction rather than shipped broken.
+2. **Gate the binstub on the `ensure_gems` result, then write it.** The gem
+   counts as present when `shadwire` comes back under `applied` (the `bundle
+   add` succeeded) or `skipped` (it was already declared). Under `pending` (the
+   user declined the confirm) or `failed`, the binstub is skipped and reported
+   as a manual instruction rather than shipped broken. This ordering is
+   load-bearing: a bundler binstub written while the gem is absent from the
+   Gemfile raises `Gem::LoadError` on first run.
+
+   The gate reads the result rather than re-reading the Gemfile. The two agree
+   in all four cases, but the result is a direct record of what the command did,
+   where a re-read depends on `bundle add` having written a line the
+   `Project#gem?` regex recognizes. It is also what makes this testable: the CLI
+   suite injects a `runner` that records invocations without touching the
+   filesystem (`test/init_test.rb:24`, `test/status_test.rb:17`), so a Gemfile
+   re-read would report the gem absent in every existing test and no binstub
+   would ever be written under test.
 3. **`--force` rewrites an existing binstub.** `--force` today resets
    `shadwire.json` (`init.rb:56`); extending it to re-lay the bootstrap file is
    a coherent reading of the same flag. Without it, an existing `bin/shadwire`
