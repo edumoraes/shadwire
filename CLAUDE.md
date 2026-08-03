@@ -131,3 +131,25 @@ React → Rails translation: `cva` variants → frozen Ruby hashes; `cn()`/`clas
 ## Commits
 
 Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `chore:`).
+
+## Project tracking
+
+GitHub is this project's planner, not just a code remote. Anything that has to
+outlive the conversation it came up in belongs in an **issue**: planned work not
+yet started, technical debt, deferred decisions, open questions, and anything
+needing input from outside the repo. Group related issues under a **milestone**
+(a release, or a themed body of work).
+
+**A deferral becomes an issue before the PR that defers it merges.** This is the
+rule with teeth. "Known gaps", "out of scope for now" and "follow-up" recorded
+only in a spec or a PR description are invisible the moment the thread closes —
+`docs/superpowers/specs/` already carries lists of deferred items that nobody
+greps. Specs and plans stay as the *rationale*; the issue is the *tracker*. If it
+is worth writing down, it is worth a number that can be closed.
+
+Label every issue with its area — `area:registry`, `area:cli`, `area:skills`,
+`area:sandbox`, `area:ci`, `area:docs` — plus `bug` / `enhancement` /
+`documentation`. PRs get the same `area:*` labels automatically from
+`.github/labeler.yml`; keep that file in step when a new top-level directory
+appears. Close issues from the PR that resolves them (`Closes #12`) so the
+tracker maintains itself.
