@@ -1,0 +1,177 @@
+<% content_for :title, "CLI — Shadwire" %>
+<% content_for :description, "Referência completa da CLI shadwire: init, add, list, search, info, diff, update, remove e status, com todas as flags, o payload JSON e o tratamento de erros." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "CLI",
+        description: "A ferramenta de desenvolvimento que instala o código dos componentes no seu app e o mantém em dia com o registry." %>
+
+  <section class="space-y-4">
+    <p class="leading-7">
+      Depois do <%= link_to "init", docs_installation_path, class: "font-medium underline underline-offset-4" %>,
+      todo comando passa por <%= docs_code("bin/shadwire") %>. O binstub resolve pelo bundle
+      do app, então a versão da CLI é a mesma para todo mundo. Cada comando tem ajuda embutida
+      em <%= docs_code("bin/shadwire help COMANDO") %>.
+    </p>
+
+    <%= docs_code_block(@snippets[:quick_reference], language: :shell) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Comandos") %>
+
+    <%= render "docs/table",
+          headers: [ "Comando", "O que faz" ],
+          rows: @commands.map { |command|
+            [ docs_code(command[:signature]), command[:summary] ]
+          } %>
+  </section>
+
+  <section class="space-y-8">
+    <%= docs_h2("Referência") %>
+
+    <div class="space-y-3">
+      <%= docs_h3("status") %>
+      <p class="text-sm leading-6 text-muted-foreground">
+        O contexto do projeto em uma chamada só — o comando a rodar primeiro, e o único que
+        um agente precisa injetar.
+      </p>
+      <%= docs_code_block("bin/shadwire status --json", language: :shell) %>
+      <%= docs_code_block(@snippets[:status_json], language: :json) %>
+
+      <%= render "docs/table",
+            headers: [ "Campo", "Leitura" ],
+            rows: [
+              [ docs_code("installed[].helpers"), "Os métodos ui_* que existem de fato neste app. Chamar um helper de componente não instalado levanta NoMethodError." ],
+              [ docs_code("installed[].drift"), safe_join([ docs_code("unchanged"), ", ", docs_code("modified"), ", ", docs_code("missing"), " ou ", docs_code("unknown"), "." ]) ],
+              [ docs_code("stack.importmap"), "Se importmap e Stimulus estão presentes — os componentes interativos dependem disso." ],
+              [ docs_code("cli.binstub"), safe_join([ "Se ", docs_code("bin/shadwire"), " já existe. Falso significa rodar o ", docs_code("init"), " uma vez." ]) ],
+              [ docs_code("helpers.includeAllHelpers"), safe_join([ "Falso quer dizer que o app desativou a inclusão automática de helpers do Rails: os módulos ", docs_code("Ui::*Helper"), " precisam de um ", docs_code("helper"), " por controller." ]) ],
+              [ docs_code("helpers.legacyHelperPresent"), safe_join([ "Sobrou um ", docs_code("app/helpers/ui_helper.rb"), " de antes da divisão por componente. Ele define helpers de componentes não instalados; pode apagar." ]) ]
+            ] %>
+    </div>
+
+    <div class="space-y-3">
+      <%= docs_h3("search") %>
+      <p class="text-sm leading-6 text-muted-foreground">
+        A busca casa nome, título, descrição <strong class="font-medium text-foreground">e</strong>
+        o texto de quando usar — então termos conceituais funcionam:
+        <%= docs_code("form") %>, <%= docs_code("modal") %>, <%= docs_code("overlay") %>,
+        <%= docs_code("loading") %>, <%= docs_code("right-click") %>.
+      </p>
+      <%= docs_code_block(@snippets[:search], language: :shell) %>
+    </div>
+
+    <div class="space-y-3">
+      <%= docs_h3("info") %>
+      <p class="text-sm leading-6 text-muted-foreground">
+        A API completa do componente — leia antes de escrever ERB, em vez de adivinhar prop.
+        Retorna <%= docs_code("whenToUse") %>, snippets de <%= docs_code("usage") %>,
+        <%= docs_code("requiresStimulus") %>, <%= docs_code("registryDependencies") %>, os
+        arquivos de instalação e <%= docs_code("api.components[]") %> com helper, variantes,
+        tamanhos, props e atributos de cada classe.
+      </p>
+      <%= docs_code_block(@snippets[:info], language: :shell) %>
+      <p class="text-sm leading-6 text-muted-foreground">
+        <%= docs_code("helper") %> vem <%= docs_code("null") %> para o que não tem wrapper
+        <%= docs_code("ui_*") %>: a superclasse base, as partes internas que o pai renderiza
+        sozinho e os blocks. O corpo dos arquivos é omitido — <%= docs_code("info") %> é
+        manifesto, não payload.
+      </p>
+    </div>
+
+    <div class="space-y-3">
+      <%= docs_h3("add") %>
+      <%= docs_code_block(@snippets[:add], language: :shell) %>
+      <p class="text-sm leading-6 text-muted-foreground">
+        Sem <%= docs_code("--yes") %>, arquivos idênticos ao registry são pulados em silêncio
+        e só os modificados localmente perguntam. Num shell não interativo sem
+        <%= docs_code("--yes") %>, tudo é pulado — seguro, mas nada é instalado.
+      </p>
+    </div>
+
+    <div class="space-y-3">
+      <%= docs_h3("diff") %>
+      <p class="text-sm leading-6 text-muted-foreground">
+        Só leitura. Reporta <%= docs_code("unchanged") %> / <%= docs_code("modified") %> /
+        <%= docs_code("missing") %> por arquivo, com o diff unificado dos modificados.
+      </p>
+      <%= docs_code_block(@snippets[:diff], language: :shell) %>
+    </div>
+
+    <div class="space-y-3">
+      <%= docs_h3("update") %>
+      <%= docs_code_block(@snippets[:update], language: :shell) %>
+      <%= render layout: "docs/callout", locals: { icon: "triangle-alert", variant: :destructive, title: "update sobrescreve edições locais" } do %>
+        Rode <code>diff</code> antes. O <code>update</code> conta o que substituiu —
+        <code>overwritten</code> e <code>diffs</code> no payload JSON — mas isso é depois do
+        fato. Veja <a href="<%= docs_theming_path %>#mantendo-suas-edicoes" class="font-medium underline underline-offset-4">como manter suas edições</a>.
+      <% end %>
+    </div>
+
+    <div class="space-y-3">
+      <%= docs_h3("remove") %>
+      <%= docs_code_block(@snippets[:remove], language: :shell) %>
+      <p class="text-sm leading-6 text-muted-foreground">
+        Apaga apenas os arquivos exclusivos dos componentes removidos — nunca a base
+        compartilhada, nunca um arquivo que outro componente instalado ainda usa. Pins de
+        importmap que ninguém mais usa são reportados, não removidos.
+      </p>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Flags") %>
+
+    <%= render "docs/table",
+          headers: [ "Flag", "Comandos", "Efeito" ],
+          rows: @flags.map { |flag| [ docs_code(flag[:flag]), flag[:commands], flag[:description] ] } %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Erros e código de saída") %>
+
+    <p class="leading-7 text-muted-foreground">
+      Código de saída 0 significa que funcionou. Um comando que não conseguiu instalar uma
+      dependência reporta e sai não-zero — dá para confiar no código em vez de reconferir o
+      Gemfile.
+    </p>
+
+    <%= docs_code_block(@snippets[:errors], language: :console) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Erros são frases, não backtraces. Um <%= docs_code("shadwire.json") %> malformado, um
+      registry inacessível, um registry servindo HTML e um argumento faltando produzem cada um
+      uma linha acionável no stderr:
+    </p>
+
+    <%= docs_code_block(@snippets[:error_messages], language: :text) %>
+
+    <p class="leading-7 text-muted-foreground">
+      A exceção é o <%= docs_code("status") %>, que nunca falha: ele reporta
+      <%= docs_code('"rails": false') %>, <%= docs_code("registryError") %> ou
+      <%= docs_code("configError") %> como campos e sai com 0. Por isso é seguro injetá-lo em
+      qualquer contexto.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("No CI") %>
+    <p class="leading-7 text-muted-foreground">
+      Todo comando roda não-interativo com <%= docs_code("--yes") %>, emite JSON com
+      <%= docs_code("--json") %> e aponta para outro diretório com <%= docs_code("--cwd") %>.
+      A receita mais útil trava o build quando um componente instalado divergiu do registry
+      sem ninguém notar:
+    </p>
+
+    <%= docs_code_block(@snippets[:ci], language: :yaml) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Lembre que o job precisa do grupo <%= docs_code("development") %> instalado — sem ele,
+      <%= docs_code("bin/shadwire") %> não existe.
+    </p>
+  </section>
+</article>

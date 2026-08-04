@@ -7,7 +7,7 @@
 <section class="border-b border-border/60">
   <div class="mx-auto max-w-6xl px-5 py-20 text-center sm:py-28">
     <%= ui_badge(variant: :secondary, class: "mb-6") do %>
-      <%= ui_icon("sparkles", size: :sm) %>v0.2.0 · Rails + ViewComponent
+      <%= ui_icon("sparkles", size: :sm) %>v<%= registry_version %> · Rails + ViewComponent
     <% end %>
     <h1 class="mx-auto max-w-4xl text-balance text-5xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-6xl lg:text-7xl">
       Componentes shadcn/ui que viram <span class="text-primary">código seu</span>
@@ -18,11 +18,14 @@
       que seu app instala e passa a possuir — sem nenhuma gem em runtime.
     </p>
     <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      <%= ui_button(tag: :a, href: components_path, size: :lg) do %>
-        Ver componentes<%= ui_icon("arrow-right", size: :sm) %>
+      <%= ui_button(tag: :a, href: docs_path, size: :lg) do %>
+        Começar<%= ui_icon("arrow-right", size: :sm) %>
       <% end %>
-      <%= ui_button(tag: :a, href: "https://github.com/edumoraes/shadwire", target: "_blank", rel: "noopener", variant: :outline, size: :lg) do %>
-        <%= ui_icon("github", size: :sm) %>Ver no GitHub
+      <%= ui_button(tag: :a, href: components_path, variant: :outline, size: :lg) do %>
+        Ver componentes
+      <% end %>
+      <%= ui_button(tag: :a, href: "https://github.com/edumoraes/shadwire", target: "_blank", rel: "noopener", variant: :ghost, size: :lg) do %>
+        <%= ui_icon("github", size: :sm) %>GitHub
       <% end %>
     </div>
   </div>
@@ -124,9 +127,10 @@
       </p>
     </div>
 
-    <div class="mt-12 grid gap-6 sm:grid-cols-3">
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <% [
-        { icon: "blocks", title: "Componentes", description: "Navegue pelos 29 componentes documentados, com exemplos e referência de API.", cta: "Ver catálogo", path: components_path, external: false },
+        { icon: "book-open", title: "Documentação", description: "Instalação, CLI, agent skill, theming e os guias de composição, estilo e formulários.", cta: "Ler a documentação", path: docs_path, external: false },
+        { icon: "blocks", title: "Componentes", description: "#{docs_component_items.size} componentes documentados, com exemplos ao vivo e referência de API.", cta: "Ver catálogo", path: components_path, external: false },
         { icon: "layout-dashboard", title: "Blocks", description: "Composições prontas a partir dos componentes — como a sidebar-01.", cta: "Ver blocks", path: blocks_path, external: false },
         { icon: "github", title: "GitHub", description: "Veja o código-fonte, o registry e contribua com o projeto.", cta: "Abrir repositório", path: "https://github.com/edumoraes/shadwire", external: true }
       ].each do |card| %>

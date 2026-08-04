@@ -3,12 +3,8 @@
   <%= tag.style rouge_stylesheet %>
 <% end %>
 
-<article class="mx-auto flex w-full max-w-3xl flex-col gap-12 px-5 py-12">
+<article class="flex flex-col gap-12">
   <header class="flex flex-col gap-3">
-    <%= link_to components_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
-      <%= ui_icon("arrow-left", size: :sm) %>
-      Componentes
-    <% end %>
     <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Accordion</h1>
     <p class="text-lg leading-snug text-muted-foreground">
       Um conjunto vertical de cabeçalhos interativos que revelam seções de conteúdo.

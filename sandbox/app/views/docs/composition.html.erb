@@ -1,0 +1,122 @@
+<% content_for :title, "Composição — Shadwire" %>
+<% content_for :description, "Como os componentes do Shadwire se compõem: helpers aninhados em vez de props, itens dentro do grupo, título em overlays e quando renderizar a classe direto." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Composição",
+        description: "Subcomponentes são helpers aninhados, não props. A estrutura da view espelha a do HTML — como no shadcn/ui." %>
+
+  <section class="space-y-4">
+    <%= docs_h2("Helpers só existem para o que está instalado") %>
+    <p class="leading-7 text-muted-foreground">
+      Cada componente instala o próprio módulo de helper:
+      <%= docs_code("button") %> grava <%= docs_code("app/helpers/ui/button_helper.rb") %>,
+      que define <%= docs_code("Ui::ButtonHelper#ui_button") %>. O Rails inclui
+      automaticamente tudo que está em <%= docs_code("app/helpers/") %>, então um helper
+      instalado está disponível em todas as views, sem <%= docs_code("include") %>.
+    </p>
+    <p class="leading-7 text-muted-foreground">
+      O outro lado disso: um helper de componente que <em>não</em> está instalado simplesmente
+      não existe, e chamá-lo levanta <%= docs_code("NoMethodError") %> no request. Confira em
+      <%= docs_code("installed[].helpers") %> antes de escrever.
+    </p>
+
+    <%= docs_code_block("bin/shadwire status --json\nbin/shadwire add carousel --yes", language: :shell) %>
+
+    <%= render layout: "docs/callout", locals: { icon: "info", title: "Sobrou um ui_helper.rb na raiz?" } do %>
+      Instalações antigas tinham um único <code>app/helpers/ui_helper.rb</code>. Ele define
+      helpers de componentes que talvez não estejam instalados.
+      <code>status --json</code> reporta isso em <code>helpers.legacyHelperPresent</code>; pode
+      apagar o arquivo.
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Subcomponentes são helpers aninhados") %>
+    <p class="leading-7 text-muted-foreground">
+      Não existem slots do ViewComponent nem props de conteúdo neste código. A composição
+      acontece por chamadas aninhadas.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_props]) %>
+    <%= docs_code_block(@snippets[:right_props]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("bin/shadwire info <nome>") %> lista os helpers de subcomponente de cada
+      item. Não invente nomes: <%= docs_code("ui_card_body") %> não existe,
+      <%= docs_code("ui_card_content") %> existe.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Use a composição inteira") %>
+    <p class="leading-7 text-muted-foreground">
+      Não colapse um componente em uma parte só. Header, title e description carregam
+      semântica — jogá-los todos dentro do content joga a semântica fora junto.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_collapse]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Itens ficam dentro do grupo") %>
+
+    <%= docs_code_block(@snippets[:wrong_group]) %>
+    <%= docs_code_block(@snippets[:right_group]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Vale igual para <%= docs_code("ui_tabs_trigger") %> dentro de
+      <%= docs_code("ui_tabs_list") %>, <%= docs_code("ui_breadcrumb_item") %> dentro de
+      <%= docs_code("ui_breadcrumb_list") %> e <%= docs_code("ui_pagination_item") %> dentro de
+      <%= docs_code("ui_pagination_content") %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Overlays sempre precisam de título") %>
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("dialog") %>, <%= docs_code("alert-dialog") %>,
+      <%= docs_code("sheet") %> e <%= docs_code("drawer") %> precisam do componente de título
+      para leitores de tela, mesmo quando o desenho não mostra nenhum.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_title]) %>
+    <%= docs_code_block(@snippets[:right_title]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Componentes interativos precisam de Stimulus") %>
+    <p class="leading-7 text-muted-foreground">
+      28 dos <%= docs_component_items.size %> componentes trazem um controller.
+      <%= docs_code("bin/shadwire info <nome>") %> reporta
+      <%= docs_code("requiresStimulus") %>, e <%= docs_code("status.stack") %> diz se o app tem
+      importmap e stimulus-rails.
+    </p>
+    <p class="leading-7 text-muted-foreground">
+      Os controllers são instalados em <%= docs_code("app/javascript/controllers/") %> e se
+      registram pelo <%= docs_code("eagerLoadControllersFrom(\"controllers\", application)") %>
+      do <%= docs_code("controllers/index.js") %>. Se o seu app registra controllers
+      explicitamente, registre os novos lá também.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Renderizando a classe direto") %>
+    <p class="leading-7 text-muted-foreground">
+      O helper é um invólucro fino. As duas formas são equivalentes:
+    </p>
+
+    <%= docs_code_block(@snippets[:helper_vs_class]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Prefira o helper nas views. Use a classe quando precisar do objeto do componente, ou
+      dentro de outro ViewComponent — componentes não recebem helpers automaticamente, então
+      inclua o módulo se quiser chamar <%= docs_code("ui_button") %> a partir do template dele:
+    </p>
+
+    <%= docs_code_block(@snippets[:inside_component], language: :ruby) %>
+  </section>
+</article>

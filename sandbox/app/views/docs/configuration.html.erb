@@ -1,0 +1,103 @@
+<% content_for :title, "shadwire.json — Shadwire" %>
+<% content_for :description, "O manifesto que a CLI grava na raiz do app: registry, aliases de instalação, entrypoint do Tailwind e o inventário do que está instalado." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "shadwire.json",
+        description: "O manifesto que a CLI grava na raiz do app. É ele que faz diff, update e remove saberem o que existe — versione junto com o código." %>
+
+  <section class="space-y-4">
+    <p class="leading-7">
+      <%= docs_code("shadwire init") %> escreve este arquivo uma vez. Depois disso, todo
+      <%= docs_code("add") %>, <%= docs_code("update") %> e <%= docs_code("remove") %>
+      atualiza a seção <%= docs_code("installed") %>. É um arquivo de projeto, não de
+      máquina: comite.
+    </p>
+
+    <%= docs_code_block(@snippets[:full], language: :json) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Campos") %>
+
+    <%= render "docs/table",
+          headers: [ "Campo", "O que é" ],
+          rows: [
+            [ docs_code("registry"), "URL base de onde a CLI instala. Persistido a partir de #{docs_code("init --registry")}. Aceita #{docs_code("https://")} e #{docs_code("file://")}.".html_safe ],
+            [ docs_code("tailwind.css"), "O entrypoint do Tailwind da aplicação — o arquivo que recebe o #{docs_code("@import")} do shadwire.css.".html_safe ],
+            [ docs_code("aliases"), "Para onde cada tipo de arquivo vai. Mude aqui se o seu app não segue a árvore padrão do Rails." ],
+            [ docs_code("installed"), "Inventário por componente: a #{docs_code("version")} do registry e os arquivos que ele possui. É a base de #{docs_code("diff")}, #{docs_code("update")} e #{docs_code("remove")}.".html_safe ]
+          ] %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Aliases") %>
+    <p class="leading-7 text-muted-foreground">
+      Cada arquivo do registry declara um tipo — componente, helper, controller Stimulus,
+      CSS — e o alias correspondente decide o diretório de destino.
+    </p>
+
+    <%= render "docs/table",
+          headers: [ "Alias", "Padrão", "Recebe" ],
+          rows: [
+            [ docs_code("components"), docs_code("app/components"), "A superclasse compartilhada UiComponent." ],
+            [ docs_code("ui"), docs_code("app/components/ui"), "As classes de componente e seus templates." ],
+            [ docs_code("helpers"), docs_code("app/helpers"), "Os módulos Ui::*Helper com os wrappers ui_*." ],
+            [ docs_code("controllers"), docs_code("app/javascript/controllers"), "Os controllers Stimulus dos componentes interativos." ],
+            [ docs_code("vendorCss"), docs_code("vendor/shadwire"), "O shadwire.css com os tokens." ]
+          ] %>
+
+    <p class="leading-7 text-muted-foreground">
+      Um app com estrutura própria — uma engine, por exemplo — só precisa apontar os aliases
+      para os diretórios certos antes do primeiro <%= docs_code("add") %>:
+    </p>
+
+    <%= docs_code_block(@snippets[:engine_aliases], language: :json) %>
+
+    <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "Mudar alias depois de instalar não move nada" } do %>
+      Os caminhos gravados em <code>installed[].files</code> continuam apontando para onde os
+      arquivos foram escritos. Se precisar mudar um alias com componentes já instalados,
+      remova-os, ajuste o alias e instale de novo.
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("O @import do Tailwind") %>
+    <p class="leading-7 text-muted-foreground">
+      O <%= docs_code("init") %> insere o import no arquivo apontado por
+      <%= docs_code("tailwind.css") %>. É o que traz os tokens para dentro do build:
+    </p>
+
+    <%= docs_code_block(@snippets[:import], language: :css) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("bin/shadwire status --json") %> reporta
+      <%= docs_code("tailwind.importPresent") %> — se vier <%= docs_code("false") %>, o import
+      sumiu e os componentes vão renderizar sem cor.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Resolução do registry") %>
+    <p class="leading-7 text-muted-foreground">
+      Para qualquer comando, a URL base é resolvida nesta ordem:
+    </p>
+
+    <ol class="ml-4 list-decimal space-y-1 text-sm leading-6 text-muted-foreground marker:text-foreground">
+      <li>a flag <%= docs_code("--registry") %>, se passada;</li>
+      <li>o campo <%= docs_code("registry") %> do <%= docs_code("shadwire.json") %> do app;</li>
+      <li>o padrão embutido, <%= docs_code("https://shadwire.edumoraes.dev.br/r") %>.</li>
+    </ol>
+
+    <%= docs_code_block(@snippets[:registry_override], language: :shell) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Passar <%= docs_code("--registry") %> no <%= docs_code("init") %> persiste a escolha no
+      arquivo; nos demais comandos, ela vale só para aquela execução. Detalhes do formato em
+      <%= link_to "Registry", docs_registry_path, class: "font-medium underline underline-offset-4" %>.
+    </p>
+  </section>
+</article>

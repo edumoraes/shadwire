@@ -1,0 +1,48 @@
+<%# The ⌘K palette, composed from the Command and Dialog components the registry
+    ships. The item list mirrors the sidebar, so it never lists a page that is
+    not there — the browser filters it client-side, which is all a static site
+    can do (and all this catalog needs). %>
+<div data-controller="docs-search" data-action="ui-command:select->docs-search#navigate">
+  <%= ui_dialog do %>
+    <%= ui_dialog_trigger(variant: :outline,
+                          class: "h-9 w-9 justify-center px-0 text-muted-foreground sm:w-56 sm:justify-between sm:px-3",
+                          data: { docs_search_target: "trigger" },
+                          aria: { label: "Buscar na documentação" }) do %>
+      <span class="flex items-center gap-2">
+        <%= ui_icon("search", size: :sm) %>
+        <span class="hidden text-sm font-normal sm:inline">Buscar…</span>
+      </span>
+      <%= ui_kbd_group(class: "hidden sm:inline-flex") do %>
+        <%= ui_kbd { "⌘" } %>
+        <%= ui_kbd { "K" } %>
+      <% end %>
+    <% end %>
+
+    <%= ui_dialog_content(show_close_button: false, class: "gap-0 overflow-hidden p-0 sm:max-w-[34rem]") do %>
+      <%= ui_dialog_header(class: "sr-only") do %>
+        <%= ui_dialog_title { "Buscar na documentação" } %>
+        <%= ui_dialog_description { "Filtre as páginas da documentação e dos componentes pelo título." } %>
+      <% end %>
+
+      <%= ui_command(class: "rounded-none border-0") do %>
+        <%= ui_command_input(placeholder: "Buscar páginas e componentes…") %>
+        <%= ui_command_list(class: "max-h-[22rem]") do %>
+          <%= ui_command_empty(class: "py-6 text-center text-sm text-muted-foreground") { "Nada encontrado." } %>
+          <% docs_nav_groups.each do |group| %>
+            <%= ui_command_group(heading: group[:title]) do %>
+              <% group[:items].each do |item| %>
+                <%# No per-item icon on purpose: 70-odd identical SVGs would be the
+                    single heaviest thing on every page of a static site. %>
+                <%= ui_command_item(value: "#{group[:title]} #{item[:title]}",
+                                    class: "cursor-pointer",
+                                    data: { href: item[:path] }) do %>
+                  <%= item[:title] %>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

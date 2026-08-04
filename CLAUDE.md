@@ -72,6 +72,7 @@ Monorepo; the repo root is **not** a Rails app.
   `styles/shadwire.css`, `javascript/controllers/` (reserved for future Stimulus).
 - `sandbox/` — Rails app (ViewComponent, Tailwind v4, importmap, Turbo, Stimulus)
   that validates synced components via render tests and accessibility checks.
+  It is also the **docs site**: CI freezes it to static HTML and publishes it.
 - `bin/sync_registry` — copies registry files into the sandbox. With no args it
   skips items with missing source files (warns); validates that targets stay
   inside `sandbox/` and that no two sources map to the same target.
@@ -86,6 +87,25 @@ Monorepo; the repo root is **not** a Rails app.
 
 Tailwind loads Shadwire tokens via `@import` in `sandbox/app/assets/tailwind/application.css`,
 pointing at the synced `vendor/shadwire/shadwire.css`.
+
+## The docs site
+
+The sandbox *is* the published site. Guides and components share one shell —
+`sandbox/app/views/layouts/docs.html.erb`: header, sidebar grouped by topic,
+breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
+
+- `DocsNavHelper` is the single source of the sidebar. Guide pages are listed by
+  hand; the **Componentes group is derived from `registry/registry.json`**, so a
+  new component appears there as soon as it has a `get "components/<name>"`
+  route. `test/helpers/docs_nav_helper_test.rb` fails if the two drift apart.
+- Guide pages live in `sandbox/app/views/docs/` and are served by `DocsController`.
+- **Code samples go in `sandbox/app/lib/docs_snippets.rb`, never inline in a view.**
+  An ERB template cannot hold a heredoc containing ERB tags — the scanner closes
+  the tag at the first `%>` and the heredoc never terminates. `DocsController`
+  assigns the page's hash to `@snippets` in a `before_action`.
+- The "Nesta página" rail is built client-side by `docs_toc_controller.js` from
+  the `h2`/`h3` already in `<main>`, so no page declares its own outline.
+- Prose is in Portuguese (pt-BR). `registry/`, the CLI and `skills/` are English.
 
 ## Component conventions
 

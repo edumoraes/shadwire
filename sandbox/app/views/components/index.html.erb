@@ -1,86 +1,39 @@
 <% content_for :title, "Componentes — Shadwire" %>
+<% content_for :description, "O catálogo de componentes do Shadwire: ports em ViewComponent dos componentes do shadcn/ui, cada um com exemplos ao vivo, código de uso e referência de API." %>
 
-<section class="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 py-16">
-  <header class="flex flex-col gap-3">
-    <%= link_to root_path, class: "inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground" do %>
-      <%= ui_icon("arrow-left", size: :sm) %>
-      Início
-    <% end %>
+<article class="space-y-8">
+  <header class="space-y-3">
     <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Componentes</h1>
-    <p class="max-w-2xl text-lg leading-snug text-muted-foreground">
+    <p class="text-lg leading-snug text-muted-foreground">
       Ports em ViewComponent dos componentes do shadcn/ui. Abra cada página para ver
       exemplos ao vivo, código de uso e a referência da API.
     </p>
   </header>
 
+  <div class="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+    <%= ui_badge(variant: :secondary) { "#{docs_component_items.size} componentes" } %>
+    <span>
+      Instale qualquer um com <%= docs_code("bin/shadwire add <nome>") %> —
+      veja <%= link_to "Instalação", docs_installation_path, class: "font-medium underline underline-offset-4" %>.
+    </span>
+  </div>
+
+  <%# A lista vem do registry, então um componente novo aparece aqui assim que tiver rota. %>
   <nav aria-label="Componentes">
-    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      <% [
-        [ "Accordion", components_accordion_path ],
-        [ "Alert", components_alert_path ],
-        [ "Alert Dialog", components_alert_dialog_path ],
-        [ "Aspect Ratio", components_aspect_ratio_path ],
-        [ "Avatar", components_avatar_path ],
-        [ "Badge", components_badge_path ],
-        [ "Breadcrumb", components_breadcrumb_path ],
-        [ "Button", components_button_path ],
-        [ "Button Group", components_button_group_path ],
-        [ "Calendar", components_calendar_path ],
-        [ "Card", components_card_path ],
-        [ "Carousel", components_carousel_path ],
-        [ "Chart", components_chart_path ],
-        [ "Checkbox", components_checkbox_path ],
-        [ "Collapsible", components_collapsible_path ],
-        [ "Combobox", components_combobox_path ],
-        [ "Command", components_command_path ],
-        [ "Context Menu", components_context_menu_path ],
-        [ "Data Table", components_data_table_path ],
-        [ "Date Picker", components_date_picker_path ],
-        [ "Dialog", components_dialog_path ],
-        [ "Drawer", components_drawer_path ],
-        [ "Dropdown Menu", components_dropdown_menu_path ],
-        [ "Empty", components_empty_path ],
-        [ "Field", components_field_path ],
-        [ "Hover Card", components_hover_card_path ],
-        [ "Icon", components_icon_path ],
-        [ "Input", components_input_path ],
-        [ "Input Group", components_input_group_path ],
-        [ "Input OTP", components_input_otp_path ],
-        [ "Item", components_item_path ],
-        [ "Kbd", components_kbd_path ],
-        [ "Label", components_label_path ],
-        [ "Menubar", components_menubar_path ],
-        [ "Native Select", components_native_select_path ],
-        [ "Navigation Menu", components_navigation_menu_path ],
-        [ "Pagination", components_pagination_path ],
-        [ "Popover", components_popover_path ],
-        [ "Progress", components_progress_path ],
-        [ "Radio Group", components_radio_group_path ],
-        [ "Resizable", components_resizable_path ],
-        [ "Scroll Area", components_scroll_area_path ],
-        [ "Select", components_select_path ],
-        [ "Separator", components_separator_path ],
-        [ "Sheet", components_sheet_path ],
-        [ "Sidebar", components_sidebar_path ],
-        [ "Skeleton", components_skeleton_path ],
-        [ "Slider", components_slider_path ],
-        [ "Sonner", components_sonner_path ],
-        [ "Spinner", components_spinner_path ],
-        [ "Switch", components_switch_path ],
-        [ "Table", components_table_path ],
-        [ "Tabs", components_tabs_path ],
-        [ "Textarea", components_textarea_path ],
-        [ "Toggle", components_toggle_path ],
-        [ "Toggle Group", components_toggle_group_path ],
-        [ "Tooltip", components_tooltip_path ]
-      ].each do |label, path| %>
+    <ul class="grid gap-3 sm:grid-cols-2">
+      <% docs_component_items.sort_by { |item| item.fetch("title").downcase }.each do |item| %>
         <li>
-          <%= link_to path, class: "group flex items-center justify-between rounded-lg border bg-card px-4 py-3 text-sm font-medium text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
-            <span><%= label %></span>
-            <span aria-hidden="true" class="text-muted-foreground transition-transform group-hover:translate-x-0.5">→</span>
+          <%= link_to "/components/#{item.fetch("name")}", class: "group flex h-full flex-col gap-1 rounded-lg border bg-card px-4 py-3 text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
+            <span class="flex items-center justify-between gap-2 text-sm font-medium">
+              <%= item.fetch("title") %>
+              <span aria-hidden="true" class="text-muted-foreground transition-transform group-hover:translate-x-0.5">→</span>
+            </span>
+            <span class="text-sm leading-6 text-muted-foreground group-hover:text-accent-foreground">
+              <%= item.fetch("description") %>
+            </span>
           <% end %>
         </li>
       <% end %>
     </ul>
   </nav>
-</section>
+</article>

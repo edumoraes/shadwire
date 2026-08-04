@@ -1,0 +1,112 @@
+<% content_for :title, "Acessibilidade — Shadwire" %>
+<% content_for :description, "O que os componentes do Shadwire garantem de acessibilidade, o que continua sendo responsabilidade sua e como a suíte do projeto valida isso." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Acessibilidade",
+        description: "Os componentes seguem os padrões do WAI-ARIA APG e preferem o elemento nativo sempre que ele existe. O que sobra para você é curto — e está aqui." %>
+
+  <section class="space-y-4">
+    <%= docs_h2("O que vem pronto") %>
+
+    <%= render "docs/table",
+          headers: [ "Área", "O que o componente já faz" ],
+          rows: [
+            [ "Elemento nativo primeiro", safe_join([ "Dialog, Alert Dialog, Sheet e Drawer usam o ", docs_code("<dialog>"), " nativo: focus trap, ", docs_code("Esc"), " e restauração de foco vêm do navegador. Checkbox, Radio Group e Switch são inputs nativos estilizados." ]) ],
+            [ "Papéis e estados", safe_join([ "Tabs expõe ", docs_code("tablist"), "/", docs_code("tab"), "/", docs_code("tabpanel"), "; Select é um combobox APG com ", docs_code("aria-activedescendant"), "; Toggle usa ", docs_code("aria-pressed"), "; Progress expõe ", docs_code("aria-valuenow"), "." ]) ],
+            [ "Teclado", "Setas navegam em menus, tabs, select e toggle group; typeahead busca por prefixo em menus e select; Esc fecha overlays." ],
+            [ "Foco visível", safe_join([ "Todo controle interativo carrega o anel de foco do token ", docs_code("ring"), ", incluindo o estado ", docs_code(":focus-visible"), "." ]) ],
+            [ "Decorativo é escondido", safe_join([ "Ícones renderizam ", docs_code('aria-hidden="true"'), " por padrão; separadores decorativos saem da árvore de acessibilidade." ]) ]
+          ] %>
+
+    <p class="leading-7 text-muted-foreground">
+      Isso não é uma promessa vaga: cada componente tem testes de renderização no repositório,
+      e uma suíte de acessibilidade percorre as páginas do site verificando estrutura,
+      rotulagem e navegação. Os testes de sistema rodam em Chrome headless a cada mudança.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("O que continua sendo seu") %>
+
+    <div class="space-y-6">
+      <div class="space-y-3">
+        <%= docs_h3("Nomear overlays") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          O <%= docs_code("<dialog>") %> dá foco e teclado, mas não inventa um nome. Todo
+          diálogo, sheet e drawer precisa do componente de título — use
+          <%= docs_code('class: "sr-only"') %> quando o desenho não mostrar um.
+        </p>
+        <%= docs_code_block(@snippets[:overlay]) %>
+      </div>
+
+      <div class="space-y-3">
+        <%= docs_h3("Nomear ícones que carregam significado") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          Ícone ao lado de texto é decoração e deve continuar escondido. Ícone sozinho é o
+          rótulo — passe <%= docs_code("label:") %>, ou rotule o controle que o contém. Detalhes
+          em <%= link_to "Ícones", docs_icons_path, class: "font-medium underline underline-offset-4" %>.
+        </p>
+        <%= docs_code_block(@snippets[:icon_label]) %>
+      </div>
+
+      <div class="space-y-3">
+        <%= docs_h3("Associar rótulo e controle") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          Como não existe integração com form builder, o par
+          <%= docs_code("for:") %> / <%= docs_code("id:") %> é seu.
+          <%= docs_code("ui_field") %> organiza a linha, mas não adivinha o id do controle —
+          veja <%= link_to "Formulários", docs_forms_path, class: "font-medium underline underline-offset-4" %>.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <%= docs_h3("Contraste depois de retematizar") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          Os valores padrão passam nos critérios de contraste; os seus precisam ser conferidos.
+          Sempre defina o par <%= docs_code("<superfície>") %> /
+          <%= docs_code("<superfície>-foreground") %> junto, e teste nos dois modos.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <%= docs_h3("Hierarquia de headings") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          <%= docs_code("ui_card_title") %> e <%= docs_code("ui_dialog_title") %> são estilo, não
+          nível. Se a página precisa de uma estrutura de headings, escreva os
+          <%= docs_code("h1") %>–<%= docs_code("h3") %> você mesmo em volta.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Testando no seu app") %>
+    <p class="leading-7 text-muted-foreground">
+      Os componentes instalados são código seu, então testam como qualquer ViewComponent. O
+      que costuma valer a pena travar em teste é justamente o que a biblioteca não pode
+      garantir sozinha — o nome acessível:
+    </p>
+
+    <%= docs_code_block(@snippets[:test], language: :ruby) %>
+
+    <%= render layout: "docs/callout", locals: { icon: "info", title: "Componentes interativos precisam de navegador" } do %>
+      Foco, teclado e o comportamento do <code>&lt;dialog&gt;</code> só aparecem em teste de
+      sistema. Um teste de renderização confirma a marcação; ele não confirma que o
+      <code>Esc</code> fecha.
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Encontrou um problema?") %>
+    <p class="leading-7 text-muted-foreground">
+      Acessibilidade quebrada em um componente é bug do registry, não do seu app —
+      <%= link_to "abra uma issue", "https://github.com/edumoraes/shadwire/issues/new", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>.
+      Enquanto isso, o arquivo é seu: corrija localmente e rode
+      <%= docs_code("bin/shadwire diff") %> antes do próximo update.
+    </p>
+  </section>
+</article>

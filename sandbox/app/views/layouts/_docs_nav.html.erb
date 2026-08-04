@@ -1,0 +1,23 @@
+<%# The documentation sidebar: one <nav> of topic groups, rendered both in the
+    sticky desktop aside and inside the mobile sheet. Data comes from
+    DocsNavHelper, so the two can never drift. %>
+<nav aria-label="Documentação" class="flex flex-col gap-6 text-sm">
+  <% docs_nav_groups.each do |group| %>
+    <div class="flex flex-col gap-1">
+      <h2 class="px-2 py-1 font-medium text-foreground"><%= group[:title] %></h2>
+      <ul class="flex flex-col gap-0.5">
+        <% group[:items].each do |item| %>
+          <% current = docs_nav_current?(item) %>
+          <li>
+            <%= link_to item[:title], item[:path],
+                  "aria-current": ("page" if current),
+                  class: class_names(
+                    "flex h-8 items-center rounded-lg px-2 transition-colors focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none",
+                    current ? "bg-accent font-medium text-accent-foreground" : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                  ) %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</nav>

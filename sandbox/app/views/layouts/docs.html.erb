@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <%= render "layouts/site_head" %>
+  </head>
+
+  <body class="min-h-svh bg-background text-foreground">
+    <%= render "layouts/site_header", docs_nav: true %>
+
+    <div class="mx-auto w-full max-w-[100rem] px-4 sm:px-6 lg:px-8">
+      <%# docs-toc reads the headings out of <main> and fills the right rail. %>
+      <div class="lg:grid lg:grid-cols-[15rem_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[15rem_minmax(0,1fr)_16rem] xl:gap-10"
+           data-controller="docs-toc">
+        <aside class="sticky top-16 hidden h-[calc(100svh-4rem)] shrink-0 border-r border-border/60 lg:block">
+          <%= ui_scroll_area(class: "h-full py-8 pr-4") do %>
+            <%= render "layouts/docs_nav" %>
+          <% end %>
+        </aside>
+
+        <main class="mx-auto min-w-0 max-w-3xl py-8" data-docs-toc-target="content">
+          <%= render "layouts/docs_breadcrumb" %>
+          <%= yield %>
+          <%= render "layouts/docs_pager" %>
+        </main>
+
+        <aside class="sticky top-16 hidden h-[calc(100svh-4rem)] xl:block">
+          <div class="py-8" data-docs-toc-target="panel">
+            <p class="mb-3 px-3 text-sm font-medium">Nesta página</p>
+            <%= ui_scroll_area(class: "max-h-[calc(100svh-10rem)]") do %>
+              <nav aria-label="Nesta página">
+                <ul class="flex flex-col gap-1 border-l text-sm" data-docs-toc-target="list"></ul>
+              </nav>
+            <% end %>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <%= render "layouts/site_footer" %>
+  </body>
+</html>

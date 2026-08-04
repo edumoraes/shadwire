@@ -1,0 +1,103 @@
+<% content_for :title, "Registry — Shadwire" %>
+<% content_for :description, "O registry estático de onde a CLI instala: index.json, os itens com o conteúdo dos arquivos embutido, e como servir o seu próprio." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Registry",
+        description: "Arquivos JSON estáticos servidos por HTTP. Sem servidor de aplicação, sem autenticação, sem conta — é isso que a CLI lê." %>
+
+  <section class="space-y-4">
+    <p class="leading-7">
+      O registry publicado do Shadwire fica em
+      <%= link_to "shadwire.edumoraes.dev.br/r", "https://shadwire.edumoraes.dev.br/r/index.json", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>.
+      São dois tipos de documento: um índice com o catálogo e um arquivo por item com o
+      conteúdo de cada arquivo embutido.
+    </p>
+
+    <%= render "docs/table",
+          headers: [ "URL", "Conteúdo" ],
+          rows: [
+            [ docs_code("/r/index.json"), "O catálogo (nome, título, descrição, quando usar) e o `base`: os arquivos compartilhados e as gems que o init instala." ],
+            [ docs_code("/r/{nome}.json"), "Um componente: metadados, dependências de registry resolvidas, a API extraída e os arquivos com o conteúdo embutido." ],
+            [ docs_code("/r/llms.txt"), "O mesmo catálogo em texto plano, para agentes." ],
+            [ docs_code("/r/llms-full.txt"), "A API completa de cada componente em texto plano." ]
+          ] %>
+
+    <%= docs_code_block(@snippets[:fetch], language: :shell) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("index.json") %>
+    <p class="leading-7 text-muted-foreground">
+      O que <%= docs_code("list") %> e <%= docs_code("search") %> leem, e de onde o
+      <%= docs_code("init") %> tira a instalação base.
+    </p>
+
+    <%= docs_code_block(@snippets[:index], language: :json) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Um item") %>
+    <p class="leading-7 text-muted-foreground">
+      Cada item traz o suficiente para instalar sem uma segunda requisição — inclusive o
+      conteúdo dos arquivos. Note que <%= docs_code("registryDependencies") %> já vem com o
+      fecho transitivo resolvido, então a CLI não precisa caminhar o grafo.
+    </p>
+
+    <%= docs_code_block(@snippets[:item], language: :json) %>
+
+    <%= render "docs/table",
+          headers: [ "Campo", "O que é" ],
+          rows: [
+            [ docs_code("whenToUse"), "Uma frase dizendo quando escolher este componente e quais são os vizinhos. É o texto que a busca casa." ],
+            [ docs_code("usage"), "Snippets ERB prontos, para o caso de uso mais comum." ],
+            [ docs_code("registryDependencies"), "Outros itens que precisam vir junto, já com o fecho transitivo." ],
+            [ docs_code("requiresStimulus"), "Verdadeiro quando o item instala um controller em app/javascript/." ],
+            [ docs_code("api.components[]"), "Extraído do código-fonte: classe, helper, variantes, tamanhos, props e atributos." ],
+            [ docs_code("files[]"), safe_join([ "Cada arquivo como ", docs_code("{ target, type, content }"), " — sem caminhos de origem." ]) ]
+          ] %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Como ele é construído") %>
+    <p class="leading-7 text-muted-foreground">
+      A fonte da verdade é <%= docs_code("registry/registry.json") %> no monorepo, que lista os
+      arquivos de cada item como pares <%= docs_code("source") %> → <%= docs_code("target") %>.
+      O <%= docs_code("bin/build_registry") %> transforma isso no registry publicado, embutindo
+      o conteúdo e extraindo a API do código:
+    </p>
+
+    <%= docs_code_block(@snippets[:build], language: :shell) %>
+
+    <p class="leading-7 text-muted-foreground">
+      A saída fica em <%= docs_code("build/") %>, que é gerada — nunca editada à mão — e
+      reconstruída no CI a cada push para a <%= docs_code("main") %>, junto com o deploy deste
+      site.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Servindo o seu próprio") %>
+    <p class="leading-7 text-muted-foreground">
+      Como são arquivos estáticos, qualquer hospedagem serve: um bucket, um Pages, um diretório
+      atrás de um proxy. Aponte a CLI com <%= docs_code("--registry") %> — ou grave a escolha
+      no <%= docs_code("shadwire.json") %> passando a flag no <%= docs_code("init") %>.
+    </p>
+
+    <p class="leading-7 text-muted-foreground">
+      Bases <%= docs_code("file://") %> também funcionam, que é como se testa um registry
+      construído localmente:
+    </p>
+
+    <%= docs_code_block(@snippets[:local], language: :shell) %>
+
+    <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "A URL do registry fica gravada no app do usuário" } do %>
+      O <code>shadwire.json</code> guarda a URL usada no <code>init</code>. Mudar o endereço de
+      um registry publicado exige manter um redirecionamento — as instalações existentes vão
+      continuar apontando para o endereço antigo.
+    <% end %>
+  </section>
+</article>
