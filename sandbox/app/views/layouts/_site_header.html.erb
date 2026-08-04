@@ -1,0 +1,63 @@
+<%# Sticky top bar shared by the landing page and the documentation shell.
+    Pass `docs_nav: true` to prepend the sheet that carries the documentation
+    sidebar on small screens, where the sticky aside is hidden. %>
+<header class="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  <div class="mx-auto flex h-16 w-full max-w-[100rem] items-center gap-2 px-4 sm:px-6 lg:px-8">
+    <% if local_assigns[:docs_nav] %>
+      <%= ui_sheet(class: "lg:hidden") do %>
+        <%= ui_sheet_trigger(variant: :ghost, size: :icon, aria: { label: "Abrir a navegação da documentação" }) do %>
+          <%= ui_icon("menu") %>
+        <% end %>
+        <%= ui_sheet_content(side: :left, class: "w-[19rem] max-w-[85vw] p-0 sm:max-w-[19rem]") do %>
+          <%= ui_sheet_header(class: "border-b px-4 py-3") do %>
+            <%= ui_sheet_title(class: "flex items-center gap-2 text-base") do %>
+              <%= ui_icon("box", class: "text-primary") %>Documentação
+            <% end %>
+            <%= ui_sheet_description(class: "sr-only") { "Navegação por tópicos da documentação do Shadwire." } %>
+          <% end %>
+          <%= ui_scroll_area(class: "min-h-0 flex-1 px-2 py-4") do %>
+            <%= render "layouts/docs_nav" %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= link_to root_path, class: "flex shrink-0 items-center gap-2 font-semibold tracking-tight" do %>
+      <%= ui_icon("box", size: :lg, class: "text-primary") %>
+      <span class="text-base">Shadwire</span>
+    <% end %>
+
+    <nav aria-label="Principal" class="ml-2 hidden items-center gap-1 text-sm md:flex">
+      <% [
+        [ "Documentação", docs_path, :docs ],
+        [ "Componentes", components_path, :components ],
+        [ "Blocks", blocks_path, :blocks ]
+      ].each do |label, path, section| %>
+        <%# "true", not "page": this highlights a whole section, and the sidebar
+            link to the actual page already claims aria-current="page". %>
+        <%= link_to label, path,
+              "aria-current": ("true" if site_nav_section == section),
+              class: class_names(
+                "rounded-md px-3 py-2 font-medium transition-colors",
+                site_nav_section == section ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+              ) %>
+      <% end %>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-1">
+      <% if local_assigns[:docs_nav] %>
+        <%= render "layouts/docs_search" %>
+      <% end %>
+      <%= link_to "https://github.com/edumoraes/shadwire", target: "_blank", rel: "noopener",
+            class: "inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" do %>
+        <%= ui_icon("github", label: "Shadwire no GitHub") %>
+      <% end %>
+      <%= ui_button(size: :icon, variant: :ghost,
+                    data: { controller: "theme", action: "theme#toggle" },
+                    aria: { label: "Alternar tema" }) do %>
+        <%= ui_icon("moon", class: "dark:hidden") %>
+        <%= ui_icon("sun", class: "hidden dark:block") %>
+      <% end %>
+    </div>
+  </div>
+</header>

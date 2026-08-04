@@ -1,0 +1,97 @@
+<% content_for :title, "Dark mode — Shadwire" %>
+<% content_for :description, "Dark mode por classe no Shadwire: a variante custom do Tailwind, o toggle em Stimulus e o script anti-flash antes da primeira pintura." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Dark mode",
+        description: "Uma classe no <html> decide o tema inteiro. Nenhum componente precisa saber disso." %>
+
+  <section class="space-y-4">
+    <p class="leading-7">
+      O <%= docs_code("shadwire.css") %> declara a variante escura ancorada em uma classe:
+    </p>
+
+    <%= docs_code_block(@snippets[:variant], language: :css) %>
+
+    <p class="leading-7 text-muted-foreground">
+      A variante <%= docs_code("dark") %> dispara quando existe um ancestral com a classe
+      <%= docs_code(".dark") %>, então trocar de tema é alternar essa classe no
+      <%= docs_code("<html>") %>. Como todo componente usa tokens, e os tokens já têm valor
+      nos dois blocos, o dark mode não custa nenhuma linha de código de componente.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("O toggle") %>
+    <p class="leading-7 text-muted-foreground">
+      Um controller Stimulus de cinco linhas. É o que alterna o tema deste site:
+    </p>
+
+    <%= docs_code_block(@snippets[:controller], language: :javascript) %>
+
+    <p class="leading-7 text-muted-foreground">
+      E o botão, com os dois ícones trocando pela própria variante:
+    </p>
+
+    <%= docs_code_block(@snippets[:toggle_markup]) %>
+
+    <p class="text-sm leading-6 text-muted-foreground">
+      <%= docs_code("dark:hidden") %> e <%= docs_code("hidden dark:block") %> decidem qual
+      elemento aparece, não que cor ele tem. É o uso legítimo do prefixo
+      <%= docs_code("dark:") %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Evitando o flash") %>
+    <p class="leading-7 text-muted-foreground">
+      Se a classe só for aplicada depois que o JavaScript da aplicação carregar, quem escolheu
+      o tema escuro vê um lampejo branco a cada navegação. A correção é um script inline no
+      <%= docs_code("<head>") %>, antes de qualquer folha de estilo, para que ele rode antes
+      da primeira pintura:
+    </p>
+
+    <%= docs_code_block(@snippets[:head_script], language: :html) %>
+
+    <p class="leading-7 text-muted-foreground">
+      A ordem importa: preferência salva primeiro, preferência do sistema como padrão. Assim
+      alguém pode escolher claro em um sistema escuro e a escolha vale.
+    </p>
+
+    <%= render layout: "docs/callout", locals: { icon: "info", title: "Content Security Policy" } do %>
+      Um app com CSP restritiva precisa liberar esse script, pelo nonce do Rails
+      (<code>nonce: true</code> em <code>javascript_tag</code>) ou movendo-o para um arquivo
+      carregado no <code>&lt;head&gt;</code> antes das folhas de estilo.
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Nunca escreva dark: para cor") %>
+    <p class="leading-7 text-muted-foreground">
+      Um override manual duplica a decisão de cor e sai de sincronia com o tema na primeira
+      vez que alguém mexer nos tokens:
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong]) %>
+    <%= docs_code_block(@snippets[:right]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Se você precisa de uma cor que os tokens não cobrem,
+      <%= link_to "adicione um token", docs_theming_path, class: "font-medium underline underline-offset-4" %>.
+      Ele ganha valor claro e escuro, e continua funcionando em qualquer retematização futura.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Testando os dois modos") %>
+    <p class="leading-7 text-muted-foreground">
+      Bugs de tema quase nunca são cor literal errada. Costumam ser colisão de especificidade
+      entre utilitários de mesma força, ou um utilitário companheiro faltando: a string de
+      classes parece certa e o CSS compilado não é. Quando algo parecer estranho no escuro,
+      olhe o CSS gerado.
+    </p>
+  </section>
+</article>

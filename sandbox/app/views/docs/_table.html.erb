@@ -1,0 +1,22 @@
+<%# A reference table in the documentation style used by the component pages.
+    Locals: headers (array of strings), rows (array of arrays of cell HTML). %>
+<%= ui_card(class: "overflow-x-auto") do %>
+  <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+    <thead class="bg-muted/50">
+      <tr>
+        <% headers.each do |header| %>
+          <th scope="col"><%= header %></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% rows.each do |row| %>
+        <tr>
+          <% row.each do |cell| %>
+            <td><%= cell %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

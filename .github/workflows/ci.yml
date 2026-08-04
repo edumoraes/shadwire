@@ -76,7 +76,7 @@ jobs:
         run: bin/rails test test/components test/integration
       - name: Docs page tests
         working-directory: sandbox
-        run: bin/rails test test/controllers
+        run: bin/rails test test/controllers test/helpers
       # Runs headless Chrome, which ubuntu-latest ships; selenium-webdriver
       # fetches its own driver. Adds roughly 90s to this job — worth it, since
       # the controllers that make the components work are only exercised here.

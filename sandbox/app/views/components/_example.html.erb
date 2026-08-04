@@ -9,7 +9,13 @@
   <%# The card itself must not clip: overlay examples (popover, command, menus) %>
   <%# open absolutely-positioned content that would be cut off by overflow-hidden. %>
   <%# The code block rounds/clips its own bottom corners instead. %>
-  <%= ui_card do %>
+  <%#
+    data-docs-toc-skip keeps the preview out of the "Nesta página" rail. A live
+    example carries headings of its own — an accordion's questions, a dialog's
+    title — that describe demo content, and the ones inside a closed <dialog>
+    are dead anchors besides.
+  %>
+  <%= ui_card(data: { docs_toc_skip: "" }) do %>
     <div class="flex min-h-[140px] flex-wrap items-center justify-center gap-3 p-8">
       <%= render "components/examples/#{name}" %>
     </div>

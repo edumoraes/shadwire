@@ -1,0 +1,139 @@
+<% content_for :title, "Formulários — Shadwire" %>
+<% content_for :description, "A família field, estado de validação, integração com form_with e como escolher o controle certo em formulários Shadwire." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Formulários",
+        description: "field é a primitiva de layout de linha de formulário. Não existe integração com form builder." %>
+
+  <section class="space-y-4">
+    <%= docs_h2("Envolva todo controle em ui_field") %>
+    <p class="leading-7 text-muted-foreground">
+      Nunca monte uma linha de formulário com <%= docs_code("div") %> e utilitários de
+      espaçamento. O <%= docs_code("field") %> já resolve rótulo, descrição, erro e o espaço
+      entre eles.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_field]) %>
+    <%= docs_code_block(@snippets[:right_field]) %>
+
+    <p class="leading-7 text-muted-foreground">A família inteira:</p>
+
+    <%= render "docs/table",
+          headers: [ "Helper", "Papel" ],
+          rows: [
+            [ docs_code("ui_field"), "A linha. Aceita orientation: :vertical (padrão), :horizontal ou :responsive." ],
+            [ docs_code("ui_field_group"), "Empilha vários campos com espaçamento consistente." ],
+            [ docs_code("ui_field_set") + " + " + docs_code("ui_field_legend"), "Agrupa checkboxes ou radios relacionados, no lugar de uma div com heading." ],
+            [ docs_code("ui_field_label"), "O rótulo do campo." ],
+            [ docs_code("ui_field_title") + " / " + docs_code("ui_field_description"), "Texto de apoio acima e abaixo do controle." ],
+            [ docs_code("ui_field_error"), "A mensagem de erro, com role=\"alert\"." ],
+            [ docs_code("ui_field_content"), "Envolve o controle quando ele precisa de container próprio." ],
+            [ docs_code("ui_field_separator"), "Divide seções dentro de um grupo." ]
+          ] %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Estado de validação") %>
+    <p class="leading-7 text-muted-foreground">
+      Passe <%= docs_code("invalid: true") %> para o <%= docs_code("ui_field") %>. Ele marca
+      <%= docs_code("data-invalid") %> e deixa o texto da linha destrutivo, e a mensagem vai
+      em <%= docs_code("ui_field_error") %>.
+    </p>
+
+    <%= docs_code_block(@snippets[:invalid]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("ui_field_error") %> aceita conteúdo em bloco ou um array em
+      <%= docs_code("errors:") %>, e não renderiza nada quando os dois estão vazios, então dá
+      para deixá-lo sempre no lugar, sem condicional.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Não existe integração com form builder") %>
+    <p class="leading-7 text-muted-foreground">
+      Não há <%= docs_code("f.ui_input") %>. Os controles aceitam atributos HTML livres e os
+      encaminham para o elemento, então você liga ao <%= docs_code("form_with") %> na mão:
+    </p>
+
+    <%= docs_code_block(@snippets[:form_with]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("form.field_name") %> e <%= docs_code("form.field_id") %> produzem os
+      <%= docs_code("user[email]") %> / <%= docs_code("user_email") %> que o Rails espera, então
+      os params chegam normalmente. Vale igual para
+      <%= docs_code("ui_checkbox") %>, <%= docs_code("ui_switch") %>,
+      <%= docs_code("ui_textarea") %>, <%= docs_code("ui_select") %>,
+      <%= docs_code("ui_radio_group") %> e <%= docs_code("ui_slider") %>.
+    </p>
+
+    <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "Checkbox não gera o input hidden do Rails" } do %>
+      Diferente de <code>form.check_box</code>, não existe campo oculto de valor
+      desmarcado. Trate a ausência do parâmetro como desmarcado, ou declare o hidden você
+      mesmo quando o formulário precisar enviar um valor nos dois casos:
+    <% end %>
+
+    <%= docs_code_block(@snippets[:checkbox_hidden]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Escolhendo o controle") %>
+
+    <%= render "docs/table",
+          headers: [ "Situação", "Controle" ],
+          rows: [
+            [ "Uma linha de texto", docs_code("ui_input") ],
+            [ "Várias linhas", docs_code("ui_textarea") ],
+            [ "Texto com prefixo, sufixo ou botão", docs_code("ui_input_group") ],
+            [ "Um de uma lista longa", safe_join([ docs_code("ui_select"), ", ou ", docs_code("combobox"), " quando precisa buscar" ]) ],
+            [ "Um de poucas opções visíveis", docs_code("ui_radio_group") ],
+            [ "Seletor nativo do mobile, sem JS", docs_code("ui_native_select") ],
+            [ "Várias escolhas independentes", docs_code("ui_checkbox") ],
+            [ "Duas a sete escolhas compactas", docs_code("ui_toggle_group") ],
+            [ "Configuração aplicada na hora", docs_code("ui_switch") ],
+            [ "Número impreciso", docs_code("ui_slider") ],
+            [ "Número exato", docs_code("ui_input(type: :number)") ],
+            [ "Data ou intervalo", safe_join([ docs_code("date-picker"), ", ou ", docs_code("ui_calendar"), " inline" ]) ],
+            [ "Código de uso único", docs_code("ui_input_otp") ]
+          ] %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("O date picker é uma receita") %>
+    <p class="leading-7 text-muted-foreground">
+      Não existe <%= docs_code("Ui::DatePickerComponent") %>. Um campo de data é
+      <%= docs_code("ui_popover") %> + <%= docs_code("ui_calendar") %>, com o controller
+      <%= docs_code("ui-date-picker") %> escrevendo a data escolhida no gatilho e fechando o
+      popover. O calendário é dono do valor: <%= docs_code("name:") %> renderiza o input
+      oculto, então ele envia como qualquer outro campo.
+    </p>
+
+    <%= docs_code_block(@snippets[:date_picker]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      O popover precisa de <%= docs_code("w-auto! p-0!") %>, porque o
+      <%= docs_code("w-72") %> padrão com padding é estreito demais para a grade. As variações
+      são argumentos do calendário:
+      <%= docs_code("mode: :range") %>, <%= docs_code("caption_layout: :dropdown") %>,
+      <%= docs_code("dir: :rtl") %>.
+      <%= docs_code("bin/shadwire info date-picker") %> imprime todas, e a
+      <%= link_to "página do Date Picker", "/components/date-picker", class: "font-medium underline underline-offset-4" %>
+      mostra cada uma ao vivo.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Input group usa o próprio input") %>
+    <p class="leading-7 text-muted-foreground">
+      Dentro de <%= docs_code("ui_input_group") %>, use os helpers dele, não um
+      <%= docs_code("ui_input") %> solto.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_input_group]) %>
+    <%= docs_code_block(@snippets[:right_input_group]) %>
+  </section>
+</article>

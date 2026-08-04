@@ -31,6 +31,18 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "[data-action='clipboard#copy']"
   end
 
+  test "live previews opt out of the table of contents" do
+    get components_accordion_path
+
+    assert_response :success
+    # An accordion example renders its questions as headings. Without the marker
+    # the "Nesta página" rail lists demo content instead of the page's sections,
+    # and the dialog pages point at anchors inside a closed <dialog>.
+    assert_select "section#example-accordion_basic [data-docs-toc-skip] h3"
+    # The example's own title is the one heading outside the marked preview.
+    assert_select "section#example-accordion_basic > h3", count: 1
+  end
+
   test "short code examples render copy controls without expand controls" do
     get components_button_path
 

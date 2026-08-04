@@ -2,9 +2,9 @@
 
 # Serves the component documentation pages of the sandbox.
 class ComponentsController < ApplicationController
-  # Catálogo e páginas de documentação compartilham o mesmo shell de navegação
-  # (header e footer) definido pelo layout "home".
-  layout "home"
+  # Catálogo e páginas de documentação compartilham o shell da documentação:
+  # header, sidebar por tópicos, trilha, "Nesta página" e rodapé.
+  layout "docs"
 
   BUTTON_EXAMPLES = [
     { name: "default", title: "Padrão",

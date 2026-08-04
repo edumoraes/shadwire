@@ -4,6 +4,27 @@ Shadwire ports the shadcn/ui Open Code model to Ruby on Rails.
 
 The source of truth is `registry/`. The Rails app in `sandbox/` consumes copied registry files so components are validated in a real Rails, ViewComponent, Tailwind CSS v4, and Hotwire environment.
 
+## Documentation
+
+The docs site is <https://shadwire.edumoraes.dev.br>. It *is* the sandbox app,
+frozen to static HTML, so every live example on it is a real render.
+
+| Page | What it covers |
+| --- | --- |
+| [Introduction](https://shadwire.edumoraes.dev.br/docs) | The Open Code model, how the registry / CLI / app fit together |
+| [Installation](https://shadwire.edumoraes.dev.br/docs/installation) | Requirements, installing the CLI, what `init` does, the first component |
+| [shadwire.json](https://shadwire.edumoraes.dev.br/docs/configuration) | The manifest: registry, aliases, Tailwind entrypoint, installed inventory |
+| [Theming](https://shadwire.edumoraes.dev.br/docs/theming) | Tokens, brand color, adding a token, keeping local edits through updates |
+| [Dark mode](https://shadwire.edumoraes.dev.br/docs/dark-mode) | Class-based dark mode, the toggle, the anti-flash script |
+| [CLI](https://shadwire.edumoraes.dev.br/docs/cli) | Every command and flag, the `status` payload, errors and exit codes, CI |
+| [Agent skill](https://shadwire.edumoraes.dev.br/docs/agent-skill) | What the skill carries, how it injects project context, permissions |
+| [Registry](https://shadwire.edumoraes.dev.br/docs/registry) | The published JSON format and how to serve your own |
+| [llms.txt](https://shadwire.edumoraes.dev.br/docs/llms-txt) | The plain-text catalog for agents without the skill |
+| [Composition](https://shadwire.edumoraes.dev.br/docs/composition) · [Styling](https://shadwire.edumoraes.dev.br/docs/styling) · [Forms](https://shadwire.edumoraes.dev.br/docs/forms) · [Icons](https://shadwire.edumoraes.dev.br/docs/icons) · [Accessibility](https://shadwire.edumoraes.dev.br/docs/accessibility) | The conventions, with wrong/right pairs |
+
+The pages are written in Portuguese; the CLI, the agent skill and this README are
+in English.
+
 ## Components
 
 58 components, listed with `shadwire list`. Search by what you need
