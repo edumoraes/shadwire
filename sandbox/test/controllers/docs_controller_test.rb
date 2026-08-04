@@ -39,8 +39,12 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     %w[Começar Ferramentas Guias Blocks Componentes].each do |group|
-      assert_select "nav[aria-label='Documentação'] h2", text: group
+      assert_select "nav[aria-label='Documentação'] ul[aria-label='#{group}'] li a"
     end
+    # Group labels must not be headings: six of them would push the page's own
+    # h1 down to seventh in the heading list.
+    nav = "nav[aria-label='Documentação']"
+    assert_select "#{nav} h1, #{nav} h2, #{nav} h3, #{nav} h4, #{nav} h5, #{nav} h6", count: 0
   end
 
   test "the CLI page documents every command and flag" do
@@ -154,7 +158,7 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
 
     assert_select "[data-slot='sheet'] [data-slot='sheet-trigger'][aria-label='Abrir a navegação da documentação']"
     assert_select "[data-slot='sheet'] dialog[data-slot='sheet-content'][data-side='left']"
-    # The nav is rendered twice — once in the sticky aside, once in the sheet —
+    # The nav is rendered twice, once in the sticky aside and once in the sheet,
     # from the same partial, so the two can never disagree.
     assert_select "nav[aria-label='Documentação']", count: 2
   end

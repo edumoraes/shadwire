@@ -1,8 +1,8 @@
 <%# A titled note. Locals: icon, title, variant (:default / :destructive).
     The block is the body.
 
-    Renders through ui_alert, which is a single element by design — the icon +
-    title + body anatomy is composed here, exactly as the Alert docs show it. %>
+    Renders through ui_alert, which is a single element by design; the icon +
+    title + body anatomy is composed here, as the Alert docs show it. %>
 <%= ui_alert(variant: local_assigns.fetch(:variant, :default), class: "not-prose") do %>
   <div class="flex gap-3">
     <%= ui_icon(icon, class: "mt-0.5 shrink-0") %>

@@ -6,7 +6,7 @@ The source of truth is `registry/`. The Rails app in `sandbox/` consumes copied 
 
 ## Documentation
 
-The docs site is <https://shadwire.edumoraes.dev.br> — it *is* the sandbox app,
+The docs site is <https://shadwire.edumoraes.dev.br>. It *is* the sandbox app,
 frozen to static HTML, so every live example on it is a real render.
 
 | Page | What it covers |

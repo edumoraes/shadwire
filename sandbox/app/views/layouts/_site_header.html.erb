@@ -33,8 +33,10 @@
         [ "Componentes", components_path, :components ],
         [ "Blocks", blocks_path, :blocks ]
       ].each do |label, path, section| %>
+        <%# "true", not "page": this highlights a whole section, and the sidebar
+            link to the actual page already claims aria-current="page". %>
         <%= link_to label, path,
-              "aria-current": ("page" if site_nav_section == section),
+              "aria-current": ("true" if site_nav_section == section),
               class: class_names(
                 "rounded-md px-3 py-2 font-medium transition-colors",
                 site_nav_section == section ? "text-foreground" : "text-muted-foreground hover:text-foreground"

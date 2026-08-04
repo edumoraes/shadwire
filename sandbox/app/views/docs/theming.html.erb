@@ -7,7 +7,7 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Theming",
-        description: "Toda cor vem de um token. Retematizar é editar duas listas de variáveis CSS — nenhum componente precisa mudar." %>
+        description: "Toda cor vem de um token. Retematizar é editar duas listas de variáveis CSS; nenhum componente precisa mudar." %>
 
   <section class="space-y-4">
     <%= docs_h2("Onde os tokens vivem") %>
@@ -52,15 +52,13 @@
     <%= docs_h2("Trocando a cor de marca") %>
     <p class="leading-7 text-muted-foreground">
       Defina <%= docs_code("--primary") %> e <%= docs_code("--primary-foreground") %> nos dois
-      blocos. Nada mais muda — cada componente que usava <%= docs_code("bg-primary") %>
-      acompanha.
+      blocos. Todo componente que usa <%= docs_code("bg-primary") %> acompanha.
     </p>
 
     <%= docs_code_block(@snippets[:brand], language: :css) %>
 
     <p class="leading-7 text-muted-foreground">
-      Escolha o foreground pelo contraste contra a própria superfície, e confira nos dois
-      modos. É o par que garante legibilidade, não o token isolado.
+      Escolha o foreground pelo contraste contra a própria superfície e confira nos dois modos.
     </p>
   </section>
 
@@ -84,8 +82,7 @@
     <p class="leading-7 text-muted-foreground">
       <%= docs_code("--radius") %> alimenta a escala derivada
       <%= docs_code("radius-sm") %> / <%= docs_code("radius-md") %> /
-      <%= docs_code("radius-lg") %>, então mudá-lo reformata cards, inputs, botões e popovers
-      de uma vez.
+      <%= docs_code("radius-lg") %>, então mudá-lo reformata cards, inputs, botões e popovers.
     </p>
 
     <%= docs_code_block(@snippets[:radius], language: :css) %>
@@ -104,7 +101,7 @@
     <p class="leading-7 text-muted-foreground">
       Isso é uma edição local: <%= docs_code("bin/shadwire diff") %> vai reportar o arquivo
       como <%= docs_code("modified") %>, e <%= docs_code("bin/shadwire update") %>
-      sobrescreveria. É esperado — a seção seguinte trata disso.
+      sobrescreveria.
     </p>
   </section>
 
@@ -112,10 +109,10 @@
     <%= docs_h2("Mantendo suas edições") %>
 
     <ol class="ml-4 list-decimal space-y-2 leading-7 text-muted-foreground marker:font-medium marker:text-foreground">
-      <li><%= docs_code("bin/shadwire diff <nome>") %> — veja exatamente o que você mudou.</li>
+      <li><%= docs_code("bin/shadwire diff <nome>") %>: veja o que você mudou.</li>
       <li>
         <%= docs_code("bin/shadwire update <nome>") %> <strong class="font-medium text-foreground">sem</strong>
-        <%= docs_code("--yes") %> — ele pergunta por arquivo modificado e mostra o diff.
+        <%= docs_code("--yes") %>: ele pergunta por arquivo modificado e mostra o diff.
       </li>
       <li>Reaplique suas edições por cima.</li>
     </ol>
@@ -123,8 +120,8 @@
     <%= docs_code_block(@snippets[:keep_edits], language: :shell) %>
 
     <p class="leading-7 text-muted-foreground">
-      Prefira mudanças aditivas — uma chave de variante nova, um token novo — a reescrever
-      classes existentes: elas sobrevivem aos updates com muito menos conflito.
+      Prefira acrescentar (uma chave de variante nova, um token novo) a reescrever classes
+      existentes. Mudanças aditivas sobrevivem aos updates com muito menos conflito.
     </p>
   </section>
 </article>

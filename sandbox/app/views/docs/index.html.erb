@@ -7,13 +7,13 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Introdução",
-        description: "Shadwire porta o modelo Open Code do shadcn/ui para o Ruby on Rails. Não é uma gem de runtime: é código-fonte de componentes que a sua aplicação copia e passa a possuir." %>
+        description: "Shadwire porta o modelo Open Code do shadcn/ui para o Ruby on Rails. Os componentes são código-fonte que a sua aplicação copia e passa a possuir, sem nenhuma gem em runtime." %>
 
   <section class="space-y-4">
     <p class="leading-7">
-      O shadcn/ui inverteu a relação com bibliotecas de UI: em vez de instalar um pacote e
+      O shadcn/ui inverteu a relação com bibliotecas de UI. Em vez de instalar um pacote e
       configurar por fora o que ele permite, você copia o código-fonte do componente para
-      dentro do projeto. Shadwire faz o mesmo para o Rails — os componentes são classes
+      dentro do projeto. Shadwire faz o mesmo para o Rails. Os componentes são classes
       <%= link_to "ViewComponent", "https://viewcomponent.org", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
       estilizadas com Tailwind CSS v4, distribuídas por um registry estático e instaladas
       por uma CLI.
@@ -22,24 +22,24 @@
     <%= render layout: "docs/callout", locals: { icon: "info", title: "Nada disso vira dependência de runtime" } do %>
       A gem <code>shadwire</code> vive no grupo <code>development</code> e só existe para
       instalar e sincronizar arquivos. Se você removê-la, os componentes instalados
-      continuam funcionando exatamente como estão.
+      continuam funcionando como estão.
     <% end %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Como funciona") %>
     <p class="leading-7 text-muted-foreground">
-      Três peças, uma direção só: o registry publica, a CLI instala, o seu app é dono.
+      O registry publica, a CLI instala e o seu app fica com os arquivos.
     </p>
 
     <ol class="space-y-4">
       <% [
         { step: "1", title: "O registry publica",
-          body: "Cada componente é publicado como um JSON com o conteúdo dos arquivos embutido, servido em https://shadwire.edumoraes.dev.br/r. É estático — sem servidor, sem autenticação, sem conta." },
+          body: "Cada componente é publicado como um JSON com o conteúdo dos arquivos embutido, servido em https://shadwire.edumoraes.dev.br/r. São arquivos estáticos, sem servidor de aplicação nem autenticação." },
         { step: "2", title: "A CLI instala",
           body: "bin/shadwire add button baixa o item, grava os arquivos nos caminhos do seu app, aplica as gems e os pins de importmap que ele precisa, e anota tudo no shadwire.json." },
         { step: "3", title: "Você passa a ser dono",
-          body: "Os arquivos são seus. Edite variantes, troque classes, renomeie o que quiser. bin/shadwire diff mostra o que divergiu do registry quando você quiser comparar." }
+          body: "Os arquivos são seus. Edite variantes, troque classes, renomeie. bin/shadwire diff mostra o que divergiu do registry." }
       ].each do |item| %>
         <li class="flex gap-4">
           <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
@@ -66,17 +66,17 @@
     <div class="grid gap-4 sm:grid-cols-2">
       <% [
         { icon: "package-open", title: "Open Code",
-          body: "O código do componente fica visível e editável no seu repositório. Sem camada de configuração para contornar o que a biblioteca não previu — você muda o arquivo." },
+          body: "O código do componente fica visível e editável no seu repositório. Não existe camada de configuração a contornar: quando a biblioteca não previu um caso, você muda o arquivo." },
         { icon: "blocks", title: "Composição",
-          body: "Subcomponentes são helpers aninhados, não props. ui_card_header dentro de ui_card, ui_select_item dentro de ui_select_content — a estrutura da view espelha a do HTML." },
+          body: "Subcomponentes são helpers aninhados, não props: ui_card_header dentro de ui_card, ui_select_item dentro de ui_select_content. A estrutura da view espelha a do HTML." },
         { icon: "palette", title: "Tokens semânticos",
           body: "Toda cor vem de um token shadcn (bg-primary, text-muted-foreground). Retematizar é editar duas listas de variáveis CSS; nenhum componente precisa mudar." },
         { icon: "accessibility", title: "Acessível por padrão",
           body: "Semântica ARIA e os padrões do WAI-ARIA APG vêm embutidos: foco, teclado, rótulos e estados. A suíte do repositório valida isso a cada mudança." },
         { icon: "bot", title: "Pronto para agentes",
-          body: "Uma skill de agente e os arquivos llms.txt descrevem o catálogo em texto plano, e toda a CLI fala --json. Um agente descobre a API sem adivinhar." },
+          body: "Uma skill de agente e os arquivos llms.txt descrevem o catálogo em texto plano, e toda a CLI fala --json, então um agente lê a API em vez de adivinhar." },
         { icon: "git-compare-arrows", title: "Atualização explícita",
-          body: "Nada muda sozinho. diff mostra a divergência, update reaplica a versão do registry quando você mandar — e diz o que sobrescreveu." }
+          body: "Nada muda sozinho. diff mostra a divergência e update reaplica a versão do registry quando você mandar, reportando o que sobrescreveu." }
       ].each do |principle| %>
         <%= ui_card(class: "h-full") do %>
           <%= ui_card_header do %>
@@ -93,8 +93,8 @@
   <section class="space-y-4">
     <%= docs_h2("O que já existe") %>
     <p class="leading-7 text-muted-foreground">
-      <%= docs_component_items.size %> componentes e 1 block, todos validados em uma aplicação
-      Rails real — a que serve este site.
+      <%= docs_component_items.size %> componentes e 1 block, todos validados na aplicação Rails
+      que serve este site.
     </p>
 
     <%= render "docs/table",

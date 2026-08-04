@@ -3,10 +3,10 @@
 # Code samples for the guide pages.
 #
 # They live here rather than in the views because an ERB template cannot hold a
-# heredoc containing ERB tags — the template scanner closes the tag at the first
+# heredoc containing ERB tags: the template scanner closes the tag at the first
 # `%>` and the heredoc never terminates. ComponentsController keeps its snippets
 # in Ruby for the same reason; this module does it for the whole docs section so
-# DocsController stays about pages, not about strings.
+# DocsController stays about pages.
 #
 # Sandbox-only: nothing here ships in the Shadwire registry.
 module DocsSnippets
@@ -144,7 +144,7 @@ module DocsSnippets
     ERB
 
     keep_edits: <<~SHELL
-      bin/shadwire diff button      # veja exatamente o que você mudou
+      bin/shadwire diff button      # veja o que você mudou
       bin/shadwire update button    # sem --yes: pergunta por arquivo e mostra o diff
     SHELL
   }.freeze
@@ -186,12 +186,12 @@ module DocsSnippets
     ERB
 
     wrong: <<~'ERB',
-      <%# Errado — cor no braço claro e no escuro, escrita à mão %>
+      <%# Errado: cor no claro e no escuro, escrita à mão %>
       <%= ui_card(class: "bg-white text-gray-900 dark:bg-gray-900 dark:text-white") do %>
     ERB
 
     right: <<~'ERB'
-      <%# Certo — os tokens já resolvem os dois modos %>
+      <%# Certo: os tokens já resolvem os dois modos %>
       <%= ui_card do %>
     ERB
   }.freeze
@@ -244,7 +244,7 @@ module DocsSnippets
     diff: <<~SHELL,
       bin/shadwire diff
       bin/shadwire diff --json
-      bin/shadwire diff --exit-code    # não-zero quando existe drift — para o CI
+      bin/shadwire diff --exit-code    # não-zero quando existe drift (para o CI)
     SHELL
 
     update: <<~SHELL,
@@ -411,7 +411,7 @@ module DocsSnippets
 
   COMPOSITION = {
     wrong_props: <<~'ERB',
-      <%# Errado — essas props não existem %>
+      <%# Errado: essas props não existem %>
       <%= ui_card(header: "Time", footer: "Salvar") %>
     ERB
 
@@ -428,7 +428,7 @@ module DocsSnippets
     ERB
 
     wrong_collapse: <<~'ERB',
-      <%# Errado — tudo despejado no content %>
+      <%# Errado: tudo despejado no content %>
       <%= ui_card do %>
         <%= ui_card_content do %>
           <h3>Time</h3>
@@ -438,7 +438,7 @@ module DocsSnippets
     ERB
 
     wrong_group: <<~'ERB',
-      <%# Errado — item renderizado direto na raiz %>
+      <%# Errado: item renderizado direto na raiz %>
       <%= ui_select do %>
         <%= ui_select_item(value: "a") { "A" } %>
       <% end %>
@@ -455,14 +455,14 @@ module DocsSnippets
     ERB
 
     wrong_title: <<~'ERB',
-      <%# Errado — o diálogo não tem nome acessível %>
+      <%# Errado: o diálogo não tem nome acessível %>
       <%= ui_dialog_content do %>
         <p>Tem certeza?</p>
       <% end %>
     ERB
 
     right_title: <<~'ERB',
-      <%# Certo — escondido visualmente, mas anunciado %>
+      <%# Certo: escondido visualmente, mas anunciado %>
       <%= ui_dialog_content do %>
         <%= ui_dialog_header do %>
           <%= ui_dialog_title(class: "sr-only") { "Confirmar exclusão" } %>
@@ -486,12 +486,12 @@ module DocsSnippets
 
   STYLING = {
     wrong_colors: <<~'ERB',
-      <%# Errado — cores fixas e um override manual de dark %>
+      <%# Errado: cores fixas e um override manual de dark %>
       <%= ui_card(class: "bg-white text-gray-900 dark:bg-gray-900 dark:text-white") do %>
     ERB
 
     right_colors: <<~'ERB',
-      <%# Certo — os tokens já cuidam dos dois modos %>
+      <%# Certo: os tokens já cuidam dos dois modos %>
       <%= ui_card do %>
     ERB
 
@@ -503,12 +503,12 @@ module DocsSnippets
     order: "base_classes → variant_classes → size_classes → a sua class",
 
     wrong_restyle: <<~'ERB',
-      <%# Errado — brigando com o design system %>
+      <%# Errado: brigando com o design system %>
       <%= ui_button(class: "bg-red-600 hover:bg-red-700") { "Excluir" } %>
     ERB
 
     right_restyle: <<~'ERB',
-      <%# Certo — a variante existe %>
+      <%# Certo: a variante existe %>
       <%= ui_button(variant: :destructive) { "Excluir" } %>
     ERB
 
@@ -623,7 +623,7 @@ module DocsSnippets
 
   ICONS = {
     wrong_names: <<~'ERB',
-      <%# Errado — nomes de componente React não existem aqui %>
+      <%# Errado: nomes de componente React não existem aqui %>
       <%= ui_icon("ChevronDown") %>
       <%= ui_icon(:chevron_down) %>
     ERB
@@ -638,23 +638,23 @@ module DocsSnippets
     ERB
 
     decorative: <<~'ERB',
-      <%# Certo — "Baixar" já é o rótulo; o ícone é decoração %>
+      <%# Certo: "Baixar" já é o rótulo; o ícone é decoração %>
       <%= ui_button { safe_join([ ui_icon("download"), " Baixar" ]) } %>
     ERB
 
     wrong_label: <<~'ERB',
-      <%# Errado — botão só de ícone, sem nome acessível %>
+      <%# Errado: botão só de ícone, sem nome acessível %>
       <%= ui_button(size: :icon) { ui_icon("trash-2") } %>
     ERB
 
     right_label: <<~'ERB',
-      <%# Certo — qualquer um dos dois, nunca nenhum %>
+      <%# Certo: qualquer um dos dois serve %>
       <%= ui_button(size: :icon) { ui_icon("trash-2", label: "Excluir") } %>
       <%= ui_button(size: :icon, "aria-label": "Excluir") { ui_icon("trash-2") } %>
     ERB
 
     wrong_prop: <<~'ERB',
-      <%# Errado — nenhum componente tem essa prop %>
+      <%# Errado: nenhum componente tem essa prop %>
       <%= ui_button(icon: "plus") { "Adicionar" } %>
     ERB
 
@@ -708,7 +708,13 @@ module DocsSnippets
   }.freeze
 
   # Snippets for a docs action, or an empty hash for a page that has none.
+  #
+  # Missing keys raise rather than returning nil: a view asking for a renamed
+  # snippet would otherwise publish an empty code block, complete with a copy
+  # button, and nothing would report it.
   def self.for(page)
-    PAGES.fetch(page.to_s, {})
+    PAGES.fetch(page.to_s, {}).dup.tap do |snippets|
+      snippets.default_proc = ->(_hash, key) { raise KeyError, "#{page} has no snippet #{key.inspect}" }
+    end
   end
 end

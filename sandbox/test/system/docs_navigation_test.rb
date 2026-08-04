@@ -34,6 +34,37 @@ class DocsNavigationTest < ApplicationSystemTestCase
     assert_selector "nav[aria-label='Nesta página'] a[data-active='true']", text: "Erros e código de saída"
   end
 
+  # A section taller than the observation band used to leave the whole rail
+  # unhighlighted, which was most of the scroll range on a long page.
+  test "exactly one entry is highlighted at any scroll position" do
+    visit docs_cli_path
+
+    assert_selector "nav[aria-label='Nesta página'] a"
+    height = page.evaluate_script("document.documentElement.scrollHeight")
+
+    (0..height).step(300) do |offset|
+      page.execute_script("window.scrollTo(0, #{offset})")
+      assert_selector "nav[aria-label='Nesta página'] a[data-active='true']", count: 1,
+                      wait: 2
+    end
+  end
+
+  # A live example renders headings of its own, and on the overlay pages they sit
+  # inside a closed <dialog>, where the anchor cannot resolve.
+  test "the table of contents leaves live previews out" do
+    visit "/components/accordion"
+
+    entries = all("nav[aria-label='Nesta página'] a").map(&:text)
+
+    assert_includes entries, "Exemplos"
+    assert_includes entries, "Basic"
+    refute_includes entries, "Como faço para redefinir minha senha?"
+
+    visit "/components/sheet"
+
+    assert_empty all("nav[aria-label='Nesta página'] a").map(&:text).grep(/\ASheet: /)
+  end
+
   test "the sidebar marks the current page and moves between pages" do
     visit docs_theming_path
 
@@ -65,6 +96,27 @@ class DocsNavigationTest < ApplicationSystemTestCase
     end
 
     assert_selector "h1", text: "Date Picker"
+  end
+
+  # Turbo caches the outgoing page. A snapshot taken with the palette still open
+  # used to restore as a non-modal dialog that no key or click could dismiss.
+  test "going back does not restore a stuck overlay" do
+    visit docs_path
+
+    find("body").send_keys([ :control, "k" ])
+    find("dialog[data-slot='dialog-content'][open]")
+
+    within "dialog[data-slot='dialog-content'][open]" do
+      fill_in_command "theming"
+      find("[data-slot='command-item']", text: "Theming", match: :first).click
+    end
+
+    assert_selector "h1", text: "Theming"
+
+    page.go_back
+
+    assert_selector "h1", text: "Introdução"
+    assert_no_selector "dialog[open]", visible: :all
   end
 
   test "small screens open the sidebar in a sheet" do

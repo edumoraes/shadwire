@@ -7,7 +7,7 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Acessibilidade",
-        description: "Os componentes seguem os padrões do WAI-ARIA APG e preferem o elemento nativo sempre que ele existe. O que sobra para você é curto — e está aqui." %>
+        description: "Os componentes seguem os padrões do WAI-ARIA APG e preferem o elemento nativo sempre que ele existe. O que sobra para você é curto." %>
 
   <section class="space-y-4">
     <%= docs_h2("O que vem pronto") %>
@@ -23,9 +23,9 @@
           ] %>
 
     <p class="leading-7 text-muted-foreground">
-      Isso não é uma promessa vaga: cada componente tem testes de renderização no repositório,
-      e uma suíte de acessibilidade percorre as páginas do site verificando estrutura,
-      rotulagem e navegação. Os testes de sistema rodam em Chrome headless a cada mudança.
+      Cada componente tem testes de renderização no repositório, e uma suíte de acessibilidade
+      percorre as páginas do site verificando estrutura, rotulagem e navegação. Os testes de
+      sistema rodam em Chrome headless a cada mudança.
     </p>
   </section>
 
@@ -37,7 +37,7 @@
         <%= docs_h3("Nomear overlays") %>
         <p class="text-sm leading-6 text-muted-foreground">
           O <%= docs_code("<dialog>") %> dá foco e teclado, mas não inventa um nome. Todo
-          diálogo, sheet e drawer precisa do componente de título — use
+          diálogo, sheet e drawer precisa do componente de título; use
           <%= docs_code('class: "sr-only"') %> quando o desenho não mostrar um.
         </p>
         <%= docs_code_block(@snippets[:overlay]) %>
@@ -46,9 +46,9 @@
       <div class="space-y-3">
         <%= docs_h3("Nomear ícones que carregam significado") %>
         <p class="text-sm leading-6 text-muted-foreground">
-          Ícone ao lado de texto é decoração e deve continuar escondido. Ícone sozinho é o
-          rótulo — passe <%= docs_code("label:") %>, ou rotule o controle que o contém. Detalhes
-          em <%= link_to "Ícones", docs_icons_path, class: "font-medium underline underline-offset-4" %>.
+          Ícone ao lado de texto é decoração e deve continuar escondido. Ícone sozinho vira o
+          rótulo, então passe <%= docs_code("label:") %> ou rotule o controle que o contém.
+          Detalhes em <%= link_to "Ícones", docs_icons_path, class: "font-medium underline underline-offset-4" %>.
         </p>
         <%= docs_code_block(@snippets[:icon_label]) %>
       </div>
@@ -58,8 +58,8 @@
         <p class="text-sm leading-6 text-muted-foreground">
           Como não existe integração com form builder, o par
           <%= docs_code("for:") %> / <%= docs_code("id:") %> é seu.
-          <%= docs_code("ui_field") %> organiza a linha, mas não adivinha o id do controle —
-          veja <%= link_to "Formulários", docs_forms_path, class: "font-medium underline underline-offset-4" %>.
+          <%= docs_code("ui_field") %> organiza a linha, mas não adivinha o id do controle.
+          Veja <%= link_to "Formulários", docs_forms_path, class: "font-medium underline underline-offset-4" %>.
         </p>
       </div>
 
@@ -86,26 +86,24 @@
   <section class="space-y-4">
     <%= docs_h2("Testando no seu app") %>
     <p class="leading-7 text-muted-foreground">
-      Os componentes instalados são código seu, então testam como qualquer ViewComponent. O
-      que costuma valer a pena travar em teste é justamente o que a biblioteca não pode
-      garantir sozinha — o nome acessível:
+      Os componentes instalados são código seu, então testam como qualquer ViewComponent.
+      Trave em teste o nome acessível, que é o que a biblioteca não garante sozinha:
     </p>
 
     <%= docs_code_block(@snippets[:test], language: :ruby) %>
 
     <%= render layout: "docs/callout", locals: { icon: "info", title: "Componentes interativos precisam de navegador" } do %>
       Foco, teclado e o comportamento do <code>&lt;dialog&gt;</code> só aparecem em teste de
-      sistema. Um teste de renderização confirma a marcação; ele não confirma que o
-      <code>Esc</code> fecha.
+      sistema. Um teste de renderização confirma a marcação, não que o <code>Esc</code> fecha.
     <% end %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Encontrou um problema?") %>
     <p class="leading-7 text-muted-foreground">
-      Acessibilidade quebrada em um componente é bug do registry, não do seu app —
+      Acessibilidade quebrada em um componente é bug do registry, não do seu app:
       <%= link_to "abra uma issue", "https://github.com/edumoraes/shadwire/issues/new", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>.
-      Enquanto isso, o arquivo é seu: corrija localmente e rode
+      Enquanto isso o arquivo é seu, então corrija localmente e rode
       <%= docs_code("bin/shadwire diff") %> antes do próximo update.
     </p>
   </section>

@@ -7,14 +7,14 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "llms.txt",
-        description: "O mesmo catálogo, em texto plano — para quando o agente não tem a skill nem consegue rodar a CLI." %>
+        description: "O mesmo catálogo em texto plano, para quando o agente não tem a skill nem consegue rodar a CLI." %>
 
   <section class="space-y-4">
     <p class="leading-7">
       A <%= link_to "agent skill", docs_agent_skill_path, class: "font-medium underline underline-offset-4" %>
-      é o caminho preferido: ela lê o app de verdade e sabe o que está instalado. Mas nem todo
-      agente instala skills, e nem todo contexto tem shell. Para esses, o build do registry
-      publica duas variantes em texto plano, geradas dos mesmos dados.
+      é o caminho preferido: ela lê o app e sabe o que está instalado. Mas nem todo agente
+      instala skills, e nem todo contexto tem shell. Para esses, o build do registry publica
+      duas variantes em texto plano, geradas dos mesmos dados.
     </p>
 
     <%= render "docs/table",
@@ -46,15 +46,15 @@
     <%= docs_h2("O limite") %>
     <p class="leading-7 text-muted-foreground">
       Esses arquivos descrevem o <em>registry</em>, não o <em>seu app</em>. Eles listam todos
-      os <%= docs_component_items.size %> componentes, inclusive os que você nunca instalou — e
-      um helper de componente não instalado não existe.
+      os <%= docs_component_items.size %> componentes, inclusive os que você nunca instalou, e
+      o helper de um componente não instalado não existe.
     </p>
 
     <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "Instalar à mão deixa o shadwire.json impreciso" } do %>
       Dá para copiar o código a partir do <code>llms-full.txt</code>, mas o inventário em
-      <code>shadwire.json</code> não é atualizado — e é ele que faz <code>diff</code>,
-      <code>update</code> e <code>remove</code> funcionarem. Se a CLI estiver disponível de
-      alguma forma, use a CLI.
+      <code>shadwire.json</code> não é atualizado, e é ele que faz <code>diff</code>,
+      <code>update</code> e <code>remove</code> funcionarem. Se a CLI estiver disponível, use
+      a CLI.
     <% end %>
   </section>
 </article>

@@ -20,16 +20,31 @@ export default class extends Controller {
   openOnShortcut(event) {
     if (event.key?.toLowerCase() !== "k") return
     if (!event.metaKey && !event.ctrlKey) return
+    // Ctrl+K is a text-editing binding on macOS, and the palette's own input is
+    // a text field, so leave the shortcut alone while someone is typing.
+    if (this.isTyping(event.target)) return
 
     event.preventDefault()
     this.triggerTarget.click()
   }
 
+  isTyping(target) {
+    if (!target) return false
+
+    return target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)
+  }
+
   // ui-command:select carries the chosen item; the destination rides on it as a
   // data attribute, because a Command item is an option, not a link.
+  //
+  // Closing first matters: Turbo caches the outgoing page, and a snapshot taken
+  // with the <dialog> still open restores as a non-modal overlay with no way to
+  // dismiss it.
   navigate(event) {
     const href = event.detail?.item?.dataset?.href
     if (!href) return
+
+    this.element.querySelector("dialog[open]")?.close()
 
     if (window.Turbo) {
       window.Turbo.visit(href)

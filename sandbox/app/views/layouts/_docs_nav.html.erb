@@ -3,9 +3,12 @@
     DocsNavHelper, so the two can never drift. %>
 <nav aria-label="Documentação" class="flex flex-col gap-6 text-sm">
   <% docs_nav_groups.each do |group| %>
+    <%# The group label is not a heading: six of them ahead of the page's own h1
+        would bury it in the heading list a screen reader announces. The list
+        carries the same name through aria-label instead. %>
     <div class="flex flex-col gap-1">
-      <h2 class="px-2 py-1 font-medium text-foreground"><%= group[:title] %></h2>
-      <ul class="flex flex-col gap-0.5">
+      <p class="px-2 py-1 font-medium text-foreground" aria-hidden="true"><%= group[:title] %></p>
+      <ul class="flex flex-col gap-0.5" aria-label="<%= group[:title] %>">
         <% group[:items].each do |item| %>
           <% current = docs_nav_current?(item) %>
           <li>

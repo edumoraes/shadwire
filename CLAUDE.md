@@ -90,7 +90,7 @@ pointing at the synced `vendor/shadwire/shadwire.css`.
 
 ## The docs site
 
-The sandbox *is* the published site. Guides and components share one shell —
+The sandbox *is* the published site. Guides and components share one shell,
 `sandbox/app/views/layouts/docs.html.erb`: header, sidebar grouped by topic,
 breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
 
@@ -100,7 +100,7 @@ breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
   route. `test/helpers/docs_nav_helper_test.rb` fails if the two drift apart.
 - Guide pages live in `sandbox/app/views/docs/` and are served by `DocsController`.
 - **Code samples go in `sandbox/app/lib/docs_snippets.rb`, never inline in a view.**
-  An ERB template cannot hold a heredoc containing ERB tags — the scanner closes
+  An ERB template cannot hold a heredoc containing ERB tags: the scanner closes
   the tag at the first `%>` and the heredoc never terminates. `DocsController`
   assigns the page's hash to `@snippets` in a `before_action`.
 - The "Nesta página" rail is built client-side by `docs_toc_controller.js` from

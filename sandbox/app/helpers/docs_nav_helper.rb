@@ -3,7 +3,7 @@
 # The documentation sidebar, in the shadcn/ui model: one flat list of groups,
 # each group a topic.
 #
-# Sandbox-only, like DocsHelper — nothing here is part of the Shadwire registry.
+# Sandbox-only, like DocsHelper. Nothing here is part of the Shadwire registry.
 #
 # The Componentes group is derived from registry/registry.json instead of being
 # listed by hand, so a component added to the registry shows up in the sidebar
@@ -43,9 +43,11 @@ module DocsNavHelper
     },
     {
       title: "Blocks",
+      # The individual blocks are deliberately absent: a block renders standalone
+      # under the "block" layout, with no header, no sidebar and no way back. The
+      # index frames each one in an iframe and links to the full-screen version.
       items: [
-        { title: "Visão geral", route: :blocks },
-        { title: "sidebar-01", route: :blocks_sidebar_01 }
+        { title: "Visão geral", route: :blocks }
       ]
     }
   ].freeze
@@ -74,7 +76,7 @@ module DocsNavHelper
     registry_items.values.select { |item| item.fetch("type") == "component" }
   end
 
-  # Every sidebar entry, flattened — the order the previous/next pager walks.
+  # Every sidebar entry, flattened into the order the previous/next pager walks.
   def docs_nav_items
     @docs_nav_items ||= docs_nav_groups.flat_map { |group| group[:items] }
   end
@@ -94,7 +96,7 @@ module DocsNavHelper
     @docs_current_group = docs_nav_groups.find { |group| group[:items].any? { |item| docs_nav_current?(item) } }
   end
 
-  # [previous, next] around the current page — either may be nil at the ends.
+  # [previous, next] around the current page. Either may be nil at the ends.
   def docs_nav_siblings
     index = docs_nav_items.index { |item| docs_nav_current?(item) }
     return [ nil, nil ] unless index
@@ -103,9 +105,11 @@ module DocsNavHelper
   end
 
   def docs_nav_current?(item)
+    # current_page? raises a bare RuntimeError without a request (a view test, a
+    # component preview), and there is no current page to compare against there.
+    return false unless respond_to?(:request) && request
+
     current_page?(item[:path])
-  rescue ActionController::RoutingError
-    false
   end
 
   # Which top-level section the header highlights: :docs, :components, :blocks

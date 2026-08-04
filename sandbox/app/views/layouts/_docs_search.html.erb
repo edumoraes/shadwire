@@ -1,7 +1,7 @@
 <%# The ⌘K palette, composed from the Command and Dialog components the registry
     ships. The item list mirrors the sidebar, so it never lists a page that is
-    not there — the browser filters it client-side, which is all a static site
-    can do (and all this catalog needs). %>
+    not there. The browser filters it client-side, which is all a static site
+    can do. %>
 <div data-controller="docs-search" data-action="ui-command:select->docs-search#navigate">
   <%= ui_dialog do %>
     <%= ui_dialog_trigger(variant: :outline,
@@ -33,7 +33,10 @@
               <% group[:items].each do |item| %>
                 <%# No per-item icon on purpose: 70-odd identical SVGs would be the
                     single heaviest thing on every page of a static site. %>
-                <%= ui_command_item(value: "#{group[:title]} #{item[:title]}",
+                <%# The filter matches this value, so it is the page title alone:
+                    including the group would make "com" match all 57 components
+                    through "Componentes". %>
+                <%= ui_command_item(value: item[:title],
                                     class: "cursor-pointer",
                                     data: { href: item[:path] }) do %>
                   <%= item[:title] %>

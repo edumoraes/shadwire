@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Serves the guide and reference pages of the documentation site — everything
-# that is not a component or a block.
+# Serves the guide and reference pages of the documentation site. Components and
+# blocks have their own controllers.
 #
 # Pages are plain views; only the ones that need repeated data (command tables,
 # token tables) get it from a constant here, so the prose stays in the view.
@@ -28,7 +28,7 @@ class DocsController < ApplicationController
       summary: "Lista todos os componentes do catálogo do registry.",
       flags: %w[--registry --json] },
     { name: "search", signature: "bin/shadwire search CONSULTA",
-      summary: "Busca no catálogo por nome, título, descrição e pelo texto de quando usar — " \
+      summary: "Busca no catálogo por nome, título, descrição e pelo texto de quando usar, " \
                "então termos conceituais como form, modal ou loading funcionam.",
       flags: %w[--registry --json] },
     { name: "info", signature: "bin/shadwire info NOME",
@@ -41,11 +41,11 @@ class DocsController < ApplicationController
       flags: %w[--registry --json --exit-code] },
     { name: "update", signature: "bin/shadwire update [NOME...]",
       summary: "Reaplica a versão do registry dos componentes instalados. Sobrescreve edições " \
-               "locais — rode o diff antes.",
+               "locais, então rode o diff antes.",
       flags: %w[--yes --overwrite --no-deps --registry --json] },
     { name: "remove", signature: "bin/shadwire remove NOME...",
-      summary: "Desinstala componentes apagando apenas os arquivos exclusivos deles — nunca a base " \
-               "compartilhada, nunca um arquivo que outro componente instalado ainda usa.",
+      summary: "Desinstala componentes apagando só os arquivos exclusivos deles, nunca a base " \
+               "compartilhada nem um arquivo que outro componente instalado ainda usa.",
       flags: %w[--yes --registry --json] },
     { name: "status", signature: "bin/shadwire status",
       summary: "Descreve o app inteiro em uma chamada: stack detectada, componentes instalados com " \
@@ -61,9 +61,9 @@ class DocsController < ApplicationController
     { flag: "--cwd DIR", commands: "todos",
       description: "Roda contra outro diretório de aplicação, em vez do diretório atual." },
     { flag: "--registry URL", commands: "todos",
-      description: "Lê de outro registry. Aceita https:// e file:// — é assim que se testa um registry construído localmente." },
+      description: "Lê de outro registry. Aceita https:// e file://, que é como se testa um registry construído localmente." },
     { flag: "--json", commands: "todos, menos version",
-      description: "Emite JSON legível por máquina em vez da saída humana. O caminho de agentes e CI." },
+      description: "Emite JSON legível por máquina em vez da saída humana. É o que agentes e CI usam." },
     { flag: "--yes, -y", commands: "init, add, update, remove",
       description: "Aplica mudanças de arquivo e de dependência sem perguntar." },
     { flag: "--overwrite", commands: "add, update",
@@ -73,7 +73,7 @@ class DocsController < ApplicationController
     { flag: "--force", commands: "init",
       description: "Reescreve um shadwire.json existente e recria o binstub." },
     { flag: "--exit-code", commands: "diff",
-      description: "Sai com código não-zero quando existe drift. Para travar o CI." }
+      description: "Sai com código não-zero quando existe drift, para travar o CI." }
   ].freeze
 
   # The shadcn semantic tokens, as installed in vendor/shadwire/shadwire.css.
