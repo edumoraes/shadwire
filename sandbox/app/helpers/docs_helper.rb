@@ -44,6 +44,21 @@ module DocsHelper
     registry_items[name.to_s]
   end
 
+  # The catalog blurb for a registry item, in the language being read.
+  #
+  # registry.json's `description` is the public API and is English by design —
+  # the CLI, /r/*.json, llms.txt and the agent skill all read it, for a worldwide
+  # audience. The site overrides it per locale instead, which is the same
+  # contract an installed component uses for its own strings: English lives in
+  # the source, and a locale file that defines the key wins.
+  #
+  # The default is not a safety net. config.i18n.fallbacks would resolve a miss
+  # to English on its own, silently, which is why RegistryDescriptionsTest
+  # asserts every item has a translation.
+  def registry_description(item)
+    t("registry.descriptions.#{item.fetch("name").tr("-", "_")}", default: item.fetch("description"))
+  end
+
   # Install targets for an item, in manifest order.
   def registry_install_targets(name)
     item = registry_item(name)

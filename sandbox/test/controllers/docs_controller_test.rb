@@ -20,7 +20,8 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     "/docs/styling" => [ "Styling", "Estilização" ],
     "/docs/forms" => [ "Forms", "Formulários" ],
     "/docs/icons" => [ "Icons", "Ícones" ],
-    "/docs/accessibility" => [ "Accessibility", "Acessibilidade" ]
+    "/docs/accessibility" => [ "Accessibility", "Acessibilidade" ],
+    "/docs/localisation" => [ "Localisation", "Localização" ]
   }.freeze
 
   PAGES.each do |path, (english, portuguese)|
@@ -43,6 +44,18 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
       assert_select "h1", text: portuguese
       assert_select "nav[aria-label='Documentação']"
       assert_select "nav[aria-label='Documentação'] a[aria-current='page'][href='/pt#{path}']"
+    end
+  end
+
+  # PAGES is written by hand, so a page added to the sidebar could go live with
+  # nobody ever fetching it here — which is how a broken template passes.
+  test "every guide page in the sidebar is covered above" do
+    guide_paths = DocsNavHelper::GUIDE_GROUPS.flat_map { |group| group[:routes] }
+                                             .reject { |route| route == :blocks }
+                                             .map { |route| Rails.application.routes.url_helpers.public_send(:"#{route}_path") }
+
+    guide_paths.each do |path|
+      assert_includes PAGES.keys, path, "#{path} is in the sidebar but no test fetches it"
     end
   end
 
@@ -113,6 +126,37 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     # Portuguese must not be silently falling back to the English text.
     assert_equal "all", I18n.t("docs.cli.flags", locale: :en).first[:commands]
     assert_equal "todos", I18n.t("docs.cli.flags", locale: :pt).first[:commands]
+  end
+
+  # The key list is scanned out of the installed component source, so a component
+  # that gains a string is documented without anyone editing the page. What can
+  # break is the scan itself — a call written in a shape the regex misses would
+  # drop a key silently. Grep independently and compare.
+  test "the localisation page lists every key the installed components read" do
+    keys = Dir[Rails.root.join("app/components/ui/**/*.{rb,erb}")]
+           .flat_map { |file| File.read(file).scan(/I18n\.t\("(ui\.[a-z0-9_.]+)"/).flatten }
+           .uniq
+
+    get docs_localisation_path
+
+    assert_response :success
+    refute_empty keys
+    keys.each do |key|
+      assert_select "table td code", text: key, count: 1, message: "#{key} is not documented"
+    end
+  end
+
+  # These four are written into data-*-value attributes and read by a Stimulus
+  # controller. Someone translating them needs to know that, and one of them
+  # carries placeholders that JavaScript — not I18n — substitutes.
+  test "the localisation page marks the keys JavaScript reads" do
+    get docs_localisation_path
+
+    %w[ui.data_table.selection ui.calendar.month ui.calendar.year ui.sonner.close].each do |key|
+      assert_select "table tr", html: /#{Regexp.escape(key)}.*>value</m,
+                    message: "#{key} is not marked as a Stimulus value"
+    end
+    assert_select "pre.highlight", text: /%\{selected\}/
   end
 
   test "guide pages render highlighted code with copy controls" do

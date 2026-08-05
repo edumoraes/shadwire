@@ -120,6 +120,7 @@ pt:
         forms: Formulários
         icons: Ícones
         accessibility: Acessibilidade
+        localisation: Localização
 
     cli:
       commands:
@@ -707,6 +708,3 @@ pt:
       data_table:
         subtitle: "Tabela com filtro, ordenação, paginação, seleção de linhas e visibilidade de colunas — tudo no cliente."
 
-  blocks:
-    sidebar_01:
-      description: Uma sidebar de navegação com seletor de versão, busca e grupos de links.

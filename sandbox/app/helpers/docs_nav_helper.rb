@@ -25,7 +25,7 @@ module DocsNavHelper
     },
     {
       key: :guides,
-      routes: %i[docs_composition docs_styling docs_forms docs_icons docs_accessibility]
+      routes: %i[docs_composition docs_styling docs_forms docs_icons docs_accessibility docs_localisation]
     },
     {
       key: :blocks,
