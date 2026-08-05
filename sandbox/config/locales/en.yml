@@ -675,6 +675,3 @@ en:
       data_table:
         subtitle: "A table with filtering, sorting, pagination, row selection and column visibility — all client-side."
 
-  blocks:
-    sidebar_01:
-      description: A navigation sidebar with a version switcher, search, and groups of links.
