@@ -155,9 +155,19 @@ module DocsHelper
     formatter.format(lexer.lex(code.to_s.strip)).html_safe
   end
 
+  # The snippet under a preview has to be the file that produced it. Rails picks
+  # _foo.pt.html.erb over _foo.html.erb on its own when rendering, so reading the
+  # source back must make the same choice — otherwise a Portuguese page shows a
+  # demo and a listing of it that disagree.
+  #
+  # Most examples have no localised copy and never will: `ui_button { "Save" }`
+  # illustrates a registry whose language is English. Only the demos whose
+  # content is prose rather than UI labels are worth two files.
   def example_source(name)
     slug = name.to_s.parameterize(separator: "_")
-    File.read(EXAMPLES_DIR.join("_#{slug}.html.erb"))
+    localised = EXAMPLES_DIR.join("_#{slug}.#{I18n.locale}.html.erb")
+
+    File.read(localised.exist? ? localised : EXAMPLES_DIR.join("_#{slug}.html.erb"))
   end
 
   def lexer_for(language, code)

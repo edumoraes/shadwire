@@ -1,0 +1,9 @@
+<%= ui_alert(variant: :destructive) do %>
+  <div class="flex gap-3">
+    <%= ui_icon("circle-alert", class: "mt-0.5") %>
+    <div class="grid gap-1">
+      <p class="font-medium leading-none">Não foi possível salvar</p>
+      <p class="text-sm">Revise os campos destacados e tente de novo.</p>
+    </div>
+  </div>
+<% end %>
