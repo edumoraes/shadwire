@@ -690,6 +690,40 @@ module DocsSnippets
     RUBY
   }.freeze
 
+  LOCALISATION = {
+    call: <<~RUBY,
+      # app/components/ui/dialog/content_component.rb, as installed
+      I18n.t("ui.dialog.close", default: "Close")
+    RUBY
+
+    override: <<~YAML,
+      # config/locales/pt.yml
+      pt:
+        ui:
+          dialog:
+            close: Fechar
+          sheet:
+            close: Fechar
+          pagination:
+            previous: Anterior
+            next: Próxima
+    YAML
+
+    interpolated: <<~YAML,
+      pt:
+        ui:
+          data_table:
+            # %{selected} and %{total} are substituted by the Stimulus
+            # controller, not by I18n. Keep both tokens, in any order.
+            selection: "%{selected} de %{total} linha(s) selecionada(s)."
+    YAML
+
+    calendar_names: <<~'ERB'
+      <%= ui_calendar(month_names: I18n.t("date.month_names").compact,
+                      day_names: I18n.t("date.abbr_day_names")) %>
+    ERB
+  }.freeze
+
   PAGES = {
     "index" => {},
     "installation" => INSTALLATION,
@@ -704,7 +738,8 @@ module DocsSnippets
     "styling" => STYLING,
     "forms" => FORMS,
     "icons" => ICONS,
-    "accessibility" => ACCESSIBILITY
+    "accessibility" => ACCESSIBILITY,
+    "localisation" => LOCALISATION
   }.freeze
 
   # Snippets for a docs action, or an empty hash for a page that has none.
