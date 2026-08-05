@@ -131,4 +131,21 @@
       <% end %>
     </div>
   </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Licença") %>
+    <p class="leading-7 text-muted-foreground">
+      Shadwire é MIT, e os componentes que a CLI instala no seu app são seus: use, modifique
+      e publique em produtos comerciais e de código fechado, sem exigência de atribuição nos
+      arquivos instalados e sem dependência de runtime.
+    </p>
+    <p class="leading-7 text-muted-foreground">
+      Shadwire é um port do
+      <%= link_to "shadcn/ui", "https://ui.shadcn.com", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>,
+      que também é MIT. Esse aviso e as licenças de tudo que um componente instalado carrega
+      junto (view_component, lucide-rails, os ícones do Lucide, o Chart.js) estão no
+      <%= link_to "NOTICE", "https://github.com/edumoraes/shadwire/blob/main/NOTICE", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
+      do repositório.
+    </p>
+  </section>
 </article>

@@ -1,0 +1,65 @@
+Shadwire
+Copyright (c) 2026 Eduardo de Moraes
+
+Shadwire is licensed under the MIT License. See LICENSE for the full text.
+This file records what Shadwire derives from, and what the MIT notice
+requirement means for code the CLI installs into your application.
+
+
+Installed components
+--------------------
+
+`shadwire add` copies component source into your application. Those installed
+files are yours: use, modify and ship them in commercial and closed-source
+products, with no attribution requirement on the copies and no runtime
+dependency on Shadwire.
+
+This is the point of the Open Code model, and it is stated here so that nobody
+has to infer it from the MIT text. The notice requirement is satisfied by this
+repository, which carries the notices below.
+
+
+shadcn/ui
+---------
+
+Shadwire is a port of shadcn/ui (https://ui.shadcn.com) to Ruby on Rails.
+Component anatomy, variant class strings and the default theme tokens derive
+from that project. shadcn/ui is MIT licensed:
+
+    MIT License
+
+    Copyright (c) 2023 shadcn
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+
+Dependencies an installed component brings along
+------------------------------------------------
+
+None of these are vendored into Shadwire. They are declared so that anyone
+auditing what reaches their application can see the whole chain is permissive.
+
+    view_component      MIT   https://github.com/ViewComponent/view_component
+    lucide-rails        MIT   https://github.com/heyvito/lucide-rails
+    Lucide (icon data)  ISC   https://github.com/lucide-icons/lucide
+    Chart.js 4.4.6      MIT   https://github.com/chartjs/Chart.js
+                              (importmap pin, used by the chart component)
+
+The CLI itself depends on Thor (MIT). It is a development-time tool and never
+reaches your application's runtime.

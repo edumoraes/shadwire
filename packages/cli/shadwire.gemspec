@@ -24,7 +24,9 @@ Gem::Specification.new do |spec|
     "rubygems_mfa_required" => "true"
   }
 
-  spec.files = Dir["lib/**/*.rb", "exe/**/*"] + ["README.md"]
+  # LICENSE ships with the gem: spec.license only names the licence, it does not
+  # deliver the text the licence itself requires copies to carry.
+  spec.files = Dir["lib/**/*.rb", "exe/**/*"] + ["README.md", "LICENSE"]
   spec.executables   = ["shadwire"]
   spec.bindir        = "exe"
 

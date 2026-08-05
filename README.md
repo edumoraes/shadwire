@@ -250,3 +250,15 @@ git commit -m "feat: add button component"
 git commit -m "test: cover card component"
 git commit -m "docs: update registry workflow"
 ```
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+Components installed into your application by the CLI are yours: use, modify and
+ship them in commercial and closed-source products, with no attribution
+requirement on the installed files and no runtime dependency on Shadwire.
+
+Shadwire is a port of [shadcn/ui](https://ui.shadcn.com), which is MIT licensed.
+That notice, and the licences of everything an installed component brings along,
+are recorded in [NOTICE](NOTICE).
