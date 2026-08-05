@@ -55,10 +55,11 @@ en:
     search:
       open: Search the documentation
       trigger: Search…
-      placeholder: Search pages and components…
+      placeholder: Search the documentation…
       title: Search the documentation
-      description: Filter the documentation and component pages by title.
+      description: Search the documentation and component pages by title and by content.
       empty: No results found.
+      results: In the pages
     code:
       expand: Expand
       collapse: Collapse
