@@ -95,23 +95,24 @@ class DocsSearchTest < ApplicationSystemTestCase
     assert_selector "#{results} [data-slot='command-item'][data-href^='/pt/']"
   end
 
-  # The palette must never get worse than it was: a missing or broken index
-  # leaves ui-command's own title filter running underneath.
+  # The palette must never get worse than it was: an index that cannot be
+  # fetched leaves ui-command's own title filter running underneath.
+  #
+  # The URL is repointed rather than the file moved away. public/ is served with
+  # `cache-control: public, max-age=3600` in this environment, so a file deleted
+  # from disk keeps arriving from the browser cache and the fallback never runs —
+  # which is exactly how this test passed locally and failed in CI.
   test "the title filter still works when the index cannot be fetched" do
-    index = DocsSearchIndex.path_for(:en)
-    moved = index.sub_ext(".json.moved")
-    FileUtils.mv(index, moved)
+    visit docs_path
+    open_palette
+    page.execute_script(<<~JS)
+      document.querySelector("[data-controller~='docs-search']")
+              .setAttribute("data-docs-search-index-url-value", "/search-index.nonexistent.json")
+    JS
 
-    begin
-      visit docs_path
-      open_palette
+    type "theming"
 
-      type "theming"
-
-      assert_selector "dialog[open] [data-slot='command-item']:not([hidden])", text: "Theming"
-      assert_no_selector "#{results} [data-slot='command-item']"
-    ensure
-      FileUtils.mv(moved, index)
-    end
+    assert_selector "dialog[open] [data-slot='command-item']:not([hidden])", text: "Theming"
+    assert_no_selector "#{results} [data-slot='command-item']"
   end
 end
