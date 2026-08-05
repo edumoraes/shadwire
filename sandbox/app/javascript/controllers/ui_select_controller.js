@@ -17,10 +17,17 @@ export default class extends Controller {
     this.assignIds()
     this.selectedValue = this.valueValue || ""
     this.renderSelection()
+    // A Turbo snapshot taken with the listbox open restores the markup open but
+    // this controller closed, and every dismissal path checks isOpen first.
+    // Close before the snapshot is taken so the two never disagree; the page is
+    // on its way out, so the trigger must not be given focus.
+    this.closeBeforeCache = () => this.close({ focusTrigger: false })
+    document.addEventListener("turbo:before-cache", this.closeBeforeCache)
   }
 
   disconnect() {
     clearTimeout(this.typeaheadTimer)
+    document.removeEventListener("turbo:before-cache", this.closeBeforeCache)
   }
 
   toggle(event) {

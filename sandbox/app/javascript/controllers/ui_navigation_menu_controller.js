@@ -8,10 +8,16 @@ export default class extends Controller {
 
   connect() {
     this.openIndex = null
+    // A Turbo snapshot taken with a panel open restores the markup open but this
+    // controller closed, and outsideClick checks openIndex first. Close before
+    // the snapshot is taken so the two never disagree.
+    this.closeBeforeCache = () => this.close()
+    document.addEventListener("turbo:before-cache", this.closeBeforeCache)
   }
 
   disconnect() {
     clearTimeout(this.closeTimer)
+    document.removeEventListener("turbo:before-cache", this.closeBeforeCache)
   }
 
   toggle(event) {
