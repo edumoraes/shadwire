@@ -56,63 +56,52 @@
       Below, only the wiring controller — <code class="rounded bg-muted px-1 py-0.5 text-xs">data-*</code> attributes
       on the element wrapping the popover and the field.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th>Atributo</th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>format-value</code></td>
-            <td><code>long</code></td>
-            <td><code>full</code>, <code>long</code>, <code>medium</code>, <code>short</code> or <code>iso</code>.</td>
-          </tr>
-          <tr>
-            <td><code>locale-value</code></td>
-            <td>—</td>
-            <td>BCP 47 (<code>pt-BR</code>, <code>ar-EG</code>). Empty follows the browser's language.</td>
-          </tr>
-          <tr>
-            <td><code>separator-value</code></td>
-            <td><code>&nbsp;–&nbsp;</code></td>
-            <td>What separates the two ends of a range in the label.</td>
-          </tr>
-          <tr>
-            <td><code>date-order-value</code></td>
-            <td><code>dmy</code></td>
-            <td>How to read <code>01/06/2026</code> as you type. <code>mdy</code> for the US order.</td>
-          </tr>
-          <tr>
-            <td><code>close-on-select-value</code></td>
-            <td><code>true</code></td>
-            <td>Closes the popover on selection. With <code>mode: :range</code>, only once the second date lands.</td>
-          </tr>
-          <tr>
-            <td><code>natural-language-value</code></td>
-            <td><code>false</code></td>
-            <td>Accepts relative phrases (“tomorrow”, “in 2 weeks”, “next friday”) in the text field.</td>
-          </tr>
-          <tr>
-            <td><code>target="label"</code></td>
-            <td>—</td>
-            <td>The element whose text becomes the chosen date; it gets <code>data-empty</code> while empty.</td>
-          </tr>
-          <tr>
-            <td><code>target="input"</code></td>
-            <td>—</td>
-            <td>An editable text field: what you type is parsed, and <kbd class="rounded bg-muted px-1 text-xs">↓</kbd> opens the popover.</td>
-          </tr>
-          <tr>
-            <td><code>target="preview"</code></td>
-            <td>—</td>
-            <td>An optional echo of the parsed date, for a supporting line below the field.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.attribute"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>format-value</code></td>
+        <td><code>long</code></td>
+        <td><code>full</code>, <code>long</code>, <code>medium</code>, <code>short</code> or <code>iso</code>.</td>
+      </tr>
+      <tr>
+        <td><code>locale-value</code></td>
+        <td>—</td>
+        <td>BCP 47 (<code>pt-BR</code>, <code>ar-EG</code>). Empty follows the browser's language.</td>
+      </tr>
+      <tr>
+        <td><code>separator-value</code></td>
+        <td><code>&nbsp;–&nbsp;</code></td>
+        <td>What separates the two ends of a range in the label.</td>
+      </tr>
+      <tr>
+        <td><code>date-order-value</code></td>
+        <td><code>dmy</code></td>
+        <td>How to read <code>01/06/2026</code> as you type. <code>mdy</code> for the US order.</td>
+      </tr>
+      <tr>
+        <td><code>close-on-select-value</code></td>
+        <td><code>true</code></td>
+        <td>Closes the popover on selection. With <code>mode: :range</code>, only once the second date lands.</td>
+      </tr>
+      <tr>
+        <td><code>natural-language-value</code></td>
+        <td><code>false</code></td>
+        <td>Accepts relative phrases (“tomorrow”, “in 2 weeks”, “next friday”) in the text field.</td>
+      </tr>
+      <tr>
+        <td><code>target="label"</code></td>
+        <td>—</td>
+        <td>The element whose text becomes the chosen date; it gets <code>data-empty</code> while empty.</td>
+      </tr>
+      <tr>
+        <td><code>target="input"</code></td>
+        <td>—</td>
+        <td>An editable text field: what you type is parsed, and <kbd class="rounded bg-muted px-1 text-xs">↓</kbd> opens the popover.</td>
+      </tr>
+      <tr>
+        <td><code>target="preview"</code></td>
+        <td>—</td>
+        <td>An optional echo of the parsed date, for a supporting line below the field.</td>
+      </tr>
     <% end %>
   </section>
 </article>

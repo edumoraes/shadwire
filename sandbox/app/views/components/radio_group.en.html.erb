@@ -51,49 +51,37 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_radio_group_item(**options)</code>
       encapsulam os componentes correspondentes.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th><%= t("components.api.component") %></th>
-            <th><%= t("components.api.argument") %></th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>RadioGroup</code></td>
-            <td><code>class</code> / <code>class_name</code>, <code>**attrs</code></td>
-            <td>—</td>
-            <td>The <code>role="radiogroup"</code> container; label it with <code>aria: { label: }</code>.</td>
-          </tr>
-          <tr>
-            <td><code>RadioGroup::Item</code></td>
-            <td><code>name:</code> (required)</td>
-            <td>—</td>
-            <td>The name shared by the group's radios.</td>
-          </tr>
-          <tr>
-            <td><code>RadioGroup::Item</code></td>
-            <td><code>value:</code> (required)</td>
-            <td>—</td>
-            <td>The value submitted when the item is selected.</td>
-          </tr>
-          <tr>
-            <td><code>RadioGroup::Item</code></td>
-            <td><code>checked</code> / <code>disabled</code></td>
-            <td><code>false</code></td>
-            <td>The native input's initial state.</td>
-          </tr>
-          <tr>
-            <td><code>RadioGroup::Item</code></td>
-            <td><code>**attrs</code></td>
-            <td><code>{}</code></td>
-            <td>Atributos HTML livres (<code>id</code>, <code>data:</code>, <code>aria:</code>, …).</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>RadioGroup</code></td>
+        <td><code>class</code> / <code>class_name</code>, <code>**attrs</code></td>
+        <td>—</td>
+        <td>The <code>role="radiogroup"</code> container; label it with <code>aria: { label: }</code>.</td>
+      </tr>
+      <tr>
+        <td><code>RadioGroup::Item</code></td>
+        <td><code>name:</code> (required)</td>
+        <td>—</td>
+        <td>The name shared by the group's radios.</td>
+      </tr>
+      <tr>
+        <td><code>RadioGroup::Item</code></td>
+        <td><code>value:</code> (required)</td>
+        <td>—</td>
+        <td>The value submitted when the item is selected.</td>
+      </tr>
+      <tr>
+        <td><code>RadioGroup::Item</code></td>
+        <td><code>checked</code> / <code>disabled</code></td>
+        <td><code>false</code></td>
+        <td>The native input's initial state.</td>
+      </tr>
+      <tr>
+        <td><code>RadioGroup::Item</code></td>
+        <td><code>**attrs</code></td>
+        <td><code>{}</code></td>
+        <td>Atributos HTML livres (<code>id</code>, <code>data:</code>, <code>aria:</code>, …).</td>
+      </tr>
     <% end %>
   </section>
 </article>

@@ -30,16 +30,11 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground"><code class="rounded bg-muted px-1 py-0.5 text-xs">ui_avatar(**options, &block)</code> wraps <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::AvatarComponent.new(**options)</code>.</p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50"><tr><th><%= t("components.api.argument") %></th><th><%= t("components.api.type") %></th><th><%= t("components.api.default") %></th><th><%= t("components.api.description") %></th></tr></thead>
-        <tbody>
-          <tr><td><code>src</code></td><td>String</td><td><code>nil</code></td><td>The image URL.</td></tr>
-          <tr><td><code>alt</code></td><td>String</td><td><code>""</code></td><td>The image's alt text.</td></tr>
-          <tr><td><code>fallback</code></td><td>String</td><td><code>nil</code></td><td>Initials or a symbol shown when there is no image.</td></tr>
-          <tr><td><code>**attrs</code></td><td>Hash</td><td><code>{}</code></td><td>Free-form HTML attributes on the wrapper.</td></tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.type"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr><td><code>src</code></td><td>String</td><td><code>nil</code></td><td>The image URL.</td></tr>
+      <tr><td><code>alt</code></td><td>String</td><td><code>""</code></td><td>The image's alt text.</td></tr>
+      <tr><td><code>fallback</code></td><td>String</td><td><code>nil</code></td><td>Initials or a symbol shown when there is no image.</td></tr>
+      <tr><td><code>**attrs</code></td><td>Hash</td><td><code>{}</code></td><td>Free-form HTML attributes on the wrapper.</td></tr>
     <% end %>
   </section>
 </article>

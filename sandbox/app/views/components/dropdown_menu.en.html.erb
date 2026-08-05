@@ -49,43 +49,31 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th><%= t("components.api.component") %></th>
-            <th><%= t("components.api.argument") %></th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>DropdownMenu::Content</code></td>
-            <td><code>side</code>, <code>align</code></td>
-            <td><code>:bottom</code>, <code>:start</code></td>
-            <td>Menu positioning, through utilities.</td>
-          </tr>
-          <tr>
-            <td><code>DropdownMenu::Item</code></td>
-            <td><code>variant</code></td>
-            <td><code>:default</code></td>
-            <td><code>:destructive</code> marks dangerous actions.</td>
-          </tr>
-          <tr>
-            <td><code>DropdownMenu::Item</code></td>
-            <td><code>inset</code>, <code>disabled</code></td>
-            <td><code>false</code></td>
-            <td>Indents to line up with icons; a disabled item is skipped during navigation.</td>
-          </tr>
-          <tr>
-            <td><code>DropdownMenu::Item</code></td>
-            <td><code>tag</code></td>
-            <td><code>:button</code></td>
-            <td>Use <code>:a</code> with <code>href</code> for link items.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>DropdownMenu::Content</code></td>
+        <td><code>side</code>, <code>align</code></td>
+        <td><code>:bottom</code>, <code>:start</code></td>
+        <td>Menu positioning, through utilities.</td>
+      </tr>
+      <tr>
+        <td><code>DropdownMenu::Item</code></td>
+        <td><code>variant</code></td>
+        <td><code>:default</code></td>
+        <td><code>:destructive</code> marks dangerous actions.</td>
+      </tr>
+      <tr>
+        <td><code>DropdownMenu::Item</code></td>
+        <td><code>inset</code>, <code>disabled</code></td>
+        <td><code>false</code></td>
+        <td>Indents to line up with icons; a disabled item is skipped during navigation.</td>
+      </tr>
+      <tr>
+        <td><code>DropdownMenu::Item</code></td>
+        <td><code>tag</code></td>
+        <td><code>:button</code></td>
+        <td>Use <code>:a</code> with <code>href</code> for link items.</td>
+      </tr>
     <% end %>
   </section>
 </article>

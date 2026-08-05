@@ -48,37 +48,25 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th><%= t("components.api.component") %></th>
-            <th><%= t("components.api.argument") %></th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>Tooltip</code></td>
-            <td><code>open_delay</code></td>
-            <td><code>300</code></td>
-            <td>Atraso em milissegundos antes de abrir no hover.</td>
-          </tr>
-          <tr>
-            <td><code>Tooltip::Trigger</code></td>
-            <td><code>variant</code>, <code>size</code></td>
-            <td><code>:outline</code></td>
-            <td>Encapsula <code>Ui::ButtonComponent</code>; ganha <code>aria-describedby</code> ao conectar.</td>
-          </tr>
-          <tr>
-            <td><code>Tooltip::Content</code></td>
-            <td><code>side</code></td>
-            <td><code>:top</code></td>
-            <td><code>:top</code>, <code>:right</code>, <code>:bottom</code>, <code>:left</code>.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>Tooltip</code></td>
+        <td><code>open_delay</code></td>
+        <td><code>300</code></td>
+        <td>Atraso em milissegundos antes de abrir no hover.</td>
+      </tr>
+      <tr>
+        <td><code>Tooltip::Trigger</code></td>
+        <td><code>variant</code>, <code>size</code></td>
+        <td><code>:outline</code></td>
+        <td>Encapsula <code>Ui::ButtonComponent</code>; ganha <code>aria-describedby</code> ao conectar.</td>
+      </tr>
+      <tr>
+        <td><code>Tooltip::Content</code></td>
+        <td><code>side</code></td>
+        <td><code>:top</code></td>
+        <td><code>:top</code>, <code>:right</code>, <code>:bottom</code>, <code>:left</code>.</td>
+      </tr>
     <% end %>
   </section>
 </article>

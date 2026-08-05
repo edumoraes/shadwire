@@ -47,43 +47,31 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th><%= t("components.api.component") %></th>
-            <th><%= t("components.api.argument") %></th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>Sheet</code></td>
-            <td><code>close_on_backdrop</code></td>
-            <td><code>true</code></td>
-            <td>Fecha ao clicar fora do painel.</td>
-          </tr>
-          <tr>
-            <td><code>Sheet::Content</code></td>
-            <td><code>side</code></td>
-            <td><code>:right</code></td>
-            <td><code>:right</code>, <code>:left</code>, <code>:top</code>, <code>:bottom</code> — emite <code>data-side</code>.</td>
-          </tr>
-          <tr>
-            <td><code>Sheet::Content</code></td>
-            <td><code>show_close_button</code></td>
-            <td><code>true</code></td>
-            <td>Renderiza o botão X no canto superior direito.</td>
-          </tr>
-          <tr>
-            <td><code>Sheet::Trigger</code> / <code>Sheet::Close</code></td>
-            <td><code>variant</code>, <code>size</code></td>
-            <td><code>:default</code> / <code>:outline</code></td>
-            <td>Encapsulam <code>Ui::ButtonComponent</code>.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>Sheet</code></td>
+        <td><code>close_on_backdrop</code></td>
+        <td><code>true</code></td>
+        <td>Fecha ao clicar fora do painel.</td>
+      </tr>
+      <tr>
+        <td><code>Sheet::Content</code></td>
+        <td><code>side</code></td>
+        <td><code>:right</code></td>
+        <td><code>:right</code>, <code>:left</code>, <code>:top</code>, <code>:bottom</code> — emite <code>data-side</code>.</td>
+      </tr>
+      <tr>
+        <td><code>Sheet::Content</code></td>
+        <td><code>show_close_button</code></td>
+        <td><code>true</code></td>
+        <td>Renderiza o botão X no canto superior direito.</td>
+      </tr>
+      <tr>
+        <td><code>Sheet::Trigger</code> / <code>Sheet::Close</code></td>
+        <td><code>variant</code>, <code>size</code></td>
+        <td><code>:default</code> / <code>:outline</code></td>
+        <td>Encapsulam <code>Ui::ButtonComponent</code>.</td>
+      </tr>
     <% end %>
   </section>
 </article>

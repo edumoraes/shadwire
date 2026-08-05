@@ -42,78 +42,67 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th><%= t("components.api.argument") %></th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>mode</code></td>
-            <td><code>:single</code></td>
-            <td><code>:range</code> selects a range; the second click closes the far end.</td>
-          </tr>
-          <tr>
-            <td><code>selected</code></td>
-            <td>—</td>
-            <td>The chosen date. With <code>:range</code> it takes a range (<code>Date..Date</code>).</td>
-          </tr>
-          <tr>
-            <td><code>from</code>, <code>to</code></td>
-            <td>—</td>
-            <td>The ends of the range, when you would rather pass them separately.</td>
-          </tr>
-          <tr>
-            <td><code>name</code>, <code>end_name</code></td>
-            <td>—</td>
-            <td>The hidden inputs. <code>name</code> is the date (or the start); <code>end_name</code> the end.</td>
-          </tr>
-          <tr>
-            <td><code>month</code></td>
-            <td>the selection, otherwise today</td>
-            <td>The first visible month.</td>
-          </tr>
-          <tr>
-            <td><code>min</code>, <code>max</code></td>
-            <td>—</td>
-            <td>Disable the days outside the span, and bound the year select.</td>
-          </tr>
-          <tr>
-            <td><code>number_of_months</code></td>
-            <td><code>1</code></td>
-            <td>Consecutive months side by side. <code>2</code> is the usual pair for ranges.</td>
-          </tr>
-          <tr>
-            <td><code>caption_layout</code></td>
-            <td><code>:label</code></td>
-            <td><code>:dropdown</code> swaps the month name for month and year selects (single month only).</td>
-          </tr>
-          <tr>
-            <td><code>year_range</code></td>
-            <td>−100…+10 anos</td>
-            <td>The years in the select. <code>min:</code>/<code>max:</code> win when given.</td>
-          </tr>
-          <tr>
-            <td><code>dir</code></td>
-            <td>—</td>
-            <td><code>:rtl</code> mirrors the grid, the navigation arrows and the ←/→ keys.</td>
-          </tr>
-          <tr>
-            <td><code>week_start</code></td>
-            <td><code>0</code></td>
-            <td>The first day of the week: <code>0</code> Sunday, <code>1</code> Monday.</td>
-          </tr>
-          <tr>
-            <td><code>month_names</code>, <code>day_names</code></td>
-            <td>pt-BR</td>
-            <td>Caption and header labels, e.g. <code>I18n.t("date.month_names").compact</code>.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>mode</code></td>
+        <td><code>:single</code></td>
+        <td><code>:range</code> selects a range; the second click closes the far end.</td>
+      </tr>
+      <tr>
+        <td><code>selected</code></td>
+        <td>—</td>
+        <td>The chosen date. With <code>:range</code> it takes a range (<code>Date..Date</code>).</td>
+      </tr>
+      <tr>
+        <td><code>from</code>, <code>to</code></td>
+        <td>—</td>
+        <td>The ends of the range, when you would rather pass them separately.</td>
+      </tr>
+      <tr>
+        <td><code>name</code>, <code>end_name</code></td>
+        <td>—</td>
+        <td>The hidden inputs. <code>name</code> is the date (or the start); <code>end_name</code> the end.</td>
+      </tr>
+      <tr>
+        <td><code>month</code></td>
+        <td>the selection, otherwise today</td>
+        <td>The first visible month.</td>
+      </tr>
+      <tr>
+        <td><code>min</code>, <code>max</code></td>
+        <td>—</td>
+        <td>Disable the days outside the span, and bound the year select.</td>
+      </tr>
+      <tr>
+        <td><code>number_of_months</code></td>
+        <td><code>1</code></td>
+        <td>Consecutive months side by side. <code>2</code> is the usual pair for ranges.</td>
+      </tr>
+      <tr>
+        <td><code>caption_layout</code></td>
+        <td><code>:label</code></td>
+        <td><code>:dropdown</code> swaps the month name for month and year selects (single month only).</td>
+      </tr>
+      <tr>
+        <td><code>year_range</code></td>
+        <td>−100…+10 anos</td>
+        <td>The years in the select. <code>min:</code>/<code>max:</code> win when given.</td>
+      </tr>
+      <tr>
+        <td><code>dir</code></td>
+        <td>—</td>
+        <td><code>:rtl</code> mirrors the grid, the navigation arrows and the ←/→ keys.</td>
+      </tr>
+      <tr>
+        <td><code>week_start</code></td>
+        <td><code>0</code></td>
+        <td>The first day of the week: <code>0</code> Sunday, <code>1</code> Monday.</td>
+      </tr>
+      <tr>
+        <td><code>month_names</code>, <code>day_names</code></td>
+        <td>pt-BR</td>
+        <td>Caption and header labels, e.g. <code>I18n.t("date.month_names").compact</code>.</td>
+      </tr>
     <% end %>
 
     <p class="text-sm text-muted-foreground">

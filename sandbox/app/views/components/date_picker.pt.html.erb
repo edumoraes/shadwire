@@ -56,63 +56,52 @@
       Abaixo, só o controller de ligação — atributos <code class="rounded bg-muted px-1 py-0.5 text-xs">data-*</code>
       no elemento que envolve o popover e o campo.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th>Atributo</th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>format-value</code></td>
-            <td><code>long</code></td>
-            <td><code>full</code>, <code>long</code>, <code>medium</code>, <code>short</code> ou <code>iso</code>.</td>
-          </tr>
-          <tr>
-            <td><code>locale-value</code></td>
-            <td>—</td>
-            <td>BCP 47 (<code>pt-BR</code>, <code>ar-EG</code>). Vazio segue o idioma do navegador.</td>
-          </tr>
-          <tr>
-            <td><code>separator-value</code></td>
-            <td><code>&nbsp;–&nbsp;</code></td>
-            <td>O que separa as duas pontas de um intervalo no rótulo.</td>
-          </tr>
-          <tr>
-            <td><code>date-order-value</code></td>
-            <td><code>dmy</code></td>
-            <td>Como ler <code>01/06/2026</code> ao digitar. <code>mdy</code> para o formato americano.</td>
-          </tr>
-          <tr>
-            <td><code>close-on-select-value</code></td>
-            <td><code>true</code></td>
-            <td>Fecha o popover ao escolher. Em <code>mode: :range</code>, só quando a segunda data entra.</td>
-          </tr>
-          <tr>
-            <td><code>natural-language-value</code></td>
-            <td><code>false</code></td>
-            <td>Aceita frases relativas (“amanhã”, “em 2 semanas”, “próxima sexta”) no campo de texto.</td>
-          </tr>
-          <tr>
-            <td><code>target="label"</code></td>
-            <td>—</td>
-            <td>Elemento cujo texto vira a data escolhida; ganha <code>data-empty</code> para o estado vazio.</td>
-          </tr>
-          <tr>
-            <td><code>target="input"</code></td>
-            <td>—</td>
-            <td>Campo de texto editável: o que for digitado é interpretado, <kbd class="rounded bg-muted px-1 text-xs">↓</kbd> abre o popover.</td>
-          </tr>
-          <tr>
-            <td><code>target="preview"</code></td>
-            <td>—</td>
-            <td>Eco opcional da data já interpretada, para uma linha de apoio abaixo do campo.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.attribute"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>format-value</code></td>
+        <td><code>long</code></td>
+        <td><code>full</code>, <code>long</code>, <code>medium</code>, <code>short</code> ou <code>iso</code>.</td>
+      </tr>
+      <tr>
+        <td><code>locale-value</code></td>
+        <td>—</td>
+        <td>BCP 47 (<code>pt-BR</code>, <code>ar-EG</code>). Vazio segue o idioma do navegador.</td>
+      </tr>
+      <tr>
+        <td><code>separator-value</code></td>
+        <td><code>&nbsp;–&nbsp;</code></td>
+        <td>O que separa as duas pontas de um intervalo no rótulo.</td>
+      </tr>
+      <tr>
+        <td><code>date-order-value</code></td>
+        <td><code>dmy</code></td>
+        <td>Como ler <code>01/06/2026</code> ao digitar. <code>mdy</code> para o formato americano.</td>
+      </tr>
+      <tr>
+        <td><code>close-on-select-value</code></td>
+        <td><code>true</code></td>
+        <td>Fecha o popover ao escolher. Em <code>mode: :range</code>, só quando a segunda data entra.</td>
+      </tr>
+      <tr>
+        <td><code>natural-language-value</code></td>
+        <td><code>false</code></td>
+        <td>Aceita frases relativas (“amanhã”, “em 2 semanas”, “próxima sexta”) no campo de texto.</td>
+      </tr>
+      <tr>
+        <td><code>target="label"</code></td>
+        <td>—</td>
+        <td>Elemento cujo texto vira a data escolhida; ganha <code>data-empty</code> para o estado vazio.</td>
+      </tr>
+      <tr>
+        <td><code>target="input"</code></td>
+        <td>—</td>
+        <td>Campo de texto editável: o que for digitado é interpretado, <kbd class="rounded bg-muted px-1 text-xs">↓</kbd> abre o popover.</td>
+      </tr>
+      <tr>
+        <td><code>target="preview"</code></td>
+        <td>—</td>
+        <td>Eco opcional da data já interpretada, para uma linha de apoio abaixo do campo.</td>
+      </tr>
     <% end %>
   </section>
 </article>

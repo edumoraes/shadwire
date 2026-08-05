@@ -30,15 +30,10 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground"><code class="rounded bg-muted px-1 py-0.5 text-xs">ui_alert(**options, &block)</code> wraps <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::AlertComponent.new(**options)</code>.</p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50"><tr><th><%= t("components.api.argument") %></th><th><%= t("components.api.type") %></th><th><%= t("components.api.default") %></th><th><%= t("components.api.description") %></th></tr></thead>
-        <tbody>
-          <tr><td><code>variant</code></td><td>Symbol/String</td><td><code>:default</code></td><td><code>:default</code> or <code>:destructive</code>.</td></tr>
-          <tr><td><code>role</code></td><td>String</td><td><code>"alert"</code></td><td>Override it when the message should not be announced immediately.</td></tr>
-          <tr><td><code>**attrs</code></td><td>Hash</td><td><code>{}</code></td><td>Free-form HTML attributes.</td></tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.type"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr><td><code>variant</code></td><td>Symbol/String</td><td><code>:default</code></td><td><code>:default</code> or <code>:destructive</code>.</td></tr>
+      <tr><td><code>role</code></td><td>String</td><td><code>"alert"</code></td><td>Override it when the message should not be announced immediately.</td></tr>
+      <tr><td><code>**attrs</code></td><td>Hash</td><td><code>{}</code></td><td>Free-form HTML attributes.</td></tr>
     <% end %>
   </section>
 </article>

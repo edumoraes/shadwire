@@ -1,5 +1,19 @@
-<%# A reference table in the documentation style used by the component pages.
-    Locals: headers (array of strings), rows (array of arrays of cell HTML). %>
+<%# A reference table in the documentation style used by the guide and component
+    pages. This is the only copy of the wrapper: a change to the card, the
+    column classes or the header row is made here and lands on all 60-odd
+    tables, rather than being made twice on each of thirty locale pairs.
+
+    Locals: headers (array of strings).
+
+    Rows arrive one of two ways. Pass `rows` — an array of arrays of cell HTML —
+    when the cells are values. Pass a block of <tr> instead when the cells are
+    prose threaded through inline <code>, where the markup reads better than the
+    array would:
+
+      <%%= render layout: "docs/table", locals: { headers: [...] } do %>
+        <tr><td>…</td></tr>
+      <%% end %>
+%>
 <%= ui_card(class: "overflow-x-auto") do %>
   <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
     <thead class="bg-muted/50">
@@ -10,12 +24,16 @@
       </tr>
     </thead>
     <tbody>
-      <% rows.each do |row| %>
-        <tr>
-          <% row.each do |cell| %>
-            <td><%= cell %></td>
-          <% end %>
-        </tr>
+      <% if local_assigns[:rows] %>
+        <% rows.each do |row| %>
+          <tr>
+            <% row.each do |cell| %>
+              <td><%= cell %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% else %>
+        <%= yield %>
       <% end %>
     </tbody>
   </table>

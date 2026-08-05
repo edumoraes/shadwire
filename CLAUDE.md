@@ -114,6 +114,14 @@ breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
   fetches it on the first keystroke and renders the hits as Command items;
   without it, `ui-command`'s title filter still runs, so the palette degrades
   rather than breaking.
+- **Reference tables render through `docs/_table`, never by hand.** It is the one
+  copy of the card, the column classes and the header row — otherwise a markup
+  change is made twice on each of thirty locale pairs. Pass `rows:` when the
+  cells are values, or `render layout: "docs/table"` with a block of `<tr>` when
+  a cell is prose threaded through inline `<code>`. Headers are repeated text, so
+  they come from `components.api.*` in the locale files;
+  `test/controllers/component_api_tables_test.rb` fails on a hand-built `<thead>`
+  or a header string written into a template.
 
 ### The site is bilingual
 
