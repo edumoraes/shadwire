@@ -208,6 +208,13 @@ jobs:
           bin/rails db:prepare
       - name: Build the published registry
         run: bin/build_registry
+      # The corpus the ⌘K palette searches. Built by rendering every page the
+      # palette offers, so it does not depend on the crawl below having run or
+      # on how wget named its files. Must come before the freeze: the server
+      # started there serves it out of public/.
+      - name: Build the documentation search index
+        working-directory: sandbox
+        run: bin/rails docs:search_index
       - name: Freeze the docs site to static HTML
         working-directory: sandbox
         run: |
@@ -234,6 +241,9 @@ jobs:
           # wget does not follow ES module / importmap references, so copy the
           # precompiled assets wholesale to guarantee every JS/CSS/font is present.
           cp -r public/assets ../_site/assets
+          # Nothing links to the search index either — the palette fetches it on
+          # the first keystroke — so the crawl never sees it.
+          cp public/search-index.*.json ../_site/
           touch ../_site/.nojekyll
           test -f ../_site/index.html || { echo "::error::no index.html produced"; cat /tmp/server.log; exit 1; }
           # The site ships in two languages, and the Portuguese tree exists in

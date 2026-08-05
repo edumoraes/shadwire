@@ -105,6 +105,15 @@ breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
   assigns the page's hash to `@snippets` in a `before_action`.
 - The "Nesta página" rail is built client-side by `docs_toc_controller.js` from
   the `h2`/`h3` already in `<main>`, so no page declares its own outline.
+- **The ⌘K palette searches page content, from an index shipped to the browser.**
+  A static crawl has no server to query, so `bin/rails docs:search_index` renders
+  every page the palette offers and writes `public/search-index.<locale>.json`
+  (~55 KB gzipped each); `deploy_pages` runs it before the freeze and copies the
+  files into `_site`, since nothing links to them for wget to follow. The file is
+  gitignored — run the task once for local search. `docs_search_controller`
+  fetches it on the first keystroke and renders the hits as Command items;
+  without it, `ui-command`'s title filter still runs, so the palette degrades
+  rather than breaking.
 
 ### The site is bilingual
 

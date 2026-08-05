@@ -88,10 +88,11 @@ pt:
     search:
       open: Buscar na documentação
       trigger: Buscar…
-      placeholder: Buscar páginas e componentes…
+      placeholder: Buscar na documentação…
       title: Buscar na documentação
-      description: Filtre as páginas da documentação e dos componentes pelo título.
+      description: Busque nas páginas da documentação e dos componentes por título e por conteúdo.
       empty: Nada encontrado.
+      results: Nas páginas
     code:
       expand: Expandir
       collapse: Recolher

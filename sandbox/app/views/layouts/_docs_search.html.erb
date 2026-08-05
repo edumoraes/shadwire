@@ -1,8 +1,14 @@
 <%# The ⌘K palette, composed from the Command and Dialog components the registry
-    ships. The item list mirrors the sidebar, so it never lists a page that is
-    not there. The browser filters it client-side, which is all a static site
-    can do. %>
-<div data-controller="docs-search" data-action="ui-command:select->docs-search#navigate">
+    ships. With an empty query it lists the sidebar, so it never offers a page
+    that is not there. Typing searches the text of every page: the site is a
+    static crawl with no server to ask, so docs-search fetches an index built at
+    deploy time and renders the hits as Command items itself. If that fetch
+    fails, ui-command's own title filter is still running underneath and the
+    palette is no worse than it was. %>
+<div data-controller="docs-search"
+     data-action="ui-command:select->docs-search#navigate"
+     data-docs-search-index-url-value="<%= "/search-index.#{I18n.locale}.json" %>"
+     data-docs-search-group-label-value="<%= t("docs.search.results") %>">
   <%= ui_dialog do %>
     <%= ui_dialog_trigger(variant: :outline,
                           class: "h-9 w-9 justify-center px-0 text-muted-foreground sm:w-56 sm:justify-between sm:px-3",
@@ -25,9 +31,14 @@
       <% end %>
 
       <%= ui_command(class: "rounded-none border-0") do %>
-        <%= ui_command_input(placeholder: t("docs.search.placeholder")) %>
+        <%= ui_command_input(placeholder: t("docs.search.placeholder"),
+                             data: { action: "input->docs-search#search" }) %>
         <%= ui_command_list(class: "max-h-[22rem]") do %>
           <%= ui_command_empty(class: "py-6 text-center text-sm text-muted-foreground") { t("docs.search.empty") } %>
+
+          <%# Full-text hits land here, ahead of the sidebar listing. %>
+          <div data-docs-search-target="results"></div>
+
           <% docs_nav_groups.each do |group| %>
             <%= ui_command_group(heading: group[:title]) do %>
               <% group[:items].each do |item| %>
