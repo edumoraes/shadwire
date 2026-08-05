@@ -11,8 +11,28 @@ export default class extends Controller {
     closeOnEscape: { type: Boolean, default: true },
   }
 
+  connect() {
+    this.closeBeforeCache = () => this.closeForSnapshot()
+    document.addEventListener("turbo:before-cache", this.closeBeforeCache)
+  }
+
   disconnect() {
     this.clearCloseFallback()
+    document.removeEventListener("turbo:before-cache", this.closeBeforeCache)
+  }
+
+  // Turbo snapshots the outgoing page before it navigates, and the Back button
+  // restores that snapshot. showModal() is what makes a dialog modal; an `open`
+  // attribute parsed from cached markup is not, so the dialog comes back
+  // non-modal and has no way out: Escape fires no cancel event, there is no
+  // backdrop to click, and open() below refuses to reopen what already reports
+  // itself open. Leave it closed in the snapshot instead.
+  closeForSnapshot() {
+    if (!this.hasDialogTarget) return
+
+    this.clearCloseFallback()
+    delete this.dialogTarget.dataset.state
+    if (this.dialogTarget.open) this.dialogTarget.close()
   }
 
   open(event) {

@@ -7,7 +7,18 @@ require_relative "../lib/shadwire_registry/llms_writer"
 # so it has to be self-sufficient: how to install, what exists, and what each
 # component's API is.
 class LlmsWriterTest < Minitest::Test
-  REGISTRY = { "name" => "shadwire", "version" => "0.2.0" }.freeze
+  REGISTRY = {
+    "name" => "shadwire",
+    "version" => "0.2.0",
+    "license" => "MIT",
+    "licenseUrl" => "https://github.com/edumoraes/shadwire/blob/main/LICENSE",
+    "attribution" => {
+      "derivedFrom" => "shadcn/ui",
+      "url" => "https://ui.shadcn.com",
+      "license" => "MIT",
+      "notice" => "Files installed into an application carry no attribution requirement of their own."
+    }
+  }.freeze
 
   ITEMS = [
     {
@@ -88,5 +99,16 @@ class LlmsWriterTest < Minitest::Test
   # Components with no ui_* wrapper would teach an agent a call it cannot make.
   def test_full_omits_components_without_a_helper
     refute_includes full, "UiComponent\n"
+  end
+
+  # These are the files most likely to be pasted into a model's context, so the
+  # terms have to be in them and not only in the repository.
+  def test_both_files_state_the_licence_and_what_it_derives_from
+    [ index, full ].each do |text|
+      assert_includes text, "## Licence"
+      assert_includes text, "MIT — https://github.com/edumoraes/shadwire/blob/main/LICENSE"
+      assert_includes text, "Ported from shadcn/ui (https://ui.shadcn.com), MIT."
+      assert_includes text, "no attribution requirement"
+    end
   end
 end

@@ -136,6 +136,27 @@ class DocsNavigationTest < ApplicationSystemTestCase
     assert_selector "h1", text: "CLI"
   end
 
+  # The sheet holds ordinary links, so an everyday click navigates with it still
+  # open — no palette code runs first to close it. That is the honest
+  # reproduction of the stuck overlay, and the one an installed component faces.
+  test "going back does not restore a stuck sheet" do
+    resize_window_to(390, 844)
+
+    visit docs_path
+
+    find("[data-slot='sheet-trigger']").click
+    within "dialog[data-slot='sheet-content'][open]" do
+      click_link "CLI"
+    end
+
+    assert_selector "h1", text: "CLI"
+
+    page.go_back
+
+    assert_selector "h1", text: "Introduction"
+    assert_no_selector "dialog[open]", visible: :all
+  end
+
   private
 
   def fill_in_command(query)

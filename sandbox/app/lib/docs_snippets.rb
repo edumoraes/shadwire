@@ -397,14 +397,26 @@ module DocsSnippets
     SHELL
 
     sample: <<~TEXT
-      # Shadwire
+      # shadwire 0.2.0
 
-      > shadcn/ui components for Ruby on Rails, delivered the shadcn Open Code way.
+      shadcn/ui components for Ruby on Rails, delivered as source your app owns.
+      Components are copied into the app by the CLI; there is no runtime
+      dependency on Shadwire.
+
+      ## Install
+
+      gem install shadwire      # or: bundle add shadwire --group development
+      shadwire init             # writes shadwire.json and the shared base files
+      shadwire add <name>       # installs a component and its dependencies
+
+      ## Licence
+
+      MIT — https://github.com/edumoraes/shadwire/blob/main/LICENSE
+      Ported from shadcn/ui (https://ui.shadcn.com), MIT.
 
       ## Components
 
-      - button — Displays a button or a link styled as a button.
-        When to use: Any clickable action. Use tag: :a for a link that looks like a
+      - button — Any clickable action. Use tag: :a for a link that looks like a
         button, size: :icon for icon-only…
     TEXT
   }.freeze
