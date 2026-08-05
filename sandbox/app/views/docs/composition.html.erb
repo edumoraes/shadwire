@@ -90,7 +90,7 @@
   <section class="space-y-4">
     <%= docs_h2("Componentes interativos precisam de Stimulus") %>
     <p class="leading-7 text-muted-foreground">
-      28 dos <%= docs_component_items.size %> componentes trazem um controller.
+      <%= registry_stimulus_component_count %> dos <%= docs_component_items.size %> componentes trazem um controller.
       <%= docs_code("bin/shadwire info <nome>") %> reporta
       <%= docs_code("requiresStimulus") %>, e <%= docs_code("status.stack") %> diz se o app tem
       importmap e stimulus-rails.
