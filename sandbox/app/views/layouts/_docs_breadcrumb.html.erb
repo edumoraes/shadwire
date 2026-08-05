@@ -4,7 +4,7 @@
   <%= ui_breadcrumb(class: "mb-4") do %>
     <%= ui_breadcrumb_list do %>
       <%= ui_breadcrumb_item do %>
-        <%= ui_breadcrumb_link(href: docs_path) { "Docs" } %>
+        <%= ui_breadcrumb_link(href: docs_path) { t("docs.breadcrumb_root") } %>
       <% end %>
       <% if docs_current_group %>
         <%= ui_breadcrumb_separator %>

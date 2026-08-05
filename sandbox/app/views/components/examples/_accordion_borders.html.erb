@@ -1,26 +1,26 @@
 <%= ui_accordion(default_value: :billing, class_name: "w-full max-w-md rounded-md border px-4") do %>
   <%= ui_accordion_item(value: :billing) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Como funciona a cobrança?" } %>
+      <%= ui_accordion_trigger { "How does billing work?" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      A cobrança acontece no início de cada ciclo, com opção mensal ou anual e cancelamento a qualquer momento.
+      Billing happens at the start of each cycle, monthly or yearly, and you can cancel at any time.
     <% end %>
   <% end %>
   <%= ui_accordion_item(value: :security) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Meus dados estão seguros?" } %>
+      <%= ui_accordion_trigger { "Is my data safe?" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Os dados são criptografados em trânsito e armazenados com controles de acesso por função.
+      Data is encrypted in transit and stored behind role-based access controls.
     <% end %>
   <% end %>
   <%= ui_accordion_item(value: :integrations) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Quais integrações são suportadas?" } %>
+      <%= ui_accordion_trigger { "Which integrations are supported?" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Webhooks, importação CSV e integrações com ferramentas de suporte e cobrança.
+      Webhooks, CSV import, and integrations with support and billing tools.
     <% end %>
   <% end %>
 <% end %>

@@ -1,0 +1,108 @@
+<% content_for :title, "Button — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Button</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      Displays a button, or an element that looks like one.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "button" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Use the <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_button</code> helper
+      in any view — it takes the same arguments as the component.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Or render the component
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::ButtonComponent</code>
+      diretamente:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_button(**options, &block)</code>
+      encapsula
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::ButtonComponent.new(**options)</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th><%= t("components.api.argument") %></th>
+            <th><%= t("components.api.type") %></th>
+            <th><%= t("components.api.default") %></th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>variant</code></td>
+            <td>Symbol</td>
+            <td><code>:default</code></td>
+            <td><code>:default</code>, <code>:secondary</code>, <code>:destructive</code>, <code>:outline</code>, <code>:ghost</code>, <code>:link</code></td>
+          </tr>
+          <tr>
+            <td><code>size</code></td>
+            <td>Symbol</td>
+            <td><code>:default</code></td>
+            <td><code>:default</code>, <code>:sm</code>, <code>:lg</code>, <code>:icon</code></td>
+          </tr>
+          <tr>
+            <td><code>tag</code></td>
+            <td>Symbol</td>
+            <td><code>:button</code></td>
+            <td>Tag HTML renderizada (ex.: <code>:button</code>, <code>:a</code>).</td>
+          </tr>
+          <tr>
+            <td><code>disabled</code></td>
+            <td>Boolean</td>
+            <td><code>false</code></td>
+            <td>Renders <code>data-disabled</code>. With <code>tag: :button</code> it also renders <code>disabled</code> by default.</td>
+          </tr>
+          <tr>
+            <td><code>focusable_when_disabled</code></td>
+            <td>Boolean</td>
+            <td><code>false</code></td>
+            <td>With <code>disabled: true</code>, keeps the native button focusable through <code>aria-disabled="true"</code> and <code>tabindex="0"</code> instead of <code>disabled</code>.</td>
+          </tr>
+          <tr>
+            <td><code>class</code> / <code>class_name</code></td>
+            <td>String</td>
+            <td><code>nil</code></td>
+            <td>Extra classes, merged after the variant and size classes.</td>
+          </tr>
+          <tr>
+            <td><code>**attrs</code></td>
+            <td>Hash</td>
+            <td><code>{}</code></td>
+            <td>Atributos HTML livres (<code>href</code>, <code>data:</code>, <code>aria:</code>, …).</td>
+          </tr>
+          <tr>
+            <td><code>&block</code></td>
+            <td>Block</td>
+            <td>—</td>
+            <td>The button's content — text and/or <code>ui_icon</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

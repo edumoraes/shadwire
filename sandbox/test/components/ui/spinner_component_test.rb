@@ -14,7 +14,7 @@ class SpinnerComponentTest < ViewComponent::TestCase
   def test_renders_status_spinner_with_label
     render_inline(Ui::SpinnerComponent.new)
 
-    assert_selector "svg[role='status'][aria-label='Carregando'][data-slot='spinner'].animate-spin"
+    assert_selector "svg[role='status'][aria-label='Loading'][data-slot='spinner'].animate-spin"
   end
 
   def test_decorative_when_label_blank

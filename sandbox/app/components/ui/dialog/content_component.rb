@@ -45,7 +45,7 @@ module Ui
         return unless @show_close_button
 
         tag.button(type: "button", class: close_button_classes, data: { slot: "dialog-close-x", action: "click->ui-dialog#close" }) do
-          safe_join([ render(Ui::IconComponent.new("x")), tag.span("Fechar", class: "sr-only") ])
+          safe_join([ render(Ui::IconComponent.new("x")), tag.span(I18n.t("ui.dialog.close", default: "Close"), class: "sr-only") ])
         end
       end
 

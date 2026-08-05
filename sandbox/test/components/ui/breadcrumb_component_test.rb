@@ -9,7 +9,7 @@ class BreadcrumbComponentTest < ViewComponent::TestCase
     def call
       ui_breadcrumb do
         ui_breadcrumb_list do
-          ui_breadcrumb_item { ui_breadcrumb_link(href: "/") { "Início" } } +
+          ui_breadcrumb_item { ui_breadcrumb_link(href: "/") { "Home" } } +
             ui_breadcrumb_separator +
             ui_breadcrumb_item { ui_breadcrumb_ellipsis } +
             ui_breadcrumb_separator(class_name: nil) { "/".html_safe } +
@@ -59,13 +59,13 @@ class BreadcrumbComponentTest < ViewComponent::TestCase
     render_inline(Ui::Breadcrumb::EllipsisComponent.new)
 
     assert_selector "span[role='presentation'][aria-hidden='true'][data-slot='breadcrumb-ellipsis'] svg"
-    assert_selector "span.sr-only", text: "Mais"
+    assert_selector "span.sr-only", text: "More"
   end
 
   def test_helper_methods_render_breadcrumb_trail
     render_inline(HelperHarnessComponent.new)
 
-    assert_selector "nav[aria-label='breadcrumb'] ol li a[href='/']", text: "Início"
+    assert_selector "nav[aria-label='breadcrumb'] ol li a[href='/']", text: "Home"
     assert_selector "nav li[data-slot='breadcrumb-separator']", count: 2
     assert_selector "nav span[aria-current='page']", text: "Breadcrumb"
   end

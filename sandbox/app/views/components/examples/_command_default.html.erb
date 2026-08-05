@@ -1,22 +1,22 @@
 <%= ui_command(class: "w-80 shadow-md") do %>
-  <%= ui_command_input(placeholder: "Digite um comando ou busque...") %>
+  <%= ui_command_input(placeholder: "Type a command or search...") %>
   <%= ui_command_list do %>
-    <%= ui_command_empty { "Nenhum resultado encontrado." } %>
-    <%= ui_command_group(heading: "Sugestões") do %>
-      <%= ui_command_item(value: "calendario") do %>
+    <%= ui_command_empty { "No results found." } %>
+    <%= ui_command_group(heading: "Suggestions") do %>
+      <%= ui_command_item(value: "calendar") do %>
         <%= ui_icon("calendar") %>
-        Calendário
+        Calendar
       <% end %>
       <%= ui_command_item(value: "emoji") do %>
         <%= ui_icon("smile") %>
-        Buscar emoji
+        Search emoji
       <% end %>
     <% end %>
     <%= ui_command_separator %>
-    <%= ui_command_group(heading: "Configurações") do %>
-      <%= ui_command_item(value: "perfil") do %>
+    <%= ui_command_group(heading: "Settings") do %>
+      <%= ui_command_item(value: "profile") do %>
         <%= ui_icon("user") %>
-        Perfil
+        Profile
         <%= ui_command_shortcut { "⌘P" } %>
       <% end %>
     <% end %>

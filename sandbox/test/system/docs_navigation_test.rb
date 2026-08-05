@@ -2,7 +2,7 @@
 
 require "application_system_test_case"
 
-# The documentation shell only fully exists in a browser: the "Nesta página"
+# The documentation shell only fully exists in a browser: the "On this page"
 # rail is built client-side from the headings, and the mobile sidebar is a sheet.
 class DocsNavigationTest < ApplicationSystemTestCase
   SCREEN_SIZE = [ 1400, 1000 ].freeze
@@ -14,24 +14,24 @@ class DocsNavigationTest < ApplicationSystemTestCase
   test "the table of contents is built from the page headings" do
     visit docs_cli_path
 
-    within "nav[aria-label='Nesta página']" do
-      assert_selector "a", text: "Comandos"
+    within "nav[aria-label='On this page']" do
+      assert_selector "a", text: "Commands"
       assert_selector "a", text: "Flags"
-      assert_selector "a", text: "Erros e código de saída"
+      assert_selector "a", text: "Errors and exit codes"
     end
 
     # Anchors resolve because the controller gives every heading an id.
     assert_equal "flags", find("h2", text: "Flags")[:id]
-    assert find("nav[aria-label='Nesta página'] a", text: "Flags")[:href].end_with?("#flags")
+    assert find("nav[aria-label='On this page'] a", text: "Flags")[:href].end_with?("#flags")
   end
 
   test "the table of contents follows the section being read" do
     visit docs_cli_path
 
-    assert_selector "nav[aria-label='Nesta página'] a", text: "Erros e código de saída"
-    find("h2", text: "Erros e código de saída").execute_script("this.scrollIntoView()")
+    assert_selector "nav[aria-label='On this page'] a", text: "Errors and exit codes"
+    find("h2", text: "Errors and exit codes").execute_script("this.scrollIntoView()")
 
-    assert_selector "nav[aria-label='Nesta página'] a[data-active='true']", text: "Erros e código de saída"
+    assert_selector "nav[aria-label='On this page'] a[data-active='true']", text: "Errors and exit codes"
   end
 
   # A section taller than the observation band used to leave the whole rail
@@ -39,12 +39,12 @@ class DocsNavigationTest < ApplicationSystemTestCase
   test "exactly one entry is highlighted at any scroll position" do
     visit docs_cli_path
 
-    assert_selector "nav[aria-label='Nesta página'] a"
+    assert_selector "nav[aria-label='On this page'] a"
     height = page.evaluate_script("document.documentElement.scrollHeight")
 
     (0..height).step(300) do |offset|
       page.execute_script("window.scrollTo(0, #{offset})")
-      assert_selector "nav[aria-label='Nesta página'] a[data-active='true']", count: 1,
+      assert_selector "nav[aria-label='On this page'] a[data-active='true']", count: 1,
                       wait: 2
     end
   end
@@ -54,28 +54,28 @@ class DocsNavigationTest < ApplicationSystemTestCase
   test "the table of contents leaves live previews out" do
     visit "/components/accordion"
 
-    entries = all("nav[aria-label='Nesta página'] a").map(&:text)
+    entries = all("nav[aria-label='On this page'] a").map(&:text)
 
-    assert_includes entries, "Exemplos"
+    assert_includes entries, "Examples"
     assert_includes entries, "Basic"
-    refute_includes entries, "Como faço para redefinir minha senha?"
+    refute_includes entries, "How do I reset my password?"
 
     visit "/components/sheet"
 
-    assert_empty all("nav[aria-label='Nesta página'] a").map(&:text).grep(/\ASheet: /)
+    assert_empty all("nav[aria-label='On this page'] a").map(&:text).grep(/\ASheet: /)
   end
 
   test "the sidebar marks the current page and moves between pages" do
     visit docs_theming_path
 
-    assert_selector "nav[aria-label='Documentação'] a[aria-current='page']", text: "Theming"
+    assert_selector "nav[aria-label='Documentation'] a[aria-current='page']", text: "Theming"
 
-    within "nav[aria-label='Páginas']" do
+    within "nav[aria-label='Pages']" do
       click_link "Dark mode"
     end
 
     assert_selector "h1", text: "Dark mode"
-    assert_selector "nav[aria-label='Documentação'] a[aria-current='page']", text: "Dark mode"
+    assert_selector "nav[aria-label='Documentation'] a[aria-current='page']", text: "Dark mode"
   end
 
   test "the palette opens with the keyboard, filters and navigates" do
@@ -115,7 +115,7 @@ class DocsNavigationTest < ApplicationSystemTestCase
 
     page.go_back
 
-    assert_selector "h1", text: "Introdução"
+    assert_selector "h1", text: "Introduction"
     assert_no_selector "dialog[open]", visible: :all
   end
 
@@ -129,7 +129,7 @@ class DocsNavigationTest < ApplicationSystemTestCase
     find("[data-slot='sheet-trigger']").click
 
     within "dialog[data-slot='sheet-content'][open]" do
-      assert_selector "nav[aria-label='Documentação']"
+      assert_selector "nav[aria-label='Documentation']"
       click_link "CLI"
     end
 

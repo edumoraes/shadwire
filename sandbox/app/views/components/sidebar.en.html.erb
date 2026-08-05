@@ -1,0 +1,71 @@
+<% content_for :title, "Sidebar — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Sidebar</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      A composable, collapsible, responsive sidebar for application layouts.
+    </p>
+  </header>
+
+  <%= ui_card(class: "flex flex-col gap-2 border-dashed p-6 sm:flex-row sm:items-center sm:justify-between") do %>
+    <div class="space-y-1">
+      <p class="text-sm font-medium">See the sidebar in a complete layout</p>
+      <p class="text-sm text-muted-foreground">The <code class="rounded bg-muted px-1 py-0.5 text-xs">sidebar-01</code> block shows collapsing, the Cmd/Ctrl+B shortcut, and the mobile drawer.</p>
+    </div>
+    <%= link_to "Open the block", blocks_sidebar_01_path,
+          class: "inline-flex shrink-0 items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90" %>
+  <% end %>
+
+  <%= render "components/install", name: "sidebar" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Wrap the page in <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_sidebar_provider</code>;
+      it hosts the controller and exposes the widths as CSS variables.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">Or render the components directly:</p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <%= docs_code_block(@composition, language: :text) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50"><tr><th>API</th><th><%= t("components.api.element") %></th><th><%= t("components.api.description") %></th></tr></thead>
+        <tbody>
+          <tr><td><code>ui_sidebar_provider</code></td><td><code>div</code></td><td>Hosts the <code>ui-sidebar</code> controller; accepts <code>default_open:</code> and <code>cookie_name:</code>.</td></tr>
+          <tr><td><code>ui_sidebar</code></td><td><code>div</code></td><td>The panel. Accepts <code>side:</code> (<code>:left</code>/<code>:right</code>), <code>variant:</code> (<code>:sidebar</code>/<code>:floating</code>/<code>:inset</code>) and <code>collapsible:</code> (<code>:offcanvas</code>/<code>:icon</code>/<code>:none</code>).</td></tr>
+          <tr><td><code>ui_sidebar_trigger</code></td><td><code>button</code></td><td>Toggles the sidebar (click or Cmd/Ctrl+B).</td></tr>
+          <tr><td><code>ui_sidebar_rail</code></td><td><code>button</code></td><td>The strip along the inner edge that toggles collapsing.</td></tr>
+          <tr><td><code>ui_sidebar_inset</code></td><td><code>main</code></td><td>The content area beside the sidebar.</td></tr>
+          <tr><td><code>ui_sidebar_header</code> / <code>ui_sidebar_footer</code></td><td><code>div</code></td><td>The top and bottom regions.</td></tr>
+          <tr><td><code>ui_sidebar_content</code></td><td><code>div</code></td><td>The scrollable region holding the groups.</td></tr>
+          <tr><td><code>ui_sidebar_group</code> / <code>_group_label</code> / <code>_group_content</code></td><td><code>div</code></td><td>A labelled menu section.</td></tr>
+          <tr><td><code>ui_sidebar_menu</code> / <code>_menu_item</code></td><td><code>ul</code> / <code>li</code></td><td>The list of menu items.</td></tr>
+          <tr><td><code>ui_sidebar_menu_button</code></td><td><code>button</code>/<code>a</code></td><td><code>is_active:</code>, <code>variant:</code>, <code>size:</code> and <code>tooltip:</code> (visible in icon mode only).</td></tr>
+          <tr><td><code>ui_sidebar_menu_action</code> / <code>_menu_badge</code></td><td><code>button</code> / <code>div</code></td><td>An action and a badge pinned to the right of the item.</td></tr>
+          <tr><td><code>ui_sidebar_menu_sub</code> / <code>_menu_sub_item</code> / <code>_menu_sub_button</code></td><td><code>ul</code> / <code>li</code> / <code>a</code></td><td>Submenu aninhado.</td></tr>
+          <tr><td><code>ui_sidebar_menu_skeleton</code></td><td><code>div</code></td><td>Placeholder de carregamento; <code>show_icon:</code>.</td></tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

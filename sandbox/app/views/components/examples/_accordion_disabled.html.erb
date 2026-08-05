@@ -1,26 +1,26 @@
 <%= ui_accordion(default_value: :history, class_name: "w-full max-w-md") do %>
   <%= ui_accordion_item(value: :history) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Posso acessar meu histórico?" } %>
+      <%= ui_accordion_trigger { "Can I get to my history?" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Sim. O histórico fica disponível na área de conta para planos ativos.
+      Yes. History is available in the account area on active plans.
     <% end %>
   <% end %>
   <%= ui_accordion_item(value: :premium, disabled: true) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger(disabled: true) { "Informações de recurso premium" } %>
+      <%= ui_accordion_trigger(disabled: true) { "Premium feature details" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Este conteúdo fica indisponível até o upgrade do plano.
+      This content stays unavailable until you upgrade the plan.
     <% end %>
   <% end %>
   <%= ui_accordion_item(value: :email) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Como atualizo meu e-mail?" } %>
+      <%= ui_accordion_trigger { "How do I update my email?" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Acesse perfil, altere o endereço e confirme o link enviado para o novo e-mail.
+      Open your profile, change the address, and confirm the link sent to the new email.
     <% end %>
   <% end %>
 <% end %>

@@ -1,0 +1,91 @@
+<% content_for :title, "Dialog — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Dialog</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      A window layered over the main page, built on the native
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">&lt;dialog&gt;</code> element.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "dialog" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">showModal()</code> entrega
+      focus trap, top layer, <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd> e
+      and focus restoration natively; the controller adds animations, closing
+      through the backdrop, and the wiring for
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-labelledby</code>/<code class="rounded bg-muted px-1 py-0.5 text-xs">aria-describedby</code>.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Or render the components directly:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th><%= t("components.api.component") %></th>
+            <th><%= t("components.api.argument") %></th>
+            <th><%= t("components.api.default") %></th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Dialog</code></td>
+            <td><code>close_on_backdrop</code></td>
+            <td><code>true</code></td>
+            <td>Closes on a click outside the panel (on the <code>::backdrop</code>).</td>
+          </tr>
+          <tr>
+            <td><code>Dialog::Trigger</code> / <code>Dialog::Close</code></td>
+            <td><code>variant</code>, <code>size</code></td>
+            <td><code>:default</code> / <code>:outline</code></td>
+            <td>Wrap <code>Ui::ButtonComponent</code> with the open/close actions.</td>
+          </tr>
+          <tr>
+            <td><code>Dialog::Content</code></td>
+            <td><code>show_close_button</code></td>
+            <td><code>true</code></td>
+            <td>Renders the X button in the top-right corner.</td>
+          </tr>
+          <tr>
+            <td><code>Dialog::Title</code> / <code>Dialog::Description</code></td>
+            <td>—</td>
+            <td>—</td>
+            <td>Tied to the dialog through <code>aria-labelledby</code>/<code>aria-describedby</code> when it opens.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

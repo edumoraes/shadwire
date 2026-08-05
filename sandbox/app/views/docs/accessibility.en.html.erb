@@ -1,0 +1,110 @@
+<% content_for :title, "Accessibility — Shadwire" %>
+<% content_for :description, "What Shadwire components guarantee about accessibility, what stays your responsibility, and how the project's suite checks it." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Accessibility",
+        description: "The components follow the WAI-ARIA APG patterns and prefer the native element wherever one exists. What is left for you is short." %>
+
+  <section class="space-y-4">
+    <%= docs_h2("What comes built in") %>
+
+    <%= render "docs/table",
+          headers: [ "Area", "What the component already does" ],
+          rows: [
+            [ "Native element first", safe_join([ "Dialog, Alert Dialog, Sheet and Drawer use the native ", docs_code("<dialog>"), ": focus trapping, ", docs_code("Esc"), " and focus restoration come from the browser. Checkbox, Radio Group and Switch are styled native inputs." ]) ],
+            [ "Roles and states", safe_join([ "Tabs exposes ", docs_code("tablist"), "/", docs_code("tab"), "/", docs_code("tabpanel"), "; Select is an APG combobox with ", docs_code("aria-activedescendant"), "; Toggle uses ", docs_code("aria-pressed"), "; Progress exposes ", docs_code("aria-valuenow"), "." ]) ],
+            [ "Keyboard", "Arrow keys navigate menus, tabs, select and toggle group; typeahead matches by prefix in menus and select; Esc closes overlays." ],
+            [ "Visible focus", safe_join([ "Every interactive control carries the focus ring from the ", docs_code("ring"), " token, including the ", docs_code(":focus-visible"), " state." ]) ],
+            [ "Decoration is hidden", safe_join([ "Icons render ", docs_code('aria-hidden="true"'), " by default; decorative separators leave the accessibility tree." ]) ]
+          ] %>
+
+    <p class="leading-7 text-muted-foreground">
+      Every component has render tests in the repository, and an accessibility suite walks the
+      site's pages checking structure, labelling and navigation. The system tests run in headless
+      Chrome on every change.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("What stays yours") %>
+
+    <div class="space-y-6">
+      <div class="space-y-3">
+        <%= docs_h3("Naming overlays") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          <%= docs_code("<dialog>") %> gives you focus and keyboard handling, but it does not
+          invent a name. Every dialog, sheet and drawer needs its title component; use
+          <%= docs_code('class: "sr-only"') %> when the design shows none.
+        </p>
+        <%= docs_code_block(@snippets[:overlay]) %>
+      </div>
+
+      <div class="space-y-3">
+        <%= docs_h3("Naming icons that carry meaning") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          An icon beside text is decoration and should stay hidden. An icon on its own becomes
+          the label, so pass <%= docs_code("label:") %> or label the control that contains it.
+          Details under <%= link_to "Icons", docs_icons_path, class: "font-medium underline underline-offset-4" %>.
+        </p>
+        <%= docs_code_block(@snippets[:icon_label]) %>
+      </div>
+
+      <div class="space-y-3">
+        <%= docs_h3("Tying label to control") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          Since there is no form builder integration, the
+          <%= docs_code("for:") %> / <%= docs_code("id:") %> pair is yours.
+          <%= docs_code("ui_field") %> lays the row out, but it does not guess the control's id.
+          See <%= link_to "Forms", docs_forms_path, class: "font-medium underline underline-offset-4" %>.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <%= docs_h3("Contrast after retheming") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          The default values pass the contrast criteria; yours have to be checked. Always set the
+          <%= docs_code("<surface>") %> / <%= docs_code("<surface>-foreground") %> pair together,
+          and test in both modes.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <%= docs_h3("Heading hierarchy") %>
+        <p class="text-sm leading-6 text-muted-foreground">
+          <%= docs_code("ui_card_title") %> and <%= docs_code("ui_dialog_title") %> are style, not
+          level. If the page needs a heading structure, write the
+          <%= docs_code("h1") %>–<%= docs_code("h3") %> around them yourself.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Testing in your app") %>
+    <p class="leading-7 text-muted-foreground">
+      The installed components are your code, so they test like any ViewComponent. Pin the
+      accessible name in a test — that is the part the library cannot guarantee on its own:
+    </p>
+
+    <%= docs_code_block(@snippets[:test], language: :ruby) %>
+
+    <%= render layout: "docs/callout", locals: { icon: "info", title: "Interactive components need a browser" } do %>
+      Focus, keyboard handling and <code>&lt;dialog&gt;</code> behaviour only show up in a system
+      test. A render test confirms the markup, not that <code>Esc</code> closes anything.
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Found a problem?") %>
+    <p class="leading-7 text-muted-foreground">
+      Broken accessibility in a component is a registry bug, not a bug in your app:
+      <%= link_to "open an issue", "https://github.com/edumoraes/shadwire/issues/new", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>.
+      In the meantime the file is yours, so fix it locally and run
+      <%= docs_code("bin/shadwire diff") %> before your next update.
+    </p>
+  </section>
+</article>

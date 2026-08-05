@@ -76,7 +76,7 @@ class DataTableComponentTest < ViewComponent::TestCase
   def test_empty_state_row_is_hidden_and_spans_all_columns
     render_table
 
-    assert_selector "tr[data-ui-data-table-target='emptyState'][hidden] td[colspan='4']", text: "Sem resultados.", visible: :all
+    assert_selector "tr[data-ui-data-table-target='emptyState'][hidden] td[colspan='4']", text: "No results.", visible: :all
   end
 
   def test_footer_has_selection_info_and_pagination
@@ -84,8 +84,8 @@ class DataTableComponentTest < ViewComponent::TestCase
 
     assert_selector "[data-ui-data-table-target='selectionInfo']"
     assert_selector "[data-ui-data-table-target='pageInfo']"
-    assert_selector "button[data-ui-data-table-target='previous'][data-action='click->ui-data-table#previousPage']", text: "Anterior"
-    assert_selector "button[data-ui-data-table-target='next'][data-action='click->ui-data-table#nextPage']", text: "Próximo"
+    assert_selector "button[data-ui-data-table-target='previous'][data-action='click->ui-data-table#previousPage']", text: "Previous"
+    assert_selector "button[data-ui-data-table-target='next'][data-action='click->ui-data-table#nextPage']", text: "Next"
   end
 
   def test_helper_composes_the_data_table

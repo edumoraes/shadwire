@@ -6,7 +6,7 @@ class PopoverComponentTest < ApplicationSystemTestCase
   test "popover toggles, moves focus in, and closes on outside click and escape" do
     visit components_popover_path
 
-    trigger = find("#example-popover_default button", text: "Abrir dimensões")
+    trigger = find("#example-popover_default button", text: "Open dimensions")
 
     assert_equal "false", trigger["aria-expanded"]
     assert_no_selector "#example-popover_default [data-slot='popover-content']", visible: true
@@ -31,7 +31,7 @@ class PopoverComponentTest < ApplicationSystemTestCase
     trigger.send_keys :escape
 
     assert_no_selector "#example-popover_default [data-slot='popover-content']", visible: true
-    assert_equal "Abrir dimensões", page.evaluate_script("document.activeElement.textContent").strip,
+    assert_equal "Open dimensions", page.evaluate_script("document.activeElement.textContent").strip,
                  "focus should return to the trigger after Escape"
   end
 end

@@ -42,6 +42,7 @@ module Ui
           data[:slot] = "sonner"
           data[:controller] = append_token(data[:controller], "ui-sonner")
           data[:"ui-sonner-duration-value"] = @duration
+          data[:"ui-sonner-close-label-value"] = I18n.t("ui.sonner.close", default: "Close")
         end
       end
     end
@@ -50,7 +51,7 @@ module Ui
       tag.ol(
         "",
         role: "region",
-        aria: { live: "polite", label: "Notificações" },
+        aria: { live: "polite", label: I18n.t("ui.sonner.label", default: "Notifications") },
         tabindex: "-1",
         data: { slot: "sonner-list", "ui-sonner-target": "list" },
         class: class_names(

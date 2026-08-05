@@ -22,8 +22,10 @@ class DocsNavHelperTest < ActionView::TestCase
   end
 
   test "every component documentation route is a registry item" do
+    # Every page route sits inside the optional locale scope, so its spec starts
+    # with the (/:locale) group rather than with /components.
     documented = Rails.application.routes.routes.filter_map { |route|
-      route.path.spec.to_s[%r{\A/components/([a-z0-9-]+)\(}, 1]
+      route.path.spec.to_s[%r{\A\(/:locale\)/components/([a-z0-9-]+)\(}, 1]
     }
     nav_paths = docs_nav_components_group[:items].map { |item| item[:path] }
 
@@ -44,9 +46,29 @@ class DocsNavHelperTest < ActionView::TestCase
   test "the component group is alphabetical after the catalog index" do
     items = docs_nav_components_group[:items]
 
-    assert_equal "Visão geral", items.first[:title]
+    assert_equal I18n.t("docs.nav.overview"), items.first[:title]
     titles = items.drop(1).map { |item| item[:title] }
     assert_equal titles.sort_by(&:downcase), titles
+  end
+
+  # The sidebar is the one place where a missing translation would be invisible:
+  # fallbacks would quietly serve the English label inside the Portuguese tree.
+  # One locale per test — docs_nav_groups memoizes, which is right for a request
+  # (a locale never changes inside one) but would hide the second assertion here.
+  test "the sidebar reads in English" do
+    I18n.with_locale(:en) do
+      assert_equal "Overview", docs_nav_components_group[:items].first[:title]
+      assert_equal "Get started", docs_nav_groups.first[:title]
+      assert_equal "Introduction", docs_nav_items.first[:title]
+    end
+  end
+
+  test "the sidebar reads in Portuguese" do
+    I18n.with_locale(:pt) do
+      assert_equal "Visão geral", docs_nav_components_group[:items].first[:title]
+      assert_equal "Começar", docs_nav_groups.first[:title]
+      assert_equal "Introdução", docs_nav_items.first[:title]
+    end
   end
 
   test "the flattened order starts at the introduction" do

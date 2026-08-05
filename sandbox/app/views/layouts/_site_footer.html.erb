@@ -6,11 +6,11 @@
         <%= ui_icon("box", class: "text-primary") %>Shadwire
       </p>
       <p class="max-w-md text-sm text-muted-foreground">
-        Componentes shadcn/ui portados para o Ruby on Rails. Código aberto que você instala e passa a possuir.
+        <%= t("site.description") %>
       </p>
     </div>
-    <nav aria-label="Rodapé" class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
-      <%= link_to "Documentação", docs_path, class: "transition-colors hover:text-foreground" %>
+    <nav aria-label="<%= t("site.footer.label") %>" class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
+      <%= link_to t("site.nav.docs"), docs_path, class: "transition-colors hover:text-foreground" %>
       <%= link_to "GitHub", "https://github.com/edumoraes/shadwire", target: "_blank", rel: "noopener", class: "transition-colors hover:text-foreground" %>
       <%= link_to "shadcn/ui", "https://ui.shadcn.com", target: "_blank", rel: "noopener", class: "transition-colors hover:text-foreground" %>
       <%= link_to "Ruby on Rails", "https://rubyonrails.org", target: "_blank", rel: "noopener", class: "transition-colors hover:text-foreground" %>

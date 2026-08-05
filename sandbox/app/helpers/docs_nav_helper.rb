@@ -11,44 +11,28 @@
 module DocsNavHelper
   # Guides and reference pages, in reading order. Component pages are appended
   # by #docs_nav_groups.
+  #
+  # Routes only — titles are resolved per request from docs.nav.* in the locale
+  # files, since the sidebar is rendered in whichever language the reader is in.
   GUIDE_GROUPS = [
     {
-      title: "Começar",
-      items: [
-        { title: "Introdução", route: :docs },
-        { title: "Instalação", route: :docs_installation },
-        { title: "shadwire.json", route: :docs_configuration },
-        { title: "Theming", route: :docs_theming },
-        { title: "Dark mode", route: :docs_dark_mode }
-      ]
+      key: :start,
+      routes: %i[docs docs_installation docs_configuration docs_theming docs_dark_mode]
     },
     {
-      title: "Ferramentas",
-      items: [
-        { title: "CLI", route: :docs_cli },
-        { title: "Agent skill", route: :docs_agent_skill },
-        { title: "Registry", route: :docs_registry },
-        { title: "llms.txt", route: :docs_llms_txt }
-      ]
+      key: :tools,
+      routes: %i[docs_cli docs_agent_skill docs_registry docs_llms_txt]
     },
     {
-      title: "Guias",
-      items: [
-        { title: "Composição", route: :docs_composition },
-        { title: "Estilização", route: :docs_styling },
-        { title: "Formulários", route: :docs_forms },
-        { title: "Ícones", route: :docs_icons },
-        { title: "Acessibilidade", route: :docs_accessibility }
-      ]
+      key: :guides,
+      routes: %i[docs_composition docs_styling docs_forms docs_icons docs_accessibility]
     },
     {
-      title: "Blocks",
+      key: :blocks,
       # The individual blocks are deliberately absent: a block renders standalone
       # under the "block" layout, with no header, no sidebar and no way back. The
       # index frames each one in an iframe and links to the full-screen version.
-      items: [
-        { title: "Visão geral", route: :blocks }
-      ]
+      routes: %i[blocks]
     }
   ].freeze
 
@@ -62,18 +46,26 @@ module DocsNavHelper
   # components controller defines.
   def docs_nav_components_group
     items = docs_component_items.map do |item|
-      { title: item.fetch("title"), path: "/components/#{item.fetch("name")}" }
+      { title: item.fetch("title"), path: docs_component_path(item.fetch("name")) }
     end
 
     {
-      title: "Componentes",
-      items: [ { title: "Visão geral", path: components_path } ] + items.sort_by { |item| item[:title].downcase }
+      title: t("docs.nav.groups.components"),
+      items: [ { title: t("docs.nav.overview"), path: components_path } ] + items.sort_by { |item| item[:title].downcase }
     }
   end
 
   # Registry items of type "component", in manifest order.
   def docs_component_items
     registry_items.values.select { |item| item.fetch("type") == "component" }
+  end
+
+  # The documentation path of a registry component. Goes through the route
+  # helper rather than being built as a string: the helper carries the locale
+  # from default_url_options, and a hand-built "/components/#{name}" would send
+  # a Portuguese reader into the English tree.
+  def docs_component_path(name)
+    send(:"components_#{name.tr("-", "_")}_path")
   end
 
   # Every sidebar entry, flattened into the order the previous/next pager walks.
@@ -115,7 +107,9 @@ module DocsNavHelper
   # Which top-level section the header highlights: :docs, :components, :blocks
   # or nil on the landing page.
   def site_nav_section
-    case request.path
+    # Compared against the unprefixed path: the Portuguese tree is the same site
+    # under /pt, and the header highlights the same section in both.
+    case request.path.delete_prefix("/#{I18n.locale}")
     when %r{\A/docs} then :docs
     when %r{\A/components} then :components
     when %r{\A/blocks} then :blocks
@@ -125,6 +119,19 @@ module DocsNavHelper
   private
 
   def resolve_group(group)
-    { title: group[:title], items: group[:items].map { |item| { title: item[:title], path: send(:"#{item[:route]}_path") } } }
+    {
+      title: t("docs.nav.groups.#{group[:key]}"),
+      items: group[:routes].map { |route| { title: docs_nav_title(route), path: send(:"#{route}_path") } }
+    }
+  end
+
+  # The sidebar label for a guide route. Most map onto docs.nav.pages.* by
+  # dropping the docs_ prefix; the two section landing pages are the exceptions.
+  def docs_nav_title(route)
+    case route
+    when :docs then t("docs.nav.pages.index")
+    when :blocks then t("docs.nav.overview")
+    else t("docs.nav.pages.#{route.to_s.delete_prefix("docs_")}")
+    end
   end
 end

@@ -1,0 +1,118 @@
+<% content_for :title, "Styling — Shadwire" %>
+<% content_for :description, "Semantic tokens, class precedence, free-form HTML attributes, and the utility conventions Shadwire components follow." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Styling",
+        description: "Variants for appearance, class: for layout. Every colour comes from a token, and your class always wins." %>
+
+  <section class="space-y-4">
+    <%= docs_h2("Semantic tokens only") %>
+    <p class="leading-7 text-muted-foreground">
+      Every colour comes from a shadcn token, so light mode, dark mode and any retheming work
+      without touching component code.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_colors]) %>
+    <%= docs_code_block(@snippets[:right_colors]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      The pairs are <%= docs_code("<surface>") %> /
+      <%= docs_code("<surface>-foreground") %>:
+      <%= docs_code("bg-primary text-primary-foreground") %>,
+      <%= docs_code("bg-muted text-muted-foreground") %>,
+      <%= docs_code("bg-destructive text-destructive-foreground") %>. The full table is under
+      <%= link_to "Theming", docs_theming_path, class: "font-medium underline underline-offset-4" %>.
+    </p>
+    <p class="leading-7 text-muted-foreground">
+      Never write <%= docs_code("dark:") %> variants for colour. Use the prefix only for
+      mode-specific choices that are not colour, such as a different image.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("class: and class_name: are the same thing") %>
+    <p class="leading-7 text-muted-foreground">
+      Both normalise to the same value. Use whichever reads better;
+      <%= docs_code("class:") %> is the more idiomatic Rails.
+    </p>
+
+    <%= docs_code_block(@snippets[:class_alias]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Your class always wins") %>
+    <p class="leading-7 text-muted-foreground">
+      Classes compose in this order, with yours last:
+    </p>
+
+    <%= docs_code_block(@snippets[:order], language: :text) %>
+
+    <p class="leading-7 text-muted-foreground">
+      That is why <%= docs_code("class:") %> overrides the component's utilities. Even so, do not
+      use it to restyle:
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_restyle]) %>
+    <%= docs_code_block(@snippets[:right_restyle]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Use <%= docs_code("class:") %> for <strong class="font-medium text-foreground">layout</strong>:
+      width, margin, position in a grid.
+    </p>
+
+    <%= docs_code_block(@snippets[:layout]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("HTML attributes pass straight through") %>
+    <p class="leading-7 text-muted-foreground">
+      Anything that is not a known prop is forwarded to the rendered element, Rails' nested
+      hashes included.
+    </p>
+
+    <%= docs_code_block(@snippets[:attrs]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Use <%= docs_code("tag:") %> to swap the element where the component supports it.
+      <%= docs_code("button") %> renders a <%= docs_code("<button>") %> by default and an
+      <%= docs_code("<a>") %> with <%= docs_code("tag: :a") %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Prefer variants and sizes over utilities") %>
+    <p class="leading-7 text-muted-foreground">
+      Look at what already exists before writing classes:
+    </p>
+
+    <%= docs_code_block(@snippets[:info], language: :console) %>
+    <%= docs_code_block(@snippets[:wrong_utilities]) %>
+    <%= docs_code_block(@snippets[:right_utilities]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Utility conventions") %>
+    <p class="leading-7 text-muted-foreground">
+      Follow what the components themselves do, so your code does not read differently from what
+      the CLI installed:
+    </p>
+
+    <ul class="space-y-2 text-sm leading-6 text-muted-foreground">
+      <% [
+        [ "size-9", "rather than h-9 w-9, when width and height match." ],
+        [ "gap-*", "with flex or grid, rather than space-x-* / space-y-*." ],
+        [ "truncate", "rather than overflow-hidden text-ellipsis whitespace-nowrap." ],
+        [ "no manual z-index", "on overlays: dialog, sheet, popover and dropdown-menu already manage their own stacking." ]
+      ].each do |token, body| %>
+        <li class="flex gap-3">
+          <%= ui_icon("check", size: :sm, class: "mt-1 shrink-0 text-primary") %>
+          <span><%= docs_code(token) %> <%= body %></span>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+</article>

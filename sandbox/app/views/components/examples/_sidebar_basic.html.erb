@@ -6,10 +6,10 @@
     <% end %>
     <%= ui_sidebar_content do %>
       <%= ui_sidebar_group do %>
-        <%= ui_sidebar_group_label { "Aplicação" } %>
+        <%= ui_sidebar_group_label { "Application" } %>
         <%= ui_sidebar_group_content do %>
           <%= ui_sidebar_menu do %>
-            <% [ [ "Caixa de entrada", "inbox", true ], [ "Projetos", "folder", false ], [ "Equipe", "users", false ] ].each do |label, icon, active| %>
+            <% [ [ "Inbox", "inbox", true ], [ "Projects", "folder", false ], [ "Team", "users", false ] ].each do |label, icon, active| %>
               <%= ui_sidebar_menu_item do %>
                 <%= ui_sidebar_menu_button(tag: :a, href: "#", is_active: active) do %>
                   <%= ui_icon(icon) %>
@@ -23,6 +23,6 @@
     <% end %>
   <% end %>
   <main class="flex flex-1 items-center justify-center p-4 text-sm text-muted-foreground">
-    Conteúdo
+    Content
   </main>
 </div>

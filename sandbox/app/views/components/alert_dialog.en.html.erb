@@ -1,0 +1,90 @@
+<% content_for :title, "Alert Dialog — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Alert Dialog</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      A modal dialog that interrupts the flow and demands an explicit answer.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "alert-dialog" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Compartilha o controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dialog</code>
+      with Dialog, but with backdrop dismissal and <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd> turned off
+      e <code class="rounded bg-muted px-1 py-0.5 text-xs">role="alertdialog"</code>.
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_alert_dialog_action</code> closes the dialog —
+      attach your real action (a form, Turbo, Stimulus) to the button.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Or render the components directly:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th><%= t("components.api.component") %></th>
+            <th><%= t("components.api.argument") %></th>
+            <th><%= t("components.api.default") %></th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>AlertDialog</code></td>
+            <td>—</td>
+            <td>—</td>
+            <td>Sempre injeta <code>close_on_backdrop: false</code> e <code>close_on_escape: false</code>.</td>
+          </tr>
+          <tr>
+            <td><code>AlertDialog::Trigger</code></td>
+            <td><code>variant</code>, <code>size</code></td>
+            <td><code>:default</code></td>
+            <td>The Button that opens the dialog.</td>
+          </tr>
+          <tr>
+            <td><code>AlertDialog::Action</code></td>
+            <td><code>variant</code>, <code>size</code></td>
+            <td><code>:default</code></td>
+            <td>The confirming Button; closes the dialog after your action runs.</td>
+          </tr>
+          <tr>
+            <td><code>AlertDialog::Cancel</code></td>
+            <td><code>variant</code>, <code>size</code></td>
+            <td><code>:outline</code></td>
+            <td>The Button that dismisses the dialog.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

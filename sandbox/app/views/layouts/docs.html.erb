@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="<%= locale_tag(I18n.locale) %>">
   <head>
     <%= render "layouts/site_head" %>
   </head>
@@ -25,9 +25,9 @@
 
         <aside class="sticky top-16 hidden h-[calc(100svh-4rem)] xl:block">
           <div class="py-8" data-docs-toc-target="panel">
-            <p class="mb-3 px-3 text-sm font-medium">Nesta página</p>
+            <p class="mb-3 px-3 text-sm font-medium"><%= t("docs.toc") %></p>
             <%= ui_scroll_area(class: "max-h-[calc(100svh-10rem)]") do %>
-              <nav aria-label="Nesta página">
+              <nav aria-label="<%= t("docs.toc") %>">
                 <ul class="flex flex-col gap-1 border-l text-sm" data-docs-toc-target="list"></ul>
               </nav>
             <% end %>

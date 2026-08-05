@@ -1,0 +1,97 @@
+<% content_for :title, "Icons — Shadwire" %>
+<% content_for :description, "lucide-rails in Shadwire: kebab-case names, the four sizes, when an icon needs an accessible label, and why there is no icon: prop." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Icons",
+        description: "Icons come from lucide-rails, the Rails port of Lucide (shadcn/ui's set). ui_icon wraps lucide_icon with shadcn's size variants." %>
+
+  <section class="space-y-4">
+    <p class="leading-7">
+      The application needs the <%= docs_code("lucide-rails") %> gem.
+      <%= docs_code("shadwire init") %> adds it, and
+      <%= docs_code("bin/shadwire status --json") %> reports it under <%= docs_code("gems") %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Names are Lucide's kebab-case") %>
+
+    <%= docs_code_block(@snippets[:wrong_names]) %>
+    <%= docs_code_block(@snippets[:right_names]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      The names are listed at
+      <%= link_to "lucide.dev/icons", "https://lucide.dev/icons", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Sizes") %>
+
+    <%= render "docs/table",
+          headers: [ "Size", "Class", "Typical use" ],
+          rows: [
+            [ docs_code(":sm"), docs_code("size-3"), "Inside badges, supporting text and breadcrumbs." ],
+            [ docs_code(":default"), docs_code("size-4"), "Buttons, menu items, fields." ],
+            [ docs_code(":lg"), docs_code("size-5"), "Headings, tiles, empty states." ],
+            [ docs_code(":xl"), docs_code("size-6"), "Illustrations and feature callouts." ]
+          ] %>
+
+    <%= docs_code_block(@snippets[:sizes]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Prefer these sizes over <%= docs_code('class: "w-3 h-3"') %>, so the icon follows any
+      future adjustment to the scale.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Icons are decorative by default") %>
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("ui_icon") %> renders <%= docs_code('aria-hidden="true"') %>, which is right
+      beside a text label, since the text is what names the control.
+    </p>
+
+    <%= docs_code_block(@snippets[:decorative]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      When the icon is the <em>only</em> content, it has to carry the name. Pass
+      <%= docs_code("label:") %>, which sets <%= docs_code('role="img"') %> and
+      <%= docs_code("aria-label") %> and cancels the <%= docs_code("aria-hidden") %>:
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_label]) %>
+    <%= docs_code_block(@snippets[:right_label]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Labelling the button instead of the icon is equally valid; what is not allowed is neither.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("There is no icon: prop") %>
+    <p class="leading-7 text-muted-foreground">
+      No component takes an icon as a prop. The icon goes in the content, shadcn-style.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_prop]) %>
+    <%= docs_code_block(@snippets[:right_prop]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("ButtonComponent") %> carries <%= docs_code("[&_svg]") %> utilities, so a
+      nested icon comes out sized and spaced with no extra class. Use
+      <%= docs_code("size: :icon") %> for an icon-only button.
+    </p>
+
+    <p class="leading-7 text-muted-foreground">
+      Both parts have to be <%= docs_code("html_safe") %>, so join them with
+      <%= docs_code("safe_join") %> rather than concatenating strings.
+      <%= docs_code('ui_icon("save") + " Save"') %> works too, since the icon is safe, but
+      <%= docs_code("safe_join") %> states the intent and handles interpolated content correctly.
+    </p>
+  </section>
+</article>

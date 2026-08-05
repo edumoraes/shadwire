@@ -1,0 +1,151 @@
+<% content_for :title, "Introduction — Shadwire" %>
+<% content_for :description, "Shadwire brings shadcn/ui's Open Code model to Ruby on Rails: ViewComponent source that your application installs and then owns." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Introduction",
+        description: "Shadwire brings shadcn/ui's Open Code model to Ruby on Rails. The components are source code your application copies and then owns, with no runtime gem." %>
+
+  <section class="space-y-4">
+    <p class="leading-7">
+      shadcn/ui inverted how you relate to a UI library. Instead of installing a package and
+      configuring what it allows from the outside, you copy the component's source into your
+      project. Shadwire does the same for Rails. The components are
+      <%= link_to "ViewComponent", "https://viewcomponent.org", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
+      classes styled with Tailwind CSS v4, distributed through a static registry and installed
+      by a CLI.
+    </p>
+
+    <%= render layout: "docs/callout", locals: { icon: "info", title: "None of this becomes a runtime dependency" } do %>
+      The <code>shadwire</code> gem lives in the <code>development</code> group and exists only
+      to install and sync files. Remove it and the installed components keep working exactly
+      as they are.
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("How it works") %>
+    <p class="leading-7 text-muted-foreground">
+      The registry publishes, the CLI installs, and your app keeps the files.
+    </p>
+
+    <ol class="space-y-4">
+      <% [
+        { step: "1", title: "The registry publishes",
+          body: "Each component is published as a JSON document with its file contents inlined, served from https://shadwire.edumoraes.dev.br/r. Static files — no application server, no authentication." },
+        { step: "2", title: "The CLI installs",
+          body: "bin/shadwire add button fetches the item, writes the files to their paths in your app, applies the gems and importmap pins it needs, and records all of it in shadwire.json." },
+        { step: "3", title: "You own it",
+          body: "The files are yours. Edit variants, swap classes, rename things. bin/shadwire diff shows what has diverged from the registry." }
+      ].each do |item| %>
+        <li class="flex gap-4">
+          <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
+            <%= item[:step] %>
+          </span>
+          <div class="space-y-1">
+            <p class="font-medium"><%= item[:title] %></p>
+            <p class="text-sm leading-6 text-muted-foreground"><%= item[:body] %></p>
+          </div>
+        </li>
+      <% end %>
+    </ol>
+
+    <%= docs_code_block(<<~SHELL, language: :shell) %>
+      gem install shadwire
+      shadwire init                     # shadwire.json + base files + bin/shadwire
+      bin/shadwire add button card      # installs components and their dependencies
+    SHELL
+  </section>
+
+  <section class="space-y-6">
+    <%= docs_h2("Principles") %>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <% [
+        { icon: "package-open", title: "Open Code",
+          body: "The component's code is visible and editable in your repository. There is no configuration layer to work around: when the library did not anticipate your case, you change the file." },
+        { icon: "blocks", title: "Composition",
+          body: "Subcomponents are nested helpers, not props: ui_card_header inside ui_card, ui_select_item inside ui_select_content. The view's structure mirrors the HTML's." },
+        { icon: "palette", title: "Semantic tokens",
+          body: "Every colour comes from a shadcn token (bg-primary, text-muted-foreground). Retheming means editing two lists of CSS variables; no component has to change." },
+        { icon: "accessibility", title: "Accessible by default",
+          body: "ARIA semantics and the WAI-ARIA APG patterns are built in: focus, keyboard, labels and states. The repository's suite checks it on every change." },
+        { icon: "bot", title: "Ready for agents",
+          body: "An agent skill and the llms.txt files describe the catalog in plain text, and the whole CLI speaks --json, so an agent reads the API instead of guessing at it." },
+        { icon: "git-compare-arrows", title: "Explicit updates",
+          body: "Nothing changes on its own. diff shows the divergence and update reapplies the registry's version when you say so, reporting what it overwrote." }
+      ].each do |principle| %>
+        <%= ui_card(class: "h-full") do %>
+          <%= ui_card_header do %>
+            <%= ui_card_title(class: "flex items-center gap-2 text-base") do %>
+              <%= ui_icon(principle[:icon], class: "text-primary") %><%= principle[:title] %>
+            <% end %>
+            <%= ui_card_description(class: "leading-6") { principle[:body] } %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("What is here already") %>
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_component_items.size %> components and 1 block, every one of them validated in the
+      Rails application that serves this site.
+    </p>
+
+    <%= render "docs/table",
+          headers: [ "Area", "Components" ],
+          rows: [
+            [ "Forms", docs_code("field") + " · " + docs_code("input") + " · " + docs_code("textarea") + " · " + docs_code("checkbox") + " · " + docs_code("radio-group") + " · " + docs_code("switch") + " · " + docs_code("select") + " · " + docs_code("combobox") + " · " + docs_code("slider") + " · " + docs_code("input-otp") + " · " + docs_code("date-picker") ],
+            [ "Overlays", docs_code("dialog") + " · " + docs_code("alert-dialog") + " · " + docs_code("sheet") + " · " + docs_code("drawer") + " · " + docs_code("popover") + " · " + docs_code("tooltip") + " · " + docs_code("hover-card") ],
+            [ "Navigation", docs_code("sidebar") + " · " + docs_code("navigation-menu") + " · " + docs_code("menubar") + " · " + docs_code("breadcrumb") + " · " + docs_code("tabs") + " · " + docs_code("pagination") + " · " + docs_code("command") ],
+            [ "Data", docs_code("table") + " · " + docs_code("data-table") + " · " + docs_code("chart") + " · " + docs_code("card") + " · " + docs_code("item") + " · " + docs_code("badge") + " · " + docs_code("avatar") ],
+            [ "State", docs_code("skeleton") + " · " + docs_code("spinner") + " · " + docs_code("progress") + " · " + docs_code("empty") + " · " + docs_code("alert") + " · " + docs_code("sonner") ]
+          ] %>
+
+    <p class="text-sm text-muted-foreground">
+      The whole catalog is under <%= link_to "Components", components_path, class: "font-medium underline underline-offset-4" %>,
+      and the CLI answers <%= docs_code("bin/shadwire list") %> with the same list.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Where to start") %>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <% [
+        { icon: "download", title: "Installation", body: "Requirements, the CLI, and your first component in your app.", path: docs_installation_path },
+        { icon: "terminal", title: "CLI", body: "Every command, every flag, and the JSON payload.", path: docs_cli_path },
+        { icon: "palette", title: "Theming", body: "The tokens, your brand colour, and how to keep your edits.", path: docs_theming_path },
+        { icon: "bot", title: "Agent skill", body: "The context Claude Code, Codex and other agents work from.", path: docs_agent_skill_path }
+      ].each do |card| %>
+        <%= link_to card[:path], class: "group flex h-full flex-col gap-2 rounded-xl border bg-card p-5 text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
+          <span class="flex items-center gap-2 font-medium">
+            <%= ui_icon(card[:icon], size: :sm, class: "text-primary") %><%= card[:title] %>
+          </span>
+          <span class="text-sm leading-6 text-muted-foreground group-hover:text-accent-foreground"><%= card[:body] %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Licence") %>
+    <p class="leading-7 text-muted-foreground">
+      Shadwire is MIT, and the components the CLI installs into your app are yours: use them,
+      modify them and ship them in commercial and closed-source products, with no attribution
+      required in the installed files and no runtime dependency.
+    </p>
+    <p class="leading-7 text-muted-foreground">
+      Shadwire is a port of
+      <%= link_to "shadcn/ui", "https://ui.shadcn.com", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>,
+      which is MIT as well. That notice, and the licences of everything an installed component
+      brings with it (view_component, lucide-rails, the Lucide icons, Chart.js), are in the
+      repository's
+      <%= link_to "NOTICE", "https://github.com/edumoraes/shadwire/blob/main/NOTICE", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>.
+    </p>
+  </section>
+</article>

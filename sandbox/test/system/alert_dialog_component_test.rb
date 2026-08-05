@@ -9,7 +9,7 @@ class AlertDialogComponentTest < ApplicationSystemTestCase
     assert_no_selector "dialog[data-slot='alert-dialog-content']"
 
     within "#example-alert_dialog_default" do
-      click_button "Excluir conta"
+      click_button "Delete account"
     end
 
     dialog = find("dialog[role='alertdialog'][open]")
@@ -18,7 +18,7 @@ class AlertDialogComponentTest < ApplicationSystemTestCase
 
     dialog.send_keys :escape
 
-    assert_selector "dialog[role='alertdialog'][open]", text: "Tem certeza absoluta?"
+    assert_selector "dialog[role='alertdialog'][open]", text: "Are you absolutely sure?"
 
     dialog.execute_script(<<~JS)
       const rect = this.getBoundingClientRect()
@@ -28,18 +28,18 @@ class AlertDialogComponentTest < ApplicationSystemTestCase
     assert_selector "dialog[role='alertdialog'][open]"
 
     within "dialog[open]" do
-      click_button "Cancelar"
+      click_button "Cancel"
     end
 
     assert_no_selector "dialog[open]"
     assert_no_selector "dialog[data-slot='alert-dialog-content']"
 
     within "#example-alert_dialog_default" do
-      click_button "Excluir conta"
+      click_button "Delete account"
     end
 
     within "dialog[open]" do
-      click_button "Continuar"
+      click_button "Continue"
     end
 
     assert_no_selector "dialog[open]"

@@ -1,19 +1,19 @@
 <%= ui_table(class: "max-w-xl") do %>
-  <%= ui_table_caption { "Uma lista das suas faturas recentes." } %>
+  <%= ui_table_caption { "A list of your recent invoices." } %>
   <%= ui_table_header do %>
     <%= ui_table_row do %>
-      <%= ui_table_head(scope: "col", class: "w-[100px]") { "Fatura" } %>
+      <%= ui_table_head(scope: "col", class: "w-[100px]") { "Invoice" } %>
       <%= ui_table_head(scope: "col") { "Status" } %>
-      <%= ui_table_head(scope: "col") { "Método" } %>
-      <%= ui_table_head(scope: "col", class: "text-right") { "Valor" } %>
+      <%= ui_table_head(scope: "col") { "Method" } %>
+      <%= ui_table_head(scope: "col", class: "text-right") { "Amount" } %>
     <% end %>
   <% end %>
   <%= ui_table_body do %>
     <% [
-      [ "INV001", "Paga", "Pix", "R$ 250,00" ],
-      [ "INV002", "Pendente", "Boleto", "R$ 150,00" ],
-      [ "INV003", "Paga", "Cartão", "R$ 350,00" ],
-      [ "INV004", "Cancelada", "Pix", "R$ 450,00" ]
+      [ "INV001", "Paid", "Credit Card", "$250.00" ],
+      [ "INV002", "Pending", "Bank Transfer", "$150.00" ],
+      [ "INV003", "Paid", "Credit Card", "$350.00" ],
+      [ "INV004", "Cancelled", "Credit Card", "$450.00" ]
     ].each do |invoice, status, method, amount| %>
       <%= ui_table_row do %>
         <%= ui_table_cell(class: "font-medium") { invoice } %>
@@ -26,7 +26,7 @@
   <%= ui_table_footer do %>
     <%= ui_table_row do %>
       <%= ui_table_cell(colspan: 3) { "Total" } %>
-      <%= ui_table_cell(class: "text-right") { "R$ 1.200,00" } %>
+      <%= ui_table_cell(class: "text-right") { "$1,200.00" } %>
     <% end %>
   <% end %>
 <% end %>

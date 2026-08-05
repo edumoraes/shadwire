@@ -106,7 +106,9 @@ module Ui
       {
         ui_calendar_caption_layout_value: @caption_layout,
         ui_calendar_first_year_value: @year_range.first,
-        ui_calendar_last_year_value: @year_range.last
+        ui_calendar_last_year_value: @year_range.last,
+        ui_calendar_month_label_value: I18n.t("ui.calendar.month", default: "Month"),
+        ui_calendar_year_label_value: I18n.t("ui.calendar.year", default: "Year")
       }
     end
 
@@ -121,8 +123,8 @@ module Ui
     def nav
       tag.div(class: "pointer-events-none absolute inset-x-0 top-0 flex items-center justify-between") do
         safe_join([
-          nav_button(rtl? ? "chevron-right" : "chevron-left", "previous", "Mês anterior"),
-          nav_button(rtl? ? "chevron-left" : "chevron-right", "next", "Próximo mês")
+          nav_button(rtl? ? "chevron-right" : "chevron-left", "previous", I18n.t("ui.calendar.previous_month", default: "Previous month")),
+          nav_button(rtl? ? "chevron-left" : "chevron-right", "next", I18n.t("ui.calendar.next_month", default: "Next month"))
         ])
       end
     end

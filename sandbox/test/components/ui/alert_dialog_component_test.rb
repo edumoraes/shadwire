@@ -11,11 +11,11 @@ class AlertDialogComponentTest < ViewComponent::TestCase
         ui_alert_dialog_trigger(variant: :destructive) { "Excluir conta" } +
           ui_alert_dialog_content do
             ui_alert_dialog_header do
-              ui_alert_dialog_title { "Tem certeza absoluta?" } +
-                ui_alert_dialog_description { "Esta ação não pode ser desfeita." }
+              ui_alert_dialog_title { "Are you absolutely sure?" } +
+                ui_alert_dialog_description { "This action cannot be undone." }
             end +
               ui_alert_dialog_footer do
-                ui_alert_dialog_cancel { "Cancelar" } + ui_alert_dialog_action { "Continuar" }
+                ui_alert_dialog_cancel { "Cancel" } + ui_alert_dialog_action { "Continue" }
               end
           end
       end
@@ -30,10 +30,10 @@ class AlertDialogComponentTest < ViewComponent::TestCase
   end
 
   def test_trigger_renders_button_with_open_action
-    render_inline(Ui::AlertDialog::TriggerComponent.new) { "Excluir" }
+    render_inline(Ui::AlertDialog::TriggerComponent.new) { "Delete" }
 
     assert_selector "button[type='button'][aria-haspopup='dialog'][data-slot='alert-dialog-trigger']" \
-                    "[data-action='click->ui-dialog#open']", text: "Excluir"
+                    "[data-action='click->ui-dialog#open']", text: "Delete"
   end
 
   def test_content_renders_alertdialog_role_without_close_button
@@ -47,29 +47,29 @@ class AlertDialogComponentTest < ViewComponent::TestCase
   def test_header_title_description_and_footer
     view = vc_test_controller.view_context
     header = Ui::AlertDialog::HeaderComponent.new.render_in(view) do
-      Ui::AlertDialog::TitleComponent.new.render_in(view) { "Título" } +
-        Ui::AlertDialog::DescriptionComponent.new.render_in(view) { "Descrição" }
+      Ui::AlertDialog::TitleComponent.new.render_in(view) { "Title" } +
+        Ui::AlertDialog::DescriptionComponent.new.render_in(view) { "Description" }
     end
-    footer = Ui::AlertDialog::FooterComponent.new.render_in(view) { "ações" }
+    footer = Ui::AlertDialog::FooterComponent.new.render_in(view) { "actions" }
 
     render_inline(Ui::AlertDialog::ContentComponent.new) { header + footer }
 
     assert_selector "dialog [data-slot='alert-dialog-header'] h2[data-slot='alert-dialog-title']",
-                    visible: :all, text: "Título"
-    assert_selector "dialog p[data-slot='alert-dialog-description']", visible: :all, text: "Descrição"
-    assert_selector "dialog [data-slot='alert-dialog-footer']", visible: :all, text: "ações"
+                    visible: :all, text: "Title"
+    assert_selector "dialog p[data-slot='alert-dialog-description']", visible: :all, text: "Description"
+    assert_selector "dialog [data-slot='alert-dialog-footer']", visible: :all, text: "actions"
   end
 
   def test_action_and_cancel_close_the_dialog
-    render_inline(Ui::AlertDialog::ActionComponent.new) { "Continuar" }
+    render_inline(Ui::AlertDialog::ActionComponent.new) { "Continue" }
 
     assert_selector "button[data-slot='alert-dialog-action'][data-action='click->ui-dialog#close'].bg-primary",
-                    text: "Continuar"
+                    text: "Continue"
 
-    render_inline(Ui::AlertDialog::CancelComponent.new) { "Cancelar" }
+    render_inline(Ui::AlertDialog::CancelComponent.new) { "Cancel" }
 
     assert_selector "button[data-slot='alert-dialog-cancel'][data-action='click->ui-dialog#close'].border",
-                    text: "Cancelar"
+                    text: "Cancel"
   end
 
   def test_helper_methods_render_alert_dialog
@@ -77,7 +77,7 @@ class AlertDialogComponentTest < ViewComponent::TestCase
 
     assert_selector "#delete-dialog[data-controller='ui-dialog'][data-ui-dialog-close-on-escape-value='false']"
     assert_selector "button.bg-destructive[aria-haspopup='dialog']", text: "Excluir conta"
-    assert_selector "dialog[role='alertdialog'] h2", visible: :all, text: "Tem certeza absoluta?"
+    assert_selector "dialog[role='alertdialog'] h2", visible: :all, text: "Are you absolutely sure?"
     assert_selector "dialog [data-slot='alert-dialog-footer'] button", visible: :all, count: 2
   end
 end

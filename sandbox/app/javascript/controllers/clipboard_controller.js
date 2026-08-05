@@ -4,7 +4,9 @@ import { Controller } from "@hotwired/stimulus"
 // brief visual feedback on the button label that triggered it.
 export default class extends Controller {
   static targets = ["source", "label"]
-  static values = { source: String }
+  // The two labels come from the server rather than living here: this file has
+  // no access to Rails i18n, and the site is published in two languages.
+  static values = { source: String, copy: String, copied: String }
 
   copy() {
     const text = this.hasSourceValue ? this.sourceValue.trim() : this.sourceTarget.textContent.trim()
@@ -15,10 +17,10 @@ export default class extends Controller {
     if (this.flashing) return
 
     this.flashing = true
-    this.labelTarget.textContent = "Copiado!"
+    this.labelTarget.textContent = this.copiedValue
 
     setTimeout(() => {
-      this.labelTarget.textContent = "Copiar"
+      this.labelTarget.textContent = this.copyValue
       this.flashing = false
     }, 1500)
   }

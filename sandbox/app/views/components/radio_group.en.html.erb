@@ -1,0 +1,99 @@
+<% content_for :title, "Radio Group — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Radio Group</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      A set of mutually exclusive options, built on native radios.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "radio-group" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Items sharing one <code class="rounded bg-muted px-1 py-0.5 text-xs">name:</code>
+      form the group — single selection and arrow-key navigation come from the browser.
+      Label the group with <code class="rounded bg-muted px-1 py-0.5 text-xs">aria: { label: }</code>.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Or render the components directly:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Each item is a native <code class="rounded bg-muted px-1 py-0.5 text-xs">&lt;input type="radio"&gt;</code>;
+      the <code class="rounded bg-muted px-1 py-0.5 text-xs">name:</code> is repeated on every item
+      because ViewComponent injects no parent context.
+    </p>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_radio_group(**options, &block)</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_radio_group_item(**options)</code>
+      encapsulam os componentes correspondentes.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th><%= t("components.api.component") %></th>
+            <th><%= t("components.api.argument") %></th>
+            <th><%= t("components.api.default") %></th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>RadioGroup</code></td>
+            <td><code>class</code> / <code>class_name</code>, <code>**attrs</code></td>
+            <td>—</td>
+            <td>The <code>role="radiogroup"</code> container; label it with <code>aria: { label: }</code>.</td>
+          </tr>
+          <tr>
+            <td><code>RadioGroup::Item</code></td>
+            <td><code>name:</code> (required)</td>
+            <td>—</td>
+            <td>The name shared by the group's radios.</td>
+          </tr>
+          <tr>
+            <td><code>RadioGroup::Item</code></td>
+            <td><code>value:</code> (required)</td>
+            <td>—</td>
+            <td>The value submitted when the item is selected.</td>
+          </tr>
+          <tr>
+            <td><code>RadioGroup::Item</code></td>
+            <td><code>checked</code> / <code>disabled</code></td>
+            <td><code>false</code></td>
+            <td>The native input's initial state.</td>
+          </tr>
+          <tr>
+            <td><code>RadioGroup::Item</code></td>
+            <td><code>**attrs</code></td>
+            <td><code>{}</code></td>
+            <td>Atributos HTML livres (<code>id</code>, <code>data:</code>, <code>aria:</code>, …).</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

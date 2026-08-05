@@ -1,23 +1,23 @@
 <%= ui_dialog do %>
-  <%= ui_dialog_trigger(variant: :outline) { "Editar perfil" } %>
+  <%= ui_dialog_trigger(variant: :outline) { "Edit profile" } %>
   <%= ui_dialog_content(class: "sm:max-w-md") do %>
     <%= ui_dialog_header do %>
-      <%= ui_dialog_title { "Editar perfil" } %>
-      <%= ui_dialog_description { "Faça alterações no seu perfil e salve quando terminar." } %>
+      <%= ui_dialog_title { "Edit profile" } %>
+      <%= ui_dialog_description { "Make changes to your profile and save when you are done." } %>
     <% end %>
     <div class="grid gap-4">
       <div class="grid gap-2">
-        <%= ui_label(for: "dialog-profile-name") { "Nome" } %>
+        <%= ui_label(for: "dialog-profile-name") { "Name" } %>
         <%= ui_input(id: "dialog-profile-name", value: "Eduardo de Moraes") %>
       </div>
       <div class="grid gap-2">
-        <%= ui_label(for: "dialog-profile-username") { "Usuário" } %>
+        <%= ui_label(for: "dialog-profile-username") { "Username" } %>
         <%= ui_input(id: "dialog-profile-username", value: "@edu") %>
       </div>
     </div>
     <%= ui_dialog_footer do %>
-      <%= ui_dialog_close { "Cancelar" } %>
-      <%= ui_button { "Salvar alterações" } %>
+      <%= ui_dialog_close { "Cancel" } %>
+      <%= ui_button { "Save changes" } %>
     <% end %>
   <% end %>
 <% end %>

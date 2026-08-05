@@ -1,19 +1,19 @@
 <%= ui_sheet do %>
-  <%= ui_sheet_trigger(variant: :outline) { "Abrir sheet" } %>
+  <%= ui_sheet_trigger(variant: :outline) { "Open sheet" } %>
   <%= ui_sheet_content do %>
     <%= ui_sheet_header do %>
-      <%= ui_sheet_title { "Editar perfil" } %>
-      <%= ui_sheet_description { "Faça alterações no seu perfil e salve quando terminar." } %>
+      <%= ui_sheet_title { "Edit profile" } %>
+      <%= ui_sheet_description { "Make changes to your profile and save when you are done." } %>
     <% end %>
     <div class="grid gap-4 px-4">
       <div class="grid gap-2">
-        <%= ui_label(for: "sheet-profile-name") { "Nome" } %>
+        <%= ui_label(for: "sheet-profile-name") { "Name" } %>
         <%= ui_input(id: "sheet-profile-name", value: "Eduardo de Moraes") %>
       </div>
     </div>
     <%= ui_sheet_footer do %>
-      <%= ui_button { "Salvar alterações" } %>
-      <%= ui_sheet_close { "Fechar" } %>
+      <%= ui_button { "Save changes" } %>
+      <%= ui_sheet_close { "Close" } %>
     <% end %>
   <% end %>
 <% end %>

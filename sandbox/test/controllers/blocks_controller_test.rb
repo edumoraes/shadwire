@@ -28,6 +28,6 @@ class BlocksControllerTest < ActionDispatch::IntegrationTest
     get root_path
 
     assert_response :success
-    assert_select "nav[aria-label='Principal'] a[href='#{blocks_path}']", text: "Blocks"
+    assert_select "nav[aria-label='Main'] a[href='#{blocks_path}']", text: "Blocks"
   end
 end
