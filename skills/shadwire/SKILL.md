@@ -35,7 +35,7 @@ Read this before anything else. The three fields that decide what you can write:
   A helper for a component that is not installed **does not exist**; calling it
   raises `NoMethodError`. Install the component first.
 - **`stack.importmap`** / **`stack.stimulus`** — whether interactive components
-  will work. 28 of 58 components ship a Stimulus controller.
+  will work. 29 of 57 components ship a Stimulus controller.
 - **`cli.binstub`** — whether `bin/shadwire` exists yet. False means run `init`
   once before anything else, so the rest of this file applies as written.
 

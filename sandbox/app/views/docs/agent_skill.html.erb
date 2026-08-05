@@ -47,7 +47,7 @@
           headers: [ "Campo", "Por que decide" ],
           rows: [
             [ docs_code("installed[].helpers"), "Os métodos ui_* que existem neste app. Chamar o helper de um componente não instalado levanta NoMethodError." ],
-            [ docs_code("stack.importmap"), "Se os componentes interativos vão funcionar. 28 dos 58 trazem um controller Stimulus." ],
+            [ docs_code("stack.importmap"), "Se os componentes interativos vão funcionar. #{registry_stimulus_component_count} dos #{docs_component_items.size} componentes trazem um controller Stimulus." ],
             [ docs_code("cli.binstub"), safe_join([ "Se ", docs_code("bin/shadwire"), " já existe. Falso significa rodar o ", docs_code("init"), " uma vez antes de tudo." ]) ]
           ] %>
 

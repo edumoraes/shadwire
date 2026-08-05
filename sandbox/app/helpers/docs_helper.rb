@@ -55,6 +55,15 @@ module DocsHelper
     registry_install_targets(name).any? { |target| target.start_with?("app/javascript/") }
   end
 
+  # How many components ship a Stimulus controller. Counted rather than written
+  # down: the prose said 28 for long enough that it outlived being true.
+  def registry_stimulus_component_count
+    registry_items.values.count do |item|
+      item.fetch("type") == "component" &&
+        item.fetch("files").any? { |file| file.fetch("target").start_with?("app/javascript/") }
+    end
+  end
+
   # Highlights an ERB snippet for display in a documentation code block.
   def highlight_erb(code)
     highlight_code(code, language: :erb)

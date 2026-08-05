@@ -27,7 +27,7 @@
           ] %>
 
     <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "Componentes interativos precisam de Stimulus" } do %>
-      28 dos <%= docs_component_items.size %> componentes trazem um controller Stimulus. Eles
+      <%= registry_stimulus_component_count %> dos <%= docs_component_items.size %> componentes trazem um controller Stimulus. Eles
       são instalados em <code>app/javascript/controllers/</code> e se registram pelo
       <code>eagerLoadControllersFrom</code> padrão do <code>importmap-rails</code>. Se o seu
       app registra controllers manualmente, registre os novos também.
