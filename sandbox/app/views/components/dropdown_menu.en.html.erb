@@ -1,0 +1,91 @@
+<% content_for :title, "Dropdown Menu — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Dropdown Menu</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      A menu of actions or options, triggered by a button.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "dropdown-menu" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dropdown-menu</code>
+      implements the WAI-ARIA menu pattern: roving focus across the items,
+      <kbd class="rounded bg-muted px-1 text-xs">↑</kbd>/<kbd class="rounded bg-muted px-1 text-xs">↓</kbd> com wrap,
+      <kbd class="rounded bg-muted px-1 text-xs">Home</kbd>/<kbd class="rounded bg-muted px-1 text-xs">End</kbd>,
+      typeahead matching, and closing with
+      <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>, Tab ou clique fora.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Or render the components directly:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Componente</th>
+            <th><%= t("components.api.argument") %></th>
+            <th><%= t("components.api.default") %></th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>DropdownMenu::Content</code></td>
+            <td><code>side</code>, <code>align</code></td>
+            <td><code>:bottom</code>, <code>:start</code></td>
+            <td>Menu positioning, through utilities.</td>
+          </tr>
+          <tr>
+            <td><code>DropdownMenu::Item</code></td>
+            <td><code>variant</code></td>
+            <td><code>:default</code></td>
+            <td><code>:destructive</code> marks dangerous actions.</td>
+          </tr>
+          <tr>
+            <td><code>DropdownMenu::Item</code></td>
+            <td><code>inset</code>, <code>disabled</code></td>
+            <td><code>false</code></td>
+            <td>Indents to line up with icons; a disabled item is skipped during navigation.</td>
+          </tr>
+          <tr>
+            <td><code>DropdownMenu::Item</code></td>
+            <td><code>tag</code></td>
+            <td><code>:button</code></td>
+            <td>Use <code>:a</code> with <code>href</code> for link items.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

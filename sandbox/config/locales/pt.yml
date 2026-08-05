@@ -280,6 +280,16 @@ pt:
       usage: Uso
       examples: Exemplos
       api: Referência da API
+      composition: Composição
+    # Column headers of the API reference tables, repeated on every
+    # component page.
+    api:
+      argument: Argumento
+      type: Tipo
+      default: Padrão
+      description: Descrição
+      element: Elemento
+      api: API
     install:
       lead_html: "O Shadwire segue o modelo <em>open-code</em> do shadcn/ui: o código-fonte do componente é copiado para a sua aplicação e passa a ser seu. Instale com a CLI:"
       files_html: "O item %{name} do registry instala estes arquivos:"

@@ -8,7 +8,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Button"
-    assert_select "p", text: /se parece com um botão/
+    assert_select "p", text: /looks like one/
   end
 
   test "button docs page shows a live preview for every variant" do
@@ -132,7 +132,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Accordion"
-    assert_select "p", text: /conjunto vertical de cabeçalhos interativos/
+    assert_select "p", text: /vertical set of interactive headings/
   end
 
   test "accordion docs page shows live examples from the shadcn reference" do
@@ -163,16 +163,16 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Scroll Area"
-    assert_select "p", text: /Aprimora a rolagem nativa/
+    assert_select "p", text: /Improves native scrolling/
     assert_select "h2", text: "Installation"
-    assert_select "h2", text: "Uso"
-    assert_select "h2", text: "Composição"
-    assert_select "h2", text: "Exemplos"
+    assert_select "h2", text: "Usage"
+    assert_select "h2", text: "Composition"
+    assert_select "h2", text: "Examples"
     assert_select "h3", text: "Horizontal"
     assert_select "h2", text: "RTL"
     assert_select "section#example-scroll_area_rtl", text: /التمرير/
     assert_select "section#example-scroll_area_rtl [data-controller~='clipboard']"
-    assert_select "h2", text: "Referência da API"
+    assert_select "h2", text: "API reference"
     assert_select "[data-controller='ui-scroll-area']"
     assert_select "[data-slot='scroll-area'][dir='rtl']", text: /التمرير/
     assert_select "[data-slot='scroll-area-scrollbar'][data-orientation='vertical']"
@@ -189,7 +189,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Input"
-    assert_select "p", text: /se parece com um campo de texto/
+    assert_select "p", text: /looks like a text field/
     assert_select "input[type='email'][data-slot='input']"
     assert_select "input[type='file'][data-slot='input']"
     assert_select "input[disabled][data-slot='input']"

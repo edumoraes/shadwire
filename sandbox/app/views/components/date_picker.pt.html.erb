@@ -1,0 +1,118 @@
+<% content_for :title, "Date Picker — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Date Picker</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      Uma receita: Popover + Calendar. Não é um componente novo — não existe
+      <code class="rounded bg-muted px-1 py-0.5 text-base">Ui::DatePickerComponent</code>,
+      você compõe as partes.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "date-picker" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      O <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_calendar</code> é quem guarda o valor:
+      ele grava a data escolhida em um input escondido (<code class="rounded bg-muted px-1 py-0.5 text-xs">name:</code>)
+      e anuncia <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:change</code>.
+      O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-date-picker</code> ouve esse evento
+      para escrever a data formatada no rótulo do gatilho e fechar o popover — nada além de apresentação.
+      Sem ele o picker continua funcionando; só não conta ao usuário o que foi escolhido.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      O popover precisa de <code class="rounded bg-muted px-1 py-0.5 text-xs">w-auto! p-0!</code>:
+      o padrão é <code class="rounded bg-muted px-1 py-0.5 text-xs">w-72</code> com preenchimento,
+      estreito demais para a grade do calendário. O <code class="rounded bg-muted px-1 py-0.5 text-xs">!</code>
+      vai no fim da classe — é a sintaxe do Tailwind v4.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <%= docs_code_block(@composition, language: :text) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Os oito arranjos que o shadcn/ui documenta, traduzidos para ViewComponent + Stimulus.
+    </p>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      O que o calendário aceita está em <%= link_to "Calendar", components_calendar_path, class: "underline underline-offset-4" %>.
+      Abaixo, só o controller de ligação — atributos <code class="rounded bg-muted px-1 py-0.5 text-xs">data-*</code>
+      no elemento que envolve o popover e o campo.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Atributo</th>
+            <th><%= t("components.api.default") %></th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>format-value</code></td>
+            <td><code>long</code></td>
+            <td><code>full</code>, <code>long</code>, <code>medium</code>, <code>short</code> ou <code>iso</code>.</td>
+          </tr>
+          <tr>
+            <td><code>locale-value</code></td>
+            <td>—</td>
+            <td>BCP 47 (<code>pt-BR</code>, <code>ar-EG</code>). Vazio segue o idioma do navegador.</td>
+          </tr>
+          <tr>
+            <td><code>separator-value</code></td>
+            <td><code>&nbsp;–&nbsp;</code></td>
+            <td>O que separa as duas pontas de um intervalo no rótulo.</td>
+          </tr>
+          <tr>
+            <td><code>date-order-value</code></td>
+            <td><code>dmy</code></td>
+            <td>Como ler <code>01/06/2026</code> ao digitar. <code>mdy</code> para o formato americano.</td>
+          </tr>
+          <tr>
+            <td><code>close-on-select-value</code></td>
+            <td><code>true</code></td>
+            <td>Fecha o popover ao escolher. Em <code>mode: :range</code>, só quando a segunda data entra.</td>
+          </tr>
+          <tr>
+            <td><code>natural-language-value</code></td>
+            <td><code>false</code></td>
+            <td>Aceita frases relativas (“amanhã”, “em 2 semanas”, “próxima sexta”) no campo de texto.</td>
+          </tr>
+          <tr>
+            <td><code>target="label"</code></td>
+            <td>—</td>
+            <td>Elemento cujo texto vira a data escolhida; ganha <code>data-empty</code> para o estado vazio.</td>
+          </tr>
+          <tr>
+            <td><code>target="input"</code></td>
+            <td>—</td>
+            <td>Campo de texto editável: o que for digitado é interpretado, <kbd class="rounded bg-muted px-1 text-xs">↓</kbd> abre o popover.</td>
+          </tr>
+          <tr>
+            <td><code>target="preview"</code></td>
+            <td>—</td>
+            <td>Eco opcional da data já interpretada, para uma linha de apoio abaixo do campo.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

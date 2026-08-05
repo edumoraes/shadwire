@@ -1,0 +1,127 @@
+<% content_for :title, "Calendar — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Calendar</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      A month grid built on the client: navigation, single or range selection, and keyboard support.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "calendar" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      The server renders only the scaffold; the <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar</code> controller
+      builds the days, so changing month costs no request. The chosen date goes into an
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">input[type=hidden]</code> — the calendar submits like
+      works inside a <code class="rounded bg-muted px-1 py-0.5 text-xs">form_with</code> like
+      any other field. For a field that opens the calendar in a popover, see
+      <%= link_to "Date Picker", components_date_picker_path, class: "underline underline-offset-4" %>.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Datas aceitam <code class="rounded bg-muted px-1 py-0.5 text-xs">Date</code> ou string
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">YYYY-MM-DD</code>. Like every component, it
+      also accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th><%= t("components.api.argument") %></th>
+            <th><%= t("components.api.default") %></th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>mode</code></td>
+            <td><code>:single</code></td>
+            <td><code>:range</code> selects a range; the second click closes the far end.</td>
+          </tr>
+          <tr>
+            <td><code>selected</code></td>
+            <td>—</td>
+            <td>The chosen date. With <code>:range</code> it takes a range (<code>Date..Date</code>).</td>
+          </tr>
+          <tr>
+            <td><code>from</code>, <code>to</code></td>
+            <td>—</td>
+            <td>The ends of the range, when you would rather pass them separately.</td>
+          </tr>
+          <tr>
+            <td><code>name</code>, <code>end_name</code></td>
+            <td>—</td>
+            <td>The hidden inputs. <code>name</code> is the date (or the start); <code>end_name</code> the end.</td>
+          </tr>
+          <tr>
+            <td><code>month</code></td>
+            <td>the selection, otherwise today</td>
+            <td>The first visible month.</td>
+          </tr>
+          <tr>
+            <td><code>min</code>, <code>max</code></td>
+            <td>—</td>
+            <td>Disable the days outside the span, and bound the year select.</td>
+          </tr>
+          <tr>
+            <td><code>number_of_months</code></td>
+            <td><code>1</code></td>
+            <td>Consecutive months side by side. <code>2</code> is the usual pair for ranges.</td>
+          </tr>
+          <tr>
+            <td><code>caption_layout</code></td>
+            <td><code>:label</code></td>
+            <td><code>:dropdown</code> swaps the month name for month and year selects (single month only).</td>
+          </tr>
+          <tr>
+            <td><code>year_range</code></td>
+            <td>−100…+10 anos</td>
+            <td>The years in the select. <code>min:</code>/<code>max:</code> win when given.</td>
+          </tr>
+          <tr>
+            <td><code>dir</code></td>
+            <td>—</td>
+            <td><code>:rtl</code> mirrors the grid, the navigation arrows and the ←/→ keys.</td>
+          </tr>
+          <tr>
+            <td><code>week_start</code></td>
+            <td><code>0</code></td>
+            <td>Primeiro dia da semana: <code>0</code> domingo, <code>1</code> segunda.</td>
+          </tr>
+          <tr>
+            <td><code>month_names</code>, <code>day_names</code></td>
+            <td>pt-BR</td>
+            <td>Caption and header labels, e.g. <code>I18n.t("date.month_names").compact</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+
+    <p class="text-sm text-muted-foreground">
+      Events: <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:change</code> on each
+      escolha e <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:connect</code> quando
+      the calendar builds, both carrying <code class="rounded bg-muted px-1 py-0.5 text-xs">detail: { date, from, to }</code>.
+      No sentido inverso, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar#setDate</code>
+      moves the calendar to a date coming from elsewhere.
+    </p>
+  </section>
+</article>

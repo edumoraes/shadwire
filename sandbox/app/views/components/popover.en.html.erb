@@ -1,0 +1,84 @@
+<% content_for :title, "Popover — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Popover</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      An overlaid panel, triggered by a button, for showing rich content.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "popover" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-popover</code>
+      toggles the panel, moves focus into it on open, and hands focus back to the trigger on
+      closing with <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>. Clicking outside closes it too.
+      Positioning is utilities only (<code class="rounded bg-muted px-1 py-0.5 text-xs">side</code>/<code class="rounded bg-muted px-1 py-0.5 text-xs">align</code>),
+      sem floating-ui.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Or render the components directly:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Componente</th>
+            <th><%= t("components.api.argument") %></th>
+            <th><%= t("components.api.default") %></th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>Popover::Trigger</code></td>
+            <td><code>variant</code>, <code>size</code></td>
+            <td><code>:outline</code></td>
+            <td>The Button that opens and closes it; keeps <code>aria-expanded</code> current.</td>
+          </tr>
+          <tr>
+            <td><code>Popover::Content</code></td>
+            <td><code>side</code></td>
+            <td><code>:bottom</code></td>
+            <td><code>:top</code>, <code>:right</code>, <code>:bottom</code>, <code>:left</code>.</td>
+          </tr>
+          <tr>
+            <td><code>Popover::Content</code></td>
+            <td><code>align</code></td>
+            <td><code>:center</code></td>
+            <td><code>:start</code>, <code>:center</code>, <code>:end</code> no eixo cruzado.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

@@ -1,0 +1,85 @@
+<% content_for :title, "Progress — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Progress</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      Shows how far along a task is.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "progress" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      The value is clamped to <code class="rounded bg-muted px-1 py-0.5 text-xs">0..max</code>
+      on the server. For live updates, re-render through Turbo (Streams/Frames) —
+      the component holds no client-side state.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Or render the component
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::ProgressComponent</code>
+      diretamente:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_progress(**options)</code>
+      encapsula
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::ProgressComponent.new(**options)</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th><%= t("components.api.argument") %></th>
+            <th><%= t("components.api.type") %></th>
+            <th><%= t("components.api.default") %></th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>value</code></td>
+            <td>Numeric</td>
+            <td><code>0</code></td>
+            <td>The current progress; clamped to <code>0..max</code> and exposed as <code>aria-valuenow</code>.</td>
+          </tr>
+          <tr>
+            <td><code>max</code></td>
+            <td>Numeric</td>
+            <td><code>100</code></td>
+            <td>The top of the scale (<code>aria-valuemax</code>).</td>
+          </tr>
+          <tr>
+            <td><code>class</code> / <code>class_name</code></td>
+            <td>String</td>
+            <td><code>nil</code></td>
+            <td>Classes extras (largura, altura, …).</td>
+          </tr>
+          <tr>
+            <td><code>**attrs</code></td>
+            <td>Hash</td>
+            <td><code>{}</code></td>
+            <td>Free-form HTML attributes; label it with <code>aria: { label: }</code>.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>
