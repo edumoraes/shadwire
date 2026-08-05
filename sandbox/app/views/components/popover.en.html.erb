@@ -20,7 +20,7 @@
       toggles the panel, moves focus into it on open, and hands focus back to the trigger on
       closing with <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>. Clicking outside closes it too.
       Positioning is utilities only (<code class="rounded bg-muted px-1 py-0.5 text-xs">side</code>/<code class="rounded bg-muted px-1 py-0.5 text-xs">align</code>),
-      sem floating-ui.
+      with no floating-ui.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">
@@ -52,7 +52,7 @@
       <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
         <thead class="bg-muted/50">
           <tr>
-            <th>Componente</th>
+            <th><%= t("components.api.component") %></th>
             <th><%= t("components.api.argument") %></th>
             <th><%= t("components.api.default") %></th>
             <th><%= t("components.api.description") %></th>

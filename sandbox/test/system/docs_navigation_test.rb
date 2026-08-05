@@ -2,7 +2,7 @@
 
 require "application_system_test_case"
 
-# The documentation shell only fully exists in a browser: the "Nesta página"
+# The documentation shell only fully exists in a browser: the "On this page"
 # rail is built client-side from the headings, and the mobile sidebar is a sheet.
 class DocsNavigationTest < ApplicationSystemTestCase
   SCREEN_SIZE = [ 1400, 1000 ].freeze
@@ -15,7 +15,7 @@ class DocsNavigationTest < ApplicationSystemTestCase
     visit docs_cli_path
 
     within "nav[aria-label='On this page']" do
-      assert_selector "a", text: "Comandos"
+      assert_selector "a", text: "Commands"
       assert_selector "a", text: "Flags"
       assert_selector "a", text: "Errors and exit codes"
     end
@@ -56,7 +56,7 @@ class DocsNavigationTest < ApplicationSystemTestCase
 
     entries = all("nav[aria-label='On this page'] a").map(&:text)
 
-    assert_includes entries, "Exemplos"
+    assert_includes entries, "Examples"
     assert_includes entries, "Basic"
     refute_includes entries, "How do I reset my password?"
 
@@ -115,7 +115,7 @@ class DocsNavigationTest < ApplicationSystemTestCase
 
     page.go_back
 
-    assert_selector "h1", text: "Introdução"
+    assert_selector "h1", text: "Introduction"
     assert_no_selector "dialog[open]", visible: :all
   end
 

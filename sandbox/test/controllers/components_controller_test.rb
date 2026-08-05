@@ -91,7 +91,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", text: "Alert"
     assert_select "div[role='alert'].bg-background", text: /Heads up/
-    assert_select "div[role='alert'].text-destructive", text: /Erro ao salvar/
+    assert_select "div[role='alert'].text-destructive", text: /Could not save/
     assert_select "table td code", text: "variant"
   end
 
@@ -430,7 +430,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", text: "Dropdown Menu"
     assert_select "[data-controller='ui-dropdown-menu'] button[aria-haspopup='menu']", text: "Open"
-    assert_select "[role='menu'] [data-slot='dropdown-menu-label']", text: "Minha conta"
+    assert_select "[role='menu'] [data-slot='dropdown-menu-label']", text: "My account"
     assert_select "[role='menu'] button[role='menuitem'][data-disabled]", text: "Unavailable"
     assert_select "[role='menu'] a[role='menuitem'][href='#docs']", text: "Documentation"
     assert_select "[role='menu'] button[data-variant='destructive']", text: /Delete/

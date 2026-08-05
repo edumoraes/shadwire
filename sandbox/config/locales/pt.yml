@@ -289,6 +289,7 @@ pt:
       default: Padrão
       description: Descrição
       element: Elemento
+      component: Componente
       api: API
     install:
       lead_html: "O Shadwire segue o modelo <em>open-code</em> do shadcn/ui: o código-fonte do componente é copiado para a sua aplicação e passa a ser seu. Instale com a CLI:"

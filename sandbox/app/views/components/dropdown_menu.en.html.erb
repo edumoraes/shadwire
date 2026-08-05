@@ -18,10 +18,10 @@
     <p class="text-sm text-muted-foreground">
       O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dropdown-menu</code>
       implements the WAI-ARIA menu pattern: roving focus across the items,
-      <kbd class="rounded bg-muted px-1 text-xs">↑</kbd>/<kbd class="rounded bg-muted px-1 text-xs">↓</kbd> com wrap,
+      <kbd class="rounded bg-muted px-1 text-xs">↑</kbd>/<kbd class="rounded bg-muted px-1 text-xs">↓</kbd> with wrapping,
       <kbd class="rounded bg-muted px-1 text-xs">Home</kbd>/<kbd class="rounded bg-muted px-1 text-xs">End</kbd>,
       typeahead matching, and closing with
-      <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>, Tab ou clique fora.
+      <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>, Tab, or a click outside.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">
@@ -53,7 +53,7 @@
       <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
         <thead class="bg-muted/50">
           <tr>
-            <th>Componente</th>
+            <th><%= t("components.api.component") %></th>
             <th><%= t("components.api.argument") %></th>
             <th><%= t("components.api.default") %></th>
             <th><%= t("components.api.description") %></th>

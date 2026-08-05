@@ -49,7 +49,7 @@ class DatePickerComponentTest < ApplicationSystemTestCase
 
     find("#born-on").click
     year = (Date.current.year - 30).to_s
-    find("#example-date_picker_dob select[aria-label='Ano'] option[value='#{year}']").select_option
+    find("#example-date_picker_dob select[aria-label='Year'] option[value='#{year}']").select_option
 
     assert_selector "#example-date_picker_dob [data-date^='#{year}-']"
   end
@@ -64,7 +64,7 @@ class DatePickerComponentTest < ApplicationSystemTestCase
     find("#born-on").click
 
     background = page.evaluate_script(<<~JS)
-      getComputedStyle(document.querySelector("#example-date_picker_dob select[aria-label='Ano'] option")).backgroundColor
+      getComputedStyle(document.querySelector("#example-date_picker_dob select[aria-label='Year'] option")).backgroundColor
     JS
 
     refute_equal "rgba(0, 0, 0, 0)", background,
@@ -81,7 +81,7 @@ class DatePickerComponentTest < ApplicationSystemTestCase
     assert_selector "#example-date_picker_input [data-date='2026-08-01']", visible: :all
     assert_equal "2026-08-01", hidden_value("#example-date_picker_input input[name='subscribed_on']")
 
-    find("#example-date_picker_input button[aria-label='Escolher data']").click
+    find("#example-date_picker_input button[aria-label='Pick a date']").click
     find("#example-date_picker_input [data-date='2026-08-12']").click
 
     assert_equal "2026-08-12", hidden_value("#example-date_picker_input input[name='subscribed_on']")

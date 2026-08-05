@@ -54,7 +54,7 @@ class DialogComponentTest < ApplicationSystemTestCase
     visit components_dialog_path
 
     within "#example-dialog_no_backdrop_close" do
-      click_button "Sem fechar pelo backdrop"
+      click_button "No backdrop close"
     end
 
     dialog = find("dialog[data-slot='dialog-content'][open]")
@@ -66,7 +66,7 @@ class DialogComponentTest < ApplicationSystemTestCase
     assert_selector "dialog[open]", text: "Heads up"
 
     within "dialog[open]" do
-      click_button "Entendi"
+      click_button "Got it"
     end
 
     assert_no_selector "dialog[open]"

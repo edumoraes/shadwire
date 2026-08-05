@@ -36,7 +36,7 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
-      Datas aceitam <code class="rounded bg-muted px-1 py-0.5 text-xs">Date</code> ou string
+      Dates accept a <code class="rounded bg-muted px-1 py-0.5 text-xs">Date</code> or an ISO
       <code class="rounded bg-muted px-1 py-0.5 text-xs">YYYY-MM-DD</code>. Like every component, it
       also accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
@@ -105,7 +105,7 @@
           <tr>
             <td><code>week_start</code></td>
             <td><code>0</code></td>
-            <td>Primeiro dia da semana: <code>0</code> domingo, <code>1</code> segunda.</td>
+            <td>The first day of the week: <code>0</code> Sunday, <code>1</code> Monday.</td>
           </tr>
           <tr>
             <td><code>month_names</code>, <code>day_names</code></td>
@@ -118,7 +118,7 @@
 
     <p class="text-sm text-muted-foreground">
       Events: <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:change</code> on each
-      escolha e <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:connect</code> quando
+      selection and <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:connect</code> when
       the calendar builds, both carrying <code class="rounded bg-muted px-1 py-0.5 text-xs">detail: { date, from, to }</code>.
       No sentido inverso, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar#setDate</code>
       moves the calendar to a date coming from elsewhere.

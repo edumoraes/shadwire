@@ -9,7 +9,7 @@ class SheetComponentTest < ApplicationSystemTestCase
     assert_no_selector "dialog[data-slot='sheet-content']"
 
     within "#example-sheet_default" do
-      click_button "Abrir sheet"
+      click_button "Open sheet"
     end
 
     sheet = find("dialog[data-slot='sheet-content'][open]")

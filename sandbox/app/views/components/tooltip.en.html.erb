@@ -18,7 +18,7 @@
     <p class="text-sm text-muted-foreground">
       O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-tooltip</code>
       opens on hover or focus after a delay, ties the trigger to the bubble through
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-describedby</code> e fecha com
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-describedby</code>, and closes on
       <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd> without moving focus (WCAG 1.4.13).
       The content lives inside the root, so the pointer can move onto it without closing it.
     </p>
@@ -52,7 +52,7 @@
       <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
         <thead class="bg-muted/50">
           <tr>
-            <th>Componente</th>
+            <th><%= t("components.api.component") %></th>
             <th><%= t("components.api.argument") %></th>
             <th><%= t("components.api.default") %></th>
             <th><%= t("components.api.description") %></th>
@@ -69,7 +69,7 @@
             <td><code>Tooltip::Trigger</code></td>
             <td><code>variant</code>, <code>size</code></td>
             <td><code>:outline</code></td>
-            <td>Encapsula <code>Ui::ButtonComponent</code>; ganha <code>aria-describedby</code> ao conectar.</td>
+            <td>Wraps <code>Ui::ButtonComponent</code>; gains <code>aria-describedby</code> once connected.</td>
           </tr>
           <tr>
             <td><code>Tooltip::Content</code></td>

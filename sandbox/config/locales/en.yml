@@ -256,6 +256,7 @@ en:
       default: Default
       description: Description
       element: Element
+      component: Component
       api: API
     install:
       lead_html: "Shadwire follows shadcn/ui's <em>open code</em> model: the component's source is copied into your application and becomes yours. Install it with the CLI:"

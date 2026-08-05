@@ -7,7 +7,7 @@ class SelectComponentTest < ViewComponent::TestCase
     include Ui::SelectHelper
 
     def call
-      ui_select(name: "fruit", value: "banana", placeholder: "Selecione uma fruta", id: "fruit-select") do
+      ui_select(name: "fruit", value: "banana", placeholder: "Pick a fruit", id: "fruit-select") do
         safe_join(
           [
             ui_select_trigger { ui_select_value },

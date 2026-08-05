@@ -20,14 +20,14 @@ class DropdownMenuComponentTest < ApplicationSystemTestCase
 
     # ArrowDown roves to the next item; wrapping back to the top.
     send_active_key(:arrow_down)
-    assert_match(/Configurações/, focused_item_text)
+    assert_match(/Settings/, focused_item_text)
 
     send_active_key(:arrow_down)
     assert_equal "Profile", focused_item_text
 
-    # Typeahead jumps to the item starting with "c".
-    send_active_key("c")
-    assert_match(/Configurações/, focused_item_text)
+    # Typeahead jumps to the item starting with "s".
+    send_active_key("s")
+    assert_match(/Settings/, focused_item_text)
 
     # Escape closes and returns focus to the trigger.
     send_active_key(:escape)
@@ -40,12 +40,12 @@ class DropdownMenuComponentTest < ApplicationSystemTestCase
 
     find("#example-dropdown_menu_variants button", text: "Actions").send_keys :arrow_down
 
-    assert_equal "Duplicar", focused_item_text
+    assert_equal "Duplicate", focused_item_text
 
     send_active_key(:arrow_down)
 
     refute_equal "Unavailable", focused_item_text, "disabled item should be skipped"
-    assert_match(/Documentação/, focused_item_text)
+    assert_match(/Documentation/, focused_item_text)
   end
 
   private

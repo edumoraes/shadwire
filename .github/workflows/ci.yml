@@ -236,6 +236,17 @@ jobs:
           cp -r public/assets ../_site/assets
           touch ../_site/.nojekyll
           test -f ../_site/index.html || { echo "::error::no index.html produced"; cat /tmp/server.log; exit 1; }
+          # The site ships in two languages, and the Portuguese tree exists in
+          # this artifact only because every English page links at its
+          # counterpart. Losing the switcher would not fail anything above — it
+          # would quietly publish a monolingual site — so compare the two trees.
+          en=$(find ../_site -name '*.html' -not -path '../_site/pt/*' -not -name 'pt.html' | wc -l)
+          pt=$(find ../_site/pt -name '*.html' 2>/dev/null | wc -l)
+          echo "frozen pages: ${en} en / ${pt} pt"
+          if [ "$pt" -lt "$((en - 1))" ]; then
+            echo "::error::the Portuguese tree is short (${pt} pages against ${en} English) — the crawl did not reach it"
+            exit 1
+          fi
       - name: Publish the registry into the Pages artifact
         # Serve the built registry at /shadwire/r/... alongside the docs site.
         run: cp -r build/r _site/r

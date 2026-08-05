@@ -105,7 +105,46 @@ breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
   assigns the page's hash to `@snippets` in a `before_action`.
 - The "Nesta página" rail is built client-side by `docs_toc_controller.js` from
   the `h2`/`h3` already in `<main>`, so no page declares its own outline.
-- Prose is in Portuguese (pt-BR). `registry/`, the CLI and `skills/` are English.
+
+### The site is bilingual
+
+English is the default and owns the bare paths (`/docs`); Portuguese lives under
+`/pt`. The locale is in the URL and nowhere else — no session, no cookie, no
+Accept-Language — because the published site is a static crawl: nothing survives
+to serve time that could negotiate one. Routes sit inside
+`scope "(:locale)", locale: /pt/`, and `ApplicationController#default_url_options`
+keeps generated links inside the language being read.
+
+**Where a string goes depends on what it is:**
+
+- **Chrome** (header, footer, sidebar, pager, search, code-block controls) and
+  **tabular data** (CLI commands, theme tokens, example captions, API table
+  headers) → `config/locales/{en,pt}.yml`. These repeat across pages; duplicating
+  them is how they drift. `en.yml` is the reference and `pt.yml` mirrors it.
+- **Page prose** → locale-suffixed templates, `installation.en.html.erb` /
+  `installation.pt.html.erb`. This text is threaded through markup and inline
+  `<code>` and reads as a document, not a string table.
+- **Example partials** under `components/examples/` → English, one copy. They
+  illustrate a registry whose language is English, and their source is shown
+  verbatim as the documentation.
+
+Two traps this arrangement sets:
+
+- **Never hand-build an internal path.** `"/components/#{name}"` silently sends a
+  Portuguese reader into the English tree. Use the route helper
+  (`docs_component_path`), which carries the locale.
+- **Heading anchors differ per language**, since `docs_h2` derives the id from
+  the heading text. A cross-page `#anchor` link must be written per locale.
+
+The language switcher is two plain `<a>` links, not a dropdown or a JS toggle:
+the CI crawl starts at the English root and finds `/pt` only because every page
+links straight at its counterpart. The freeze step compares the two trees' page
+counts and fails if the Portuguese one comes up short.
+
+Registry components carry their user-facing strings as `I18n.t(..., default:)`
+with English defaults, so an installed component needs no setup; the sandbox's
+`pt.yml` defines the `ui.*` overrides, which is both what keeps the `/pt` demos
+in Portuguese and a worked example for consuming apps.
 
 ## Component conventions
 

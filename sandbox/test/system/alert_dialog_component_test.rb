@@ -9,7 +9,7 @@ class AlertDialogComponentTest < ApplicationSystemTestCase
     assert_no_selector "dialog[data-slot='alert-dialog-content']"
 
     within "#example-alert_dialog_default" do
-      click_button "Excluir conta"
+      click_button "Delete account"
     end
 
     dialog = find("dialog[role='alertdialog'][open]")
@@ -35,7 +35,7 @@ class AlertDialogComponentTest < ApplicationSystemTestCase
     assert_no_selector "dialog[data-slot='alert-dialog-content']"
 
     within "#example-alert_dialog_default" do
-      click_button "Excluir conta"
+      click_button "Delete account"
     end
 
     within "dialog[open]" do

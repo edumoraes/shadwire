@@ -9,7 +9,7 @@ class TabsComponentTest < ViewComponent::TestCase
     def call
       ui_tabs(default_value: :account, id: "settings-tabs") do
         ui_tabs_list do
-          ui_tabs_trigger(value: :account) { "Conta" } +
+          ui_tabs_trigger(value: :account) { "Account" } +
             ui_tabs_trigger(value: :password) { "Password" }
         end +
           ui_tabs_content(value: :account) { "Painel da conta" } +
@@ -37,9 +37,9 @@ class TabsComponentTest < ViewComponent::TestCase
   end
 
   def test_trigger_renders_tab_role_value_and_actions
-    render_inline(Ui::Tabs::TriggerComponent.new(value: :account)) { "Conta" }
+    render_inline(Ui::Tabs::TriggerComponent.new(value: :account)) { "Account" }
 
-    assert_selector "button[type='button'][role='tab'][data-ui-tabs-value='account'][data-slot='tabs-trigger']", text: "Conta"
+    assert_selector "button[type='button'][role='tab'][data-ui-tabs-value='account'][data-slot='tabs-trigger']", text: "Account"
     assert_selector "button[data-ui-tabs-target='trigger']"
     assert_selector "button[data-action='click->ui-tabs#select keydown->ui-tabs#navigate']"
   end

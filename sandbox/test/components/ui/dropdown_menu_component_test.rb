@@ -70,8 +70,8 @@ class DropdownMenuComponentTest < ViewComponent::TestCase
   end
 
   def test_label_separator_group_and_shortcut
-    render_inline(Ui::DropdownMenu::LabelComponent.new(inset: true)) { "Conta" }
-    assert_selector "div[data-slot='dropdown-menu-label'][data-inset]", text: "Conta"
+    render_inline(Ui::DropdownMenu::LabelComponent.new(inset: true)) { "Account" }
+    assert_selector "div[data-slot='dropdown-menu-label'][data-inset]", text: "Account"
 
     render_inline(Ui::DropdownMenu::SeparatorComponent.new)
     assert_selector "div[role='separator'][data-slot='dropdown-menu-separator']"
