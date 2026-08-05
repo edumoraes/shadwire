@@ -1,6 +1,14 @@
 {
   "name": "shadwire",
   "version": "0.1.0",
+  "license": "MIT",
+  "licenseUrl": "https://github.com/edumoraes/shadwire/blob/main/LICENSE",
+  "attribution": {
+    "derivedFrom": "shadcn/ui",
+    "url": "https://ui.shadcn.com",
+    "license": "MIT",
+    "notice": "Files installed into an application carry no attribution requirement of their own."
+  },
   "items": [
     {
       "name": "alpha",

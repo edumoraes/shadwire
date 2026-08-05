@@ -132,6 +132,19 @@ def transitive_dependencies(item, items_by_name)
   resolved.sort
 end
 
+# Terms travel with the payload. A published item is fetched on its own — by the
+# CLI, by an agent, by anyone mirroring the registry — so leaving the licence in
+# the repository would mean leaving the payload to go and find it.
+def licence_of(registry)
+  {
+    "license" => registry.fetch("license"),
+    "licenseUrl" => registry.fetch("licenseUrl"),
+    "attribution" => registry.fetch("attribution")
+  }
+end
+
+LICENCE = licence_of(REGISTRY).freeze
+
 items = REGISTRY.fetch("items")
 items_by_name = items.to_h { |item| [item.fetch("name"), item] }
 
@@ -158,7 +171,7 @@ items.each do |item|
     "requiresStimulus" => item.fetch("files").any? { |file| file.fetch("target").start_with?("app/javascript/") },
     "api" => build_api(item),
     "files" => item.fetch("files").map { |file| inline_file(file) }
-  }
+  }.merge(LICENCE)
 
   OUTPUT_DIR.join("#{name}.json").write(JSON.pretty_generate(published) + "\n")
   published_items << published
@@ -167,6 +180,7 @@ end
 index = {
   "name" => REGISTRY.fetch("name"),
   "version" => REGISTRY.fetch("version"),
+  **LICENCE,
   "items" => items.map do |item|
     name = item.fetch("name")
     {

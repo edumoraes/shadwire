@@ -107,6 +107,41 @@ class InfoTest < Minitest::Test
     end
   end
 
+  # Someone auditing what is about to enter a codebase should not have to leave
+  # the payload and go read GitHub to find out the terms.
+  def test_info_json_carries_the_licence_and_attribution
+    Dir.mktmpdir do |root|
+      result = run_info("button", root:, json: true)
+
+      assert_equal "MIT", result.fetch("license")
+      assert_match(%r{/LICENSE\z}, result.fetch("licenseUrl"))
+      assert_equal "shadcn/ui", result.dig("attribution", "derivedFrom")
+      assert_equal "MIT", result.dig("attribution", "license")
+    end
+  end
+
+  def test_human_output_names_the_licence_and_what_it_derives_from
+    Dir.mktmpdir do |root|
+      out = StringIO.new
+      run_info("button", root:, ui: silent_ui(out:))
+
+      assert_match(/License: MIT/, out.string)
+      assert_match(%r{Ported from shadcn/ui}, out.string)
+      assert_match(/no attribution requirement/, out.string)
+    end
+  end
+
+  # A registry published before the field exists must still print an item.
+  def test_human_output_omits_the_licence_when_the_registry_has_none
+    Dir.mktmpdir do |root|
+      out = StringIO.new
+      run_info("card", root:, ui: silent_ui(out:))
+
+      assert_match(/Card/, out.string)
+      refute_match(/License:/, out.string)
+    end
+  end
+
   def test_info_unknown_item_raises_registry_error
     Dir.mktmpdir do |root|
       assert_raises(Shadwire::RegistryError) { run_info("nonexistent", root:) }

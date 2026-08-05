@@ -33,6 +33,8 @@ module ShadwireRegistry
 
         Full API reference for every component: llms-full.txt
 
+        #{licence(registry)}
+
         ## Components (#{items.size})
 
         #{lines.join("\n")}
@@ -47,7 +49,24 @@ module ShadwireRegistry
         ui_* methods; each component's own helper module installs with it, so only
         the components you install define helpers.
 
+        #{licence(registry)}
+
         #{items.map { |item| card(item) }.join("\n---\n\n")}
+      TXT
+    end
+
+    # These files are what an agent reads when it cannot run the CLI, and the
+    # ones most likely to be pasted into a model's context, so the terms travel
+    # in them rather than only in the repository.
+    def licence(registry)
+      attribution = registry.fetch("attribution")
+
+      <<~TXT.chomp
+        ## Licence
+
+        #{registry.fetch("license")} — #{registry.fetch("licenseUrl")}
+        Ported from #{attribution.fetch("derivedFrom")} (#{attribution.fetch("url")}), #{attribution.fetch("license")}.
+        #{attribution.fetch("notice")}
       TXT
     end
 
