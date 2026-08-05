@@ -1,31 +1,101 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
+# Chrome of the documentation site: the strings that repeat on every page —
+# header, footer, sidebar, pager, search palette, code-block controls — plus the
+# structural headings the shared partials render.
 #
-# To use the locales, use `I18n.t`:
+# Page prose does NOT live here. A guide or component page keeps its text inline
+# in a locale-suffixed template (installation.en.html.erb / installation.pt.html.erb),
+# because that prose is threaded through markup and inline <code> and reads far
+# better as one continuous document than as a hundred numbered keys.
 #
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
+# English is the default locale and this file is the reference: pt.yml mirrors
+# its shape. A key missing from pt.yml falls back here rather than rendering a
+# translation-missing span.
 en:
-  hello: "Hello world"
+  site:
+    name: Shadwire
+    description: shadcn/ui components ported to Ruby on Rails. Open code you install and own.
+    nav:
+      main: Main
+      docs: Documentation
+      components: Components
+      blocks: Blocks
+      github: Shadwire on GitHub
+      theme: Toggle theme
+      open_docs: Open the documentation navigation
+      docs_sheet_title: Documentation
+      docs_sheet_description: Topic navigation for the Shadwire documentation.
+    language:
+      label: Language
+      current: "Language: %{name}"
+    footer:
+      label: Footer
+
+  home:
+    showcase:
+      with_icon:
+        title: Button
+        description: Compose a ui_icon inside the block; the button sizes the SVG for you.
+      card_default:
+        title: Card
+        description: A surface with a header, content and footer for grouping related actions.
+      input_with_label:
+        title: Form
+        description: Accessible form controls, tied to each other by label and id.
+      alert_default:
+        title: Alert
+        description: Call out an important message with alert semantics.
+
+  docs:
+    breadcrumb_root: Docs
+    toc: On this page
+    pager:
+      label: Pages
+      previous: Previous
+      next: Next
+    search:
+      open: Search the documentation
+      trigger: Search…
+      placeholder: Search pages and components…
+      title: Search the documentation
+      description: Filter the documentation and component pages by title.
+      empty: No results found.
+    code:
+      expand: Expand
+      collapse: Collapse
+      copy: Copy
+      copied: Copied!
+    nav:
+      overview: Overview
+      groups:
+        start: Get started
+        tools: Tools
+        guides: Guides
+        blocks: Blocks
+        components: Components
+      pages:
+        index: Introduction
+        installation: Installation
+        configuration: shadwire.json
+        theming: Theming
+        dark_mode: Dark mode
+        cli: CLI
+        agent_skill: Agent skill
+        registry: Registry
+        llms_txt: llms.txt
+        composition: Composition
+        styling: Styling
+        forms: Forms
+        icons: Icons
+        accessibility: Accessibility
+
+  components:
+    sections:
+      installation: Installation
+      usage: Usage
+      examples: Examples
+      api: API reference
+    install:
+      lead_html: "Shadwire follows shadcn/ui's <em>open code</em> model: the component's source is copied into your application and becomes yours. Install it with the CLI:"
+      files_html: "The %{name} registry item installs these files:"
+      stimulus_html: "This component uses Stimulus, so the application needs %{importmap} and %{stimulus} with automatic controller loading."
+      cli_html: "Haven't installed the CLI yet? %{install}, then %{init}."

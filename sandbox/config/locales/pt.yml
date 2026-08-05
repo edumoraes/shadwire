@@ -1,0 +1,92 @@
+# Portuguese chrome. Mirrors the shape of en.yml, which is the reference file —
+# see the note there on why page prose lives in locale-suffixed templates and
+# not in this file.
+pt:
+  site:
+    name: Shadwire
+    description: Componentes shadcn/ui portados para o Ruby on Rails. Código aberto que você instala e passa a possuir.
+    nav:
+      main: Principal
+      docs: Documentação
+      components: Componentes
+      blocks: Blocks
+      github: Shadwire no GitHub
+      theme: Alternar tema
+      open_docs: Abrir a navegação da documentação
+      docs_sheet_title: Documentação
+      docs_sheet_description: Navegação por tópicos da documentação do Shadwire.
+    language:
+      label: Idioma
+      current: "Idioma: %{name}"
+    footer:
+      label: Rodapé
+
+  home:
+    showcase:
+      with_icon:
+        title: Botão
+        description: Componha um ui_icon dentro do bloco; o botão dimensiona o SVG automaticamente.
+      card_default:
+        title: Card
+        description: Uma superfície com cabeçalho, conteúdo e rodapé para agrupar ações relacionadas.
+      input_with_label:
+        title: Formulário
+        description: Controles de formulário acessíveis, ligados por label e id.
+      alert_default:
+        title: Alerta
+        description: Destaque uma mensagem importante com semântica de alerta.
+
+  docs:
+    breadcrumb_root: Docs
+    toc: Nesta página
+    pager:
+      label: Páginas
+      previous: Anterior
+      next: Próxima
+    search:
+      open: Buscar na documentação
+      trigger: Buscar…
+      placeholder: Buscar páginas e componentes…
+      title: Buscar na documentação
+      description: Filtre as páginas da documentação e dos componentes pelo título.
+      empty: Nada encontrado.
+    code:
+      expand: Expandir
+      collapse: Recolher
+      copy: Copiar
+      copied: Copiado!
+    nav:
+      overview: Visão geral
+      groups:
+        start: Começar
+        tools: Ferramentas
+        guides: Guias
+        blocks: Blocks
+        components: Componentes
+      pages:
+        index: Introdução
+        installation: Instalação
+        configuration: shadwire.json
+        theming: Theming
+        dark_mode: Dark mode
+        cli: CLI
+        agent_skill: Agent skill
+        registry: Registry
+        llms_txt: llms.txt
+        composition: Composição
+        styling: Estilização
+        forms: Formulários
+        icons: Ícones
+        accessibility: Acessibilidade
+
+  components:
+    sections:
+      installation: Instalação
+      usage: Uso
+      examples: Exemplos
+      api: Referência da API
+    install:
+      lead_html: "O Shadwire segue o modelo <em>open-code</em> do shadcn/ui: o código-fonte do componente é copiado para a sua aplicação e passa a ser seu. Instale com a CLI:"
+      files_html: "O item %{name} do registry instala estes arquivos:"
+      stimulus_html: "Este componente usa Stimulus, então a aplicação precisa de %{importmap} e %{stimulus} com carregamento automático de controllers."
+      cli_html: "Ainda não instalou a CLI? %{install} e depois %{init}."

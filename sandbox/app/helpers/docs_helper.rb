@@ -32,6 +32,12 @@ module DocsHelper
     tag.code(text, class: "rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-[0.8125rem]")
   end
 
+  # The same, one step down: inline code inside the smaller supporting prose of
+  # the install section and the API tables.
+  def docs_code_sm(text)
+    tag.code(text, class: "rounded bg-muted px-1 py-0.5 text-xs")
+  end
+
   # The registry item a documentation page describes, or nil when the page has
   # no matching item.
   def registry_item(name)
@@ -149,9 +155,16 @@ module DocsHelper
   def docs_code_block_attrs(source, collapsible, class_name)
     data = {
       controller: class_names("clipboard", ("code-block" if collapsible)),
-      clipboard_source_value: source
+      clipboard_source_value: source,
+      clipboard_copy_value: t("docs.code.copy"),
+      clipboard_copied_value: t("docs.code.copied")
     }
-    data[:code_block_expanded_value] = false if collapsible
+
+    if collapsible
+      data[:code_block_expanded_value] = false
+      data[:code_block_expand_value] = t("docs.code.expand")
+      data[:code_block_collapse_value] = t("docs.code.collapse")
+    end
 
     {
       class: class_names("relative", class_name),
@@ -178,7 +191,7 @@ module DocsHelper
       safe_join([
         tag.span(data: { code_block_target: "expandIcon" }) { ui_icon("chevrons-down", size: :sm) },
         tag.span(data: { code_block_target: "collapseIcon" }, hidden: true) { ui_icon("chevrons-up", size: :sm) },
-        tag.span("Expandir", data: { code_block_target: "label" })
+        tag.span(t("docs.code.expand"), data: { code_block_target: "label" })
       ])
     end
   end
@@ -188,7 +201,7 @@ module DocsHelper
               data: { action: "clipboard#copy" }) do
       safe_join([
         ui_icon("copy", size: :sm),
-        tag.span("Copiar", data: { clipboard_target: "label" })
+        tag.span(t("docs.code.copy"), data: { clipboard_target: "label" })
       ])
     end
   end

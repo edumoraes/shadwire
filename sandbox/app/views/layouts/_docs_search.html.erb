@@ -7,10 +7,10 @@
     <%= ui_dialog_trigger(variant: :outline,
                           class: "h-9 w-9 justify-center px-0 text-muted-foreground sm:w-56 sm:justify-between sm:px-3",
                           data: { docs_search_target: "trigger" },
-                          aria: { label: "Buscar na documentação" }) do %>
+                          aria: { label: t("docs.search.open") }) do %>
       <span class="flex items-center gap-2">
         <%= ui_icon("search", size: :sm) %>
-        <span class="hidden text-sm font-normal sm:inline">Buscar…</span>
+        <span class="hidden text-sm font-normal sm:inline"><%= t("docs.search.trigger") %></span>
       </span>
       <%= ui_kbd_group(class: "hidden sm:inline-flex") do %>
         <%= ui_kbd { "⌘" } %>
@@ -20,14 +20,14 @@
 
     <%= ui_dialog_content(show_close_button: false, class: "gap-0 overflow-hidden p-0 sm:max-w-[34rem]") do %>
       <%= ui_dialog_header(class: "sr-only") do %>
-        <%= ui_dialog_title { "Buscar na documentação" } %>
-        <%= ui_dialog_description { "Filtre as páginas da documentação e dos componentes pelo título." } %>
+        <%= ui_dialog_title { t("docs.search.title") } %>
+        <%= ui_dialog_description { t("docs.search.description") } %>
       <% end %>
 
       <%= ui_command(class: "rounded-none border-0") do %>
-        <%= ui_command_input(placeholder: "Buscar páginas e componentes…") %>
+        <%= ui_command_input(placeholder: t("docs.search.placeholder")) %>
         <%= ui_command_list(class: "max-h-[22rem]") do %>
-          <%= ui_command_empty(class: "py-6 text-center text-sm text-muted-foreground") { "Nada encontrado." } %>
+          <%= ui_command_empty(class: "py-6 text-center text-sm text-muted-foreground") { t("docs.search.empty") } %>
           <% docs_nav_groups.each do |group| %>
             <%= ui_command_group(heading: group[:title]) do %>
               <% group[:items].each do |item| %>

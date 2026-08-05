@@ -18,14 +18,14 @@
 
   <% if @usage_helper.present? %>
     <section class="space-y-4">
-      <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uso</h2>
+      <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
       <%= docs_code_block(@usage_helper) %>
     </section>
   <% end %>
 
   <% if @examples.present? %>
     <section class="space-y-8">
-      <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Exemplos</h2>
+      <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
       <% @examples.each do |example| %>
         <%= render "components/example", **example %>
       <% end %>

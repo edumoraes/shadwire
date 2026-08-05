@@ -1,4 +1,8 @@
-<% content_for :title, "Shadwire — componentes shadcn/ui para Ruby on Rails" %>
+<% content_for :title, "Shadwire — shadcn/ui components for Ruby on Rails" %>
+<% content_for :description do %>
+  Shadwire brings shadcn/ui's Open Code model to Ruby on Rails: open, copyable
+  ViewComponent source that your app installs and then owns, with no runtime gem.
+<% end %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
 <% end %>
@@ -10,19 +14,19 @@
       <%= ui_icon("sparkles", size: :sm) %>v<%= registry_version %> · Rails + ViewComponent
     <% end %>
     <h1 class="mx-auto max-w-4xl text-balance text-5xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-6xl lg:text-7xl">
-      Componentes shadcn/ui que viram <span class="text-primary">código seu</span>
+      shadcn/ui components that become <span class="text-primary">your code</span>
     </h1>
     <p class="mx-auto mt-6 max-w-2xl text-balance text-xl leading-[1.2] tracking-[-0.006em] text-muted-foreground sm:text-2xl">
-      Shadwire porta o modelo <strong class="font-medium text-foreground">Open Code</strong> do
-      shadcn/ui para o Ruby on Rails: código de componentes ViewComponent aberto e copiável,
-      que seu app instala e passa a possuir, sem nenhuma gem em runtime.
+      Shadwire brings shadcn/ui's <strong class="font-medium text-foreground">Open Code</strong> model
+      to Ruby on Rails: open, copyable ViewComponent source that your app installs
+      and then owns — with no runtime gem.
     </p>
     <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
       <%= ui_button(tag: :a, href: docs_path, size: :lg) do %>
-        Começar<%= ui_icon("arrow-right", size: :sm) %>
+        Get started<%= ui_icon("arrow-right", size: :sm) %>
       <% end %>
       <%= ui_button(tag: :a, href: components_path, variant: :outline, size: :lg) do %>
-        Ver componentes
+        Browse components
       <% end %>
       <%= ui_button(tag: :a, href: "https://github.com/edumoraes/shadwire", target: "_blank", rel: "noopener", variant: :ghost, size: :lg) do %>
         <%= ui_icon("github", size: :sm) %>GitHub
@@ -31,11 +35,11 @@
   </div>
 </section>
 
-<%# 2. Construído com (prova social / stack) %>
+<%# 2. Built on (social proof / stack) %>
 <section class="border-b border-border/60 bg-muted/30">
   <div class="mx-auto max-w-6xl px-5 py-14">
     <p class="text-center text-sm font-medium uppercase tracking-wide text-muted-foreground">
-      Construído sobre
+      Built on
     </p>
     <ul class="mt-8 flex flex-wrap items-center justify-center gap-3">
       <% [
@@ -56,14 +60,14 @@
   </div>
 </section>
 
-<%# 3. Tudo que você precisa (showcase com preview + código) %>
+<%# 3. Everything you need (showcase with preview + code) %>
 <section class="border-b border-border/60">
   <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Tudo que você precisa</h2>
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Everything you need</h2>
       <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
-        Componentes acessíveis prontos para copiar, de botões e formulários a diálogos e
-        sidebars. Veja alguns ao vivo, com o código ao lado.
+        Accessible, copy-ready components — from buttons and forms to dialogs and
+        sidebars. Here are a few of them running live, with the code beside them.
       </p>
     </div>
 
@@ -84,25 +88,25 @@
   </div>
 </section>
 
-<%# 4. O código é seu (filosofia / Open Code) %>
+<%# 4. The code is yours (philosophy / Open Code) %>
 <section class="border-b border-border/60 bg-muted/30">
   <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">O código é seu</h2>
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">The code is yours</h2>
       <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
-        Shadwire não é uma gem de runtime. Você instala o código-fonte dos componentes no
-        seu app e passa a mantê-lo, com liberdade para adaptar.
+        Shadwire is not a runtime gem. You install the component source into your
+        app and maintain it from there, free to adapt it to whatever you are building.
       </p>
     </div>
 
     <div class="mt-12 grid gap-6 sm:grid-cols-3">
       <% [
-        { icon: "package-open", title: "Você é dono",
-          description: "Os arquivos são copiados para o seu projeto e funcionam sem nenhuma dependência do Shadwire." },
-        { icon: "accessibility", title: "Acessível por padrão",
-          description: "Semântica ARIA e padrões do APG embutidos em cada componente." },
-        { icon: "palette", title: "Tokens semânticos",
-          description: "Estilizado com tokens shadcn (bg-primary, text-muted-foreground…) e dark mode pronto." }
+        { icon: "package-open", title: "You own it",
+          description: "The files are copied into your project and run with no Shadwire dependency at all." },
+        { icon: "accessibility", title: "Accessible by default",
+          description: "ARIA semantics and APG patterns are built into every component." },
+        { icon: "palette", title: "Semantic tokens",
+          description: "Styled with shadcn tokens (bg-primary, text-muted-foreground…), dark mode included." }
       ].each do |principle| %>
         <%= ui_card(class: "h-full") do %>
           <%= ui_card_header do %>
@@ -117,22 +121,22 @@
   </div>
 </section>
 
-<%# 5. Comece agora (getting started) %>
+<%# 5. Start here (getting started) %>
 <section>
   <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Comece agora</h2>
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Start here</h2>
       <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
-        Explore o catálogo, veja composições prontas ou acompanhe o projeto no GitHub.
+        Browse the catalog, look through the ready-made compositions, or follow the project on GitHub.
       </p>
     </div>
 
     <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <% [
-        { icon: "book-open", title: "Documentação", description: "Instalação, CLI, agent skill, theming e os guias de composição, estilo e formulários.", cta: "Ler a documentação", path: docs_path, external: false },
-        { icon: "blocks", title: "Componentes", description: "#{docs_component_items.size} componentes documentados, com exemplos ao vivo e referência de API.", cta: "Ver catálogo", path: components_path, external: false },
-        { icon: "layout-dashboard", title: "Blocks", description: "Composições prontas a partir dos componentes, como a sidebar-01.", cta: "Ver blocks", path: blocks_path, external: false },
-        { icon: "github", title: "GitHub", description: "Veja o código-fonte, o registry e contribua com o projeto.", cta: "Abrir repositório", path: "https://github.com/edumoraes/shadwire", external: true }
+        { icon: "book-open", title: "Documentation", description: "Installation, the CLI, the agent skill, theming, and the guides on composition, styling and forms.", cta: "Read the docs", path: docs_path, external: false },
+        { icon: "blocks", title: "Components", description: "#{docs_component_items.size} documented components, each with live examples and an API reference.", cta: "Browse the catalog", path: components_path, external: false },
+        { icon: "layout-dashboard", title: "Blocks", description: "Ready-made compositions built out of the components, like sidebar-01.", cta: "See the blocks", path: blocks_path, external: false },
+        { icon: "github", title: "GitHub", description: "Read the source and the registry, and contribute to the project.", cta: "Open the repository", path: "https://github.com/edumoraes/shadwire", external: true }
       ].each do |card| %>
         <%= link_to card[:path],
               **(card[:external] ? { target: "_blank", rel: "noopener" } : {}),

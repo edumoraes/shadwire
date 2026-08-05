@@ -1,0 +1,21 @@
+<%# Language switcher: two plain links, both always present in the markup.
+    Not a dropdown and not a JS toggle — the published site is a static wget
+    crawl that starts at the English root, and the Portuguese tree exists in the
+    artifact only because every English page links straight at its counterpart
+    (and every Portuguese page links back). %>
+<nav aria-label="<%= t("site.language.label") %>"
+     class="flex items-center gap-0.5 rounded-md border border-border/60 p-0.5 text-xs font-medium">
+  <% site_locales.each do |locale| %>
+    <% current = locale == I18n.locale %>
+    <%= link_to locale_path(locale),
+          lang: locale_tag(locale),
+          hreflang: locale_tag(locale),
+          "aria-current": ("true" if current),
+          class: class_names(
+            "rounded px-2 py-1 uppercase transition-colors",
+            current ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"
+          ) do %>
+      <%= locale %><span class="sr-only"> — <%= locale_name(locale) %></span>
+    <% end %>
+  <% end %>
+</nav>
