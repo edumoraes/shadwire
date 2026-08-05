@@ -8,6 +8,15 @@ export default class extends Controller {
 
   connect() {
     this.isOpen = false
+    // A Turbo snapshot taken while the popover is open restores the markup open
+    // but this controller closed, and every dismissal path checks isOpen first.
+    // Close before the snapshot is taken so the two never disagree.
+    this.closeBeforeCache = () => this.close()
+    document.addEventListener("turbo:before-cache", this.closeBeforeCache)
+  }
+
+  disconnect() {
+    document.removeEventListener("turbo:before-cache", this.closeBeforeCache)
   }
 
   toggle(event) {

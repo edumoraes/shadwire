@@ -7,8 +7,24 @@ export default class extends Controller {
   static targets = ["dialog"]
   static values = { closeOnBackdrop: { type: Boolean, default: true } }
 
+  connect() {
+    this.closeBeforeCache = () => this.closeForSnapshot()
+    document.addEventListener("turbo:before-cache", this.closeBeforeCache)
+  }
+
   disconnect() {
     this.clearFallback()
+    document.removeEventListener("turbo:before-cache", this.closeBeforeCache)
+  }
+
+  // A <dialog open> restored from a Turbo snapshot is non-modal: no backdrop, no
+  // Escape, and open() refuses to reopen it. Leave it closed in the snapshot.
+  closeForSnapshot() {
+    if (!this.hasDialogTarget) return
+
+    this.clearFallback()
+    delete this.dialogTarget.dataset.state
+    if (this.dialogTarget.open) this.dialogTarget.close()
   }
 
   open(event) {
