@@ -241,9 +241,12 @@ jobs:
           # counterpart. Losing the switcher would not fail anything above — it
           # would quietly publish a monolingual site — so compare the two trees.
           en=$(find ../_site -name '*.html' -not -path '../_site/pt/*' -not -name 'pt.html' | wc -l)
-          pt=$(find ../_site/pt -name '*.html' 2>/dev/null | wc -l)
+          # --adjust-extension freezes the Portuguese home as pt.html, beside the
+          # pt/ directory rather than inside it, so count it on its own or the
+          # tally reads one short and the two trees never appear to match.
+          pt=$(( $(find ../_site/pt -name '*.html' 2>/dev/null | wc -l) + $(test -f ../_site/pt.html && echo 1 || echo 0) ))
           echo "frozen pages: ${en} en / ${pt} pt"
-          if [ "$pt" -lt "$((en - 1))" ]; then
+          if [ "$pt" -lt "$en" ]; then
             echo "::error::the Portuguese tree is short (${pt} pages against ${en} English) — the crawl did not reach it"
             exit 1
           fi
