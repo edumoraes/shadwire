@@ -1,0 +1,99 @@
+<% content_for :title, "Ícones — Shadwire" %>
+<% content_for :description, "lucide-rails no Shadwire: nomes kebab-case, os quatro tamanhos, quando o ícone precisa de rótulo acessível e por que não existe prop icon:." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Ícones",
+        description: "Os ícones vêm do lucide-rails, o port Rails do Lucide (o set do shadcn/ui). ui_icon embrulha o lucide_icon com as variantes de tamanho do shadcn." %>
+
+  <section class="space-y-4">
+    <p class="leading-7">
+      A aplicação precisa da gem <%= docs_code("lucide-rails") %>. O
+      <%= docs_code("shadwire init") %> a adiciona, e
+      <%= docs_code("bin/shadwire status --json") %> reporta em <%= docs_code("gems") %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Nomes são kebab-case do Lucide") %>
+
+    <%= docs_code_block(@snippets[:wrong_names]) %>
+    <%= docs_code_block(@snippets[:right_names]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Os nomes estão em
+      <%= link_to "lucide.dev/icons", "https://lucide.dev/icons", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Tamanhos") %>
+
+    <%= render "docs/table",
+          headers: [ "Tamanho", "Classe", "Uso típico" ],
+          rows: [
+            [ docs_code(":sm"), docs_code("size-3"), "Dentro de badges, textos auxiliares e trilhas." ],
+            [ docs_code(":default"), docs_code("size-4"), "Botões, itens de menu, campos." ],
+            [ docs_code(":lg"), docs_code("size-5"), "Cabeçalhos, ladrilhos, estados vazios." ],
+            [ docs_code(":xl"), docs_code("size-6"), "Ilustrações e destaques." ]
+          ] %>
+
+    <%= docs_code_block(@snippets[:sizes]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Prefira esses tamanhos a <%= docs_code('class: "w-3 h-3"') %>, para o ícone acompanhar
+      qualquer ajuste futuro na escala.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Ícones são decorativos por padrão") %>
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("ui_icon") %> renderiza <%= docs_code('aria-hidden="true"') %>, que é o
+      correto ao lado de um rótulo de texto, já que o texto nomeia o controle.
+    </p>
+
+    <%= docs_code_block(@snippets[:decorative]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Quando o ícone é o <em>único</em> conteúdo, ele precisa carregar o nome. Passe
+      <%= docs_code("label:") %>, que define <%= docs_code('role="img"') %> e
+      <%= docs_code("aria-label") %> e cancela o <%= docs_code("aria-hidden") %>:
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_label]) %>
+    <%= docs_code_block(@snippets[:right_label]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Rotular o botão em vez do ícone é igualmente válido; o que não pode é ficar sem nenhum
+      dos dois.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Não existe prop icon:") %>
+    <p class="leading-7 text-muted-foreground">
+      Nenhum componente recebe ícone como prop. O ícone vai no conteúdo, no estilo shadcn.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_prop]) %>
+    <%= docs_code_block(@snippets[:right_prop]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      O <%= docs_code("ButtonComponent") %> carrega utilitários
+      <%= docs_code("[&_svg]") %>, então um ícone aninhado já sai dimensionado e espaçado sem
+      classe extra. Use <%= docs_code("size: :icon") %> para o botão só de ícone.
+    </p>
+
+    <p class="leading-7 text-muted-foreground">
+      As duas partes precisam ser <%= docs_code("html_safe") %>, então junte com
+      <%= docs_code("safe_join") %> em vez de concatenar strings.
+      <%= docs_code('ui_icon("save") + " Save"') %> também funciona, já que o ícone é seguro,
+      mas <%= docs_code("safe_join") %> declara a intenção e trata conteúdo interpolado
+      corretamente.
+    </p>
+  </section>
+</article>

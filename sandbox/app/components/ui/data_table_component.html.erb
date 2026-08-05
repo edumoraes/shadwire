@@ -13,7 +13,7 @@
           class: "ml-auto",
           data: { "ui-dropdown-menu-close-on-select-value": false })) do %>
       <%= render(Ui::DropdownMenu::TriggerComponent.new(variant: :outline)) do %>
-        Colunas
+        <%= I18n.t("ui.data_table.columns", default: "Columns") %>
         <%= render(Ui::IconComponent.new("chevron-down")) %>
       <% end %>
       <%= render(Ui::DropdownMenu::ContentComponent.new(align: :end)) do %>
@@ -37,7 +37,7 @@
           <% if @selectable %>
             <%= render(Ui::Table::HeadComponent.new(class: "w-10")) do %>
               <%= render(Ui::CheckboxComponent.new(
-                    aria: { label: "Selecionar todas as linhas" },
+                    aria: { label: I18n.t("ui.data_table.select_all", default: "Select all rows") },
                     data: { "ui-data-table-target": "selectAll", action: "change->ui-data-table#toggleAll" })) %>
             <% end %>
           <% end %>
@@ -70,7 +70,7 @@
             <% if @selectable %>
               <%= render(Ui::Table::CellComponent.new(class: "w-10")) do %>
                 <%= render(Ui::CheckboxComponent.new(
-                      aria: { label: "Selecionar linha" },
+                      aria: { label: I18n.t("ui.data_table.select_row", default: "Select row") },
                       data: { "ui-data-table-target": "rowCheckbox", action: "change->ui-data-table#toggleRow" })) %>
               <% end %>
             <% end %>
@@ -103,11 +103,11 @@
       <%= render(Ui::ButtonComponent.new(
             variant: :outline,
             size: :sm,
-            data: { "ui-data-table-target": "previous", action: "click->ui-data-table#previousPage" })) { "Anterior" } %>
+            data: { "ui-data-table-target": "previous", action: "click->ui-data-table#previousPage" })) { I18n.t("ui.data_table.previous", default: "Previous") } %>
       <%= render(Ui::ButtonComponent.new(
             variant: :outline,
             size: :sm,
-            data: { "ui-data-table-target": "next", action: "click->ui-data-table#nextPage" })) { "Próximo" } %>
+            data: { "ui-data-table-target": "next", action: "click->ui-data-table#nextPage" })) { I18n.t("ui.data_table.next", default: "Next") } %>
     </div>
   </div>
 <% end %>

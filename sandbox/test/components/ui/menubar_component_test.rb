@@ -11,7 +11,7 @@ class MenubarComponentTest < ViewComponent::TestCase
         ui_menubar_menu do
           ui_menubar_trigger { "Arquivo" } +
             ui_menubar_content do
-              ui_menubar_item { "Novo" } + ui_menubar_item { "Abrir" }
+              ui_menubar_item { "Novo" } + ui_menubar_item { "Open" }
             end
         end
       end

@@ -121,7 +121,7 @@ screen readers, even when the design does not show one.
 
 ## Interactive components need Stimulus
 
-28 of 58 components ship a Stimulus controller. `bin/shadwire info <name>` reports
+29 of 57 components ship a Stimulus controller. `bin/shadwire info <name>` reports
 `Requires Stimulus`, and `status.stack` reports whether the app has importmap and
 stimulus-rails.
 

@@ -1,0 +1,41 @@
+<%# Shared <head> for the landing page and the documentation shell. %>
+<title><%= content_for(:title) || "Shadwire" %></title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Shadwire">
+<meta name="mobile-web-app-capable" content="yes">
+<% if content_for?(:description) %>
+  <meta name="description" content="<%= content_for(:description).to_s.squish %>">
+<% end %>
+<%= csrf_meta_tags %>
+<%= csp_meta_tag %>
+
+<%# Every page exists at one address per language, and each states where the
+    others are. The hrefs are absolute and come from config.x.site_url, never
+    from the request: the published site is frozen by crawling 127.0.0.1, so
+    request.base_url would bake the build host into all of them. %>
+<link rel="canonical" href="<%= locale_url(I18n.locale) %>">
+<% site_locales.each do |locale| %>
+  <link rel="alternate" hreflang="<%= locale_tag(locale) %>" href="<%= locale_url(locale) %>">
+<% end %>
+<link rel="alternate" hreflang="x-default" href="<%= locale_url(I18n.default_locale) %>">
+
+<%= yield :head %>
+
+<link rel="icon" href="/icon.png" type="image/png">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon.png">
+
+<%# Aplica o tema salvo antes da primeira pintura para evitar flash. %>
+<script>
+  (() => {
+    const stored = localStorage.getItem("theme")
+    const dark = stored
+      ? stored === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches
+    document.documentElement.classList.toggle("dark", dark)
+  })()
+</script>
+
+<%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+<%= javascript_importmap_tags %>

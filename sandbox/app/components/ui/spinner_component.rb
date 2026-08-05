@@ -5,7 +5,7 @@ module Ui
   # Exposes `role="status"` with an accessible label so a standalone spinner
   # announces; pass `label: nil` to make it decorative next to visible text.
   class SpinnerComponent < UiComponent
-    def initialize(label: "Carregando", class_name: nil, **attrs)
+    def initialize(label: I18n.t("ui.spinner.label", default: "Loading"), class_name: nil, **attrs)
       @label = label
       @attrs = attrs
       @class_name = extract_class_name(@attrs, class_name)

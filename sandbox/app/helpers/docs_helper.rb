@@ -16,6 +16,28 @@ module DocsHelper
   CODE_BLOCK_MAX_HEIGHT_REM = 32
   CODE_BLOCK_LINE_HEIGHT_REM = 1.625
 
+  # Section headings. Every documentation page uses these so the "Nesta página"
+  # rail (built client-side by the docs-toc controller) sees a consistent
+  # hierarchy, and so the class strings live in one place.
+  def docs_h2(text)
+    tag.h2(text, id: text.to_s.parameterize, class: "scroll-mt-24 border-b pb-2 text-2xl font-bold tracking-[-0.01em]")
+  end
+
+  def docs_h3(text)
+    tag.h3(text, id: text.to_s.parameterize, class: "scroll-mt-24 text-lg font-bold tracking-[-0.01em]")
+  end
+
+  # Inline code, as it appears inside documentation prose.
+  def docs_code(text)
+    tag.code(text, class: "rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-[0.8125rem]")
+  end
+
+  # The same, one step down: inline code inside the smaller supporting prose of
+  # the install section and the API tables.
+  def docs_code_sm(text)
+    tag.code(text, class: "rounded bg-muted px-1 py-0.5 text-xs")
+  end
+
   # The registry item a documentation page describes, or nil when the page has
   # no matching item.
   def registry_item(name)
@@ -37,6 +59,15 @@ module DocsHelper
 
   def registry_requires_stimulus?(name)
     registry_install_targets(name).any? { |target| target.start_with?("app/javascript/") }
+  end
+
+  # How many components ship a Stimulus controller. Counted rather than written
+  # down: the prose said 28 for long enough that it outlived being true.
+  def registry_stimulus_component_count
+    registry_items.values.count do |item|
+      item.fetch("type") == "component" &&
+        item.fetch("files").any? { |file| file.fetch("target").start_with?("app/javascript/") }
+    end
   end
 
   # Highlights an ERB snippet for display in a documentation code block.
@@ -76,19 +107,30 @@ module DocsHelper
     Rouge::Themes::Base16.mode(:dark).render(scope: ".highlight").html_safe
   end
 
-  private
+  # The registry's published version, as the landing page badge shows it.
+  def registry_version
+    registry_manifest.fetch("version", "")
+  end
 
+  # Registry items keyed by name. Public because DocsNavHelper builds the
+  # sidebar's component group from the same manifest.
+  #
   # Memoized per request rather than per process: the manifest is small, and
   # caching it across requests would serve stale file lists in development after
   # editing registry.json.
   def registry_items
-    @registry_items ||= JSON.parse(REGISTRY_MANIFEST.read)
-                            .fetch("items")
-                            .to_h { |item| [ item.fetch("name"), item ] }
+    @registry_items ||= registry_manifest.fetch("items", [])
+                                         .to_h { |item| [ item.fetch("name"), item ] }
+  end
+
+  private
+
+  def registry_manifest
+    @registry_manifest ||= JSON.parse(REGISTRY_MANIFEST.read)
   rescue Errno::ENOENT, JSON::ParserError
     # The docs site is only ever served from the monorepo, but a missing or
     # broken manifest must not take the whole page down.
-    @registry_items = {}
+    @registry_manifest = {}
   end
 
   def highlight_code(code, language:)
@@ -113,9 +155,16 @@ module DocsHelper
   def docs_code_block_attrs(source, collapsible, class_name)
     data = {
       controller: class_names("clipboard", ("code-block" if collapsible)),
-      clipboard_source_value: source
+      clipboard_source_value: source,
+      clipboard_copy_value: t("docs.code.copy"),
+      clipboard_copied_value: t("docs.code.copied")
     }
-    data[:code_block_expanded_value] = false if collapsible
+
+    if collapsible
+      data[:code_block_expanded_value] = false
+      data[:code_block_expand_value] = t("docs.code.expand")
+      data[:code_block_collapse_value] = t("docs.code.collapse")
+    end
 
     {
       class: class_names("relative", class_name),
@@ -142,7 +191,7 @@ module DocsHelper
       safe_join([
         tag.span(data: { code_block_target: "expandIcon" }) { ui_icon("chevrons-down", size: :sm) },
         tag.span(data: { code_block_target: "collapseIcon" }, hidden: true) { ui_icon("chevrons-up", size: :sm) },
-        tag.span("Expandir", data: { code_block_target: "label" })
+        tag.span(t("docs.code.expand"), data: { code_block_target: "label" })
       ])
     end
   end
@@ -152,7 +201,7 @@ module DocsHelper
               data: { action: "clipboard#copy" }) do
       safe_join([
         ui_icon("copy", size: :sm),
-        tag.span("Copiar", data: { clipboard_target: "label" })
+        tag.span(t("docs.code.copy"), data: { clipboard_target: "label" })
       ])
     end
   end
@@ -164,7 +213,7 @@ module DocsHelper
                    scrollbars: [ :horizontal ],
                    class: docs_code_block_scroll_area_class(frame),
                    data: ({ code_block_target: "collapsed" } if collapsible)) do
-      tag.pre(class: docs_code_block_pre_class) do
+      tag.pre(class: docs_code_block_pre_class(collapsible)) do
         tag.code(highlight_code(visible_source, language:))
       end
     end
@@ -176,14 +225,18 @@ module DocsHelper
                    style: "height: #{docs_code_block_expanded_height(line_count)}rem; max-height: #{CODE_BLOCK_MAX_HEIGHT_REM}rem;",
                    hidden: true,
                    data: { code_block_target: "expanded" }) do
-      tag.pre(id: "#{block_id}-expanded", class: docs_code_block_pre_class) do
+      tag.pre(id: "#{block_id}-expanded", class: docs_code_block_pre_class(true)) do
         tag.code(highlight_code(source, language:))
       end
     end
   end
 
-  def docs_code_block_pre_class
-    "highlight min-w-max p-4 pr-24 text-sm leading-relaxed"
+  # The controls float over the top-right corner, so the code reserves room for
+  # them. A collapsible block carries two buttons ("Expandir" + "Copiar"), which
+  # need roughly twice the room of "Copiar" alone. The block scrolls
+  # horizontally, so the reserved space costs nothing but scroll width.
+  def docs_code_block_pre_class(collapsible)
+    class_names("highlight min-w-max p-4 text-sm leading-relaxed", collapsible ? "pr-56" : "pr-28")
   end
 
   def docs_code_block_scroll_area_class(frame)

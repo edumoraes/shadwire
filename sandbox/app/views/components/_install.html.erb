@@ -4,11 +4,10 @@
     Renders nothing when the page has no matching registry item. %>
 <% if registry_item(name) %>
 <section class="flex flex-col gap-4">
-  <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Instalação</h2>
+  <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.installation") %></h2>
 
   <p class="text-sm text-muted-foreground">
-    O Shadwire segue o modelo <em>open-code</em> do shadcn/ui: o código-fonte do
-    componente é copiado para a sua aplicação e passa a ser seu. Instale com a CLI:
+    <%= t("components.install.lead_html") %>
   </p>
 
   <%= docs_code_block("#{registry_install_command(name)} --yes", language: :shell) %>
@@ -16,8 +15,7 @@
   <% targets = registry_install_targets(name) %>
   <% if targets.any? %>
     <p class="text-sm text-muted-foreground">
-      O item <code class="rounded bg-muted px-1 py-0.5 text-xs"><%= name %></code>
-      do registry instala estes arquivos:
+      <%= t("components.install.files_html", name: docs_code_sm(name)) %>
     </p>
 
     <ul class="flex flex-col gap-1 text-sm">
@@ -32,17 +30,16 @@
 
   <% if registry_requires_stimulus?(name) %>
     <p class="text-sm text-muted-foreground">
-      Este componente usa Stimulus: a aplicação precisa de
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">importmap-rails</code> e
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">stimulus-rails</code>
-      com carregamento automático de controllers.
+      <%= t("components.install.stimulus_html",
+             importmap: docs_code_sm("importmap-rails"),
+             stimulus: docs_code_sm("stimulus-rails")) %>
     </p>
   <% end %>
 
   <p class="text-sm text-muted-foreground">
-    Ainda não instalou a CLI?
-    <code class="rounded bg-muted px-1 py-0.5 text-xs">gem install shadwire</code>
-    e depois <code class="rounded bg-muted px-1 py-0.5 text-xs">shadwire init</code>.
+    <%= t("components.install.cli_html",
+           install: docs_code_sm("gem install shadwire"),
+           init: docs_code_sm("shadwire init")) %>
   </p>
 </section>
 <% end %>

@@ -4,7 +4,9 @@ import { Controller } from "@hotwired/stimulus"
 // Scroll Area-backed source.
 export default class extends Controller {
   static targets = ["button", "collapsed", "expanded", "label", "expandIcon", "collapseIcon"]
-  static values = { expanded: Boolean }
+  // expand/collapse come from the server: this file has no access to Rails
+  // i18n, and the site is published in two languages.
+  static values = { expanded: Boolean, expand: String, collapse: String }
 
   connect() {
     this.render()
@@ -23,7 +25,7 @@ export default class extends Controller {
 
     this.collapsedTarget.hidden = expanded
     this.expandedTarget.hidden = !expanded
-    this.labelTarget.textContent = expanded ? "Recolher" : "Expandir"
+    this.labelTarget.textContent = expanded ? this.collapseValue : this.expandValue
     this.buttonTarget.setAttribute("aria-expanded", String(expanded))
 
     if (this.hasExpandIconTarget) this.expandIconTarget.hidden = expanded

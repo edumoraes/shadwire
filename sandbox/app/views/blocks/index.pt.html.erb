@@ -1,0 +1,39 @@
+<% content_for :title, "Blocks — Shadwire" %>
+<% content_for :description, "Composições prontas a partir dos componentes do Shadwire, portadas dos blocks do shadcn/ui." %>
+
+<article class="space-y-8">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Blocks</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      Composições prontas a partir dos componentes do Shadwire, portadas dos
+      <a href="https://ui.shadcn.com/blocks" class="font-medium underline underline-offset-4">blocks do shadcn/ui</a>.
+      Um block instala como qualquer outro item do registry, e o código é seu do mesmo jeito.
+    </p>
+  </header>
+
+  <ul class="flex flex-col gap-10">
+    <% @blocks.each do |block| %>
+      <li class="flex flex-col gap-3">
+        <div class="flex flex-wrap items-end justify-between gap-2">
+          <div class="space-y-1">
+            <h2 class="scroll-mt-24 text-2xl font-bold tracking-[-0.01em] leading-tight"><%= block[:title] %></h2>
+            <p class="text-sm text-muted-foreground"><%= block[:description] %></p>
+          </div>
+          <%= link_to send(block[:path_helper]),
+                class: "inline-flex items-center gap-1 rounded-md border bg-card px-3 py-1.5 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground" do %>
+            <%= ui_icon("external-link", size: :sm) %>Abrir em tela cheia
+          <% end %>
+        </div>
+        <div class="overflow-hidden rounded-xl border bg-background shadow-sm">
+          <iframe src="<%= send(block[:path_helper]) %>"
+                  title="<%= block[:title] %> preview"
+                  loading="lazy"
+                  class="h-[520px] w-full"></iframe>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Instale com <%= docs_code("bin/shadwire add #{block[:name]}") %>.
+        </p>
+      </li>
+    <% end %>
+  </ul>
+</article>

@@ -26,11 +26,11 @@ class AvatarComponentTest < ViewComponent::TestCase
         alt: "",
         fallback: "AL",
         data: { testid: "profile-avatar" },
-        aria: { label: "Perfil" }
+        aria: { label: "Profile" }
       )
     )
 
-    assert_selector "span.relative.flex.size-10[data-testid='profile-avatar'][aria-label='Perfil']"
+    assert_selector "span.relative.flex.size-10[data-testid='profile-avatar'][aria-label='Profile']"
     assert_no_selector "span.relative.flex.size-10[role]"
     assert_no_selector "span.relative.flex.size-10[data-status]"
     assert_no_selector "img[type]"

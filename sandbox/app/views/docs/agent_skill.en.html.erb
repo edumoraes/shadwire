@@ -1,0 +1,128 @@
+<% content_for :title, "Agent skill — Shadwire" %>
+<% content_for :description, "The skill that gives coding agents like Claude Code, Codex and Cursor context about Shadwire's CLI and components." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Agent skill",
+        description: "An installable skill that teaches coding agents to use Shadwire: the workflow, the rules, and your app's API, read at the moment it is needed." %>
+
+  <section class="space-y-4">
+    <p class="leading-7">
+      An agent writing ERB with no context invents props: it guesses <%= docs_code("icon:") %> on
+      a button, calls <%= docs_code("ui_carousel") %> in an app where the carousel is not
+      installed, writes <%= docs_code("bg-blue-500") %> where a token exists. The skill carries
+      the workflow and the conventions, and pulls the <em>data</em> — component names, variants,
+      props, helpers — from the CLI itself, at the point of use.
+    </p>
+
+    <%= docs_code_block(@snippets[:install], language: :shell) %>
+
+    <p class="leading-7 text-muted-foreground">
+      The <%= link_to "skills", "https://github.com/obra/superpowers", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
+      installer covers Claude Code, Codex, Cursor, OpenCode, Gemini CLI and around twenty other
+      agents. The skill lives at <%= link_to "skills/shadwire/", "https://github.com/edumoraes/shadwire/tree/main/skills/shadwire", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
+      in the repository.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("The skill does not list components") %>
+    <p class="leading-7 text-muted-foreground">
+      A skill that listed the components and their variants would go stale on the first
+      <%= docs_code("add") %>, with nothing to announce it. Instead it injects the output of
+      <%= docs_code("bin/shadwire status --json") %> as project context and tells the agent to
+      read that before anything else.
+    </p>
+
+    <%= docs_code_block(@snippets[:context], language: :markdown) %>
+
+    <p class="leading-7 text-muted-foreground">
+      The block always returns parseable JSON. Three fields decide what the agent may write:
+    </p>
+
+    <%= render "docs/table",
+          headers: [ "Field", "Why it decides" ],
+          rows: [
+            [ docs_code("installed[].helpers"), "The ui_* methods that exist in this app. Calling the helper of a component that is not installed raises NoMethodError." ],
+            [ docs_code("stack.importmap"), "Whether the interactive components will work at all. #{registry_stimulus_component_count} of the #{docs_component_items.size} components ship a Stimulus controller." ],
+            [ docs_code("cli.binstub"), safe_join([ "Whether ", docs_code("bin/shadwire"), " exists yet. False means running ", docs_code("init"), " once before anything else." ]) ]
+          ] %>
+
+    <p class="leading-7 text-muted-foreground">
+      The repository's CI checks that everything the skill names still exists in the registry
+      and in the CLI, and runs the workflow it teaches end to end — so a stale skill breaks the
+      build.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("What it carries") %>
+
+    <%= render "docs/table",
+          headers: [ "File", "Contents" ],
+          rows: @skill_files.map { |file| [ docs_code(file[:path]), file[:summary] ] } %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("SKILL.md") %> is the front door; the rest are references it links to. The
+      same rules are documented here under
+      <%= link_to "Composition", docs_composition_path, class: "font-medium underline underline-offset-4" %>,
+      <%= link_to "Styling", docs_styling_path, class: "font-medium underline underline-offset-4" %>,
+      <%= link_to "Forms", docs_forms_path, class: "font-medium underline underline-offset-4" %>
+      and <%= link_to "Icons", docs_icons_path, class: "font-medium underline underline-offset-4" %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("The workflow it teaches") %>
+
+    <%= docs_code_block(@snippets[:workflow], language: :shell) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("info --json") %> returns the helper names, the variants and the sizes. It
+      is the step most often skipped, and without it the agent reinvents the component out of
+      <%= docs_code("div") %>s and utilities.
+    </p>
+
+    <%= render layout: "docs/callout", locals: { icon: "info", title: "Trust the exit code" } do %>
+      A non-zero exit means something was not applied (almost always a <code>bundle add</code>),
+      and the message says how to recover. The skill instructs the agent to stop there rather
+      than carry on as if it had worked.
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Permissions") %>
+    <p class="leading-7 text-muted-foreground">
+      The skill's frontmatter declares the tools it needs:
+    </p>
+
+    <%= docs_code_block(@snippets[:frontmatter], language: :yaml) %>
+
+    <p class="leading-7 text-muted-foreground">
+      That <%= docs_code("allowed-tools") %> applies only to the turn that invokes the skill. To
+      silence the permission prompts, add a rule to the application's
+      <%= docs_code(".claude/settings.json") %>:
+    </p>
+
+    <%= docs_code_block(@snippets[:permissions], language: :json) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("user-invocable: false") %> is deliberate: nobody types this skill. It is
+      the context the agent loads when the subject is UI in a Rails app that has a
+      <%= docs_code("shadwire.json") %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Agents without the skill") %>
+    <p class="leading-7 text-muted-foreground">
+      Not every agent installs skills. The same catalog is published in plain text, in the
+      <%= link_to "llms.txt", docs_llms_txt_path, class: "font-medium underline underline-offset-4" %>
+      format: an index saying when to use each component, and a file carrying the whole API.
+      Either one can be pasted straight into a model's context.
+    </p>
+  </section>
+</article>

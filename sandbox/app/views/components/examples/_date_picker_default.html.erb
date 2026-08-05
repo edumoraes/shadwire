@@ -1,10 +1,10 @@
-<%# Date Picker = Popover + Calendar (uma receita, não um componente novo).
-    O controller ui-date-picker escreve a data escolhida no rótulo e fecha o popover. %>
+<%# Date Picker = Popover + Calendar (a recipe, not a new component).
+    The ui-date-picker controller writes the chosen date into the label and closes the popover. %>
 <div data-controller="ui-date-picker" data-ui-date-picker-format-value="long">
   <%= ui_popover do %>
     <%= ui_popover_trigger(variant: :outline, class: "w-[212px] justify-between font-normal") do %>
       <span data-ui-date-picker-target="label" data-empty="true" class="data-[empty=true]:text-muted-foreground">
-        Selecione uma data
+        Pick a date
       </span>
       <%= ui_icon("chevron-down", class: "opacity-50") %>
     <% end %>

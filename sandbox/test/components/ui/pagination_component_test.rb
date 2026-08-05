@@ -20,9 +20,9 @@ class PaginationComponentTest < ViewComponent::TestCase
   end
 
   def test_renders_navigation_landmark
-    render_inline(Ui::PaginationComponent.new) { "páginas" }
+    render_inline(Ui::PaginationComponent.new) { "pages" }
 
-    assert_selector "nav[role='navigation'][aria-label='pagination'][data-slot='pagination']", text: "páginas"
+    assert_selector "nav[role='navigation'][aria-label='pagination'][data-slot='pagination']", text: "pages"
   end
 
   def test_renders_content_list_and_item
@@ -54,17 +54,17 @@ class PaginationComponentTest < ViewComponent::TestCase
 
     render_inline(Ui::PaginationComponent.new) { previous_html + next_html }
 
-    assert_selector "a[href='#prev'][aria-label='Ir para a página anterior'] svg"
-    assert_selector "a[href='#prev'] span.hidden", text: "Anterior"
-    assert_selector "a[href='#next'][aria-label='Ir para a próxima página'] svg"
-    assert_selector "a[href='#next'] span.hidden", text: "Próxima"
+    assert_selector "a[href='#prev'][aria-label='Go to the previous page'] svg"
+    assert_selector "a[href='#prev'] span.hidden", text: "Previous"
+    assert_selector "a[href='#next'][aria-label='Go to the next page'] svg"
+    assert_selector "a[href='#next'] span.hidden", text: "Next"
   end
 
   def test_ellipsis_is_decorative_with_sr_only_text
     render_inline(Ui::Pagination::EllipsisComponent.new)
 
     assert_selector "span[aria-hidden='true'][data-slot='pagination-ellipsis'] svg"
-    assert_selector "span.sr-only", text: "Mais páginas"
+    assert_selector "span.sr-only", text: "More pages"
   end
 
   def test_helper_methods_render_pagination

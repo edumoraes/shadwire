@@ -1,0 +1,118 @@
+<% content_for :title, "Estilização — Shadwire" %>
+<% content_for :description, "Tokens semânticos, precedência de classes, atributos HTML livres e as convenções de utilitários que os componentes do Shadwire seguem." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Estilização",
+        description: "Variantes para aparência, class: para layout. Toda cor vem de um token, e a sua classe sempre ganha." %>
+
+  <section class="space-y-4">
+    <%= docs_h2("Só tokens semânticos") %>
+    <p class="leading-7 text-muted-foreground">
+      Toda cor vem de um token do shadcn, para que o modo claro, o escuro e qualquer
+      retematização funcionem sem tocar no código do componente.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_colors]) %>
+    <%= docs_code_block(@snippets[:right_colors]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Os pares são <%= docs_code("<superfície>") %> /
+      <%= docs_code("<superfície>-foreground") %>:
+      <%= docs_code("bg-primary text-primary-foreground") %>,
+      <%= docs_code("bg-muted text-muted-foreground") %>,
+      <%= docs_code("bg-destructive text-destructive-foreground") %>. A tabela completa está em
+      <%= link_to "Theming", docs_theming_path, class: "font-medium underline underline-offset-4" %>.
+    </p>
+    <p class="leading-7 text-muted-foreground">
+      Nunca escreva variantes <%= docs_code("dark:") %> para cor. Use o prefixo só para
+      escolhas específicas de modo que não sejam cor, como uma imagem diferente.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("class: e class_name: são a mesma coisa") %>
+    <p class="leading-7 text-muted-foreground">
+      As duas normalizam para o mesmo valor. Use a que ler melhor;
+      <%= docs_code("class:") %> é mais idiomático no Rails.
+    </p>
+
+    <%= docs_code_block(@snippets[:class_alias]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("A sua classe sempre ganha") %>
+    <p class="leading-7 text-muted-foreground">
+      As classes compõem nesta ordem, com a sua por último:
+    </p>
+
+    <%= docs_code_block(@snippets[:order], language: :text) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Por isso <%= docs_code("class:") %> sobrescreve os utilitários do componente. Mesmo
+      assim, não use para reestilizar:
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_restyle]) %>
+    <%= docs_code_block(@snippets[:right_restyle]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Use <%= docs_code("class:") %> para <strong class="font-medium text-foreground">layout</strong>,
+      como largura, margem e posição no grid:
+    </p>
+
+    <%= docs_code_block(@snippets[:layout]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Atributos HTML passam direto") %>
+    <p class="leading-7 text-muted-foreground">
+      O que não for uma prop conhecida é encaminhado para o elemento renderizado, inclusive os
+      hashes aninhados do Rails.
+    </p>
+
+    <%= docs_code_block(@snippets[:attrs]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Use <%= docs_code("tag:") %> para trocar o elemento onde o componente suporta.
+      <%= docs_code("button") %> renderiza um <%= docs_code("<button>") %> por padrão e um
+      <%= docs_code("<a>") %> com <%= docs_code("tag: :a") %>.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Prefira variantes e tamanhos a utilitários") %>
+    <p class="leading-7 text-muted-foreground">
+      Veja o que já existe antes de escrever classes:
+    </p>
+
+    <%= docs_code_block(@snippets[:info], language: :console) %>
+    <%= docs_code_block(@snippets[:wrong_utilities]) %>
+    <%= docs_code_block(@snippets[:right_utilities]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Convenções de utilitários") %>
+    <p class="leading-7 text-muted-foreground">
+      Siga o que os próprios componentes fazem, para o seu código não destoar do que a CLI
+      instalou:
+    </p>
+
+    <ul class="space-y-2 text-sm leading-6 text-muted-foreground">
+      <% [
+        [ "size-9", "em vez de h-9 w-9, quando largura e altura coincidem." ],
+        [ "gap-*", "com flex ou grid, em vez de space-x-* / space-y-*." ],
+        [ "truncate", "em vez de overflow-hidden text-ellipsis whitespace-nowrap." ],
+        [ "sem z-index manual", "em overlays: dialog, sheet, popover e dropdown-menu já gerenciam o próprio empilhamento." ]
+      ].each do |token, body| %>
+        <li class="flex gap-3">
+          <%= ui_icon("check", size: :sm, class: "mt-1 shrink-0 text-primary") %>
+          <span><%= docs_code(token) %> <%= body %></span>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+</article>

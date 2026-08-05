@@ -10,7 +10,7 @@ class ChartComponentTest < ViewComponent::TestCase
       ui_chart(
         type: :line,
         data: { labels: %w[Jan Fev], datasets: [ { label: "Visitas", data: [ 12, 30 ] } ] },
-        label: "Visitas por mês"
+        label: "Visits per month"
       )
     end
   end
@@ -41,6 +41,6 @@ class ChartComponentTest < ViewComponent::TestCase
   def test_helper_renders_a_chart
     render_inline(HelperHarnessComponent.new)
 
-    assert_selector "figure[data-controller='ui-chart'] canvas[aria-label='Visitas por mês']"
+    assert_selector "figure[data-controller='ui-chart'] canvas[aria-label='Visits per month']"
   end
 end

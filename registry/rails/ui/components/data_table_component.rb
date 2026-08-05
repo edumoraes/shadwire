@@ -8,9 +8,9 @@ module Ui
   #
   #   ui_data_table(
   #     columns: [
-  #       { key: :name, label: "Nome", sortable: true },
+  #       { key: :name, label: "Name", sortable: true },
   #       { key: :email, label: "E-mail" },
-  #       { key: :amount, label: "Valor", sortable: true }
+  #       { key: :amount, label: "Amount", sortable: true }
   #     ],
   #     rows: [{ id: 1, name: "Ada", email: "ada@x.com", amount: 316 }],
   #     filter_key: :email
@@ -24,10 +24,10 @@ module Ui
       columns:,
       rows:,
       filter_key: nil,
-      filter_placeholder: "Filtrar…",
+      filter_placeholder: I18n.t("ui.data_table.filter_placeholder", default: "Filter…"),
       page_size: 5,
       selectable: true,
-      empty_text: "Sem resultados.",
+      empty_text: I18n.t("ui.data_table.empty", default: "No results."),
       class_name: nil,
       **attrs
     )
@@ -52,6 +52,8 @@ module Ui
           data[:controller] = append_token(data[:controller], "ui-data-table")
           data[:"ui-data-table-page-size-value"] = @page_size
           data[:"ui-data-table-filter-key-value"] = @filter_key if @filter_key
+          data[:"ui-data-table-selection-label-value"] =
+            I18n.t("ui.data_table.selection", default: "%{selected} of %{total} row(s) selected.")
         end
       end
     end

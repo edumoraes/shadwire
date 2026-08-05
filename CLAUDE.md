@@ -72,6 +72,7 @@ Monorepo; the repo root is **not** a Rails app.
   `styles/shadwire.css`, `javascript/controllers/` (reserved for future Stimulus).
 - `sandbox/` — Rails app (ViewComponent, Tailwind v4, importmap, Turbo, Stimulus)
   that validates synced components via render tests and accessibility checks.
+  It is also the **docs site**: CI freezes it to static HTML and publishes it.
 - `bin/sync_registry` — copies registry files into the sandbox. With no args it
   skips items with missing source files (warns); validates that targets stay
   inside `sandbox/` and that no two sources map to the same target.
@@ -86,6 +87,64 @@ Monorepo; the repo root is **not** a Rails app.
 
 Tailwind loads Shadwire tokens via `@import` in `sandbox/app/assets/tailwind/application.css`,
 pointing at the synced `vendor/shadwire/shadwire.css`.
+
+## The docs site
+
+The sandbox *is* the published site. Guides and components share one shell,
+`sandbox/app/views/layouts/docs.html.erb`: header, sidebar grouped by topic,
+breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
+
+- `DocsNavHelper` is the single source of the sidebar. Guide pages are listed by
+  hand; the **Componentes group is derived from `registry/registry.json`**, so a
+  new component appears there as soon as it has a `get "components/<name>"`
+  route. `test/helpers/docs_nav_helper_test.rb` fails if the two drift apart.
+- Guide pages live in `sandbox/app/views/docs/` and are served by `DocsController`.
+- **Code samples go in `sandbox/app/lib/docs_snippets.rb`, never inline in a view.**
+  An ERB template cannot hold a heredoc containing ERB tags: the scanner closes
+  the tag at the first `%>` and the heredoc never terminates. `DocsController`
+  assigns the page's hash to `@snippets` in a `before_action`.
+- The "Nesta página" rail is built client-side by `docs_toc_controller.js` from
+  the `h2`/`h3` already in `<main>`, so no page declares its own outline.
+
+### The site is bilingual
+
+English is the default and owns the bare paths (`/docs`); Portuguese lives under
+`/pt`. The locale is in the URL and nowhere else — no session, no cookie, no
+Accept-Language — because the published site is a static crawl: nothing survives
+to serve time that could negotiate one. Routes sit inside
+`scope "(:locale)", locale: /pt/`, and `ApplicationController#default_url_options`
+keeps generated links inside the language being read.
+
+**Where a string goes depends on what it is:**
+
+- **Chrome** (header, footer, sidebar, pager, search, code-block controls) and
+  **tabular data** (CLI commands, theme tokens, example captions, API table
+  headers) → `config/locales/{en,pt}.yml`. These repeat across pages; duplicating
+  them is how they drift. `en.yml` is the reference and `pt.yml` mirrors it.
+- **Page prose** → locale-suffixed templates, `installation.en.html.erb` /
+  `installation.pt.html.erb`. This text is threaded through markup and inline
+  `<code>` and reads as a document, not a string table.
+- **Example partials** under `components/examples/` → English, one copy. They
+  illustrate a registry whose language is English, and their source is shown
+  verbatim as the documentation.
+
+Two traps this arrangement sets:
+
+- **Never hand-build an internal path.** `"/components/#{name}"` silently sends a
+  Portuguese reader into the English tree. Use the route helper
+  (`docs_component_path`), which carries the locale.
+- **Heading anchors differ per language**, since `docs_h2` derives the id from
+  the heading text. A cross-page `#anchor` link must be written per locale.
+
+The language switcher is two plain `<a>` links, not a dropdown or a JS toggle:
+the CI crawl starts at the English root and finds `/pt` only because every page
+links straight at its counterpart. The freeze step compares the two trees' page
+counts and fails if the Portuguese one comes up short.
+
+Registry components carry their user-facing strings as `I18n.t(..., default:)`
+with English defaults, so an installed component needs no setup; the sandbox's
+`pt.yml` defines the `ui.*` overrides, which is both what keeps the `/pt` demos
+in Portuguese and a worked example for consuming apps.
 
 ## Component conventions
 
@@ -131,3 +190,25 @@ React → Rails translation: `cva` variants → frozen Ruby hashes; `cn()`/`clas
 ## Commits
 
 Conventional Commits (`feat:`, `fix:`, `test:`, `docs:`, `chore:`).
+
+## Project tracking
+
+GitHub is this project's planner, not just a code remote. Anything that has to
+outlive the conversation it came up in belongs in an **issue**: planned work not
+yet started, technical debt, deferred decisions, open questions, and anything
+needing input from outside the repo. Group related issues under a **milestone**
+(a release, or a themed body of work).
+
+**A deferral becomes an issue before the PR that defers it merges.** This is the
+rule with teeth. "Known gaps", "out of scope for now" and "follow-up" recorded
+only in a spec or a PR description are invisible the moment the thread closes —
+`docs/superpowers/specs/` already carries lists of deferred items that nobody
+greps. Specs and plans stay as the *rationale*; the issue is the *tracker*. If it
+is worth writing down, it is worth a number that can be closed.
+
+Label every issue with its area — `area:registry`, `area:cli`, `area:skills`,
+`area:sandbox`, `area:ci`, `area:docs` — plus `bug` / `enhancement` /
+`documentation`. PRs get the same `area:*` labels automatically from
+`.github/labeler.yml`; keep that file in step when a new top-level directory
+appears. Close issues from the PR that resolves them (`Closes #12`) so the
+tracker maintains itself.

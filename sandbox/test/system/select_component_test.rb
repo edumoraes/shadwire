@@ -11,7 +11,7 @@ class SelectComponentTest < ApplicationSystemTestCase
     hidden = root.find("input[type='hidden']", visible: :all)
 
     assert_equal "false", trigger["aria-expanded"]
-    assert_text "Selecione uma fruta"
+    assert_text "Pick a fruit"
     assert_equal "", hidden.value
 
     trigger.send_keys :enter
@@ -52,14 +52,14 @@ class SelectComponentTest < ApplicationSystemTestCase
     visit components_select_path
 
     within "#example-select_groups" do
-      assert_selector "[data-slot='select-value']", text: /Leste/
+      assert_selector "[data-slot='select-value']", text: /Eastern/
       find("button[role='combobox']").send_keys :enter
     end
 
     # The preselected EST option is highlighted on open. `assert_selector` waits
     # for the text to land; `find(visible: :all).text` only waited for the node
     # to exist and read it back blank while the panel was still coming up.
-    assert_selector "#example-select_groups [role='option'][data-highlighted]", text: /Leste/
+    assert_selector "#example-select_groups [role='option'][data-highlighted]", text: /Eastern/
   end
 
   private

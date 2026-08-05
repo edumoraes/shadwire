@@ -2,52 +2,24 @@
 
 # Serves the component documentation pages of the sandbox.
 class ComponentsController < ApplicationController
-  # Catálogo e páginas de documentação compartilham o mesmo shell de navegação
-  # (header e footer) definido pelo layout "home".
-  layout "home"
+  # The catalog and the documentation pages share the documentation shell:
+  # header, topic sidebar, breadcrumb, the on-this-page rail and the footer.
+  layout "docs"
 
-  BUTTON_EXAMPLES = [
-    { name: "default", title: "Padrão",
-      description: "A variante padrão, usada para a ação primária da tela." },
-    { name: "secondary", title: "Secundário",
-      description: "Uma alternativa de menor ênfase para ações secundárias." },
-    { name: "destructive", title: "Destrutivo",
-      description: "Para ações destrutivas, como excluir um registro." },
-    { name: "outline", title: "Contorno",
-      description: "Apenas borda, sem preenchimento — boa para ações neutras." },
-    { name: "ghost", title: "Ghost",
-      description: "Sem fundo nem borda até o hover." },
-    { name: "link", title: "Link",
-      description: "Aparência de link de texto, mantendo a semântica de botão." },
-    { name: "icon", title: "Ícone",
-      description: "Botão quadrado só com ícone (size: :icon). Informe label: no ícone para leitores de tela." },
-    { name: "with_icon", title: "Com ícone",
-      description: "Componha ui_icon dentro do bloco; o botão dimensiona o SVG automaticamente." },
-    { name: "sizes", title: "Tamanhos",
-      description: "Os tamanhos :sm, :default e :lg lado a lado." },
-    { name: "loading", title: "Carregando",
-      description: "Estado de carregamento composto com um ícone giratório e disabled." },
-    { name: "disabled", title: "Desabilitado",
-      description: "Passe disabled: true como atributo HTML." },
-    { name: "as_link", title: "Como link",
-      description: "Renderize como <a> com tag: :a, mantendo o visual de botão." }
-  ].freeze
+  BUTTON_EXAMPLES = %w[default secondary destructive outline ghost link icon with_icon sizes loading disabled as_link].freeze
 
   USAGE_HELPER = <<~ERB
-    <%= ui_button { "Salvar" } %>
-    <%= ui_button(variant: :outline, size: :sm) { "Cancelar" } %>
+    <%= ui_button { "Save" } %>
+    <%= ui_button(variant: :outline, size: :sm) { "Cancel" } %>
   ERB
 
   USAGE_COMPONENT = <<~ERB
     <%= render Ui::ButtonComponent.new(variant: :destructive) do %>
-      Excluir
+      Delete
     <% end %>
   ERB
 
-  BADGE_EXAMPLES = [
-    { name: "badge_variants", title: "Variantes",
-      description: "Use variantes para indicar prioridade, estado ou categorias." }
-  ].freeze
+  BADGE_EXAMPLES = %w[badge_variants].freeze
 
   BADGE_USAGE_HELPER = <<~ERB
     <%= ui_badge { "Badge" } %>
@@ -60,10 +32,7 @@ class ComponentsController < ApplicationController
     <% end %>
   ERB
 
-  CARD_EXAMPLES = [
-    { name: "card_default", title: "Padrão",
-      description: "Componha header, title, description, content e footer dentro do card." }
-  ].freeze
+  CARD_EXAMPLES = %w[card_default].freeze
 
   CARD_USAGE_HELPER = <<~ERB
     <%= ui_card do %>
@@ -71,7 +40,7 @@ class ComponentsController < ApplicationController
         <%= ui_card_title { "Criar projeto" } %>
         <%= ui_card_description { "Configure o novo workspace." } %>
       <% end %>
-      <%= ui_card_content { "Conteúdo do card." } %>
+      <%= ui_card_content { "Card content." } %>
     <% end %>
   ERB
 
@@ -94,29 +63,21 @@ class ComponentsController < ApplicationController
     `-- Card::Footer
   TEXT
 
-  ALERT_EXAMPLES = [
-    { name: "alert_default", title: "Padrão",
-      description: "Mensagem importante com role=\"alert\" por padrão." },
-    { name: "alert_destructive", title: "Destrutivo",
-      description: "Use para erros ou avisos de alta severidade." }
-  ].freeze
+  ALERT_EXAMPLES = %w[alert_default alert_destructive].freeze
 
   ALERT_USAGE_HELPER = <<~ERB
     <%= ui_alert do %>
-      Heads up! Você pode adicionar componentes ao seu app.
+      Heads up! You can add components to your app.
     <% end %>
   ERB
 
   ALERT_USAGE_COMPONENT = <<~ERB
     <%= render Ui::AlertComponent.new(variant: :destructive) do %>
-      Erro ao salvar alterações.
+      Could not save your changes.
     <% end %>
   ERB
 
-  SEPARATOR_EXAMPLES = [
-    { name: "separator_default", title: "Orientações e decorativo",
-      description: "Separadores semânticos expõem aria-orientation; decorativos ficam ocultos da tecnologia assistiva." }
-  ].freeze
+  SEPARATOR_EXAMPLES = %w[separator_default].freeze
 
   SEPARATOR_USAGE_HELPER = <<~ERB
     <%= ui_separator %>
@@ -127,10 +88,7 @@ class ComponentsController < ApplicationController
     <%= render Ui::SeparatorComponent.new(decorative: true) %>
   ERB
 
-  AVATAR_EXAMPLES = [
-    { name: "avatar_default", title: "Imagem, fallback e rótulo",
-      description: "Renderize uma imagem com fallback ou um fallback isolado para usuários sem foto." }
-  ].freeze
+  AVATAR_EXAMPLES = %w[avatar_default].freeze
 
   AVATAR_USAGE_HELPER = <<~ERB
     <%= ui_avatar(src: "/avatar.png", alt: "Eduardo Moraes", fallback: "EM") %>
@@ -140,41 +98,27 @@ class ComponentsController < ApplicationController
     <%= render Ui::AvatarComponent.new(fallback: "EM", aria: { label: "Eduardo Moraes" }) %>
   ERB
 
-  ICON_EXAMPLES = [
-    { name: "icon_default", title: "Decorativo e rotulado",
-      description: "Ícones são decorativos por padrão; passe label: quando o ícone carregar significado." }
-  ].freeze
+  ICON_EXAMPLES = %w[icon_default].freeze
 
   ICON_USAGE_HELPER = <<~ERB
     <%= ui_icon("download") %>
-    <%= ui_icon("bell", label: "Notificações") %>
+    <%= ui_icon("bell", label: "Notifications") %>
   ERB
 
   ICON_USAGE_COMPONENT = <<~ERB
     <%= render Ui::IconComponent.new("download", size: :lg) %>
   ERB
 
-  ACCORDION_EXAMPLES = [
-    { name: "accordion_basic", title: "Basic",
-      description: "Um accordion simples que exibe um item por vez. O primeiro item começa aberto." },
-    { name: "accordion_multiple", title: "Multiple",
-      description: "Use multiple: true para permitir que vários itens fiquem abertos ao mesmo tempo." },
-    { name: "accordion_disabled", title: "Disabled",
-      description: "Use disabled: true no item para bloquear um painel específico." },
-    { name: "accordion_borders", title: "Borders",
-      description: "Adicione border no accordion para destacar o contorno do grupo." },
-    { name: "accordion_card", title: "Card",
-      description: "Componha o Accordion dentro de Card quando ele fizer parte de uma superfície maior." }
-  ].freeze
+  ACCORDION_EXAMPLES = %w[accordion_basic accordion_multiple accordion_disabled accordion_borders accordion_card].freeze
 
   ACCORDION_USAGE_HELPER = <<~ERB
     <%= ui_accordion(default_value: :item_1) do %>
       <%= ui_accordion_item(value: :item_1) do %>
         <%= ui_accordion_header do %>
-          <%= ui_accordion_trigger { "É acessível?" } %>
+          <%= ui_accordion_trigger { "Is it accessible?" } %>
         <% end %>
         <%= ui_accordion_content do %>
-          Sim. Ele segue o padrão WAI-ARIA para accordions.
+          Yes. It follows the WAI-ARIA pattern for accordions.
         <% end %>
       <% end %>
     <% end %>
@@ -185,11 +129,11 @@ class ComponentsController < ApplicationController
       <%= render Ui::Accordion::ItemComponent.new(value: :item_1) do %>
         <%= render Ui::Accordion::HeaderComponent.new do %>
           <%= render Ui::Accordion::TriggerComponent.new do %>
-            É acessível?
+            Is it accessible?
           <% end %>
         <% end %>
         <%= render Ui::Accordion::ContentComponent.new do %>
-          Sim. Ele segue o padrão WAI-ARIA para accordions.
+          Yes. It follows the WAI-ARIA pattern for accordions.
         <% end %>
       <% end %>
     <% end %>
@@ -199,21 +143,14 @@ class ComponentsController < ApplicationController
     <%= ui_accordion do %>
       <%= ui_accordion_item do %>
         <%= ui_accordion_header do %>
-          <%= ui_accordion_trigger { "Título" } %>
+          <%= ui_accordion_trigger { "Title" } %>
         <% end %>
-        <%= ui_accordion_content { "Conteúdo" } %>
+        <%= ui_accordion_content { "Content" } %>
       <% end %>
     <% end %>
   ERB
 
-  SCROLL_AREA_EXAMPLES = [
-    { name: "scroll_area_vertical", title: "Preview",
-      description: "A vertical Scroll Area keeps native scrolling while matching Shadwire styles." },
-    { name: "scroll_area_horizontal", title: "Horizontal",
-      description: "Use a horizontal scrollbar for galleries and wide content." },
-    { name: "scroll_area_rtl", title: "RTL",
-      description: "Use dir: \"rtl\" when rendering right-to-left content." }
-  ].freeze
+  SCROLL_AREA_EXAMPLES = %w[scroll_area_vertical scroll_area_horizontal scroll_area_rtl].freeze
 
   SCROLL_AREA_USAGE_HELPER = <<~ERB
     <%= ui_scroll_area(class: "h-[200px] w-[350px] rounded-md border p-4") do %>
@@ -244,18 +181,7 @@ class ComponentsController < ApplicationController
     <% end %>
   ERB
 
-  INPUT_EXAMPLES = [
-    { name: "input_default", title: "Padrão",
-      description: "Um campo de texto com o visual shadcn. Atributos HTML livres passam direto para o <input>." },
-    { name: "input_with_label", title: "Com label",
-      description: "Combine com ui_label usando for:/id: para associar o rótulo ao campo." },
-    { name: "input_disabled", title: "Desabilitado",
-      description: "Passe disabled: true como atributo HTML." },
-    { name: "input_file", title: "Arquivo",
-      description: "type: :file estiliza o seletor de arquivo nativo." },
-    { name: "input_form", title: "Com form_with",
-      description: "Use form.field_name/form.field_id para integrar com formulários Rails." }
-  ].freeze
+  INPUT_EXAMPLES = %w[input_default input_with_label input_disabled input_file input_form].freeze
 
   INPUT_USAGE_HELPER = <<~ERB
     <%= ui_input(type: :email, placeholder: "voce@exemplo.com") %>
@@ -265,12 +191,7 @@ class ComponentsController < ApplicationController
     <%= render Ui::InputComponent.new(type: :email, name: "user[email]") %>
   ERB
 
-  LABEL_EXAMPLES = [
-    { name: "label_default", title: "Padrão",
-      description: "Associe o rótulo ao campo com for: apontando para o id do controle." },
-    { name: "label_disabled", title: "Grupo desabilitado",
-      description: "Dentro de um grupo com data-disabled, o rótulo reduz a opacidade automaticamente." }
-  ].freeze
+  LABEL_EXAMPLES = %w[label_default label_disabled].freeze
 
   LABEL_USAGE_HELPER = <<~ERB
     <%= ui_label(for: "email") { "Email" } %>
@@ -283,14 +204,7 @@ class ComponentsController < ApplicationController
     <% end %>
   ERB
 
-  TEXTAREA_EXAMPLES = [
-    { name: "textarea_default", title: "Padrão",
-      description: "Uma área de texto com o visual shadcn; cresce com o conteúdo via field-sizing." },
-    { name: "textarea_with_label", title: "Com label",
-      description: "Combine com ui_label para formulários acessíveis." },
-    { name: "textarea_disabled", title: "Desabilitado",
-      description: "Passe disabled: true como atributo HTML." }
-  ].freeze
+  TEXTAREA_EXAMPLES = %w[textarea_default textarea_with_label textarea_disabled].freeze
 
   TEXTAREA_USAGE_HELPER = <<~ERB
     <%= ui_textarea(name: "post[body]", placeholder: "Digite sua mensagem") %>
@@ -298,20 +212,11 @@ class ComponentsController < ApplicationController
 
   TEXTAREA_USAGE_COMPONENT = <<~ERB
     <%= render Ui::TextareaComponent.new(placeholder: "Digite sua mensagem") do %>
-      Conteúdo inicial
+      Initial content
     <% end %>
   ERB
 
-  CHECKBOX_EXAMPLES = [
-    { name: "checkbox_default", title: "Padrão",
-      description: "Um checkbox nativo estilizado, associado a um ui_label via for:/id:." },
-    { name: "checkbox_checked", title: "Marcado",
-      description: "Use checked: true para renderizar marcado; combine com textos auxiliares." },
-    { name: "checkbox_disabled", title: "Desabilitado",
-      description: "disabled: true desabilita o input nativo." },
-    { name: "checkbox_form", title: "Com form_with",
-      description: "Use form.field_name/form.field_id. Diferente de form.check_box, não há input hidden — trate a ausência do parâmetro como desmarcado." }
-  ].freeze
+  CHECKBOX_EXAMPLES = %w[checkbox_default checkbox_checked checkbox_disabled checkbox_form].freeze
 
   CHECKBOX_USAGE_HELPER = <<~ERB
     <%= ui_checkbox(id: "terms") %>
@@ -323,56 +228,49 @@ class ComponentsController < ApplicationController
   ERB
 
   def button
-    @examples = BUTTON_EXAMPLES
+    @examples = examples_for(BUTTON_EXAMPLES)
     @usage_helper = USAGE_HELPER
     @usage_component = USAGE_COMPONENT
   end
 
   def badge
-    @examples = BADGE_EXAMPLES
+    @examples = examples_for(BADGE_EXAMPLES)
     @usage_helper = BADGE_USAGE_HELPER
     @usage_component = BADGE_USAGE_COMPONENT
   end
 
   def card
-    @examples = CARD_EXAMPLES
+    @examples = examples_for(CARD_EXAMPLES)
     @usage_helper = CARD_USAGE_HELPER
     @usage_component = CARD_USAGE_COMPONENT
     @composition = CARD_COMPOSITION
   end
 
   def alert
-    @examples = ALERT_EXAMPLES
+    @examples = examples_for(ALERT_EXAMPLES)
     @usage_helper = ALERT_USAGE_HELPER
     @usage_component = ALERT_USAGE_COMPONENT
   end
 
   def separator
-    @examples = SEPARATOR_EXAMPLES
+    @examples = examples_for(SEPARATOR_EXAMPLES)
     @usage_helper = SEPARATOR_USAGE_HELPER
     @usage_component = SEPARATOR_USAGE_COMPONENT
   end
 
   def avatar
-    @examples = AVATAR_EXAMPLES
+    @examples = examples_for(AVATAR_EXAMPLES)
     @usage_helper = AVATAR_USAGE_HELPER
     @usage_component = AVATAR_USAGE_COMPONENT
   end
 
   def icon
-    @examples = ICON_EXAMPLES
+    @examples = examples_for(ICON_EXAMPLES)
     @usage_helper = ICON_USAGE_HELPER
     @usage_component = ICON_USAGE_COMPONENT
   end
 
-  RADIO_GROUP_EXAMPLES = [
-    { name: "radio_group_default", title: "Padrão",
-      description: "Radios nativos compartilhando o mesmo name: — a navegação por setas vem do navegador." },
-    { name: "radio_group_disabled", title: "Item desabilitado",
-      description: "disabled: true desabilita um item específico sem afetar o grupo." },
-    { name: "radio_group_form", title: "Com form_with",
-      description: "Use form.field_name para o name compartilhado e form.field_id(attr, valor) para cada id." }
-  ].freeze
+  RADIO_GROUP_EXAMPLES = %w[radio_group_default radio_group_disabled radio_group_form].freeze
 
   RADIO_GROUP_USAGE_HELPER = <<~ERB
     <%= ui_radio_group(aria: { label: "Plano" }) do %>
@@ -391,29 +289,20 @@ class ComponentsController < ApplicationController
 
   RADIO_GROUP_COMPOSITION = <<~TEXT
     RadioGroup
-    `-- RadioGroup::Item (um por opção, mesmo name:)
+    `-- RadioGroup::Item (one per option, same name:)
   TEXT
 
   def checkbox
-    @examples = CHECKBOX_EXAMPLES
+    @examples = examples_for(CHECKBOX_EXAMPLES)
     @usage_helper = CHECKBOX_USAGE_HELPER
     @usage_component = CHECKBOX_USAGE_COMPONENT
   end
 
-  SWITCH_EXAMPLES = [
-    { name: "switch_default", title: "Padrão",
-      description: "Um checkbox nativo com role=\"switch\" — semântica de alternância para leitores de tela." },
-    { name: "switch_checked", title: "Ligado",
-      description: "Use checked: true para iniciar ligado; combine com textos auxiliares." },
-    { name: "switch_disabled", title: "Desabilitado",
-      description: "disabled: true desabilita o input nativo." },
-    { name: "switch_form", title: "Com form_with",
-      description: "Use form.field_name/form.field_id. Sem input hidden — trate a ausência do parâmetro como desligado." }
-  ].freeze
+  SWITCH_EXAMPLES = %w[switch_default switch_checked switch_disabled switch_form].freeze
 
   SWITCH_USAGE_HELPER = <<~ERB
     <%= ui_switch(id: "airplane-mode") %>
-    <%= ui_label(for: "airplane-mode") { "Modo avião" } %>
+    <%= ui_label(for: "airplane-mode") { "Airplane mode" } %>
   ERB
 
   SWITCH_USAGE_COMPONENT = <<~ERB
@@ -421,18 +310,13 @@ class ComponentsController < ApplicationController
   ERB
 
   def radio_group
-    @examples = RADIO_GROUP_EXAMPLES
+    @examples = examples_for(RADIO_GROUP_EXAMPLES)
     @usage_helper = RADIO_GROUP_USAGE_HELPER
     @usage_component = RADIO_GROUP_USAGE_COMPONENT
     @composition = RADIO_GROUP_COMPOSITION
   end
 
-  SKELETON_EXAMPLES = [
-    { name: "skeleton_default", title: "Padrão",
-      description: "Combine formas para esboçar o conteúdo que está carregando." },
-    { name: "skeleton_card", title: "Card",
-      description: "Um placeholder para cards de mídia com linhas de texto." }
-  ].freeze
+  SKELETON_EXAMPLES = %w[skeleton_default skeleton_card].freeze
 
   SKELETON_USAGE_HELPER = <<~ERB
     <%= ui_skeleton(class: "h-4 w-48") %>
@@ -443,19 +327,12 @@ class ComponentsController < ApplicationController
   ERB
 
   def switch
-    @examples = SWITCH_EXAMPLES
+    @examples = examples_for(SWITCH_EXAMPLES)
     @usage_helper = SWITCH_USAGE_HELPER
     @usage_component = SWITCH_USAGE_COMPONENT
   end
 
-  PROGRESS_EXAMPLES = [
-    { name: "progress_default", title: "Padrão",
-      description: "O valor é renderizado no servidor e exposto via aria-valuenow." },
-    { name: "progress_values", title: "Valores",
-      description: "Barras em diferentes estágios de conclusão." },
-    { name: "progress_custom", title: "Máximo e altura customizados",
-      description: "Use max: para escalas próprias e classes para ajustar a altura." }
-  ].freeze
+  PROGRESS_EXAMPLES = %w[progress_default progress_values progress_custom].freeze
 
   PROGRESS_USAGE_HELPER = <<~ERB
     <%= ui_progress(value: 60, aria: { label: "Progresso do envio" }) %>
@@ -466,17 +343,12 @@ class ComponentsController < ApplicationController
   ERB
 
   def skeleton
-    @examples = SKELETON_EXAMPLES
+    @examples = examples_for(SKELETON_EXAMPLES)
     @usage_helper = SKELETON_USAGE_HELPER
     @usage_component = SKELETON_USAGE_COMPONENT
   end
 
-  TABLE_EXAMPLES = [
-    { name: "table_demo", title: "Faturas",
-      description: "A anatomia completa: caption, header, body e footer com células alinhadas." },
-    { name: "table_selected", title: "Linha selecionada",
-      description: "Use data: { state: \"selected\" } para destacar uma linha." }
-  ].freeze
+  TABLE_EXAMPLES = %w[table_demo table_selected].freeze
 
   TABLE_USAGE_HELPER = <<~ERB
     <%= ui_table do %>
@@ -517,29 +389,22 @@ class ComponentsController < ApplicationController
   TEXT
 
   def progress
-    @examples = PROGRESS_EXAMPLES
+    @examples = examples_for(PROGRESS_EXAMPLES)
     @usage_helper = PROGRESS_USAGE_HELPER
     @usage_component = PROGRESS_USAGE_COMPONENT
   end
 
-  BREADCRUMB_EXAMPLES = [
-    { name: "breadcrumb_default", title: "Padrão",
-      description: "Trilha com links e a página atual marcada com aria-current=\"page\"." },
-    { name: "breadcrumb_ellipsis", title: "Recolhido",
-      description: "Use ui_breadcrumb_ellipsis para trilhas longas." },
-    { name: "breadcrumb_custom_separator", title: "Separador custom",
-      description: "Passe um bloco ao separador para trocar o chevron padrão." }
-  ].freeze
+  BREADCRUMB_EXAMPLES = %w[breadcrumb_default breadcrumb_ellipsis breadcrumb_custom_separator].freeze
 
   BREADCRUMB_USAGE_HELPER = <<~ERB
     <%= ui_breadcrumb do %>
       <%= ui_breadcrumb_list do %>
         <%= ui_breadcrumb_item do %>
-          <%= ui_breadcrumb_link(href: "/") { "Início" } %>
+          <%= ui_breadcrumb_link(href: "/") { "Home" } %>
         <% end %>
         <%= ui_breadcrumb_separator %>
         <%= ui_breadcrumb_item do %>
-          <%= ui_breadcrumb_page { "Página atual" } %>
+          <%= ui_breadcrumb_page { "Current page" } %>
         <% end %>
       <% end %>
     <% end %>
@@ -550,7 +415,7 @@ class ComponentsController < ApplicationController
       <%= render Ui::Breadcrumb::ListComponent.new do %>
         <%= render Ui::Breadcrumb::ItemComponent.new do %>
           <%= render Ui::Breadcrumb::PageComponent.new do %>
-            Página atual
+            Current page
           <% end %>
         <% end %>
       <% end %>
@@ -566,16 +431,13 @@ class ComponentsController < ApplicationController
   TEXT
 
   def table
-    @examples = TABLE_EXAMPLES
+    @examples = examples_for(TABLE_EXAMPLES)
     @usage_helper = TABLE_USAGE_HELPER
     @usage_component = TABLE_USAGE_COMPONENT
     @composition = TABLE_COMPOSITION
   end
 
-  PAGINATION_EXAMPLES = [
-    { name: "pagination_default", title: "Padrão",
-      description: "Anterior/Próxima com rótulos acessíveis, página ativa com aria-current=\"page\" e ellipsis decorativo." }
-  ].freeze
+  PAGINATION_EXAMPLES = %w[pagination_default].freeze
 
   PAGINATION_USAGE_HELPER = <<~ERB
     <%= ui_pagination do %>
@@ -607,24 +469,19 @@ class ComponentsController < ApplicationController
   TEXT
 
   def breadcrumb
-    @examples = BREADCRUMB_EXAMPLES
+    @examples = examples_for(BREADCRUMB_EXAMPLES)
     @usage_helper = BREADCRUMB_USAGE_HELPER
     @usage_component = BREADCRUMB_USAGE_COMPONENT
     @composition = BREADCRUMB_COMPOSITION
   end
 
-  TABS_EXAMPLES = [
-    { name: "tabs_default", title: "Padrão",
-      description: "Dois painéis com cards; o painel ativo é controlado pelo controller ui-tabs." },
-    { name: "tabs_disabled", title: "Trigger desabilitado",
-      description: "disabled: true tira o trigger do fluxo de teclado e da ativação." }
-  ].freeze
+  TABS_EXAMPLES = %w[tabs_default tabs_disabled].freeze
 
   TABS_USAGE_HELPER = <<~ERB
     <%= ui_tabs(default_value: :account) do %>
       <%= ui_tabs_list do %>
         <%= ui_tabs_trigger(value: :account) { "Conta" } %>
-        <%= ui_tabs_trigger(value: :password) { "Senha" } %>
+        <%= ui_tabs_trigger(value: :password) { "Password" } %>
       <% end %>
       <%= ui_tabs_content(value: :account) { "Painel da conta" } %>
       <%= ui_tabs_content(value: :password) { "Painel de senha" } %>
@@ -652,31 +509,24 @@ class ComponentsController < ApplicationController
   TEXT
 
   def pagination
-    @examples = PAGINATION_EXAMPLES
+    @examples = examples_for(PAGINATION_EXAMPLES)
     @usage_helper = PAGINATION_USAGE_HELPER
     @usage_component = PAGINATION_USAGE_COMPONENT
     @composition = PAGINATION_COMPOSITION
   end
 
-  DIALOG_EXAMPLES = [
-    { name: "dialog_default", title: "Padrão",
-      description: "Formulário de perfil em um <dialog> nativo: focus trap, Esc e restauração de foco vêm do navegador." },
-    { name: "dialog_no_backdrop_close", title: "Sem fechar pelo backdrop",
-      description: "close_on_backdrop: false ignora cliques fora do painel." },
-    { name: "dialog_custom_close", title: "Footer custom",
-      description: "show_close_button: false remove o X; componha seus próprios botões com ui_dialog_close." }
-  ].freeze
+  DIALOG_EXAMPLES = %w[dialog_default dialog_no_backdrop_close dialog_custom_close].freeze
 
   DIALOG_USAGE_HELPER = <<~ERB
     <%= ui_dialog do %>
-      <%= ui_dialog_trigger(variant: :outline) { "Abrir" } %>
+      <%= ui_dialog_trigger(variant: :outline) { "Open" } %>
       <%= ui_dialog_content do %>
         <%= ui_dialog_header do %>
-          <%= ui_dialog_title { "Título" } %>
-          <%= ui_dialog_description { "Descrição do diálogo." } %>
+          <%= ui_dialog_title { "Title" } %>
+          <%= ui_dialog_description { "The dialog's description." } %>
         <% end %>
         <%= ui_dialog_footer do %>
-          <%= ui_dialog_close { "Cancelar" } %>
+          <%= ui_dialog_close { "Cancel" } %>
         <% end %>
       <% end %>
     <% end %>
@@ -685,11 +535,11 @@ class ComponentsController < ApplicationController
   DIALOG_USAGE_COMPONENT = <<~ERB
     <%= render Ui::DialogComponent.new do %>
       <%= render Ui::Dialog::TriggerComponent.new do %>
-        Abrir
+        Open
       <% end %>
       <%= render Ui::Dialog::ContentComponent.new do %>
         <%= render Ui::Dialog::TitleComponent.new do %>
-          Título
+          Title
         <% end %>
       <% end %>
     <% end %>
@@ -704,28 +554,25 @@ class ComponentsController < ApplicationController
   TEXT
 
   def tabs
-    @examples = TABS_EXAMPLES
+    @examples = examples_for(TABS_EXAMPLES)
     @usage_helper = TABS_USAGE_HELPER
     @usage_component = TABS_USAGE_COMPONENT
     @composition = TABS_COMPOSITION
   end
 
-  ALERT_DIALOG_EXAMPLES = [
-    { name: "alert_dialog_default", title: "Confirmação de exclusão",
-      description: "Backdrop e Esc não fecham — a pessoa precisa escolher Cancelar ou Continuar." }
-  ].freeze
+  ALERT_DIALOG_EXAMPLES = %w[alert_dialog_default].freeze
 
   ALERT_DIALOG_USAGE_HELPER = <<~ERB
     <%= ui_alert_dialog do %>
-      <%= ui_alert_dialog_trigger(variant: :destructive) { "Excluir" } %>
+      <%= ui_alert_dialog_trigger(variant: :destructive) { "Delete" } %>
       <%= ui_alert_dialog_content do %>
         <%= ui_alert_dialog_header do %>
           <%= ui_alert_dialog_title { "Tem certeza?" } %>
-          <%= ui_alert_dialog_description { "Esta ação não pode ser desfeita." } %>
+          <%= ui_alert_dialog_description { "This action cannot be undone." } %>
         <% end %>
         <%= ui_alert_dialog_footer do %>
-          <%= ui_alert_dialog_cancel { "Cancelar" } %>
-          <%= ui_alert_dialog_action { "Continuar" } %>
+          <%= ui_alert_dialog_cancel { "Cancel" } %>
+          <%= ui_alert_dialog_action { "Continue" } %>
         <% end %>
       <% end %>
     <% end %>
@@ -734,7 +581,7 @@ class ComponentsController < ApplicationController
   ALERT_DIALOG_USAGE_COMPONENT = <<~ERB
     <%= render Ui::AlertDialogComponent.new do %>
       <%= render Ui::AlertDialog::TriggerComponent.new do %>
-        Excluir
+        Delete
       <% end %>
       <%= render Ui::AlertDialog::ContentComponent.new do %>
         <%= render Ui::AlertDialog::TitleComponent.new do %>
@@ -753,29 +600,24 @@ class ComponentsController < ApplicationController
   TEXT
 
   def dialog
-    @examples = DIALOG_EXAMPLES
+    @examples = examples_for(DIALOG_EXAMPLES)
     @usage_helper = DIALOG_USAGE_HELPER
     @usage_component = DIALOG_USAGE_COMPONENT
     @composition = DIALOG_COMPOSITION
   end
 
-  SHEET_EXAMPLES = [
-    { name: "sheet_default", title: "Padrão",
-      description: "Um painel que desliza da direita, com formulário e footer." },
-    { name: "sheet_sides", title: "Os quatro lados",
-      description: "side: :right, :left, :top ou :bottom controla a borda de origem e a animação." }
-  ].freeze
+  SHEET_EXAMPLES = %w[sheet_default sheet_sides].freeze
 
   SHEET_USAGE_HELPER = <<~ERB
     <%= ui_sheet do %>
-      <%= ui_sheet_trigger(variant: :outline) { "Abrir" } %>
+      <%= ui_sheet_trigger(variant: :outline) { "Open" } %>
       <%= ui_sheet_content(side: :right) do %>
         <%= ui_sheet_header do %>
-          <%= ui_sheet_title { "Título" } %>
-          <%= ui_sheet_description { "Descrição do painel." } %>
+          <%= ui_sheet_title { "Title" } %>
+          <%= ui_sheet_description { "The panel's description." } %>
         <% end %>
         <%= ui_sheet_footer do %>
-          <%= ui_sheet_close { "Fechar" } %>
+          <%= ui_sheet_close { "Close" } %>
         <% end %>
       <% end %>
     <% end %>
@@ -784,11 +626,11 @@ class ComponentsController < ApplicationController
   SHEET_USAGE_COMPONENT = <<~ERB
     <%= render Ui::SheetComponent.new do %>
       <%= render Ui::Sheet::TriggerComponent.new do %>
-        Abrir
+        Open
       <% end %>
       <%= render Ui::Sheet::ContentComponent.new(side: :left) do %>
         <%= render Ui::Sheet::TitleComponent.new do %>
-          Título
+          Title
         <% end %>
       <% end %>
     <% end %>
@@ -803,30 +645,25 @@ class ComponentsController < ApplicationController
   TEXT
 
   def alert_dialog
-    @examples = ALERT_DIALOG_EXAMPLES
+    @examples = examples_for(ALERT_DIALOG_EXAMPLES)
     @usage_helper = ALERT_DIALOG_USAGE_HELPER
     @usage_component = ALERT_DIALOG_USAGE_COMPONENT
     @composition = ALERT_DIALOG_COMPOSITION
   end
 
   def sheet
-    @examples = SHEET_EXAMPLES
+    @examples = examples_for(SHEET_EXAMPLES)
     @usage_helper = SHEET_USAGE_HELPER
     @usage_component = SHEET_USAGE_COMPONENT
     @composition = SHEET_COMPOSITION
   end
 
-  TOOLTIP_EXAMPLES = [
-    { name: "tooltip_default", title: "Padrão",
-      description: "Abre no hover e no foco depois de um pequeno atraso; Esc fecha sem mover o foco." },
-    { name: "tooltip_sides", title: "Lados",
-      description: "side: :top, :right, :bottom ou :left posiciona o balão." }
-  ].freeze
+  TOOLTIP_EXAMPLES = %w[tooltip_default tooltip_sides].freeze
 
   TOOLTIP_USAGE_HELPER = <<~ERB
     <%= ui_tooltip do %>
       <%= ui_tooltip_trigger(variant: :outline) { "Passe o mouse" } %>
-      <%= ui_tooltip_content { "Adicionar à biblioteca" } %>
+      <%= ui_tooltip_content { "Add to library" } %>
     <% end %>
   ERB
 
@@ -848,24 +685,19 @@ class ComponentsController < ApplicationController
   TEXT
 
   def tooltip
-    @examples = TOOLTIP_EXAMPLES
+    @examples = examples_for(TOOLTIP_EXAMPLES)
     @usage_helper = TOOLTIP_USAGE_HELPER
     @usage_component = TOOLTIP_USAGE_COMPONENT
     @composition = TOOLTIP_COMPOSITION
   end
 
-  POPOVER_EXAMPLES = [
-    { name: "popover_default", title: "Padrão",
-      description: "Painel não-modal: abre no clique, foca o conteúdo e fecha por clique fora ou Esc." },
-    { name: "popover_align", title: "Alinhamento",
-      description: "align: :start, :center ou :end desloca o painel no eixo cruzado." }
-  ].freeze
+  POPOVER_EXAMPLES = %w[popover_default popover_align].freeze
 
   POPOVER_USAGE_HELPER = <<~ERB
     <%= ui_popover do %>
-      <%= ui_popover_trigger(variant: :outline) { "Abrir" } %>
+      <%= ui_popover_trigger(variant: :outline) { "Open" } %>
       <%= ui_popover_content do %>
-        Conteúdo do popover.
+        Popover content.
       <% end %>
     <% end %>
   ERB
@@ -873,10 +705,10 @@ class ComponentsController < ApplicationController
   POPOVER_USAGE_COMPONENT = <<~ERB
     <%= render Ui::PopoverComponent.new do %>
       <%= render Ui::Popover::TriggerComponent.new do %>
-        Abrir
+        Open
       <% end %>
       <%= render Ui::Popover::ContentComponent.new(side: :bottom, align: :start) do %>
-        Conteúdo
+        Content
       <% end %>
     <% end %>
   ERB
@@ -888,27 +720,22 @@ class ComponentsController < ApplicationController
   TEXT
 
   def popover
-    @examples = POPOVER_EXAMPLES
+    @examples = examples_for(POPOVER_EXAMPLES)
     @usage_helper = POPOVER_USAGE_HELPER
     @usage_component = POPOVER_USAGE_COMPONENT
     @composition = POPOVER_COMPOSITION
   end
 
-  DROPDOWN_MENU_EXAMPLES = [
-    { name: "dropdown_menu_default", title: "Padrão",
-      description: "Label, grupos, itens com atalhos. Setas navegam, typeahead busca por prefixo, Esc fecha." },
-    { name: "dropdown_menu_variants", title: "Inset, links e destrutivo",
-      description: "inset: alinha com itens que têm ícone; tag: :a vira link; variant: :destructive destaca ações perigosas." }
-  ].freeze
+  DROPDOWN_MENU_EXAMPLES = %w[dropdown_menu_default dropdown_menu_variants].freeze
 
   DROPDOWN_MENU_USAGE_HELPER = <<~ERB
     <%= ui_dropdown_menu do %>
-      <%= ui_dropdown_menu_trigger(variant: :outline) { "Abrir" } %>
+      <%= ui_dropdown_menu_trigger(variant: :outline) { "Open" } %>
       <%= ui_dropdown_menu_content do %>
         <%= ui_dropdown_menu_label { "Minha conta" } %>
         <%= ui_dropdown_menu_separator %>
         <%= ui_dropdown_menu_item do %>
-          Perfil
+          Profile
           <%= ui_dropdown_menu_shortcut { "⇧⌘P" } %>
         <% end %>
       <% end %>
@@ -918,11 +745,11 @@ class ComponentsController < ApplicationController
   DROPDOWN_MENU_USAGE_COMPONENT = <<~ERB
     <%= render Ui::DropdownMenuComponent.new do %>
       <%= render Ui::DropdownMenu::TriggerComponent.new do %>
-        Abrir
+        Open
       <% end %>
       <%= render Ui::DropdownMenu::ContentComponent.new do %>
         <%= render Ui::DropdownMenu::ItemComponent.new(variant: :destructive) do %>
-          Excluir
+          Delete
         <% end %>
       <% end %>
     <% end %>
@@ -938,30 +765,23 @@ class ComponentsController < ApplicationController
         |   `-- DropdownMenu::Item (button/link) > DropdownMenu::Shortcut
         `-- DropdownMenu::Item (variant: :destructive)
 
-    CheckboxItem, RadioItem e submenus ficam de fora desta versão.
+    CheckboxItem, RadioItem and submenus are out of scope for this version.
   TEXT
 
   def dropdown_menu
-    @examples = DROPDOWN_MENU_EXAMPLES
+    @examples = examples_for(DROPDOWN_MENU_EXAMPLES)
     @usage_helper = DROPDOWN_MENU_USAGE_HELPER
     @usage_component = DROPDOWN_MENU_USAGE_COMPONENT
     @composition = DROPDOWN_MENU_COMPOSITION
   end
 
-  SELECT_EXAMPLES = [
-    { name: "select_default", title: "Padrão",
-      description: "Combobox APG: o foco fica no gatilho, setas/typeahead navegam e a opção ativa usa aria-activedescendant." },
-    { name: "select_groups", title: "Grupos",
-      description: "Agrupe opções com label e separador; itens podem ser desabilitados." },
-    { name: "select_form", title: "Com form_with",
-      description: "O valor vai num input hidden (name:). O required nativo não se aplica — valide no servidor." }
-  ].freeze
+  SELECT_EXAMPLES = %w[select_default select_groups select_form].freeze
 
   SELECT_USAGE_HELPER = <<~ERB
-    <%= ui_select(name: "fruit", placeholder: "Selecione") do %>
+    <%= ui_select(name: "fruit", placeholder: "Select") do %>
       <%= ui_select_trigger { ui_select_value } %>
       <%= ui_select_content do %>
-        <%= ui_select_item(value: "apple") { "Maçã" } %>
+        <%= ui_select_item(value: "apple") { "Apple" } %>
         <%= ui_select_item(value: "banana") { "Banana" } %>
       <% end %>
     <% end %>
@@ -989,39 +809,39 @@ class ComponentsController < ApplicationController
   TEXT
 
   def select
-    @examples = SELECT_EXAMPLES
+    @examples = examples_for(SELECT_EXAMPLES)
     @usage_helper = SELECT_USAGE_HELPER
     @usage_component = SELECT_USAGE_COMPONENT
     @composition = SELECT_COMPOSITION
   end
 
   def input
-    @examples = INPUT_EXAMPLES
+    @examples = examples_for(INPUT_EXAMPLES)
     @usage_helper = INPUT_USAGE_HELPER
     @usage_component = INPUT_USAGE_COMPONENT
   end
 
   def label
-    @examples = LABEL_EXAMPLES
+    @examples = examples_for(LABEL_EXAMPLES)
     @usage_helper = LABEL_USAGE_HELPER
     @usage_component = LABEL_USAGE_COMPONENT
   end
 
   def textarea
-    @examples = TEXTAREA_EXAMPLES
+    @examples = examples_for(TEXTAREA_EXAMPLES)
     @usage_helper = TEXTAREA_USAGE_HELPER
     @usage_component = TEXTAREA_USAGE_COMPONENT
   end
 
   def accordion
-    @examples = ACCORDION_EXAMPLES
+    @examples = examples_for(ACCORDION_EXAMPLES)
     @usage_helper = ACCORDION_USAGE_HELPER
     @usage_component = ACCORDION_USAGE_COMPONENT
     @composition = ACCORDION_COMPOSITION
   end
 
   def scroll_area
-    @examples = SCROLL_AREA_EXAMPLES
+    @examples = examples_for(SCROLL_AREA_EXAMPLES)
     @usage_helper = SCROLL_AREA_USAGE_HELPER
     @usage_component = SCROLL_AREA_USAGE_COMPONENT
     @composition = SCROLL_AREA_COMPOSITION
@@ -1029,22 +849,18 @@ class ComponentsController < ApplicationController
     @rtl_usage = SCROLL_AREA_RTL
   end
 
-  SIDEBAR_EXAMPLES = [
-    { name: "sidebar_basic", title: "Preview",
-      description: "Um sidebar contido (collapsible: :none) com header, grupos e menu. " \
-                   "O bloco completo, com colapso e drawer mobile, está em /blocks/sidebar-01." }
-  ].freeze
+  SIDEBAR_EXAMPLES = %w[sidebar_basic].freeze
 
   SIDEBAR_USAGE_HELPER = <<~ERB
     <%= ui_sidebar_provider do %>
       <%= ui_sidebar do %>
         <%= ui_sidebar_content do %>
           <%= ui_sidebar_group do %>
-            <%= ui_sidebar_group_label { "Aplicação" } %>
+            <%= ui_sidebar_group_label { "Application" } %>
             <%= ui_sidebar_group_content do %>
               <%= ui_sidebar_menu do %>
                 <%= ui_sidebar_menu_item do %>
-                  <%= ui_sidebar_menu_button(tag: :a, href: "#", is_active: true) { "Início" } %>
+                  <%= ui_sidebar_menu_button(tag: :a, href: "#", is_active: true) { "Home" } %>
                 <% end %>
               <% end %>
             <% end %>
@@ -1064,7 +880,7 @@ class ComponentsController < ApplicationController
         <%= render Ui::Sidebar::ContentComponent.new do %>
           <%= render Ui::Sidebar::MenuComponent.new do %>
             <%= render Ui::Sidebar::MenuItemComponent.new do %>
-              <%= render Ui::Sidebar::MenuButtonComponent.new(tooltip: "Início") { "Início" } %>
+              <%= render Ui::Sidebar::MenuButtonComponent.new(tooltip: "Home") { "Home" } %>
             <% end %>
           <% end %>
         <% end %>
@@ -1089,7 +905,7 @@ class ComponentsController < ApplicationController
   TEXT
 
   def sidebar
-    @examples = SIDEBAR_EXAMPLES
+    @examples = examples_for(SIDEBAR_EXAMPLES)
     @usage_helper = SIDEBAR_USAGE_HELPER
     @usage_component = SIDEBAR_USAGE_COMPONENT
     @composition = SIDEBAR_COMPOSITION
@@ -1097,43 +913,43 @@ class ComponentsController < ApplicationController
 
   def aspect_ratio
     @page_title = "Aspect Ratio"
-    @page_subtitle = "Mantém o conteúdo em uma proporção fixa usando a propriedade CSS aspect-ratio."
+    @page_subtitle = t("components.pages.aspect_ratio.subtitle")
     @usage_helper = <<~ERB
       <%= ui_aspect_ratio(ratio: "16 / 9") do %>
         <%= image_tag "cover.jpg", class: "h-full w-full object-cover" %>
       <% end %>
     ERB
-    @examples = [ { name: "aspect_ratio_default", title: "Padrão", description: "Restringe o conteúdo à proporção 16 / 9." } ]
+    @examples = examples_for(%w[aspect_ratio_default])
     render "doc_page"
   end
 
   def spinner
     @page_title = "Spinner"
-    @page_subtitle = "Um indicador de carregamento giratório com role=\"status\" e rótulo acessível."
+    @page_subtitle = t("components.pages.spinner.subtitle")
     @usage_helper = <<~ERB
       <%= ui_spinner %>
-      <%= ui_button(disabled: true) { ui_spinner(label: nil) + " Salvando" } %>
+      <%= ui_button(disabled: true) { ui_spinner(label: nil) + " Saving" } %>
     ERB
-    @examples = [ { name: "spinner_default", title: "Padrão", description: "Standalone (anuncia \"Carregando\") e composto dentro de um botão (decorativo)." } ]
+    @examples = examples_for(%w[spinner_default])
     render "doc_page"
   end
 
   def kbd
     @page_title = "Kbd"
-    @page_subtitle = "Representa teclas do teclado. Agrupe várias com ui_kbd_group para exibir um atalho."
+    @page_subtitle = t("components.pages.kbd.subtitle")
     @usage_helper = <<~ERB
       <%= ui_kbd_group do %>
         <%= ui_kbd { "⌘" } %>
         <%= ui_kbd { "K" } %>
       <% end %>
     ERB
-    @examples = [ { name: "kbd_default", title: "Padrão", description: "Um grupo de teclas dentro de um texto." } ]
+    @examples = examples_for(%w[kbd_default])
     render "doc_page"
   end
 
   def empty
     @page_title = "Empty"
-    @page_subtitle = "Um estado vazio: mídia, título, descrição e ações centralizados."
+    @page_subtitle = t("components.pages.empty.subtitle")
     @usage_helper = <<~ERB
       <%= ui_empty do %>
         <%= ui_empty_header do %>
@@ -1146,56 +962,56 @@ class ComponentsController < ApplicationController
         <% end %>
       <% end %>
     ERB
-    @examples = [ { name: "empty_default", title: "Padrão", description: "Estado vazio com ícone, textos e uma ação." } ]
+    @examples = examples_for(%w[empty_default])
     render "doc_page"
   end
 
   def item
     @page_title = "Item"
-    @page_subtitle = "Uma linha flexível: mídia + conteúdo (título/descrição) + ações. Agrupe com ui_item_group."
+    @page_subtitle = t("components.pages.item.subtitle")
     @usage_helper = <<~ERB
       <%= ui_item(variant: :outline) do %>
         <%= ui_item_media(variant: :icon) { ui_icon("file-text") } %>
         <%= ui_item_content do %>
-          <%= ui_item_title { "Relatório.pdf" } %>
+          <%= ui_item_title { "Report.pdf" } %>
           <%= ui_item_description { "2,4 MB" } %>
         <% end %>
       <% end %>
     ERB
-    @examples = [ { name: "item_default", title: "Padrão", description: "Um item com mídia, conteúdo e ação." } ]
+    @examples = examples_for(%w[item_default])
     render "doc_page"
   end
 
   def input_group
     @page_title = "Input Group"
-    @page_subtitle = "Combina um input/textarea com addons (ícones, texto, botões) no início ou fim."
+    @page_subtitle = t("components.pages.input_group.subtitle")
     @usage_helper = <<~ERB
       <%= ui_input_group do %>
         <%= ui_input_group_addon { ui_icon("search") } %>
-        <%= ui_input_group_input(placeholder: "Buscar...") %>
+        <%= ui_input_group_input(placeholder: "Search...") %>
         <%= ui_input_group_addon(align: :inline_end) { ui_kbd { "⌘K" } } %>
       <% end %>
     ERB
-    @examples = [ { name: "input_group_default", title: "Padrão", description: "Addon de ícone à esquerda e atalho à direita." } ]
+    @examples = examples_for(%w[input_group_default])
     render "doc_page"
   end
 
   def button_group
     @page_title = "Button Group"
-    @page_subtitle = "Junta visualmente uma sequência de botões, colapsando bordas e cantos internos."
+    @page_subtitle = t("components.pages.button_group.subtitle")
     @usage_helper = <<~ERB
       <%= ui_button_group do %>
-        <%= ui_button(variant: :outline) { "Anterior" } %>
-        <%= ui_button(variant: :outline) { "Próximo" } %>
+        <%= ui_button(variant: :outline) { "Previous" } %>
+        <%= ui_button(variant: :outline) { "Next" } %>
       <% end %>
     ERB
-    @examples = [ { name: "button_group_default", title: "Padrão", description: "Dois botões unidos em um grupo horizontal." } ]
+    @examples = examples_for(%w[button_group_default])
     render "doc_page"
   end
 
   def field
     @page_title = "Field"
-    @page_subtitle = "Compõe label, controle, descrição e erro de um campo de formulário."
+    @page_subtitle = t("components.pages.field.subtitle")
     @usage_helper = <<~ERB
       <%= ui_field do %>
         <%= ui_field_label(for: "email") { "Email" } %>
@@ -1203,85 +1019,85 @@ class ComponentsController < ApplicationController
         <%= ui_field_description { "Nunca compartilhamos seu email." } %>
       <% end %>
     ERB
-    @examples = [ { name: "field_default", title: "Padrão", description: "Um campo vertical com label, input e descrição." } ]
+    @examples = examples_for(%w[field_default])
     render "doc_page"
   end
 
   def native_select
     @page_title = "Native Select"
-    @page_subtitle = "Um <select> nativo estilizado para combinar com os demais controles."
+    @page_subtitle = t("components.pages.native_select.subtitle")
     @usage_helper = <<~ERB
       <%= ui_native_select(name: "fruit") do %>
-        <option value="apple">Maçã</option>
+        <option value="apple">Apple</option>
         <option value="banana">Banana</option>
       <% end %>
     ERB
-    @examples = [ { name: "native_select_default", title: "Padrão", description: "Select nativo com chevron e foco estilizados." } ]
+    @examples = examples_for(%w[native_select_default])
     render "doc_page"
   end
 
   def collapsible
     @page_title = "Collapsible"
-    @page_subtitle = "Uma seção que expande e recolhe, controlada pelo controller ui-collapsible."
+    @page_subtitle = t("components.pages.collapsible.subtitle")
     @usage_helper = <<~ERB
       <%= ui_collapsible do %>
-        <%= ui_collapsible_trigger { "Mostrar mais" } %>
-        <%= ui_collapsible_content { "Conteúdo escondido." } %>
+        <%= ui_collapsible_trigger { "Show more" } %>
+        <%= ui_collapsible_content { "Hidden content." } %>
       <% end %>
     ERB
-    @examples = [ { name: "collapsible_default", title: "Padrão", description: "Lista que revela itens adicionais." } ]
+    @examples = examples_for(%w[collapsible_default])
     render "doc_page"
   end
 
   def toggle
     @page_title = "Toggle"
-    @page_subtitle = "Um botão de dois estados com aria-pressed e data-state (on/off)."
+    @page_subtitle = t("components.pages.toggle.subtitle")
     @usage_helper = <<~ERB
-      <%= ui_toggle(variant: :outline, "aria-label": "Negrito") { ui_icon("bold") } %>
+      <%= ui_toggle(variant: :outline, "aria-label": "Bold") { ui_icon("bold") } %>
     ERB
-    @examples = [ { name: "toggle_default", title: "Padrão", description: "Toggles de formatação, um deles pressionado." } ]
+    @examples = examples_for(%w[toggle_default])
     render "doc_page"
   end
 
   def toggle_group
     @page_title = "Toggle Group"
-    @page_subtitle = "Um grupo de toggles com seleção única ou múltipla e navegação por setas."
+    @page_subtitle = t("components.pages.toggle_group.subtitle")
     @usage_helper = <<~ERB
       <%= ui_toggle_group(type: :single) do %>
         <%= ui_toggle_group_item(value: "left") { ui_icon("align-left") } %>
         <%= ui_toggle_group_item(value: "center") { ui_icon("align-center") } %>
       <% end %>
     ERB
-    @examples = [ { name: "toggle_group_default", title: "Padrão", description: "Seleção múltipla de formatação de texto." } ]
+    @examples = examples_for(%w[toggle_group_default])
     render "doc_page"
   end
 
   def slider
     @page_title = "Slider"
-    @page_subtitle = "Um slider de um thumb (padrão WAI-ARIA) com valor espelhado em um input hidden."
+    @page_subtitle = t("components.pages.slider.subtitle")
     @usage_helper = <<~ERB
       <%= ui_slider(min: 0, max: 100, value: 50, name: "volume", label: "Volume") %>
     ERB
-    @examples = [ { name: "slider_default", title: "Padrão", description: "Arraste o thumb ou use as setas do teclado." } ]
+    @examples = examples_for(%w[slider_default])
     render "doc_page"
   end
 
   def hover_card
     @page_title = "Hover Card"
-    @page_subtitle = "Conteúdo rico que abre ao passar o mouse ou focar o gatilho, com atrasos configuráveis."
+    @page_subtitle = t("components.pages.hover_card.subtitle")
     @usage_helper = <<~ERB
       <%= ui_hover_card do %>
         <%= ui_hover_card_trigger(href: "#") { "@shadwire" } %>
         <%= ui_hover_card_content { "Detalhes do perfil." } %>
       <% end %>
     ERB
-    @examples = [ { name: "hover_card_default", title: "Padrão", description: "Cartão de perfil exibido no hover." } ]
+    @examples = examples_for(%w[hover_card_default])
     render "doc_page"
   end
 
   def input_otp
     @page_title = "Input OTP"
-    @page_subtitle = "Campo de código de uso único: slots de um caractere com avanço, backspace e colagem."
+    @page_subtitle = t("components.pages.input_otp.subtitle")
     @usage_helper = <<~ERB
       <%= ui_input_otp(name: "code") do %>
         <%= ui_input_otp_group do %>
@@ -1290,45 +1106,45 @@ class ComponentsController < ApplicationController
         <% end %>
       <% end %>
     ERB
-    @examples = [ { name: "input_otp_default", title: "Padrão", description: "Dois grupos de três slots separados por um traço." } ]
+    @examples = examples_for(%w[input_otp_default])
     render "doc_page"
   end
 
   def drawer
     @page_title = "Drawer"
-    @page_subtitle = "Um painel que desliza de uma borda, sobre um <dialog> nativo, com arrastar para fechar."
+    @page_subtitle = t("components.pages.drawer.subtitle")
     @usage_helper = <<~ERB
       <%= ui_drawer do %>
-        <%= ui_drawer_trigger { "Abrir" } %>
+        <%= ui_drawer_trigger { "Open" } %>
         <%= ui_drawer_content do %>
           <%= ui_drawer_header do %>
-            <%= ui_drawer_title { "Título" } %>
+            <%= ui_drawer_title { "Title" } %>
           <% end %>
         <% end %>
       <% end %>
     ERB
-    @examples = [ { name: "drawer_default", title: "Padrão", description: "Drawer inferior com cabeçalho, descrição e ações." } ]
+    @examples = examples_for(%w[drawer_default])
     render "doc_page"
   end
 
   def context_menu
     @page_title = "Context Menu"
-    @page_subtitle = "Um menu aberto com o botão direito, posicionado no ponteiro, com navegação por teclado."
+    @page_subtitle = t("components.pages.context_menu.subtitle")
     @usage_helper = <<~ERB
       <%= ui_context_menu do %>
-        <%= ui_context_menu_trigger { "Clique com o botão direito" } %>
+        <%= ui_context_menu_trigger { "Right-click here" } %>
         <%= ui_context_menu_content do %>
           <%= ui_context_menu_item { "Voltar" } %>
         <% end %>
       <% end %>
     ERB
-    @examples = [ { name: "context_menu_default", title: "Padrão", description: "Área que abre o menu no clique direito." } ]
+    @examples = examples_for(%w[context_menu_default])
     render "doc_page"
   end
 
   def menubar
     @page_title = "Menubar"
-    @page_subtitle = "Uma barra de menus horizontal (padrão WAI-ARIA menubar) coordenada por um controller."
+    @page_subtitle = t("components.pages.menubar.subtitle")
     @usage_helper = <<~ERB
       <%= ui_menubar do %>
         <%= ui_menubar_menu do %>
@@ -1339,13 +1155,13 @@ class ComponentsController < ApplicationController
         <% end %>
       <% end %>
     ERB
-    @examples = [ { name: "menubar_default", title: "Padrão", description: "Dois menus com itens, separadores e atalhos." } ]
+    @examples = examples_for(%w[menubar_default])
     render "doc_page"
   end
 
   def navigation_menu
     @page_title = "Navigation Menu"
-    @page_subtitle = "Uma navegação com gatilhos que revelam painéis de conteúdo, um de cada vez."
+    @page_subtitle = t("components.pages.navigation_menu.subtitle")
     @usage_helper = <<~ERB
       <%= ui_navigation_menu do %>
         <%= ui_navigation_menu_list do %>
@@ -1358,37 +1174,37 @@ class ComponentsController < ApplicationController
         <% end %>
       <% end %>
     ERB
-    @examples = [ { name: "navigation_menu_default", title: "Padrão", description: "Gatilho com painel e um link simples." } ]
+    @examples = examples_for(%w[navigation_menu_default])
     render "doc_page"
   end
 
   def command
     @page_title = "Command"
-    @page_subtitle = "Uma paleta de comandos filtrável, com navegação por setas e Enter."
+    @page_subtitle = t("components.pages.command.subtitle")
     @usage_helper = <<~ERB
       <%= ui_command do %>
-        <%= ui_command_input(placeholder: "Buscar...") %>
+        <%= ui_command_input(placeholder: "Search...") %>
         <%= ui_command_list do %>
           <%= ui_command_empty { "Nada encontrado." } %>
-          <%= ui_command_group(heading: "Sugestões") do %>
-            <%= ui_command_item(value: "perfil") { "Perfil" } %>
+          <%= ui_command_group(heading: "Suggestions") do %>
+            <%= ui_command_item(value: "perfil") { "Profile" } %>
           <% end %>
         <% end %>
       <% end %>
     ERB
-    @examples = [ { name: "command_default", title: "Padrão", description: "Paleta com grupos, ícones e atalhos." } ]
+    @examples = examples_for(%w[command_default])
     render "doc_page"
   end
 
   def combobox
     @page_title = "Combobox"
-    @page_subtitle = "Uma receita: Popover + Command. Não é um componente novo — instala popover e command."
+    @page_subtitle = t("components.pages.combobox.subtitle")
     @usage_helper = <<~ERB
       <%= ui_popover do %>
-        <%= ui_popover_trigger(variant: :outline) { "Selecione" } %>
+        <%= ui_popover_trigger(variant: :outline) { "Select" } %>
         <%= ui_popover_content(class: "!p-0") do %>
           <%= ui_command do %>
-            <%= ui_command_input(placeholder: "Buscar...") %>
+            <%= ui_command_input(placeholder: "Search...") %>
             <%= ui_command_list do %>
               <%= ui_command_item(value: "rails") { "Rails" } %>
             <% end %>
@@ -1396,18 +1212,11 @@ class ComponentsController < ApplicationController
         <% end %>
       <% end %>
     ERB
-    @examples = [ { name: "combobox_default", title: "Padrão", description: "Gatilho de popover com uma lista de comandos buscável." } ]
+    @examples = examples_for(%w[combobox_default])
     render "doc_page"
   end
 
-  CALENDAR_EXAMPLES = [
-    { name: "calendar_default", title: "Padrão",
-      description: "Mês atual com o dia de hoje selecionado. Setas percorrem os dias, Home/End vão às pontas da semana e PageUp/PageDown trocam de mês." },
-    { name: "calendar_range", title: "Intervalo",
-      description: "mode: :range grava duas datas; passar o mouse depois do primeiro clique prevê o intervalo. number_of_months: 2 mostra dois meses lado a lado." },
-    { name: "calendar_dropdown", title: "Legenda com selects",
-      description: "caption_layout: :dropdown troca o nome do mês por selects de mês e ano — o caminho curto para anos distantes." }
-  ].freeze
+  CALENDAR_EXAMPLES = %w[calendar_default calendar_range calendar_dropdown].freeze
 
   CALENDAR_USAGE_HELPER = <<~ERB
     <%= ui_calendar(selected: Date.current, name: "date", class: "border") %>
@@ -1423,35 +1232,18 @@ class ComponentsController < ApplicationController
   ERB
 
   def calendar
-    @examples = CALENDAR_EXAMPLES
+    @examples = examples_for(CALENDAR_EXAMPLES)
     @usage_helper = CALENDAR_USAGE_HELPER
   end
 
-  DATE_PICKER_EXAMPLES = [
-    { name: "date_picker_default", title: "Padrão",
-      description: "Botão que abre o calendário em um popover e passa a exibir a data escolhida." },
-    { name: "date_picker_field", title: "Com rótulo",
-      description: "O mesmo gatilho dentro de um Field, associado ao rótulo por id." },
-    { name: "date_picker_range", title: "Intervalo",
-      description: "Duas datas em um gatilho só. O popover fecha quando a segunda ponta entra, não na primeira." },
-    { name: "date_picker_dob", title: "Data de nascimento",
-      description: "Legenda com selects de mês e ano e max: hoje — ninguém nasceu semana que vem." },
-    { name: "date_picker_input", title: "Com campo de texto",
-      description: "Digite a data ou escolha no calendário: o texto vira data e a data volta formatada. ↓ abre o popover." },
-    { name: "date_picker_time", title: "Data e hora",
-      description: "O picker resolve o dia; um input type=\"time\" nativo resolve a hora." },
-    { name: "date_picker_natural", title: "Linguagem natural",
-      description: "Aceita \"hoje\", \"amanhã\", \"em 2 semanas\", \"próxima sexta\". A tabela de frases mora no controller — é código seu." },
-    { name: "date_picker_rtl", title: "RTL",
-      description: "dir: :rtl espelha a grade, as setas e as teclas ←/→; month_names:/day_names: traduzem a legenda." }
-  ].freeze
+  DATE_PICKER_EXAMPLES = %w[date_picker_default date_picker_field date_picker_range date_picker_dob date_picker_input date_picker_time date_picker_natural date_picker_rtl].freeze
 
   DATE_PICKER_USAGE_HELPER = <<~ERB
     <div data-controller="ui-date-picker" data-ui-date-picker-format-value="long">
       <%= ui_popover do %>
         <%= ui_popover_trigger(variant: :outline, class: "w-[212px] justify-between font-normal") do %>
           <span data-ui-date-picker-target="label" data-empty="true"
-                class="data-[empty=true]:text-muted-foreground">Selecione uma data</span>
+                class="data-[empty=true]:text-muted-foreground">Select uma data</span>
           <%= ui_icon("chevron-down", class: "opacity-50") %>
         <% end %>
         <%= ui_popover_content(align: :start, class: "w-auto! p-0!") do %>
@@ -1462,37 +1254,37 @@ class ComponentsController < ApplicationController
   ERB
 
   DATE_PICKER_COMPOSITION = <<~TEXT
-    data-controller="ui-date-picker"   ligação: formata o rótulo, lê o que é digitado, fecha o popover
+    data-controller="ui-date-picker"   the wiring: formats the label, parses what is typed, closes the popover
     `-- Popover
-        |-- Popover::Trigger           o campo visível: um Button ou um InputGroup
+        |-- Popover::Trigger           the visible field: a Button or an InputGroup
         |   `-- [data-ui-date-picker-target="label" | "input"]
         `-- Popover::Content (w-auto! p-0!)
-            `-- Calendar               name:/end_name: gravam o valor no formulário
+            `-- Calendar               name:/end_name: write the value into the form
   TEXT
 
   def date_picker
-    @examples = DATE_PICKER_EXAMPLES
+    @examples = examples_for(DATE_PICKER_EXAMPLES)
     @usage_helper = DATE_PICKER_USAGE_HELPER
     @composition = DATE_PICKER_COMPOSITION
   end
 
   def resizable
     @page_title = "Resizable"
-    @page_subtitle = "Painéis redimensionáveis com alças arrastáveis e ajuste por teclado."
+    @page_subtitle = t("components.pages.resizable.subtitle")
     @usage_helper = <<~ERB
       <%= ui_resizable_panel_group(direction: :horizontal) do %>
-        <%= ui_resizable_panel(default_size: 50) { "Um" } %>
+        <%= ui_resizable_panel(default_size: 50) { "One" } %>
         <%= ui_resizable_handle %>
-        <%= ui_resizable_panel(default_size: 50) { "Dois" } %>
+        <%= ui_resizable_panel(default_size: 50) { "Two" } %>
       <% end %>
     ERB
-    @examples = [ { name: "resizable_default", title: "Padrão", description: "Dois painéis horizontais com uma alça." } ]
+    @examples = examples_for(%w[resizable_default])
     render "doc_page"
   end
 
   def carousel
     @page_title = "Carousel"
-    @page_subtitle = "Um carrossel de slides com controles anterior/próximo e navegação por setas."
+    @page_subtitle = t("components.pages.carousel.subtitle")
     @usage_helper = <<~ERB
       <%= ui_carousel do %>
         <%= ui_carousel_content do %>
@@ -1503,45 +1295,41 @@ class ComponentsController < ApplicationController
         <%= ui_carousel_next %>
       <% end %>
     ERB
-    @examples = [ { name: "carousel_default", title: "Padrão", description: "Cinco slides numerados com controles." } ]
+    @examples = examples_for(%w[carousel_default])
     render "doc_page"
   end
 
   def sonner
     @page_title = "Sonner"
-    @page_subtitle = "Notificações temporárias empilhadas numa região live polida. Dispare com window.toast ou via Stimulus."
+    @page_subtitle = t("components.pages.sonner.subtitle")
     @usage_helper = <<~ERB
-      <%# Coloque um toaster no layout… %>
+      <%# Put one toaster in the layout… %>
       <%= ui_sonner %>
 
-      <%# …e dispare de qualquer lugar. %>
+      <%# …and fire it from anywhere. %>
       <%= ui_button(data: { action: "click->ui-sonner#toast",
-            "ui-sonner-title-param": "Evento criado",
-            "ui-sonner-description-param": "Domingo às 21h." }) { "Mostrar toast" } %>
+            "ui-sonner-title-param": "Event created",
+            "ui-sonner-description-param": "Sunday at 9:00 PM." }) { "Show toast" } %>
     ERB
-    @examples = [ { name: "sonner_default", title: "Padrão", description: "Variantes default, sucesso, erro e com ação." } ]
+    @examples = examples_for(%w[sonner_default])
     render "doc_page"
   end
 
   def chart
     @page_title = "Chart"
-    @page_subtitle = "Gráficos com Chart.js. A paleta usa os tokens --chart-1..5 do tema. É a única dependência JS de terceiros."
+    @page_subtitle = t("components.pages.chart.subtitle")
     @usage_helper = <<~ERB
-      <%= ui_chart(type: :bar, label: "Visitantes por mês",
-            data: { labels: %w[Jan Fev Mar],
+      <%= ui_chart(type: :bar, label: "Visitors per month",
+            data: { labels: %w[Jan Feb Mar],
                     datasets: [ { label: "Desktop", data: [ 186, 305, 237 ] } ] }) %>
     ERB
-    @examples = [
-      { name: "chart_bar", title: "Barras", description: "Dois conjuntos de dados com a paleta do tema." },
-      { name: "chart_line", title: "Linha", description: "Série temporal com tensão e área preenchida." },
-      { name: "chart_pie", title: "Pizza", description: "Distribuição categórica colorida por rótulo." }
-    ]
+    @examples = examples_for(%w[chart_bar chart_line chart_pie])
     render "doc_page"
   end
 
   def data_table
     @page_title = "Data Table"
-    @page_subtitle = "Tabela com filtro, ordenação, paginação, seleção de linhas e visibilidade de colunas — tudo no cliente."
+    @page_subtitle = t("components.pages.data_table.subtitle")
     @usage_helper = <<~ERB
       <%= ui_data_table(
             filter_key: :email,
@@ -1554,7 +1342,20 @@ class ComponentsController < ApplicationController
               { id: 1, status: "Sucesso", email: "ada@example.com", amount: 316 }
             ]) %>
     ERB
-    @examples = [ { name: "data_table_default", title: "Padrão", description: "Filtro por e-mail, colunas ordenáveis e seleção de linhas." } ]
+    @examples = examples_for(%w[data_table_default])
     render "doc_page"
+  end
+
+  private
+
+  # Example captions are prose, so they live in the locale files and are looked
+  # up per request. The controller keeps only the order and the partial names,
+  # which are the same in every language.
+  def examples_for(names)
+    names.map do |name|
+      { name: name,
+        title: t("components.examples.#{name}.title"),
+        description: t("components.examples.#{name}.description") }
+    end
   end
 end

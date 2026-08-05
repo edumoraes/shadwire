@@ -1,10 +1,10 @@
 <%= ui_table(class: "max-w-md") do %>
   <%= ui_table_body do %>
     <%= ui_table_row do %>
-      <%= ui_table_cell { "Linha padrão" } %>
+      <%= ui_table_cell { "Default row" } %>
     <% end %>
     <%= ui_table_row(data: { state: "selected" }, aria: { selected: "true" }) do %>
-      <%= ui_table_cell { "Linha selecionada (data-state=\"selected\")" } %>
+      <%= ui_table_cell { "Selected row (data-state=\"selected\")" } %>
     <% end %>
   <% end %>
 <% end %>

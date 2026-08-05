@@ -1,0 +1,93 @@
+<% content_for :title, "Accordion — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="flex flex-col gap-12">
+  <header class="flex flex-col gap-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Accordion</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      A vertical set of interactive headings that reveal sections of content.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "accordion" %>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Use the <code class="rounded bg-muted px-1 py-0.5 text-xs">Root > Item > Header > Trigger + Content</code> composition.
+      O helper <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion</code>
+      takes the same arguments as <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::AccordionComponent</code>.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      You can also render the ViewComponent classes directly:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <p class="text-sm text-muted-foreground">
+      The anatomy follows the Base UI reference shadcn uses: item, header,
+      trigger and content panel. <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion_panel</code>
+      is a name alias for <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion_content</code>.
+    </p>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="flex flex-col gap-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="flex flex-col gap-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      The helpers wrap the ViewComponent classes and preserve free-form HTML attributes,
+      incluindo <code class="rounded bg-muted px-1 py-0.5 text-xs">data:</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">aria:</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Helper</th>
+            <th>Argumentos principais</th>
+            <th><%= t("components.api.description") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ui_accordion</code></td>
+            <td><code>multiple</code>, <code>default_value</code>, <code>orientation</code>, <code>disabled</code>, <code>loop_focus</code></td>
+            <td>Root, with the Stimulus controller, initial values and keyboard navigation.</td>
+          </tr>
+          <tr>
+            <td><code>ui_accordion_item</code></td>
+            <td><code>value</code>, <code>disabled</code></td>
+            <td>The item, with <code>border-b last:border-b-0</code>. Pass <code>value</code> whenever you set <code>default_value</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_accordion_header</code></td>
+            <td><code>tag</code></td>
+            <td>Renders the semantic heading; defaults to <code>:h3</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_accordion_trigger</code></td>
+            <td><code>disabled</code></td>
+            <td>The button that toggles the item, with a <code>chevron-down</code> icon and Stimulus actions.</td>
+          </tr>
+          <tr>
+            <td><code>ui_accordion_content</code> / <code>ui_accordion_panel</code></td>
+            <td><code>class</code> / <code>class_name</code></td>
+            <td>The panel, with <code>role="region"</code>, shadcn animations and an inner <code>pt-0 pb-4</code> wrapper.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

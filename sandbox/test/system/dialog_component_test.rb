@@ -9,7 +9,7 @@ class DialogComponentTest < ApplicationSystemTestCase
     assert_no_selector "dialog[data-slot='dialog-content']"
 
     within "#example-dialog_default" do
-      click_button "Editar perfil"
+      click_button "Edit profile"
     end
 
     dialog = find("dialog[data-slot='dialog-content'][open]")
@@ -17,7 +17,7 @@ class DialogComponentTest < ApplicationSystemTestCase
     assert_equal "open", dialog["data-state"]
     assert dialog["aria-labelledby"].present?
     assert dialog["aria-describedby"].present?
-    assert_selector "dialog[open] h2", text: "Editar perfil"
+    assert_selector "dialog[open] h2", text: "Edit profile"
 
     dialog.send_keys :escape
 
@@ -25,8 +25,8 @@ class DialogComponentTest < ApplicationSystemTestCase
     assert_no_selector "dialog[data-slot='dialog-content']"
 
     within "#example-dialog_default" do
-      assert_equal "Editar perfil", page.evaluate_script("document.activeElement.textContent").strip
-      click_button "Editar perfil"
+      assert_equal "Edit profile", page.evaluate_script("document.activeElement.textContent").strip
+      click_button "Edit profile"
     end
 
     dialog = find("dialog[data-slot='dialog-content'][open]")
@@ -39,11 +39,11 @@ class DialogComponentTest < ApplicationSystemTestCase
     assert_no_selector "dialog[data-slot='dialog-content']"
 
     within "#example-dialog_default" do
-      click_button "Editar perfil"
+      click_button "Edit profile"
     end
 
     within "dialog[open]" do
-      click_button "Cancelar"
+      click_button "Cancel"
     end
 
     assert_no_selector "dialog[open]"
@@ -54,7 +54,7 @@ class DialogComponentTest < ApplicationSystemTestCase
     visit components_dialog_path
 
     within "#example-dialog_no_backdrop_close" do
-      click_button "Sem fechar pelo backdrop"
+      click_button "No backdrop close"
     end
 
     dialog = find("dialog[data-slot='dialog-content'][open]")
@@ -63,10 +63,10 @@ class DialogComponentTest < ApplicationSystemTestCase
       this.dispatchEvent(new MouseEvent("click", { bubbles: true, clientX: rect.left - 40, clientY: rect.top - 40 }))
     JS
 
-    assert_selector "dialog[open]", text: "Atenção"
+    assert_selector "dialog[open]", text: "Heads up"
 
     within "dialog[open]" do
-      click_button "Entendi"
+      click_button "Got it"
     end
 
     assert_no_selector "dialog[open]"

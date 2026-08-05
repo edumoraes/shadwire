@@ -8,12 +8,12 @@ class ContextMenuComponentTest < ViewComponent::TestCase
 
     def call
       ui_context_menu do
-        ui_context_menu_trigger(class: "h-24") { "Clique com o botão direito" } +
+        ui_context_menu_trigger(class: "h-24") { "Right-click here" } +
           ui_context_menu_content do
-            ui_context_menu_label { "Ações" } +
+            ui_context_menu_label { "Actions" } +
               ui_context_menu_item { "Voltar" } +
               ui_context_menu_separator +
-              ui_context_menu_item(variant: :destructive) { "Excluir" }
+              ui_context_menu_item(variant: :destructive) { "Delete" }
           end
       end
     end
@@ -38,16 +38,16 @@ class ContextMenuComponentTest < ViewComponent::TestCase
   end
 
   def test_item_wires_select
-    render_inline(Ui::ContextMenu::ItemComponent.new(variant: :destructive)) { "Excluir" }
+    render_inline(Ui::ContextMenu::ItemComponent.new(variant: :destructive)) { "Delete" }
 
-    assert_selector "button[role='menuitem'][data-variant='destructive'][data-ui-context-menu-target='item'][data-action='click->ui-context-menu#select']", text: "Excluir"
+    assert_selector "button[role='menuitem'][data-variant='destructive'][data-ui-context-menu-target='item'][data-action='click->ui-context-menu#select']", text: "Delete"
   end
 
   def test_helper_composes_menu
     render_inline(HelperHarnessComponent.new)
 
     assert_selector "[data-controller='ui-context-menu'] [role='menu']", visible: :all
-    assert_selector "[data-slot='context-menu-label']", visible: :all, text: "Ações"
+    assert_selector "[data-slot='context-menu-label']", visible: :all, text: "Actions"
     assert_selector "[role='menuitem']", visible: :all, count: 2
     assert_selector "[data-slot='context-menu-separator']", visible: :all
   end

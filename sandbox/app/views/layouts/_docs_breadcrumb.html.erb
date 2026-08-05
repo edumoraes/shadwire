@@ -1,0 +1,19 @@
+<%# Docs / <group> / <page>, derived from the sidebar so it can never disagree
+    with it. Renders nothing for a page that is not in the sidebar. %>
+<% if docs_current_item %>
+  <%= ui_breadcrumb(class: "mb-4") do %>
+    <%= ui_breadcrumb_list do %>
+      <%= ui_breadcrumb_item do %>
+        <%= ui_breadcrumb_link(href: docs_path) { t("docs.breadcrumb_root") } %>
+      <% end %>
+      <% if docs_current_group %>
+        <%= ui_breadcrumb_separator %>
+        <%= ui_breadcrumb_item { docs_current_group[:title] } %>
+      <% end %>
+      <%= ui_breadcrumb_separator %>
+      <%= ui_breadcrumb_item do %>
+        <%= ui_breadcrumb_page { docs_current_item[:title] } %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

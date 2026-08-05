@@ -15,7 +15,10 @@ const CLOSE_ICON = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="1
 
 export default class extends Controller {
   static targets = ["list"]
-  static values = { duration: { type: Number, default: 4000 } }
+  static values = {
+    duration: { type: Number, default: 4000 },
+    closeLabel: { type: String, default: "Close" }
+  }
 
   connect() {
     this.previousToast = window.toast
@@ -75,7 +78,7 @@ export default class extends Controller {
 
     const close = document.createElement("button")
     close.type = "button"
-    close.setAttribute("aria-label", "Fechar")
+    close.setAttribute("aria-label", this.closeLabelValue)
     close.className =
       "absolute right-2 top-2 rounded-md p-1 text-foreground/50 transition-colors hover:text-foreground"
     close.innerHTML = CLOSE_ICON

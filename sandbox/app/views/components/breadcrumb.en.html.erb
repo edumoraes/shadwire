@@ -1,0 +1,92 @@
+<% content_for :title, "Breadcrumb — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Breadcrumb</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      Shows the path to the current resource as a hierarchy of links.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "breadcrumb" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Separators and the ellipsis are decorative (<code class="rounded bg-muted px-1 py-0.5 text-xs">aria-hidden</code>);
+      the current page carries <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-current="page"</code>.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Or render the components directly:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Helper</th>
+            <th><%= t("components.api.element") %></th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ui_breadcrumb</code></td>
+            <td><code>nav</code></td>
+            <td>Ships with <code>aria-label="breadcrumb"</code> (overridable).</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_list</code> / <code>ui_breadcrumb_item</code></td>
+            <td><code>ol</code> / <code>li</code></td>
+            <td>The trail's structure.</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_link</code></td>
+            <td><code>a</code></td>
+            <td>Passe <code>href</code> via attrs.</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_page</code></td>
+            <td><code>span</code></td>
+            <td>The current page: <code>role="link"</code>, <code>aria-disabled</code>, <code>aria-current="page"</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_separator</code></td>
+            <td><code>li</code></td>
+            <td>A chevron by default; the block replaces the icon.</td>
+          </tr>
+          <tr>
+            <td><code>ui_breadcrumb_ellipsis</code></td>
+            <td><code>span</code></td>
+            <td>Indicador decorativo de itens recolhidos.</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

@@ -6,7 +6,7 @@ class DropdownMenuComponentTest < ApplicationSystemTestCase
   test "menu opens with the keyboard, roves focus, typeaheads, and dismisses" do
     visit components_dropdown_menu_path
 
-    trigger = find("#example-dropdown_menu_default button", text: "Abrir")
+    trigger = find("#example-dropdown_menu_default button", text: "Open")
 
     assert_equal "false", trigger["aria-expanded"]
     assert_no_selector "#example-dropdown_menu_default [role='menu']", visible: true
@@ -16,36 +16,36 @@ class DropdownMenuComponentTest < ApplicationSystemTestCase
 
     assert_selector "#example-dropdown_menu_default [role='menu'][data-state='open']", visible: true
     assert_equal "true", trigger["aria-expanded"]
-    assert_equal "Perfil", focused_item_text
+    assert_equal "Profile", focused_item_text
 
     # ArrowDown roves to the next item; wrapping back to the top.
     send_active_key(:arrow_down)
-    assert_match(/Configurações/, focused_item_text)
+    assert_match(/Settings/, focused_item_text)
 
     send_active_key(:arrow_down)
-    assert_equal "Perfil", focused_item_text
+    assert_equal "Profile", focused_item_text
 
-    # Typeahead jumps to the item starting with "c".
-    send_active_key("c")
-    assert_match(/Configurações/, focused_item_text)
+    # Typeahead jumps to the item starting with "s".
+    send_active_key("s")
+    assert_match(/Settings/, focused_item_text)
 
     # Escape closes and returns focus to the trigger.
     send_active_key(:escape)
     assert_no_selector "#example-dropdown_menu_default [role='menu']", visible: true
-    assert_equal "Abrir", page.evaluate_script("document.activeElement.textContent").strip
+    assert_equal "Open", page.evaluate_script("document.activeElement.textContent").strip
   end
 
   test "disabled items are skipped during keyboard navigation" do
     visit components_dropdown_menu_path
 
-    find("#example-dropdown_menu_variants button", text: "Ações").send_keys :arrow_down
+    find("#example-dropdown_menu_variants button", text: "Actions").send_keys :arrow_down
 
-    assert_equal "Duplicar", focused_item_text
+    assert_equal "Duplicate", focused_item_text
 
     send_active_key(:arrow_down)
 
-    refute_equal "Indisponível", focused_item_text, "disabled item should be skipped"
-    assert_match(/Documentação/, focused_item_text)
+    refute_equal "Unavailable", focused_item_text, "disabled item should be skipped"
+    assert_match(/Documentation/, focused_item_text)
   end
 
   private

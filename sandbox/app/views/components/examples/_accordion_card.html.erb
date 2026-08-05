@@ -1,32 +1,32 @@
 <%= ui_card(class_name: "w-full max-w-md") do %>
   <%= ui_card_header do %>
-    <%= ui_card_title { "Assinatura e cobrança" } %>
-    <%= ui_card_description { "Perguntas comuns sobre planos, pagamentos e cancelamentos." } %>
+    <%= ui_card_title { "Subscription and billing" } %>
+    <%= ui_card_description { "Common questions about plans, payments and cancellations." } %>
   <% end %>
   <%= ui_card_content do %>
     <%= ui_accordion(default_value: :plans) do %>
       <%= ui_accordion_item(value: :plans) do %>
         <%= ui_accordion_header do %>
-          <%= ui_accordion_trigger { "Quais planos estão disponíveis?" } %>
+          <%= ui_accordion_trigger { "Which plans are available?" } %>
         <% end %>
         <%= ui_accordion_content do %>
-          Starter, Professional e Enterprise, com limites e recursos progressivos.
+          Starter, Professional and Enterprise, with progressively higher limits and features.
         <% end %>
       <% end %>
       <%= ui_accordion_item(value: :billing) do %>
         <%= ui_accordion_header do %>
-          <%= ui_accordion_trigger { "Como a cobrança é feita?" } %>
+          <%= ui_accordion_trigger { "How am I billed?" } %>
         <% end %>
         <%= ui_accordion_content do %>
-          A cobrança é recorrente e acompanha o ciclo escolhido na contratação.
+          Billing is recurring and follows the cycle you chose when you signed up.
         <% end %>
       <% end %>
       <%= ui_accordion_item(value: :cancel) do %>
         <%= ui_accordion_header do %>
-          <%= ui_accordion_trigger { "Como cancelo a assinatura?" } %>
+          <%= ui_accordion_trigger { "How do I cancel my subscription?" } %>
         <% end %>
         <%= ui_accordion_content do %>
-          O cancelamento fica disponível em configurações de cobrança e mantém acesso até o fim do ciclo.
+          Cancelling is available under billing settings, and access continues until the end of the cycle.
         <% end %>
       <% end %>
     <% end %>

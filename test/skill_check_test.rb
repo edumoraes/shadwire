@@ -202,6 +202,27 @@ class SkillCheckTest < Minitest::Test
                  "so every call prompts: #{ungranted.inspect}"
   end
 
+  # The skill is meant to carry procedure, not data, but it names one count: how
+  # many components need Stimulus. It said "28 of 58" while the registry held 29
+  # of 57, and the wrong number reached the published site through two pages that
+  # copied it. Counting the registry is the only way that stays true.
+  def test_the_stimulus_count_matches_the_registry
+    components = REGISTRY.fetch("items").select { |item| item.fetch("type") == "component" }
+    with_stimulus = components.count do |item|
+      item.fetch("files").any? { |file| file.fetch("target").start_with?("app/javascript/") }
+    end
+
+    claims = SKILL_TEXT.scan(/(\d+) of (\d+) components ship a Stimulus controller/)
+
+    refute_empty claims, "the skill no longer states the Stimulus count; drop this test with it"
+    claims.each do |claimed_stimulus, claimed_total|
+      assert_equal with_stimulus, claimed_stimulus.to_i,
+                   "the skill claims #{claimed_stimulus} components ship a Stimulus controller; the registry has #{with_stimulus}"
+      assert_equal components.size, claimed_total.to_i,
+                   "the skill claims #{claimed_total} components; the registry has #{components.size}"
+    end
+  end
+
   def test_referenced_skill_files_exist
     SKILL_FILES.each do |file|
       File.read(file).scan(/\]\((\.[^)]+\.md)\)/).flatten.uniq.each do |link|

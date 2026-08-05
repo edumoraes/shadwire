@@ -1,0 +1,25 @@
+<%# Previous/next links, walking the flattened sidebar order. %>
+<% previous_item, next_item = docs_nav_siblings %>
+<% if previous_item || next_item %>
+  <nav aria-label="<%= t("docs.pager.label") %>" class="mt-16 flex items-center justify-between gap-4 border-t pt-6">
+    <% if previous_item %>
+      <%= link_to previous_item[:path], rel: "prev", class: "group flex min-w-0 flex-col gap-0.5 text-sm" do %>
+        <span class="flex items-center gap-1 text-muted-foreground">
+          <%= ui_icon("arrow-left", size: :sm, class: "transition-transform group-hover:-translate-x-0.5") %><%= t("docs.pager.previous") %>
+        </span>
+        <span class="truncate font-medium"><%= previous_item[:title] %></span>
+      <% end %>
+    <% else %>
+      <span></span>
+    <% end %>
+
+    <% if next_item %>
+      <%= link_to next_item[:path], rel: "next", class: "group flex min-w-0 flex-col items-end gap-0.5 text-right text-sm" do %>
+        <span class="flex items-center gap-1 text-muted-foreground">
+          <%= t("docs.pager.next") %><%= ui_icon("arrow-right", size: :sm, class: "transition-transform group-hover:translate-x-0.5") %>
+        </span>
+        <span class="truncate font-medium"><%= next_item[:title] %></span>
+      <% end %>
+    <% end %>
+  </nav>
+<% end %>

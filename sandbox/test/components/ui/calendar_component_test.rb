@@ -20,8 +20,8 @@ class CalendarComponentTest < ViewComponent::TestCase
   def test_renders_nav_and_grid_scaffold
     render_inline(Ui::CalendarComponent.new(month: "2026-06"))
 
-    assert_selector "button[aria-label='Mês anterior'][data-action='click->ui-calendar#previous']"
-    assert_selector "button[aria-label='Próximo mês'][data-action='click->ui-calendar#next']"
+    assert_selector "button[aria-label='Previous month'][data-action='click->ui-calendar#previous']"
+    assert_selector "button[aria-label='Next month'][data-action='click->ui-calendar#next']"
     assert_selector "[data-ui-calendar-target='months'][data-action*='keydown->ui-calendar#keydown']"
     assert_selector "[data-ui-calendar-target='months'][data-action*='mouseover->ui-calendar#preview']"
   end
@@ -104,16 +104,16 @@ class CalendarComponentTest < ViewComponent::TestCase
     render_inline(Ui::CalendarComponent.new(month: "2026-06"))
 
     assert_no_selector "[data-slot='calendar'][dir]"
-    assert_selector "button[aria-label='Mês anterior'] svg path[d='#{CHEVRON_LEFT}']"
-    assert_selector "button[aria-label='Próximo mês'] svg path[d='#{CHEVRON_RIGHT}']"
+    assert_selector "button[aria-label='Previous month'] svg path[d='#{CHEVRON_LEFT}']"
+    assert_selector "button[aria-label='Next month'] svg path[d='#{CHEVRON_RIGHT}']"
   end
 
   def test_rtl_flips_the_nav_arrows
     render_inline(Ui::CalendarComponent.new(month: "2026-06", dir: :rtl))
 
     assert_selector "[data-slot='calendar'][dir='rtl']"
-    assert_selector "button[aria-label='Mês anterior'] svg path[d='#{CHEVRON_RIGHT}']"
-    assert_selector "button[aria-label='Próximo mês'] svg path[d='#{CHEVRON_LEFT}']"
+    assert_selector "button[aria-label='Previous month'] svg path[d='#{CHEVRON_RIGHT}']"
+    assert_selector "button[aria-label='Next month'] svg path[d='#{CHEVRON_LEFT}']"
   end
 
   def test_localized_labels_ride_along_as_json

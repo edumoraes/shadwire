@@ -1,26 +1,26 @@
 <%= ui_accordion(multiple: true, default_value: [ :notifications, :privacy ], class_name: "w-full max-w-md") do %>
   <%= ui_accordion_item(value: :notifications) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Configurações de notificação" } %>
+      <%= ui_accordion_trigger { "Notification settings" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Gerencie alertas por e-mail, push e resumos semanais para acompanhar atualizações importantes.
+      Manage email alerts, push notifications and weekly digests to keep up with what matters.
     <% end %>
   <% end %>
   <%= ui_accordion_item(value: :privacy) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Privacidade e segurança" } %>
+      <%= ui_accordion_trigger { "Privacy and security" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Configure autenticação em duas etapas, sessões ativas e permissões de acesso aos seus dados.
+      Set up two-factor authentication, review active sessions, and control access to your data.
     <% end %>
   <% end %>
   <%= ui_accordion_item(value: :billing) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Cobrança e assinatura" } %>
+      <%= ui_accordion_trigger { "Billing and subscription" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Consulte faturas, métodos de pagamento e o ciclo atual da sua assinatura.
+      Review invoices, payment methods, and your subscription's current cycle.
     <% end %>
   <% end %>
 <% end %>

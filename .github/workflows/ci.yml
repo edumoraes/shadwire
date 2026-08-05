@@ -76,7 +76,7 @@ jobs:
         run: bin/rails test test/components test/integration
       - name: Docs page tests
         working-directory: sandbox
-        run: bin/rails test test/controllers
+        run: bin/rails test test/controllers test/helpers
       # Runs headless Chrome, which ubuntu-latest ships; selenium-webdriver
       # fetches its own driver. Adds roughly 90s to this job — worth it, since
       # the controllers that make the components work are only exercised here.
@@ -85,7 +85,7 @@ jobs:
         run: bin/rails test:system
       - name: Capybara failure screenshots
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: capybara-screenshots
           path: sandbox/tmp/screenshots
@@ -236,6 +236,20 @@ jobs:
           cp -r public/assets ../_site/assets
           touch ../_site/.nojekyll
           test -f ../_site/index.html || { echo "::error::no index.html produced"; cat /tmp/server.log; exit 1; }
+          # The site ships in two languages, and the Portuguese tree exists in
+          # this artifact only because every English page links at its
+          # counterpart. Losing the switcher would not fail anything above — it
+          # would quietly publish a monolingual site — so compare the two trees.
+          en=$(find ../_site -name '*.html' -not -path '../_site/pt/*' -not -name 'pt.html' | wc -l)
+          # --adjust-extension freezes the Portuguese home as pt.html, beside the
+          # pt/ directory rather than inside it, so count it on its own or the
+          # tally reads one short and the two trees never appear to match.
+          pt=$(( $(find ../_site/pt -name '*.html' 2>/dev/null | wc -l) + $(test -f ../_site/pt.html && echo 1 || echo 0) ))
+          echo "frozen pages: ${en} en / ${pt} pt"
+          if [ "$pt" -lt "$en" ]; then
+            echo "::error::the Portuguese tree is short (${pt} pages against ${en} English) — the crawl did not reach it"
+            exit 1
+          fi
       - name: Publish the registry into the Pages artifact
         # Serve the built registry at /shadwire/r/... alongside the docs site.
         run: cp -r build/r _site/r

@@ -1,0 +1,84 @@
+<% content_for :title, "Pagination — Shadwire" %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Pagination</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      Navigation between pages, with previous and next links.
+    </p>
+  </header>
+
+  <%= render "components/install", name: "pagination" %>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
+    <p class="text-sm text-muted-foreground">
+      The links borrow the <code class="rounded bg-muted px-1 py-0.5 text-xs">Button</code> look:
+      the active page uses the outline variant and carries
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-current="page"</code>.
+      Wire it to Pagy or Kaminari by generating the real <code class="rounded bg-muted px-1 py-0.5 text-xs">href</code>s.
+    </p>
+    <%= docs_code_block(@usage_helper) %>
+    <p class="text-sm text-muted-foreground">
+      Or render the components directly:
+    </p>
+    <%= docs_code_block(@usage_component) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <%= docs_code_block(@composition) %>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= ui_card(class: "overflow-x-auto") do %>
+      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
+        <thead class="bg-muted/50">
+          <tr>
+            <th>Helper</th>
+            <th>Argumentos</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>ui_pagination</code> / <code>ui_pagination_content</code> / <code>ui_pagination_item</code></td>
+            <td>—</td>
+            <td>Landmark <code>nav</code>, lista <code>ul</code> e itens <code>li</code>.</td>
+          </tr>
+          <tr>
+            <td><code>ui_pagination_link</code></td>
+            <td><code>active: false</code>, <code>size: :icon</code></td>
+            <td>Renders an <code>&lt;a&gt;</code> styled as a Button (outline when active, ghost otherwise).</td>
+          </tr>
+          <tr>
+            <td><code>ui_pagination_previous</code> / <code>ui_pagination_next</code></td>
+            <td>—</td>
+            <td>Chevron + label (hidden on small screens); the block replaces the default text.</td>
+          </tr>
+          <tr>
+            <td><code>ui_pagination_ellipsis</code></td>
+            <td>—</td>
+            <td>Decorative, with the <code>sr-only</code> text "More pages".</td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </section>
+</article>

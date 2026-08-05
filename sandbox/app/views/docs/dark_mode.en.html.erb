@@ -1,0 +1,96 @@
+<% content_for :title, "Dark mode — Shadwire" %>
+<% content_for :description, "Class-based dark mode in Shadwire: the custom Tailwind variant, the Stimulus toggle, and the anti-flash script that runs before the first paint." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Dark mode",
+        description: "One class on <html> decides the whole theme. No component has to know about it." %>
+
+  <section class="space-y-4">
+    <p class="leading-7">
+      <%= docs_code("shadwire.css") %> declares the dark variant anchored to a class:
+    </p>
+
+    <%= docs_code_block(@snippets[:variant], language: :css) %>
+
+    <p class="leading-7 text-muted-foreground">
+      The <%= docs_code("dark") %> variant fires when an ancestor carries the
+      <%= docs_code(".dark") %> class, so switching themes is toggling that class on
+      <%= docs_code("<html>") %>. Because every component uses tokens, and every token already
+      has a value in both blocks, dark mode costs no component code at all.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("The toggle") %>
+    <p class="leading-7 text-muted-foreground">
+      A five-line Stimulus controller. It is what switches the theme on this site:
+    </p>
+
+    <%= docs_code_block(@snippets[:controller], language: :javascript) %>
+
+    <p class="leading-7 text-muted-foreground">
+      And the button, with the two icons swapping through the variant itself:
+    </p>
+
+    <%= docs_code_block(@snippets[:toggle_markup]) %>
+
+    <p class="text-sm leading-6 text-muted-foreground">
+      <%= docs_code("dark:hidden") %> and <%= docs_code("hidden dark:block") %> decide which
+      element shows, not what colour it is. That is the legitimate use of the
+      <%= docs_code("dark:") %> prefix.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Avoiding the flash") %>
+    <p class="leading-7 text-muted-foreground">
+      If the class is only applied once the application's JavaScript has loaded, anyone who
+      chose the dark theme gets a white flash on every navigation. The fix is an inline script
+      in <%= docs_code("<head>") %>, ahead of any stylesheet, so it runs before the first paint:
+    </p>
+
+    <%= docs_code_block(@snippets[:head_script], language: :html) %>
+
+    <p class="leading-7 text-muted-foreground">
+      The order matters: the saved preference first, the system preference as the fallback.
+      That way someone can choose light on a dark system and have the choice stick.
+    </p>
+
+    <%= render layout: "docs/callout", locals: { icon: "info", title: "Content Security Policy" } do %>
+      An app with a strict CSP has to allow this script, either through Rails' nonce
+      (<code>nonce: true</code> on <code>javascript_tag</code>) or by moving it into a file
+      loaded in <code>&lt;head&gt;</code> ahead of the stylesheets.
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Never write dark: for colour") %>
+    <p class="leading-7 text-muted-foreground">
+      A hand-written override duplicates the colour decision and falls out of step with the
+      theme the first time anyone touches the tokens:
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong]) %>
+    <%= docs_code_block(@snippets[:right]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      If you need a colour the tokens do not cover,
+      <%= link_to "add a token", docs_theming_path, class: "font-medium underline underline-offset-4" %>.
+      It gets a light and a dark value, and it keeps working through any future retheming.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Testing both modes") %>
+    <p class="leading-7 text-muted-foreground">
+      Theme bugs are almost never a literally wrong colour. They are usually a specificity
+      collision between utilities of equal weight, or a missing companion utility: the class
+      string looks right and the compiled CSS is not. When something looks off in the dark,
+      read the generated CSS.
+    </p>
+  </section>
+</article>

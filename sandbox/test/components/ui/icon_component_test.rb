@@ -34,9 +34,9 @@ class IconComponentTest < ViewComponent::TestCase
   end
 
   def test_labelled_icon_is_exposed_to_assistive_tech
-    render_inline(Ui::IconComponent.new("check", label: "Concluído"))
+    render_inline(Ui::IconComponent.new("check", label: "Complete"))
 
-    assert_selector "svg[role='img'][aria-label='Concluído']"
+    assert_selector "svg[role='img'][aria-label='Complete']"
     refute_selector "svg[aria-hidden]"
   end
 end
