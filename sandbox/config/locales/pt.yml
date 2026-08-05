@@ -285,3 +285,417 @@ pt:
       files_html: "O item %{name} do registry instala estes arquivos:"
       stimulus_html: "Este componente usa Stimulus, então a aplicação precisa de %{importmap} e %{stimulus} com carregamento automático de controllers."
       cli_html: "Ainda não instalou a CLI? %{install} e depois %{init}."
+
+    # Captions for the live examples on the component pages, keyed by the
+    # partial each one renders. Names are unique across the catalog because
+    # the partials all share one directory.
+    examples:
+      default:
+        title: "Padrão"
+        description: "A variante padrão, usada para a ação primária da tela."
+      secondary:
+        title: "Secundário"
+        description: "Uma alternativa de menor ênfase para ações secundárias."
+      destructive:
+        title: "Destrutivo"
+        description: "Para ações destrutivas, como excluir um registro."
+      outline:
+        title: "Contorno"
+        description: "Apenas borda, sem preenchimento — boa para ações neutras."
+      ghost:
+        title: "Ghost"
+        description: "Sem fundo nem borda até o hover."
+      link:
+        title: "Link"
+        description: "Aparência de link de texto, mantendo a semântica de botão."
+      icon:
+        title: "Ícone"
+        description: "Botão quadrado só com ícone (size: :icon). Informe label: no ícone para leitores de tela."
+      with_icon:
+        title: "Com ícone"
+        description: "Componha ui_icon dentro do bloco; o botão dimensiona o SVG automaticamente."
+      sizes:
+        title: "Tamanhos"
+        description: "Os tamanhos :sm, :default e :lg lado a lado."
+      loading:
+        title: "Carregando"
+        description: "Estado de carregamento composto com um ícone giratório e disabled."
+      disabled:
+        title: "Desabilitado"
+        description: "Passe disabled: true como atributo HTML."
+      as_link:
+        title: "Como link"
+        description: "Renderize como <a> com tag: :a, mantendo o visual de botão."
+      badge_variants:
+        title: "Variantes"
+        description: "Use variantes para indicar prioridade, estado ou categorias."
+      card_default:
+        title: "Padrão"
+        description: "Componha header, title, description, content e footer dentro do card."
+      alert_default:
+        title: "Padrão"
+        description: "Mensagem importante com role=\"alert\" por padrão."
+      alert_destructive:
+        title: "Destrutivo"
+        description: "Use para erros ou avisos de alta severidade."
+      separator_default:
+        title: "Orientações e decorativo"
+        description: "Separadores semânticos expõem aria-orientation; decorativos ficam ocultos da tecnologia assistiva."
+      avatar_default:
+        title: "Imagem, fallback e rótulo"
+        description: "Renderize uma imagem com fallback ou um fallback isolado para usuários sem foto."
+      icon_default:
+        title: "Decorativo e rotulado"
+        description: "Ícones são decorativos por padrão; passe label: quando o ícone carregar significado."
+      accordion_basic:
+        title: "Basic"
+        description: "Um accordion simples que exibe um item por vez. O primeiro item começa aberto."
+      accordion_multiple:
+        title: "Multiple"
+        description: "Use multiple: true para permitir que vários itens fiquem abertos ao mesmo tempo."
+      accordion_disabled:
+        title: "Disabled"
+        description: "Use disabled: true no item para bloquear um painel específico."
+      accordion_borders:
+        title: "Borders"
+        description: "Adicione border no accordion para destacar o contorno do grupo."
+      accordion_card:
+        title: "Card"
+        description: "Componha o Accordion dentro de Card quando ele fizer parte de uma superfície maior."
+      scroll_area_vertical:
+        title: "Preview"
+        description: "Uma Scroll Area vertical mantém a rolagem nativa com o visual do Shadwire."
+      scroll_area_horizontal:
+        title: "Horizontal"
+        description: "Use a barra horizontal para galerias e conteúdo largo."
+      scroll_area_rtl:
+        title: "RTL"
+        description: "Use dir: \"rtl\" para conteúdo escrito da direita para a esquerda."
+      input_default:
+        title: "Padrão"
+        description: "Um campo de texto com o visual shadcn. Atributos HTML livres passam direto para o <input>."
+      input_with_label:
+        title: "Com label"
+        description: "Combine com ui_label usando for:/id: para associar o rótulo ao campo."
+      input_disabled:
+        title: "Desabilitado"
+        description: "Passe disabled: true como atributo HTML."
+      input_file:
+        title: "Arquivo"
+        description: "type: :file estiliza o seletor de arquivo nativo."
+      input_form:
+        title: "Com form_with"
+        description: "Use form.field_name/form.field_id para integrar com formulários Rails."
+      label_default:
+        title: "Padrão"
+        description: "Associe o rótulo ao campo com for: apontando para o id do controle."
+      label_disabled:
+        title: "Grupo desabilitado"
+        description: "Dentro de um grupo com data-disabled, o rótulo reduz a opacidade automaticamente."
+      textarea_default:
+        title: "Padrão"
+        description: "Uma área de texto com o visual shadcn; cresce com o conteúdo via field-sizing."
+      textarea_with_label:
+        title: "Com label"
+        description: "Combine com ui_label para formulários acessíveis."
+      textarea_disabled:
+        title: "Desabilitado"
+        description: "Passe disabled: true como atributo HTML."
+      checkbox_default:
+        title: "Padrão"
+        description: "Um checkbox nativo estilizado, associado a um ui_label via for:/id:."
+      checkbox_checked:
+        title: "Marcado"
+        description: "Use checked: true para renderizar marcado; combine com textos auxiliares."
+      checkbox_disabled:
+        title: "Desabilitado"
+        description: "disabled: true desabilita o input nativo."
+      checkbox_form:
+        title: "Com form_with"
+        description: "Use form.field_name/form.field_id. Diferente de form.check_box, não há input hidden — trate a ausência do parâmetro como desmarcado."
+      radio_group_default:
+        title: "Padrão"
+        description: "Radios nativos compartilhando o mesmo name: — a navegação por setas vem do navegador."
+      radio_group_disabled:
+        title: "Item desabilitado"
+        description: "disabled: true desabilita um item específico sem afetar o grupo."
+      radio_group_form:
+        title: "Com form_with"
+        description: "Use form.field_name para o name compartilhado e form.field_id(attr, valor) para cada id."
+      switch_default:
+        title: "Padrão"
+        description: "Um checkbox nativo com role=\"switch\" — semântica de alternância para leitores de tela."
+      switch_checked:
+        title: "Ligado"
+        description: "Use checked: true para iniciar ligado; combine com textos auxiliares."
+      switch_disabled:
+        title: "Desabilitado"
+        description: "disabled: true desabilita o input nativo."
+      switch_form:
+        title: "Com form_with"
+        description: "Use form.field_name/form.field_id. Sem input hidden — trate a ausência do parâmetro como desligado."
+      skeleton_default:
+        title: "Padrão"
+        description: "Combine formas para esboçar o conteúdo que está carregando."
+      skeleton_card:
+        title: "Card"
+        description: "Um placeholder para cards de mídia com linhas de texto."
+      progress_default:
+        title: "Padrão"
+        description: "O valor é renderizado no servidor e exposto via aria-valuenow."
+      progress_values:
+        title: "Valores"
+        description: "Barras em diferentes estágios de conclusão."
+      progress_custom:
+        title: "Máximo e altura customizados"
+        description: "Use max: para escalas próprias e classes para ajustar a altura."
+      table_demo:
+        title: "Faturas"
+        description: "A anatomia completa: caption, header, body e footer com células alinhadas."
+      table_selected:
+        title: "Linha selecionada"
+        description: "Use data: { state: \"selected\" } para destacar uma linha."
+      breadcrumb_default:
+        title: "Padrão"
+        description: "Trilha com links e a página atual marcada com aria-current=\"page\"."
+      breadcrumb_ellipsis:
+        title: "Recolhido"
+        description: "Use ui_breadcrumb_ellipsis para trilhas longas."
+      breadcrumb_custom_separator:
+        title: "Separador custom"
+        description: "Passe um bloco ao separador para trocar o chevron padrão."
+      pagination_default:
+        title: "Padrão"
+        description: "Anterior/Próxima com rótulos acessíveis, página ativa com aria-current=\"page\" e ellipsis decorativo."
+      tabs_default:
+        title: "Padrão"
+        description: "Dois painéis com cards; o painel ativo é controlado pelo controller ui-tabs."
+      tabs_disabled:
+        title: "Trigger desabilitado"
+        description: "disabled: true tira o trigger do fluxo de teclado e da ativação."
+      dialog_default:
+        title: "Padrão"
+        description: "Formulário de perfil em um <dialog> nativo: focus trap, Esc e restauração de foco vêm do navegador."
+      dialog_no_backdrop_close:
+        title: "Sem fechar pelo backdrop"
+        description: "close_on_backdrop: false ignora cliques fora do painel."
+      dialog_custom_close:
+        title: "Footer custom"
+        description: "show_close_button: false remove o X; componha seus próprios botões com ui_dialog_close."
+      alert_dialog_default:
+        title: "Confirmação de exclusão"
+        description: "Backdrop e Esc não fecham — a pessoa precisa escolher Cancelar ou Continuar."
+      sheet_default:
+        title: "Padrão"
+        description: "Um painel que desliza da direita, com formulário e footer."
+      sheet_sides:
+        title: "Os quatro lados"
+        description: "side: :right, :left, :top ou :bottom controla a borda de origem e a animação."
+      tooltip_default:
+        title: "Padrão"
+        description: "Abre no hover e no foco depois de um pequeno atraso; Esc fecha sem mover o foco."
+      tooltip_sides:
+        title: "Lados"
+        description: "side: :top, :right, :bottom ou :left posiciona o balão."
+      popover_default:
+        title: "Padrão"
+        description: "Painel não-modal: abre no clique, foca o conteúdo e fecha por clique fora ou Esc."
+      popover_align:
+        title: "Alinhamento"
+        description: "align: :start, :center ou :end desloca o painel no eixo cruzado."
+      dropdown_menu_default:
+        title: "Padrão"
+        description: "Label, grupos, itens com atalhos. Setas navegam, typeahead busca por prefixo, Esc fecha."
+      dropdown_menu_variants:
+        title: "Inset, links e destrutivo"
+        description: "inset: alinha com itens que têm ícone; tag: :a vira link; variant: :destructive destaca ações perigosas."
+      select_default:
+        title: "Padrão"
+        description: "Combobox APG: o foco fica no gatilho, setas/typeahead navegam e a opção ativa usa aria-activedescendant."
+      select_groups:
+        title: "Grupos"
+        description: "Agrupe opções com label e separador; itens podem ser desabilitados."
+      select_form:
+        title: "Com form_with"
+        description: "O valor vai num input hidden (name:). O required nativo não se aplica — valide no servidor."
+      sidebar_basic:
+        title: "Preview"
+        description: "Um sidebar contido (collapsible: :none) com header, grupos e menu. O bloco completo, com colapso e drawer mobile, está em /blocks/sidebar-01."
+      aspect_ratio_default:
+        title: "Padrão"
+        description: "Restringe o conteúdo à proporção 16 / 9."
+      spinner_default:
+        title: "Padrão"
+        description: "Standalone (anuncia \"Carregando\") e composto dentro de um botão (decorativo)."
+      kbd_default:
+        title: "Padrão"
+        description: "Um grupo de teclas dentro de um texto."
+      empty_default:
+        title: "Padrão"
+        description: "Estado vazio com ícone, textos e uma ação."
+      item_default:
+        title: "Padrão"
+        description: "Um item com mídia, conteúdo e ação."
+      input_group_default:
+        title: "Padrão"
+        description: "Addon de ícone à esquerda e atalho à direita."
+      button_group_default:
+        title: "Padrão"
+        description: "Dois botões unidos em um grupo horizontal."
+      field_default:
+        title: "Padrão"
+        description: "Um campo vertical com label, input e descrição."
+      native_select_default:
+        title: "Padrão"
+        description: "Select nativo com chevron e foco estilizados."
+      collapsible_default:
+        title: "Padrão"
+        description: "Lista que revela itens adicionais."
+      toggle_default:
+        title: "Padrão"
+        description: "Toggles de formatação, um deles pressionado."
+      toggle_group_default:
+        title: "Padrão"
+        description: "Seleção múltipla de formatação de texto."
+      slider_default:
+        title: "Padrão"
+        description: "Arraste o thumb ou use as setas do teclado."
+      hover_card_default:
+        title: "Padrão"
+        description: "Cartão de perfil exibido no hover."
+      input_otp_default:
+        title: "Padrão"
+        description: "Dois grupos de três slots separados por um traço."
+      drawer_default:
+        title: "Padrão"
+        description: "Drawer inferior com cabeçalho, descrição e ações."
+      context_menu_default:
+        title: "Padrão"
+        description: "Área que abre o menu no clique direito."
+      menubar_default:
+        title: "Padrão"
+        description: "Dois menus com itens, separadores e atalhos."
+      navigation_menu_default:
+        title: "Padrão"
+        description: "Gatilho com painel e um link simples."
+      command_default:
+        title: "Padrão"
+        description: "Paleta com grupos, ícones e atalhos."
+      combobox_default:
+        title: "Padrão"
+        description: "Gatilho de popover com uma lista de comandos buscável."
+      calendar_default:
+        title: "Padrão"
+        description: "Mês atual com o dia de hoje selecionado. Setas percorrem os dias, Home/End vão às pontas da semana e PageUp/PageDown trocam de mês."
+      calendar_range:
+        title: "Intervalo"
+        description: "mode: :range grava duas datas; passar o mouse depois do primeiro clique prevê o intervalo. number_of_months: 2 mostra dois meses lado a lado."
+      calendar_dropdown:
+        title: "Legenda com selects"
+        description: "caption_layout: :dropdown troca o nome do mês por selects de mês e ano — o caminho curto para anos distantes."
+      date_picker_default:
+        title: "Padrão"
+        description: "Botão que abre o calendário em um popover e passa a exibir a data escolhida."
+      date_picker_field:
+        title: "Com rótulo"
+        description: "O mesmo gatilho dentro de um Field, associado ao rótulo por id."
+      date_picker_range:
+        title: "Intervalo"
+        description: "Duas datas em um gatilho só. O popover fecha quando a segunda ponta entra, não na primeira."
+      date_picker_dob:
+        title: "Data de nascimento"
+        description: "Legenda com selects de mês e ano e max: hoje — ninguém nasceu semana que vem."
+      date_picker_input:
+        title: "Com campo de texto"
+        description: "Digite a data ou escolha no calendário: o texto vira data e a data volta formatada. ↓ abre o popover."
+      date_picker_time:
+        title: "Data e hora"
+        description: "O picker resolve o dia; um input type=\"time\" nativo resolve a hora."
+      date_picker_natural:
+        title: "Linguagem natural"
+        description: "Aceita \"hoje\", \"amanhã\", \"em 2 semanas\", \"próxima sexta\". A tabela de frases mora no controller — é código seu."
+      date_picker_rtl:
+        title: "RTL"
+        description: "dir: :rtl espelha a grade, as setas e as teclas ←/→; month_names:/day_names: traduzem a legenda."
+      resizable_default:
+        title: "Padrão"
+        description: "Dois painéis horizontais com uma alça."
+      carousel_default:
+        title: "Padrão"
+        description: "Cinco slides numerados com controles."
+      sonner_default:
+        title: "Padrão"
+        description: "Variantes default, sucesso, erro e com ação."
+      chart_bar:
+        title: "Barras"
+        description: "Dois conjuntos de dados com a paleta do tema."
+      chart_line:
+        title: "Linha"
+        description: "Série temporal com tensão e área preenchida."
+      chart_pie:
+        title: "Pizza"
+        description: "Distribuição categórica colorida por rótulo."
+      data_table_default:
+        title: "Padrão"
+        description: "Filtro por e-mail, colunas ordenáveis e seleção de linhas."
+
+    # Subtitles of the component pages that render through the generic
+    # doc_page template. Their titles are component names, which do not
+    # translate.
+    pages:
+      aspect_ratio:
+        subtitle: "Mantém o conteúdo em uma proporção fixa usando a propriedade CSS aspect-ratio."
+      spinner:
+        subtitle: "Um indicador de carregamento giratório com role=\"status\" e rótulo acessível."
+      kbd:
+        subtitle: "Representa teclas do teclado. Agrupe várias com ui_kbd_group para exibir um atalho."
+      empty:
+        subtitle: "Um estado vazio: mídia, título, descrição e ações centralizados."
+      item:
+        subtitle: "Uma linha flexível: mídia + conteúdo (título/descrição) + ações. Agrupe com ui_item_group."
+      input_group:
+        subtitle: "Combina um input/textarea com addons (ícones, texto, botões) no início ou fim."
+      button_group:
+        subtitle: "Junta visualmente uma sequência de botões, colapsando bordas e cantos internos."
+      field:
+        subtitle: "Compõe label, controle, descrição e erro de um campo de formulário."
+      native_select:
+        subtitle: "Um <select> nativo estilizado para combinar com os demais controles."
+      collapsible:
+        subtitle: "Uma seção que expande e recolhe, controlada pelo controller ui-collapsible."
+      toggle:
+        subtitle: "Um botão de dois estados com aria-pressed e data-state (on/off)."
+      toggle_group:
+        subtitle: "Um grupo de toggles com seleção única ou múltipla e navegação por setas."
+      slider:
+        subtitle: "Um slider de um thumb (padrão WAI-ARIA) com valor espelhado em um input hidden."
+      hover_card:
+        subtitle: "Conteúdo rico que abre ao passar o mouse ou focar o gatilho, com atrasos configuráveis."
+      input_otp:
+        subtitle: "Campo de código de uso único: slots de um caractere com avanço, backspace e colagem."
+      drawer:
+        subtitle: "Um painel que desliza de uma borda, sobre um <dialog> nativo, com arrastar para fechar."
+      context_menu:
+        subtitle: "Um menu aberto com o botão direito, posicionado no ponteiro, com navegação por teclado."
+      menubar:
+        subtitle: "Uma barra de menus horizontal (padrão WAI-ARIA menubar) coordenada por um controller."
+      navigation_menu:
+        subtitle: "Uma navegação com gatilhos que revelam painéis de conteúdo, um de cada vez."
+      command:
+        subtitle: "Uma paleta de comandos filtrável, com navegação por setas e Enter."
+      combobox:
+        subtitle: "Uma receita: Popover + Command. Não é um componente novo — instala popover e command."
+      resizable:
+        subtitle: "Painéis redimensionáveis com alças arrastáveis e ajuste por teclado."
+      carousel:
+        subtitle: "Um carrossel de slides com controles anterior/próximo e navegação por setas."
+      sonner:
+        subtitle: "Notificações temporárias empilhadas numa região live polida. Dispare com window.toast ou via Stimulus."
+      chart:
+        subtitle: "Gráficos com Chart.js. A paleta usa os tokens --chart-1..5 do tema. É a única dependência JS de terceiros."
+      data_table:
+        subtitle: "Tabela com filtro, ordenação, paginação, seleção de linhas e visibilidade de colunas — tudo no cliente."
+
+  blocks:
+    sidebar_01:
+      description: Uma sidebar de navegação com seletor de versão, busca e grupos de links.

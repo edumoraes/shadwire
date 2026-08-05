@@ -8,14 +8,14 @@ class DialogComponentTest < ViewComponent::TestCase
 
     def call
       ui_dialog(id: "profile-dialog") do
-        ui_dialog_trigger(variant: :outline) { "Editar perfil" } +
+        ui_dialog_trigger(variant: :outline) { "Edit profile" } +
           ui_dialog_content do
             ui_dialog_header do
-              ui_dialog_title { "Editar perfil" } +
-                ui_dialog_description { "Faça alterações no seu perfil aqui." }
+              ui_dialog_title { "Edit profile" } +
+                ui_dialog_description { "Make changes to your profile here." }
             end +
               ui_dialog_footer do
-                ui_dialog_close { "Cancelar" }
+                ui_dialog_close { "Cancel" }
               end
           end
       end
@@ -23,9 +23,9 @@ class DialogComponentTest < ViewComponent::TestCase
   end
 
   def test_root_renders_stimulus_controller
-    render_inline(Ui::DialogComponent.new) { "conteúdo" }
+    render_inline(Ui::DialogComponent.new) { "content" }
 
-    assert_selector "[data-controller='ui-dialog'][data-slot='dialog']", text: "conteúdo"
+    assert_selector "[data-controller='ui-dialog'][data-slot='dialog']", text: "content"
   end
 
   def test_root_can_disable_backdrop_close
@@ -35,9 +35,9 @@ class DialogComponentTest < ViewComponent::TestCase
   end
 
   def test_trigger_renders_button_with_open_action
-    render_inline(Ui::Dialog::TriggerComponent.new) { "Abrir" }
+    render_inline(Ui::Dialog::TriggerComponent.new) { "Open" }
 
-    assert_selector "button[type='button'][aria-haspopup='dialog'][data-slot='dialog-trigger']", text: "Abrir"
+    assert_selector "button[type='button'][aria-haspopup='dialog'][data-slot='dialog-trigger']", text: "Open"
     assert_selector "button[data-action='click->ui-dialog#open']"
   end
 
@@ -60,31 +60,31 @@ class DialogComponentTest < ViewComponent::TestCase
   def test_header_title_description_and_footer
     view = vc_test_controller.view_context
     header = Ui::Dialog::HeaderComponent.new.render_in(view) do
-      Ui::Dialog::TitleComponent.new.render_in(view) { "Título" } +
-        Ui::Dialog::DescriptionComponent.new.render_in(view) { "Descrição" }
+      Ui::Dialog::TitleComponent.new.render_in(view) { "Title" } +
+        Ui::Dialog::DescriptionComponent.new.render_in(view) { "Description" }
     end
-    footer = Ui::Dialog::FooterComponent.new.render_in(view) { "ações" }
+    footer = Ui::Dialog::FooterComponent.new.render_in(view) { "actions" }
 
     render_inline(Ui::Dialog::ContentComponent.new) { header + footer }
 
-    assert_selector "dialog [data-slot='dialog-header'] h2[data-slot='dialog-title']", visible: :all, text: "Título"
-    assert_selector "dialog [data-slot='dialog-header'] p[data-slot='dialog-description']", visible: :all, text: "Descrição"
-    assert_selector "dialog [data-slot='dialog-footer']", visible: :all, text: "ações"
+    assert_selector "dialog [data-slot='dialog-header'] h2[data-slot='dialog-title']", visible: :all, text: "Title"
+    assert_selector "dialog [data-slot='dialog-header'] p[data-slot='dialog-description']", visible: :all, text: "Description"
+    assert_selector "dialog [data-slot='dialog-footer']", visible: :all, text: "actions"
   end
 
   def test_close_component_renders_button_with_close_action
-    render_inline(Ui::Dialog::CloseComponent.new) { "Cancelar" }
+    render_inline(Ui::Dialog::CloseComponent.new) { "Cancel" }
 
     assert_selector "button[type='button'][data-slot='dialog-close'][data-action='click->ui-dialog#close'].border",
-                    text: "Cancelar"
+                    text: "Cancel"
   end
 
   def test_helper_methods_render_dialog
     render_inline(HelperHarnessComponent.new)
 
     assert_selector "#profile-dialog[data-controller='ui-dialog']"
-    assert_selector "button[aria-haspopup='dialog']", text: "Editar perfil"
-    assert_selector "dialog h2[data-slot='dialog-title']", visible: :all, text: "Editar perfil"
-    assert_selector "dialog [data-slot='dialog-footer'] button", visible: :all, text: "Cancelar"
+    assert_selector "button[aria-haspopup='dialog']", text: "Edit profile"
+    assert_selector "dialog h2[data-slot='dialog-title']", visible: :all, text: "Edit profile"
+    assert_selector "dialog [data-slot='dialog-footer'] button", visible: :all, text: "Cancel"
   end
 end

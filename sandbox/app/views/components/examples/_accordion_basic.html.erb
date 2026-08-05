@@ -1,26 +1,26 @@
 <%= ui_accordion(default_value: :password, class_name: "w-full max-w-md") do %>
   <%= ui_accordion_item(value: :password) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Como faço para redefinir minha senha?" } %>
+      <%= ui_accordion_trigger { "How do I reset my password?" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Clique em "Esqueci minha senha" na tela de login, informe seu e-mail e enviaremos um link válido por 24 horas.
+      Click "Forgot my password" on the sign-in screen, give us your email, and we will send a link valid for 24 hours.
     <% end %>
   <% end %>
   <%= ui_accordion_item(value: :plan) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Posso alterar meu plano?" } %>
+      <%= ui_accordion_trigger { "Can I change my plan?" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Sim. Você pode mudar entre planos mensais e anuais a qualquer momento nas configurações de cobrança.
+      Yes. You can move between monthly and yearly plans at any time from your billing settings.
     <% end %>
   <% end %>
   <%= ui_accordion_item(value: :payment) do %>
     <%= ui_accordion_header do %>
-      <%= ui_accordion_trigger { "Quais formas de pagamento são aceitas?" } %>
+      <%= ui_accordion_trigger { "Which payment methods do you accept?" } %>
     <% end %>
     <%= ui_accordion_content do %>
-      Aceitamos cartões de crédito, débito e faturamento por boleto para contas empresariais.
+      We accept credit cards, debit cards, and invoiced billing for business accounts.
     <% end %>
   <% end %>
 <% end %>

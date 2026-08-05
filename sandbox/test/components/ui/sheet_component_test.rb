@@ -54,27 +54,27 @@ class SheetComponentTest < ViewComponent::TestCase
   def test_header_title_description_and_footer
     view = vc_test_controller.view_context
     header = Ui::Sheet::HeaderComponent.new.render_in(view) do
-      Ui::Sheet::TitleComponent.new.render_in(view) { "Título" } +
-        Ui::Sheet::DescriptionComponent.new.render_in(view) { "Descrição" }
+      Ui::Sheet::TitleComponent.new.render_in(view) { "Title" } +
+        Ui::Sheet::DescriptionComponent.new.render_in(view) { "Description" }
     end
-    footer = Ui::Sheet::FooterComponent.new.render_in(view) { "ações" }
+    footer = Ui::Sheet::FooterComponent.new.render_in(view) { "actions" }
 
     render_inline(Ui::Sheet::ContentComponent.new) { header + footer }
 
-    assert_selector "dialog [data-slot='sheet-header'] h2[data-slot='sheet-title']", visible: :all, text: "Título"
-    assert_selector "dialog p[data-slot='sheet-description']", visible: :all, text: "Descrição"
-    assert_selector "dialog [data-slot='sheet-footer']", visible: :all, text: "ações"
+    assert_selector "dialog [data-slot='sheet-header'] h2[data-slot='sheet-title']", visible: :all, text: "Title"
+    assert_selector "dialog p[data-slot='sheet-description']", visible: :all, text: "Description"
+    assert_selector "dialog [data-slot='sheet-footer']", visible: :all, text: "actions"
   end
 
   def test_trigger_and_close_buttons
-    render_inline(Ui::Sheet::TriggerComponent.new) { "Abrir" }
+    render_inline(Ui::Sheet::TriggerComponent.new) { "Open" }
 
     assert_selector "button[aria-haspopup='dialog'][data-slot='sheet-trigger'][data-action='click->ui-dialog#open']",
-                    text: "Abrir"
+                    text: "Open"
 
-    render_inline(Ui::Sheet::CloseComponent.new) { "Fechar" }
+    render_inline(Ui::Sheet::CloseComponent.new) { "Close" }
 
-    assert_selector "button[data-slot='sheet-close'][data-action='click->ui-dialog#close'].border", text: "Fechar"
+    assert_selector "button[data-slot='sheet-close'][data-action='click->ui-dialog#close'].border", text: "Close"
   end
 
   def test_helper_methods_render_sheet

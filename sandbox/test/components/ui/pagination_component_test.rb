@@ -20,9 +20,9 @@ class PaginationComponentTest < ViewComponent::TestCase
   end
 
   def test_renders_navigation_landmark
-    render_inline(Ui::PaginationComponent.new) { "páginas" }
+    render_inline(Ui::PaginationComponent.new) { "pages" }
 
-    assert_selector "nav[role='navigation'][aria-label='pagination'][data-slot='pagination']", text: "páginas"
+    assert_selector "nav[role='navigation'][aria-label='pagination'][data-slot='pagination']", text: "pages"
   end
 
   def test_renders_content_list_and_item

@@ -14,9 +14,9 @@ class DropdownMenuComponentTest < ViewComponent::TestCase
               ui_dropdown_menu_separator +
               ui_dropdown_menu_group do
                 ui_dropdown_menu_item do
-                  safe_join([ "Perfil", ui_dropdown_menu_shortcut { "⇧⌘P" } ])
+                  safe_join([ "Profile", ui_dropdown_menu_shortcut { "⇧⌘P" } ])
                 end +
-                  ui_dropdown_menu_item(tag: :a, href: "/settings") { "Configurações" }
+                  ui_dropdown_menu_item(tag: :a, href: "/settings") { "Settings" }
               end +
               ui_dropdown_menu_item(variant: :destructive) { "Sair" }
           end
@@ -32,11 +32,11 @@ class DropdownMenuComponentTest < ViewComponent::TestCase
   end
 
   def test_trigger_renders_button_with_menu_semantics
-    render_inline(Ui::DropdownMenu::TriggerComponent.new) { "Abrir" }
+    render_inline(Ui::DropdownMenu::TriggerComponent.new) { "Open" }
 
     assert_selector "button[type='button'][aria-haspopup='menu'][aria-expanded='false']" \
                     "[data-slot='dropdown-menu-trigger'][data-ui-dropdown-menu-target='trigger']" \
-                    "[data-action='click->ui-dropdown-menu#toggle keydown->ui-dropdown-menu#triggerKeydown']", text: "Abrir"
+                    "[data-action='click->ui-dropdown-menu#toggle keydown->ui-dropdown-menu#triggerKeydown']", text: "Open"
   end
 
   def test_content_renders_hidden_menu
@@ -48,18 +48,18 @@ class DropdownMenuComponentTest < ViewComponent::TestCase
   end
 
   def test_item_default_variant
-    render_inline(Ui::DropdownMenu::ItemComponent.new) { "Perfil" }
+    render_inline(Ui::DropdownMenu::ItemComponent.new) { "Profile" }
 
     assert_selector "button[type='button'][role='menuitem'][tabindex='-1']" \
                     "[data-slot='dropdown-menu-item'][data-ui-dropdown-menu-target='item']" \
-                    "[data-action='click->ui-dropdown-menu#select']", text: "Perfil"
+                    "[data-action='click->ui-dropdown-menu#select']", text: "Profile"
   end
 
   def test_item_inset_destructive_and_disabled_states
-    render_inline(Ui::DropdownMenu::ItemComponent.new(inset: true, variant: :destructive, disabled: true)) { "Excluir" }
+    render_inline(Ui::DropdownMenu::ItemComponent.new(inset: true, variant: :destructive, disabled: true)) { "Delete" }
 
     assert_selector "button[role='menuitem'][data-inset][data-variant='destructive'][data-disabled][aria-disabled='true']",
-                    text: "Excluir"
+                    text: "Delete"
   end
 
   def test_item_renders_as_link
@@ -89,8 +89,8 @@ class DropdownMenuComponentTest < ViewComponent::TestCase
     assert_selector "#account-menu[data-controller='ui-dropdown-menu']"
     assert_selector "button[data-ui-dropdown-menu-target='trigger']", text: "Abrir menu"
     assert_selector "[role='menu'] [data-slot='dropdown-menu-label']", visible: :all, text: "Minha conta"
-    assert_selector "[role='menu'] [role='group'] button[role='menuitem']", visible: :all, text: /Perfil/
-    assert_selector "[role='menu'] a[role='menuitem'][href='/settings']", visible: :all, text: "Configurações"
+    assert_selector "[role='menu'] [role='group'] button[role='menuitem']", visible: :all, text: /Profile/
+    assert_selector "[role='menu'] a[role='menuitem'][href='/settings']", visible: :all, text: "Settings"
     assert_selector "[role='menu'] button[role='menuitem'][data-variant='destructive']", visible: :all, text: "Sair"
   end
 end

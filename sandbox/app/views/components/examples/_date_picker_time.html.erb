@@ -1,13 +1,13 @@
-<%# Data e hora são dois campos: o picker cuida do dia, um `input type="time"`
-    nativo cuida da hora. O indicador nativo do navegador fica escondido para
-    não competir com o ícone do campo. %>
+<%# Date and time are two fields: the picker settles the day, a native
+    `input type="time"` settles the hour. The browser's own indicator is hidden
+    so it does not compete with the field's icon. %>
 <div class="flex max-w-xs gap-4">
   <%= ui_field(data: { controller: "ui-date-picker" }) do %>
-    <%= ui_field_label(for: "meeting-on") { "Data" } %>
+    <%= ui_field_label(for: "meeting-on") { "Date" } %>
     <%= ui_popover do %>
       <%= ui_popover_trigger(id: "meeting-on", variant: :outline, class: "w-36 justify-between font-normal") do %>
         <span data-ui-date-picker-target="label" data-empty="true" class="data-[empty=true]:text-muted-foreground">
-          Selecione
+          Pick one
         </span>
         <%= ui_icon("chevron-down", class: "opacity-50") %>
       <% end %>
@@ -18,7 +18,7 @@
   <% end %>
 
   <%= ui_field(class: "w-32") do %>
-    <%= ui_field_label(for: "meeting-at") { "Hora" } %>
+    <%= ui_field_label(for: "meeting-at") { "Time" } %>
     <%= ui_input(
           type: :time,
           id: "meeting-at",

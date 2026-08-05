@@ -4,9 +4,9 @@ require "test_helper"
 
 class SidebarMenuButtonComponentTest < ViewComponent::TestCase
   def test_renders_default_button
-    render_inline(Ui::Sidebar::MenuButtonComponent.new) { "Início" }
+    render_inline(Ui::Sidebar::MenuButtonComponent.new) { "Home" }
 
-    assert_selector "button[type='button'][data-slot='sidebar-menu-button'][data-size='default']", text: "Início"
+    assert_selector "button[type='button'][data-slot='sidebar-menu-button'][data-size='default']", text: "Home"
   end
 
   def test_renders_active_link
@@ -22,11 +22,11 @@ class SidebarMenuButtonComponentTest < ViewComponent::TestCase
   end
 
   def test_tooltip_wraps_button_with_controller
-    render_inline(Ui::Sidebar::MenuButtonComponent.new(tooltip: "Início")) { "Início" }
+    render_inline(Ui::Sidebar::MenuButtonComponent.new(tooltip: "Home")) { "Home" }
 
-    assert_selector "[data-controller='ui-tooltip'] button[data-ui-tooltip-target='trigger']", text: "Início"
+    assert_selector "[data-controller='ui-tooltip'] button[data-ui-tooltip-target='trigger']", text: "Home"
     assert_selector "[data-slot='sidebar-menu-button-tooltip-content'][role='tooltip'][data-ui-tooltip-target='content']",
-                    text: "Início", visible: :all
+                    text: "Home", visible: :all
   end
 
   def test_menu_sub_button_renders_anchor

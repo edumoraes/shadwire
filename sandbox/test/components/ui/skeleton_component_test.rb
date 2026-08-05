@@ -18,15 +18,15 @@ class SkeletonComponentTest < ViewComponent::TestCase
   end
 
   def test_allows_exposing_to_assistive_technology
-    render_inline(Ui::SkeletonComponent.new(aria: { hidden: "false", label: "Carregando" }))
+    render_inline(Ui::SkeletonComponent.new(aria: { hidden: "false", label: "Loading" }))
 
-    assert_selector "div[aria-hidden='false'][aria-label='Carregando']"
+    assert_selector "div[aria-hidden='false'][aria-label='Loading']"
   end
 
   def test_accepts_html_attrs_and_content
-    render_inline(Ui::SkeletonComponent.new(data: { testid: "loading" })) { "conteúdo" }
+    render_inline(Ui::SkeletonComponent.new(data: { testid: "loading" })) { "content" }
 
-    assert_selector "div[data-testid='loading'][data-slot='skeleton']", text: "conteúdo"
+    assert_selector "div[data-testid='loading'][data-slot='skeleton']", text: "content"
   end
 
   def test_helper_renders_skeleton

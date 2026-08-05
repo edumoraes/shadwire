@@ -8,8 +8,8 @@ class PopoverComponentTest < ViewComponent::TestCase
 
     def call
       ui_popover(id: "dims-popover") do
-        ui_popover_trigger(variant: :outline) { "Abrir" } +
-          ui_popover_content(side: :bottom, align: :start) { "Conteúdo do popover" }
+        ui_popover_trigger(variant: :outline) { "Open" } +
+          ui_popover_content(side: :bottom, align: :start) { "Popover content" }
       end
     end
   end
@@ -22,11 +22,11 @@ class PopoverComponentTest < ViewComponent::TestCase
   end
 
   def test_trigger_renders_button_with_toggle_and_expanded_state
-    render_inline(Ui::Popover::TriggerComponent.new) { "Abrir" }
+    render_inline(Ui::Popover::TriggerComponent.new) { "Open" }
 
     assert_selector "button[type='button'][aria-haspopup='dialog'][aria-expanded='false']" \
                     "[data-slot='popover-trigger'][data-ui-popover-target='trigger']" \
-                    "[data-action='click->ui-popover#toggle']", text: "Abrir"
+                    "[data-action='click->ui-popover#toggle']", text: "Open"
   end
 
   def test_content_renders_hidden_focusable_panel_with_side_and_align
@@ -46,7 +46,7 @@ class PopoverComponentTest < ViewComponent::TestCase
     render_inline(HelperHarnessComponent.new)
 
     assert_selector "#dims-popover[data-controller='ui-popover']"
-    assert_selector "button[data-ui-popover-target='trigger'][aria-expanded='false']", text: "Abrir"
-    assert_selector "[data-ui-popover-target='content'].top-full.left-0", visible: :all, text: "Conteúdo do popover"
+    assert_selector "button[data-ui-popover-target='trigger'][aria-expanded='false']", text: "Open"
+    assert_selector "[data-ui-popover-target='content'].top-full.left-0", visible: :all, text: "Popover content"
   end
 end

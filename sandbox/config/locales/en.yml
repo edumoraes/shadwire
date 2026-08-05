@@ -252,3 +252,417 @@ en:
       files_html: "The %{name} registry item installs these files:"
       stimulus_html: "This component uses Stimulus, so the application needs %{importmap} and %{stimulus} with automatic controller loading."
       cli_html: "Haven't installed the CLI yet? %{install}, then %{init}."
+
+    # Captions for the live examples on the component pages, keyed by the
+    # partial each one renders. Names are unique across the catalog because
+    # the partials all share one directory.
+    examples:
+      default:
+        title: "Default"
+        description: "The default variant, used for a screen's primary action."
+      secondary:
+        title: "Secondary"
+        description: "A lower-emphasis alternative for secondary actions."
+      destructive:
+        title: "Destructive"
+        description: "For destructive actions, such as deleting a record."
+      outline:
+        title: "Outline"
+        description: "Border only, no fill — good for neutral actions."
+      ghost:
+        title: "Ghost"
+        description: "No background and no border until hover."
+      link:
+        title: "Link"
+        description: "Looks like a text link while keeping button semantics."
+      icon:
+        title: "Icon"
+        description: "A square icon-only button (size: :icon). Pass label: on the icon for screen readers."
+      with_icon:
+        title: "With icon"
+        description: "Compose ui_icon inside the block; the button sizes the SVG for you."
+      sizes:
+        title: "Sizes"
+        description: "The :sm, :default and :lg sizes side by side."
+      loading:
+        title: "Loading"
+        description: "A loading state composed from a spinning icon and disabled."
+      disabled:
+        title: "Disabled"
+        description: "Pass disabled: true as an HTML attribute."
+      as_link:
+        title: "As a link"
+        description: "Render as an <a> with tag: :a, keeping the button's look."
+      badge_variants:
+        title: "Variants"
+        description: "Use variants to signal priority, state or category."
+      card_default:
+        title: "Default"
+        description: "Compose header, title, description, content and footer inside the card."
+      alert_default:
+        title: "Default"
+        description: "An important message, with role=\"alert\" by default."
+      alert_destructive:
+        title: "Destructive"
+        description: "Use this for errors or high-severity warnings."
+      separator_default:
+        title: "Orientations and decorative"
+        description: "Semantic separators expose aria-orientation; decorative ones stay hidden from assistive technology."
+      avatar_default:
+        title: "Image, fallback and label"
+        description: "Render an image with a fallback, or a fallback on its own for users with no photo."
+      icon_default:
+        title: "Decorative and labelled"
+        description: "Icons are decorative by default; pass label: when the icon carries meaning."
+      accordion_basic:
+        title: "Basic"
+        description: "A simple accordion showing one item at a time. The first item starts open."
+      accordion_multiple:
+        title: "Multiple"
+        description: "Use multiple: true to let several items stay open at once."
+      accordion_disabled:
+        title: "Disabled"
+        description: "Use disabled: true on an item to lock that panel."
+      accordion_borders:
+        title: "Borders"
+        description: "Add border on the accordion to outline the group."
+      accordion_card:
+        title: "Card"
+        description: "Compose the Accordion inside a Card when it is part of a larger surface."
+      scroll_area_vertical:
+        title: "Preview"
+        description: "A vertical Scroll Area keeps native scrolling while matching Shadwire styles."
+      scroll_area_horizontal:
+        title: "Horizontal"
+        description: "Use a horizontal scrollbar for galleries and wide content."
+      scroll_area_rtl:
+        title: "RTL"
+        description: "Use dir: \"rtl\" when rendering right-to-left content."
+      input_default:
+        title: "Default"
+        description: "A text field with the shadcn look. Free-form HTML attributes pass straight to the <input>."
+      input_with_label:
+        title: "With a label"
+        description: "Pair it with ui_label using for:/id: to tie the label to the field."
+      input_disabled:
+        title: "Disabled"
+        description: "Pass disabled: true as an HTML attribute."
+      input_file:
+        title: "File"
+        description: "type: :file styles the native file picker."
+      input_form:
+        title: "With form_with"
+        description: "Use form.field_name/form.field_id to wire it into Rails forms."
+      label_default:
+        title: "Default"
+        description: "Tie the label to the field with for: pointing at the control's id."
+      label_disabled:
+        title: "Disabled group"
+        description: "Inside a group carrying data-disabled, the label dims automatically."
+      textarea_default:
+        title: "Default"
+        description: "A textarea with the shadcn look; it grows with its content through field-sizing."
+      textarea_with_label:
+        title: "With a label"
+        description: "Pair it with ui_label for accessible forms."
+      textarea_disabled:
+        title: "Disabled"
+        description: "Pass disabled: true as an HTML attribute."
+      checkbox_default:
+        title: "Default"
+        description: "A styled native checkbox, tied to a ui_label through for:/id:."
+      checkbox_checked:
+        title: "Checked"
+        description: "Use checked: true to render it checked; pair it with supporting text."
+      checkbox_disabled:
+        title: "Disabled"
+        description: "disabled: true disables the native input."
+      checkbox_form:
+        title: "With form_with"
+        description: "Use form.field_name/form.field_id. Unlike form.check_box there is no hidden input — treat a missing parameter as unchecked."
+      radio_group_default:
+        title: "Default"
+        description: "Native radios sharing one name: — arrow-key navigation comes from the browser."
+      radio_group_disabled:
+        title: "Disabled item"
+        description: "disabled: true disables one item without affecting the group."
+      radio_group_form:
+        title: "With form_with"
+        description: "Use form.field_name for the shared name and form.field_id(attr, value) for each id."
+      switch_default:
+        title: "Default"
+        description: "A native checkbox with role=\"switch\" — toggle semantics for screen readers."
+      switch_checked:
+        title: "On"
+        description: "Use checked: true to start it on; pair it with supporting text."
+      switch_disabled:
+        title: "Disabled"
+        description: "disabled: true disables the native input."
+      switch_form:
+        title: "With form_with"
+        description: "Use form.field_name/form.field_id. No hidden input — treat a missing parameter as off."
+      skeleton_default:
+        title: "Default"
+        description: "Combine shapes to sketch the content that is loading."
+      skeleton_card:
+        title: "Card"
+        description: "A placeholder for media cards with lines of text."
+      progress_default:
+        title: "Default"
+        description: "The value is rendered on the server and exposed through aria-valuenow."
+      progress_values:
+        title: "Values"
+        description: "Bars at different stages of completion."
+      progress_custom:
+        title: "Custom max and height"
+        description: "Use max: for your own scale and classes to adjust the height."
+      table_demo:
+        title: "Invoices"
+        description: "The full anatomy: caption, header, body and footer, with aligned cells."
+      table_selected:
+        title: "Selected row"
+        description: "Use data: { state: \"selected\" } to highlight a row."
+      breadcrumb_default:
+        title: "Default"
+        description: "A trail of links with the current page marked aria-current=\"page\"."
+      breadcrumb_ellipsis:
+        title: "Collapsed"
+        description: "Use ui_breadcrumb_ellipsis for long trails."
+      breadcrumb_custom_separator:
+        title: "Custom separator"
+        description: "Pass a block to the separator to replace the default chevron."
+      pagination_default:
+        title: "Default"
+        description: "Previous/Next with accessible labels, the active page marked aria-current=\"page\", and a decorative ellipsis."
+      tabs_default:
+        title: "Default"
+        description: "Two panels holding cards; the active panel is driven by the ui-tabs controller."
+      tabs_disabled:
+        title: "Disabled trigger"
+        description: "disabled: true removes the trigger from the keyboard flow and from activation."
+      dialog_default:
+        title: "Default"
+        description: "A profile form in a native <dialog>: focus trapping, Esc and focus restoration all come from the browser."
+      dialog_no_backdrop_close:
+        title: "No backdrop close"
+        description: "close_on_backdrop: false ignores clicks outside the panel."
+      dialog_custom_close:
+        title: "Custom footer"
+        description: "show_close_button: false drops the X; compose your own buttons with ui_dialog_close."
+      alert_dialog_default:
+        title: "Delete confirmation"
+        description: "Neither the backdrop nor Esc closes it — the person has to choose Cancel or Continue."
+      sheet_default:
+        title: "Default"
+        description: "A panel sliding in from the right, with a form and a footer."
+      sheet_sides:
+        title: "All four sides"
+        description: "side: :right, :left, :top or :bottom sets the edge it comes from and the animation."
+      tooltip_default:
+        title: "Default"
+        description: "Opens on hover and on focus after a short delay; Esc closes it without moving focus."
+      tooltip_sides:
+        title: "Sides"
+        description: "side: :top, :right, :bottom or :left positions the bubble."
+      popover_default:
+        title: "Default"
+        description: "A non-modal panel: it opens on click, focuses its content, and closes on an outside click or Esc."
+      popover_align:
+        title: "Alignment"
+        description: "align: :start, :center or :end shifts the panel along the cross axis."
+      dropdown_menu_default:
+        title: "Default"
+        description: "A label, groups, and items with shortcuts. Arrows navigate, typeahead matches by prefix, Esc closes."
+      dropdown_menu_variants:
+        title: "Inset, links and destructive"
+        description: "inset: lines up with items that have icons; tag: :a makes it a link; variant: :destructive marks dangerous actions."
+      select_default:
+        title: "Default"
+        description: "An APG combobox: focus stays on the trigger, arrows and typeahead navigate, and the active option uses aria-activedescendant."
+      select_groups:
+        title: "Groups"
+        description: "Group options with a label and a separator; items can be disabled."
+      select_form:
+        title: "With form_with"
+        description: "The value travels in a hidden input (name:). Native required does not apply — validate on the server."
+      sidebar_basic:
+        title: "Preview"
+        description: "A contained sidebar (collapsible: :none) with a header, groups and a menu. The full block, with collapsing and a mobile drawer, is at /blocks/sidebar-01."
+      aspect_ratio_default:
+        title: "Default"
+        description: "Constrains the content to a 16 / 9 ratio."
+      spinner_default:
+        title: "Default"
+        description: "Standalone (it announces \"Loading\") and composed inside a button (decorative)."
+      kbd_default:
+        title: "Default"
+        description: "A group of keys inside a sentence."
+      empty_default:
+        title: "Default"
+        description: "An empty state with an icon, text and one action."
+      item_default:
+        title: "Default"
+        description: "An item with media, content and an action."
+      input_group_default:
+        title: "Default"
+        description: "An icon addon on the left and a shortcut on the right."
+      button_group_default:
+        title: "Default"
+        description: "Two buttons joined into one horizontal group."
+      field_default:
+        title: "Default"
+        description: "A vertical field with a label, an input and a description."
+      native_select_default:
+        title: "Default"
+        description: "A native select with a styled chevron and focus ring."
+      collapsible_default:
+        title: "Default"
+        description: "A list that reveals additional items."
+      toggle_default:
+        title: "Default"
+        description: "Formatting toggles, one of them pressed."
+      toggle_group_default:
+        title: "Default"
+        description: "Multiple selection of text formatting."
+      slider_default:
+        title: "Default"
+        description: "Drag the thumb or use the arrow keys."
+      hover_card_default:
+        title: "Default"
+        description: "A profile card shown on hover."
+      input_otp_default:
+        title: "Default"
+        description: "Two groups of three slots separated by a dash."
+      drawer_default:
+        title: "Default"
+        description: "A bottom drawer with a header, a description and actions."
+      context_menu_default:
+        title: "Default"
+        description: "An area that opens the menu on right-click."
+      menubar_default:
+        title: "Default"
+        description: "Two menus with items, separators and shortcuts."
+      navigation_menu_default:
+        title: "Default"
+        description: "A trigger with a panel, and a plain link."
+      command_default:
+        title: "Default"
+        description: "A palette with groups, icons and shortcuts."
+      combobox_default:
+        title: "Default"
+        description: "A popover trigger holding a searchable command list."
+      calendar_default:
+        title: "Default"
+        description: "The current month with today selected. Arrows walk the days, Home/End jump to the ends of the week, and PageUp/PageDown change month."
+      calendar_range:
+        title: "Range"
+        description: "mode: :range records two dates; hovering after the first click previews the range. number_of_months: 2 shows two months side by side."
+      calendar_dropdown:
+        title: "Caption with selects"
+        description: "caption_layout: :dropdown swaps the month name for month and year selects — the short way to a distant year."
+      date_picker_default:
+        title: "Default"
+        description: "A button that opens the calendar in a popover and then shows the chosen date."
+      date_picker_field:
+        title: "With a label"
+        description: "The same trigger inside a Field, tied to the label by id."
+      date_picker_range:
+        title: "Range"
+        description: "Two dates in a single trigger. The popover closes when the second end lands, not the first."
+      date_picker_dob:
+        title: "Date of birth"
+        description: "A caption with month and year selects and max: today — nobody was born next week."
+      date_picker_input:
+        title: "With a text field"
+        description: "Type the date or pick it in the calendar: the text becomes a date and the date comes back formatted. ↓ opens the popover."
+      date_picker_time:
+        title: "Date and time"
+        description: "The picker settles the day; a native input type=\"time\" settles the hour."
+      date_picker_natural:
+        title: "Natural language"
+        description: "It takes \"today\", \"tomorrow\", \"in 2 weeks\", \"next friday\". The phrase table lives in the controller — it is your code."
+      date_picker_rtl:
+        title: "RTL"
+        description: "dir: :rtl mirrors the grid, the arrows and the ←/→ keys; month_names:/day_names: translate the caption."
+      resizable_default:
+        title: "Default"
+        description: "Two horizontal panels with one handle."
+      carousel_default:
+        title: "Default"
+        description: "Five numbered slides with controls."
+      sonner_default:
+        title: "Default"
+        description: "The default, success, error and with-action variants."
+      chart_bar:
+        title: "Bars"
+        description: "Two datasets using the theme's palette."
+      chart_line:
+        title: "Line"
+        description: "A time series with tension and a filled area."
+      chart_pie:
+        title: "Pie"
+        description: "A categorical distribution coloured by label."
+      data_table_default:
+        title: "Default"
+        description: "Filtering by email, sortable columns and row selection."
+
+    # Subtitles of the component pages that render through the generic
+    # doc_page template. Their titles are component names, which do not
+    # translate.
+    pages:
+      aspect_ratio:
+        subtitle: "Keeps content at a fixed ratio using the CSS aspect-ratio property."
+      spinner:
+        subtitle: "A spinning loading indicator with role=\"status\" and an accessible label."
+      kbd:
+        subtitle: "Represents keyboard keys. Group several with ui_kbd_group to show a shortcut."
+      empty:
+        subtitle: "An empty state: media, title, description and actions, centred."
+      item:
+        subtitle: "A flexible row: media + content (title/description) + actions. Group them with ui_item_group."
+      input_group:
+        subtitle: "Combines an input or textarea with addons (icons, text, buttons) at either end."
+      button_group:
+        subtitle: "Visually joins a run of buttons, collapsing the borders and inner corners."
+      field:
+        subtitle: "Composes a form field's label, control, description and error."
+      native_select:
+        subtitle: "A native <select>, styled to match the other controls."
+      collapsible:
+        subtitle: "A section that expands and collapses, driven by the ui-collapsible controller."
+      toggle:
+        subtitle: "A two-state button with aria-pressed and data-state (on/off)."
+      toggle_group:
+        subtitle: "A group of toggles with single or multiple selection and arrow-key navigation."
+      slider:
+        subtitle: "A single-thumb slider (the WAI-ARIA pattern) with its value mirrored into a hidden input."
+      hover_card:
+        subtitle: "Rich content that opens on hovering or focusing the trigger, with configurable delays."
+      input_otp:
+        subtitle: "A one-time code field: single-character slots with advance, backspace and paste."
+      drawer:
+        subtitle: "A panel sliding in from an edge, built on the native <dialog>, with drag-to-close."
+      context_menu:
+        subtitle: "A menu opened with the right mouse button, positioned at the pointer, with keyboard navigation."
+      menubar:
+        subtitle: "A horizontal menu bar (the WAI-ARIA menubar pattern) coordinated by a controller."
+      navigation_menu:
+        subtitle: "Navigation whose triggers reveal content panels, one at a time."
+      command:
+        subtitle: "A filterable command palette, with arrow-key navigation and Enter."
+      combobox:
+        subtitle: "A recipe: Popover + Command. Not a new component — it installs popover and command."
+      resizable:
+        subtitle: "Resizable panels with draggable handles and keyboard adjustment."
+      carousel:
+        subtitle: "A slide carousel with previous/next controls and arrow-key navigation."
+      sonner:
+        subtitle: "Temporary notifications stacked in a polite live region. Fire them with window.toast or through Stimulus."
+      chart:
+        subtitle: "Charts with Chart.js. The palette uses the theme's --chart-1..5 tokens. It is the only third-party JS dependency."
+      data_table:
+        subtitle: "A table with filtering, sorting, pagination, row selection and column visibility — all client-side."
+
+  blocks:
+    sidebar_01:
+      description: A navigation sidebar with a version switcher, search, and groups of links.

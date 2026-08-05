@@ -10,7 +10,7 @@ class TabsComponentTest < ViewComponent::TestCase
       ui_tabs(default_value: :account, id: "settings-tabs") do
         ui_tabs_list do
           ui_tabs_trigger(value: :account) { "Conta" } +
-            ui_tabs_trigger(value: :password) { "Senha" }
+            ui_tabs_trigger(value: :password) { "Password" }
         end +
           ui_tabs_content(value: :account) { "Painel da conta" } +
           ui_tabs_content(value: :password) { "Painel de senha" }
@@ -19,9 +19,9 @@ class TabsComponentTest < ViewComponent::TestCase
   end
 
   def test_renders_root_with_stimulus_controller_and_default_value
-    render_inline(Ui::TabsComponent.new(default_value: :account)) { "conteúdo" }
+    render_inline(Ui::TabsComponent.new(default_value: :account)) { "content" }
 
-    assert_selector "[data-controller='ui-tabs'][data-ui-tabs-default-value-value='account'][data-slot='tabs']", text: "conteúdo"
+    assert_selector "[data-controller='ui-tabs'][data-ui-tabs-default-value-value='account'][data-slot='tabs']", text: "content"
   end
 
   def test_root_appends_to_existing_controllers

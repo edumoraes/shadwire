@@ -60,11 +60,11 @@ class UiAccessibilityTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "main"
-    assert_select "h1", text: "Componentes"
-    assert_select "nav[aria-label='Componentes']"
+    assert_select "h1", text: "Components"
+    assert_select "nav[aria-label='Components']"
 
-    assert_select "nav[aria-label='Componentes'] a[href='#{components_button_path}']", text: /Button/
-    assert_select "nav[aria-label='Componentes'] a[href='#{components_dialog_path}']", text: /Dialog/
-    assert_select "nav[aria-label='Componentes'] a[href='#{components_sidebar_path}']", text: /Sidebar/
+    assert_select "nav[aria-label='Components'] a[href='#{components_button_path}']", text: /Button/
+    assert_select "nav[aria-label='Components'] a[href='#{components_dialog_path}']", text: /Dialog/
+    assert_select "nav[aria-label='Components'] a[href='#{components_sidebar_path}']", text: /Sidebar/
   end
 end

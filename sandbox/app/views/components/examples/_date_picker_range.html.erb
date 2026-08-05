@@ -1,11 +1,11 @@
-<%# `mode: :range` grava as duas pontas: `name:` é o início, `end_name:` é o fim. %>
+<%# `mode: :range` records both ends: `name:` is the start, `end_name:` the finish. %>
 <%= ui_field(class: "w-72", data: { controller: "ui-date-picker", ui_date_picker_format_value: "medium" }) do %>
-  <%= ui_field_label(for: "stay") { "Período da estadia" } %>
+  <%= ui_field_label(for: "stay") { "Length of stay" } %>
   <%= ui_popover do %>
     <%= ui_popover_trigger(id: "stay", variant: :outline, class: "justify-start gap-2 px-2.5 font-normal") do %>
       <%= ui_icon("calendar", class: "opacity-50") %>
       <span data-ui-date-picker-target="label" data-empty="true" class="truncate data-[empty=true]:text-muted-foreground">
-        Selecione o período
+        Pick the dates
       </span>
     <% end %>
     <%= ui_popover_content(align: :start, class: "w-auto! p-0!") do %>

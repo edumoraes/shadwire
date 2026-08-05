@@ -9,7 +9,7 @@ class CollapsibleComponentTest < ViewComponent::TestCase
     def call
       ui_collapsible(open: true) do
         ui_collapsible_trigger(open: true) { "Detalhes" } +
-          ui_collapsible_content(open: true) { "Conteúdo" }
+          ui_collapsible_content(open: true) { "Content" }
       end
     end
   end
@@ -21,9 +21,9 @@ class CollapsibleComponentTest < ViewComponent::TestCase
   end
 
   def test_trigger_toggles_via_action
-    render_inline(Ui::Collapsible::TriggerComponent.new) { "Abrir" }
+    render_inline(Ui::Collapsible::TriggerComponent.new) { "Open" }
 
-    assert_selector "button[type='button'][data-slot='collapsible-trigger'][data-ui-collapsible-target='trigger'][aria-expanded='false']", text: "Abrir"
+    assert_selector "button[type='button'][data-slot='collapsible-trigger'][data-ui-collapsible-target='trigger'][aria-expanded='false']", text: "Open"
     assert_selector "button[data-action='click->ui-collapsible#toggle']"
   end
 
@@ -38,6 +38,6 @@ class CollapsibleComponentTest < ViewComponent::TestCase
 
     assert_selector "[data-controller='ui-collapsible'][data-state='open']"
     assert_selector "button[aria-expanded='true'][data-state='open']", text: "Detalhes"
-    assert_selector "[data-slot='collapsible-content'][data-state='open']", text: "Conteúdo"
+    assert_selector "[data-slot='collapsible-content'][data-state='open']", text: "Content"
   end
 end

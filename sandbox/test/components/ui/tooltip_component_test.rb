@@ -9,7 +9,7 @@ class TooltipComponentTest < ViewComponent::TestCase
     def call
       ui_tooltip(id: "save-tooltip", open_delay: 150) do
         ui_tooltip_trigger(variant: :outline) { "Passe o mouse" } +
-          ui_tooltip_content(side: :bottom) { "Salvar alterações" }
+          ui_tooltip_content(side: :bottom) { "Save changes" }
       end
     end
   end
@@ -47,6 +47,6 @@ class TooltipComponentTest < ViewComponent::TestCase
 
     assert_selector "#save-tooltip[data-controller='ui-tooltip'][data-ui-tooltip-open-delay-value='150']"
     assert_selector "button[data-ui-tooltip-target='trigger']", text: "Passe o mouse"
-    assert_selector "[role='tooltip'][data-ui-tooltip-target='content'].top-full", visible: :all, text: "Salvar alterações"
+    assert_selector "[role='tooltip'][data-ui-tooltip-target='content'].top-full", visible: :all, text: "Save changes"
   end
 end

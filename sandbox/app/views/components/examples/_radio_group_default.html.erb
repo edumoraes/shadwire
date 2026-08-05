@@ -1,14 +1,14 @@
-<%= ui_radio_group(aria: { label: "Densidade da interface" }) do %>
+<%= ui_radio_group(aria: { label: "Interface density" }) do %>
   <div class="flex items-center gap-2">
     <%= ui_radio_group_item(name: "density", value: "default", id: "density-default", checked: true) %>
-    <%= ui_label(for: "density-default") { "Padrão" } %>
+    <%= ui_label(for: "density-default") { "Default" } %>
   </div>
   <div class="flex items-center gap-2">
     <%= ui_radio_group_item(name: "density", value: "comfortable", id: "density-comfortable") %>
-    <%= ui_label(for: "density-comfortable") { "Confortável" } %>
+    <%= ui_label(for: "density-comfortable") { "Comfortable" } %>
   </div>
   <div class="flex items-center gap-2">
     <%= ui_radio_group_item(name: "density", value: "compact", id: "density-compact") %>
-    <%= ui_label(for: "density-compact") { "Compacto" } %>
+    <%= ui_label(for: "density-compact") { "Compact" } %>
   </div>
 <% end %>

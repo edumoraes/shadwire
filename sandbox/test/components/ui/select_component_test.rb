@@ -14,7 +14,7 @@ class SelectComponentTest < ViewComponent::TestCase
             ui_select_content do
               ui_select_group do
                 ui_select_label { "Frutas" } +
-                  ui_select_item(value: "apple") { "Maçã" } +
+                  ui_select_item(value: "apple") { "Apple" } +
                   ui_select_item(value: "banana") { "Banana" } +
                   ui_select_item(value: "cherry", disabled: true) { "Cereja" }
               end
@@ -35,11 +35,11 @@ class SelectComponentTest < ViewComponent::TestCase
   end
 
   def test_trigger_renders_combobox_with_chevron
-    render_inline(Ui::Select::TriggerComponent.new) { "Selecione" }
+    render_inline(Ui::Select::TriggerComponent.new) { "Select" }
 
     assert_selector "button[type='button'][role='combobox'][aria-haspopup='listbox'][aria-expanded='false']" \
                     "[data-slot='select-trigger'][data-ui-select-target='trigger']" \
-                    "[data-action='click->ui-select#toggle keydown->ui-select#keydown']", text: "Selecione"
+                    "[data-action='click->ui-select#toggle keydown->ui-select#keydown']", text: "Select"
     assert_selector "button svg" # chevron-down
   end
 
@@ -56,17 +56,17 @@ class SelectComponentTest < ViewComponent::TestCase
   end
 
   def test_content_renders_hidden_listbox
-    render_inline(Ui::Select::ContentComponent.new) { "opções" }
+    render_inline(Ui::Select::ContentComponent.new) { "options" }
 
     assert_selector "div[role='listbox'][hidden][data-slot='select-content'][data-ui-select-target='content']",
-                    visible: :all, text: "opções"
+                    visible: :all, text: "options"
   end
 
   def test_item_renders_option_with_value_and_actions
-    render_inline(Ui::Select::ItemComponent.new(value: "apple")) { "Maçã" }
+    render_inline(Ui::Select::ItemComponent.new(value: "apple")) { "Apple" }
 
     assert_selector "div[role='option'][data-value='apple'][data-slot='select-item'][data-ui-select-target='item']" \
-                    "[data-action='click->ui-select#select mouseenter->ui-select#highlight']", text: "Maçã"
+                    "[data-action='click->ui-select#select mouseenter->ui-select#highlight']", text: "Apple"
   end
 
   def test_item_disabled_state

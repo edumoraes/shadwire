@@ -2,24 +2,24 @@
   <div class="flex flex-wrap gap-2">
     <%= ui_button(variant: :outline, data: {
           action: "click->ui-sonner#toast",
-          "ui-sonner-title-param": "Evento criado",
-          "ui-sonner-description-param": "Domingo, 25 de junho às 21h." }) { "Mostrar toast" } %>
+          "ui-sonner-title-param": "Event created",
+          "ui-sonner-description-param": "Sunday, June 25 at 9:00 PM." }) { "Show toast" } %>
 
     <%= ui_button(variant: :outline, data: {
           action: "click->ui-sonner#toast",
           "ui-sonner-variant-param": "success",
-          "ui-sonner-title-param": "Tudo certo!",
-          "ui-sonner-description-param": "Suas alterações foram salvas." }) { "Sucesso" } %>
+          "ui-sonner-title-param": "All set!",
+          "ui-sonner-description-param": "Your changes have been saved." }) { "Success" } %>
 
     <%= ui_button(variant: :outline, data: {
           action: "click->ui-sonner#toast",
           "ui-sonner-variant-param": "error",
-          "ui-sonner-title-param": "Algo deu errado",
-          "ui-sonner-description-param": "Não foi possível salvar o registro." }) { "Erro" } %>
+          "ui-sonner-title-param": "Something went wrong",
+          "ui-sonner-description-param": "The record could not be saved." }) { "Error" } %>
 
     <%= ui_button(variant: :outline, data: {
           action: "click->ui-sonner#toast",
-          "ui-sonner-title-param": "Arquivo movido para a lixeira",
-          "ui-sonner-action-label-param": "Desfazer" }) { "Com ação" } %>
+          "ui-sonner-title-param": "File moved to trash",
+          "ui-sonner-action-label-param": "Undo" }) { "With an action" } %>
   </div>
 <% end %>

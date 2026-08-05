@@ -11,9 +11,9 @@ class CommandComponentTest < ViewComponent::TestCase
         ui_command_input(placeholder: "Buscar...") +
           ui_command_list do
             ui_command_empty { "Nada encontrado." } +
-              ui_command_group(heading: "Sugestões") do
-                ui_command_item(value: "calendario") { "Calendário" } +
-                  ui_command_item(value: "perfil") { "Perfil" }
+              ui_command_group(heading: "Suggestions") do
+                ui_command_item(value: "calendario") { "Calendar" } +
+                  ui_command_item(value: "perfil") { "Profile" }
               end
           end
       end
@@ -34,9 +34,9 @@ class CommandComponentTest < ViewComponent::TestCase
   end
 
   def test_item_is_option_with_value
-    render_inline(Ui::Command::ItemComponent.new(value: "perfil")) { "Perfil" }
+    render_inline(Ui::Command::ItemComponent.new(value: "perfil")) { "Profile" }
 
-    assert_selector "div[role='option'][data-value='perfil'][aria-selected='false'][data-ui-command-target='item'][data-action='click->ui-command#select']", text: "Perfil"
+    assert_selector "div[role='option'][data-value='perfil'][aria-selected='false'][data-ui-command-target='item'][data-action='click->ui-command#select']", text: "Profile"
   end
 
   def test_empty_is_hidden_initially
@@ -49,7 +49,7 @@ class CommandComponentTest < ViewComponent::TestCase
     render_inline(HelperHarnessComponent.new)
 
     assert_selector "[data-controller='ui-command'] [role='listbox'][data-ui-command-target='list']"
-    assert_selector "[data-slot='command-group'][data-ui-command-target='group']", text: /Sugestões/
+    assert_selector "[data-slot='command-group'][data-ui-command-target='group']", text: /Suggestions/
     assert_selector "[role='option'][data-ui-command-target='item']", count: 2
   end
 end

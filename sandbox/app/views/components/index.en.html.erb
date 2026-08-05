@@ -1,0 +1,39 @@
+<% content_for :title, "Components — Shadwire" %>
+<% content_for :description, "Shadwire's component catalog: ViewComponent ports of the shadcn/ui components, each with live examples, usage code and an API reference." %>
+
+<article class="space-y-8">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95]">Components</h1>
+    <p class="text-lg leading-snug text-muted-foreground">
+      ViewComponent ports of the shadcn/ui components. Open any page for live examples,
+      usage code and the API reference.
+    </p>
+  </header>
+
+  <div class="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+    <%= ui_badge(variant: :secondary) { "#{docs_component_items.size} components" } %>
+    <span>
+      Install any of them with <%= docs_code("bin/shadwire add <name>") %>.
+      See <%= link_to "Installation", docs_installation_path, class: "font-medium underline underline-offset-4" %>.
+    </span>
+  </div>
+
+  <%# The list comes from the registry, so a new component shows up here as soon as it has a route. %>
+  <nav aria-label="Components">
+    <ul class="grid gap-3 sm:grid-cols-2">
+      <% docs_component_items.sort_by { |item| item.fetch("title").downcase }.each do |item| %>
+        <li>
+          <%= link_to docs_component_path(item.fetch("name")), class: "group flex h-full flex-col gap-1 rounded-lg border bg-card px-4 py-3 text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
+            <span class="flex items-center justify-between gap-2 text-sm font-medium">
+              <%= item.fetch("title") %>
+              <span aria-hidden="true" class="text-muted-foreground transition-transform group-hover:translate-x-0.5">→</span>
+            </span>
+            <span class="text-sm leading-6 text-muted-foreground group-hover:text-accent-foreground">
+              <%= item.fetch("description") %>
+            </span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+</article>

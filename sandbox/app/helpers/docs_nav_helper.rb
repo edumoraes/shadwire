@@ -46,7 +46,7 @@ module DocsNavHelper
   # components controller defines.
   def docs_nav_components_group
     items = docs_component_items.map do |item|
-      { title: item.fetch("title"), path: "/components/#{item.fetch("name")}" }
+      { title: item.fetch("title"), path: docs_component_path(item.fetch("name")) }
     end
 
     {
@@ -58,6 +58,14 @@ module DocsNavHelper
   # Registry items of type "component", in manifest order.
   def docs_component_items
     registry_items.values.select { |item| item.fetch("type") == "component" }
+  end
+
+  # The documentation path of a registry component. Goes through the route
+  # helper rather than being built as a string: the helper carries the locale
+  # from default_url_options, and a hand-built "/components/#{name}" would send
+  # a Portuguese reader into the English tree.
+  def docs_component_path(name)
+    send(:"components_#{name.tr("-", "_")}_path")
   end
 
   # Every sidebar entry, flattened into the order the previous/next pager walks.

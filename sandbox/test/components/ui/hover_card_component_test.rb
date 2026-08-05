@@ -9,7 +9,7 @@ class HoverCardComponentTest < ViewComponent::TestCase
     def call
       ui_hover_card(open_delay: 200) do
         ui_hover_card_trigger(href: "#") { "@shadwire" } +
-          ui_hover_card_content(side: :bottom) { "Perfil" }
+          ui_hover_card_content(side: :bottom) { "Profile" }
       end
     end
   end
@@ -39,6 +39,6 @@ class HoverCardComponentTest < ViewComponent::TestCase
 
     assert_selector "[data-controller='ui-hover-card'][data-ui-hover-card-open-delay-value='200']"
     assert_selector "a[data-ui-hover-card-target='trigger']", text: "@shadwire"
-    assert_selector "[data-slot='hover-card-content'].top-full", visible: :all, text: "Perfil"
+    assert_selector "[data-slot='hover-card-content'].top-full", visible: :all, text: "Profile"
   end
 end

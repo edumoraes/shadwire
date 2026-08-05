@@ -12,9 +12,9 @@ class TextareaComponentTest < ViewComponent::TestCase
   end
 
   def test_renders_textarea_with_content
-    render_inline(Ui::TextareaComponent.new) { "Olá mundo" }
+    render_inline(Ui::TextareaComponent.new) { "Hello world" }
 
-    assert_selector "textarea[data-slot='textarea']", text: "Olá mundo"
+    assert_selector "textarea[data-slot='textarea']", text: "Hello world"
     assert_selector "textarea.border-input.rounded-md.w-full"
   end
 

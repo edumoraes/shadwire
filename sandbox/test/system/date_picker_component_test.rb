@@ -95,7 +95,7 @@ class DatePickerComponentTest < ApplicationSystemTestCase
     assert_equal (Date.current + 2).to_s,
                  hidden_value("#example-date_picker_natural input[name='post[publish_on]']")
 
-    find("#publish-on").set("amanhã")
+    find("#publish-on").set("tomorrow")
 
     tomorrow = Date.current + 1
     assert_selector "#example-date_picker_natural [data-date='#{tomorrow}'][data-selected='true']", visible: :all
