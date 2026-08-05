@@ -1,0 +1,26 @@
+<%= ui_accordion(default_value: :billing, class_name: "w-full max-w-md rounded-md border px-4") do %>
+  <%= ui_accordion_item(value: :billing) do %>
+    <%= ui_accordion_header do %>
+      <%= ui_accordion_trigger { "Como funciona a cobrança?" } %>
+    <% end %>
+    <%= ui_accordion_content do %>
+      A cobrança acontece no início de cada ciclo, mensal ou anual, e você pode cancelar quando quiser.
+    <% end %>
+  <% end %>
+  <%= ui_accordion_item(value: :security) do %>
+    <%= ui_accordion_header do %>
+      <%= ui_accordion_trigger { "Meus dados estão seguros?" } %>
+    <% end %>
+    <%= ui_accordion_content do %>
+      Os dados são criptografados em trânsito e guardados atrás de controles de acesso por papel.
+    <% end %>
+  <% end %>
+  <%= ui_accordion_item(value: :integrations) do %>
+    <%= ui_accordion_header do %>
+      <%= ui_accordion_trigger { "Quais integrações são suportadas?" } %>
+    <% end %>
+    <%= ui_accordion_content do %>
+      Webhooks, importação por CSV e integrações com ferramentas de suporte e de cobrança.
+    <% end %>
+  <% end %>
+<% end %>

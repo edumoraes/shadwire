@@ -212,9 +212,9 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Textarea"
-    assert_select "textarea[data-slot='textarea'][placeholder='Digite sua mensagem aqui.']"
+    assert_select "textarea[data-slot='textarea'][placeholder='Type your message here.']"
     assert_select "textarea[disabled][data-slot='textarea']"
-    assert_select "label[for='textarea-message']", text: "Sua mensagem"
+    assert_select "label[for='textarea-message']", text: "Your message"
     assert_select "table td code", text: "&block"
   end
 
@@ -360,7 +360,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Tooltip"
-    assert_select "[data-controller='ui-tooltip'] button[data-slot='tooltip-trigger']", text: "Passe o mouse"
+    assert_select "[data-controller='ui-tooltip'] button[data-slot='tooltip-trigger']", text: "Hover me"
     assert_select "[role='tooltip'][data-ui-tooltip-target='content']", text: "Add to library"
     assert_select "[role='tooltip'].left-full" # right side example
     assert_select "table td code", text: "open_delay"
