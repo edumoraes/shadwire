@@ -59,6 +59,23 @@ module Shadwire
         end
 
         usage(payload)
+        licence(payload)
+      end
+
+      # The terms ride on the published item, so `info` can answer "what am I
+      # about to copy into this codebase" without leaving the CLI. Older
+      # registries predate the field, so its absence is not an error.
+      def licence(payload)
+        return unless payload["license"]
+
+        url = payload["licenseUrl"]
+        @ui.say("License: #{payload["license"]}#{url ? " (#{url})" : ""}")
+
+        attribution = payload["attribution"]
+        return unless attribution
+
+        @ui.say("  Ported from #{attribution["derivedFrom"]} (#{attribution["url"]}), #{attribution["license"]}.")
+        @ui.say("  #{attribution["notice"]}") if attribution["notice"]
       end
 
       # The generated API: what to call and what it accepts. Roots first, so the

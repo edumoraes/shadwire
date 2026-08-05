@@ -239,6 +239,28 @@ class RegistrySchemaTest < Minitest::Test
     end
   end
 
+  # The published payload is fetched on its own, so the terms have to be in it.
+  # bin/build_registry copies these into index.json and every r/{name}.json.
+  def test_registry_declares_its_licence_as_an_spdx_identifier
+    license = REGISTRY.fetch("license")
+
+    assert license.is_a?(String) && !license.empty?, "license must be a non-empty SPDX identifier"
+    assert_match(/\A[A-Za-z0-9.\-+ ]+\z/, license, "license must look like an SPDX identifier: #{license.inspect}")
+    assert_match(%r{\Ahttps://}, REGISTRY.fetch("licenseUrl"), "licenseUrl must be an absolute URL")
+  end
+
+  # What Shadwire derives from is the part a reader cannot guess from the source.
+  def test_registry_attributes_what_it_derives_from
+    attribution = REGISTRY.fetch("attribution")
+
+    assert attribution.is_a?(Hash), "attribution must be an object"
+    %w[derivedFrom url license notice].each do |key|
+      value = attribution[key]
+      assert value.is_a?(String) && !value.empty?, "attribution is missing a non-empty #{key}"
+    end
+    assert_match(%r{\Ahttps://}, attribution.fetch("url"), "attribution url must be absolute")
+  end
+
   def test_optional_item_title_and_description_are_strings
     REGISTRY.fetch("items").each do |item|
       %w[title description].each do |key|
