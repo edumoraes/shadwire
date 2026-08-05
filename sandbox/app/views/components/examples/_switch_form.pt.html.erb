@@ -1,6 +1,6 @@
 <%= form_with url: "#", scope: :settings do |form| %>
   <div class="flex items-center gap-2">
     <%= ui_switch(name: form.field_name(:marketing), id: form.field_id(:marketing), value: "1") %>
-    <%= ui_label(for: form.field_id(:marketing)) { "Receive marketing emails" } %>
+    <%= ui_label(for: form.field_id(:marketing)) { "Receber e-mails de marketing" } %>
   </div>
 <% end %>

@@ -14,6 +14,10 @@
 /sandbox/node_modules/
 /sandbox/public/assets/
 /sandbox/public/vite-dev/
+# Built by `bin/rails docs:search_index` from the rendered pages, and rebuilt in
+# the deploy job. Committing it would mean a stale corpus every time a page
+# changes without anyone regenerating it.
+/sandbox/public/search-index.*.json
 /sandbox/app/assets/builds/*
 !/sandbox/app/assets/builds/.keep
 /sandbox/.bundle/

@@ -105,6 +105,15 @@ breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
   assigns the page's hash to `@snippets` in a `before_action`.
 - The "Nesta página" rail is built client-side by `docs_toc_controller.js` from
   the `h2`/`h3` already in `<main>`, so no page declares its own outline.
+- **The ⌘K palette searches page content, from an index shipped to the browser.**
+  A static crawl has no server to query, so `bin/rails docs:search_index` renders
+  every page the palette offers and writes `public/search-index.<locale>.json`
+  (~55 KB gzipped each); `deploy_pages` runs it before the freeze and copies the
+  files into `_site`, since nothing links to them for wget to follow. The file is
+  gitignored — run the task once for local search. `docs_search_controller`
+  fetches it on the first keystroke and renders the hits as Command items;
+  without it, `ui-command`'s title filter still runs, so the palette degrades
+  rather than breaking.
 - **Reference tables render through `docs/_table`, never by hand.** It is the one
   copy of the card, the column classes and the header row — otherwise a markup
   change is made twice on each of thirty locale pairs. Pass `rows:` when the
@@ -132,9 +141,15 @@ keeps generated links inside the language being read.
 - **Page prose** → locale-suffixed templates, `installation.en.html.erb` /
   `installation.pt.html.erb`. This text is threaded through markup and inline
   `<code>` and reads as a document, not a string table.
-- **Example partials** under `components/examples/` → English, one copy. They
-  illustrate a registry whose language is English, and their source is shown
-  verbatim as the documentation.
+- **Example partials** under `components/examples/` → English by default, one
+  copy. They illustrate a registry whose language is English, and their source is
+  shown verbatim as the documentation, so `ui_button { "Save" }` stays as it is.
+  A demo whose *content* is prose or domain data (an accordion's FAQ, a table of
+  invoices, a toast's message) gets a second file, `_foo.pt.html.erb`. Rails
+  picks it by locale on its own; `DocsHelper#example_source` makes the same
+  choice when reading the file back, so the snippet always matches the preview.
+  `ExampleLocalisationTest` guards both directions — most of all that no English
+  partial contains Portuguese, which is the leak that matters.
 
 Two traps this arrangement sets:
 

@@ -6,7 +6,7 @@ class TooltipComponentTest < ApplicationSystemTestCase
   test "tooltip opens on focus, links aria-describedby, and dismisses with escape" do
     visit components_tooltip_path
 
-    trigger = find("#example-tooltip_default button", text: "Passe o mouse")
+    trigger = find("#example-tooltip_default button", text: "Hover me")
     content = find("#example-tooltip_default [role='tooltip']", visible: :all)
 
     assert_equal content["id"], trigger["aria-describedby"]
@@ -20,7 +20,7 @@ class TooltipComponentTest < ApplicationSystemTestCase
 
     assert_no_selector "#example-tooltip_default [role='tooltip'][data-state='open']", visible: :all
     assert_no_selector "#example-tooltip_default [role='tooltip']", visible: true
-    assert_equal "Passe o mouse", page.evaluate_script("document.activeElement.textContent").strip,
+    assert_equal "Hover me", page.evaluate_script("document.activeElement.textContent").strip,
                  "focus should stay on the trigger after Escape"
   end
 end
