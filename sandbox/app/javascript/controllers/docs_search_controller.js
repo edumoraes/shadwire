@@ -36,15 +36,9 @@ export default class extends Controller {
 
   // ui-command:select carries the chosen item; the destination rides on it as a
   // data attribute, because a Command item is an option, not a link.
-  //
-  // Closing first matters: Turbo caches the outgoing page, and a snapshot taken
-  // with the <dialog> still open restores as a non-modal overlay with no way to
-  // dismiss it.
   navigate(event) {
     const href = event.detail?.item?.dataset?.href
     if (!href) return
-
-    this.element.querySelector("dialog[open]")?.close()
 
     if (window.Turbo) {
       window.Turbo.visit(href)

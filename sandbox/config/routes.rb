@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     get "docs/forms", to: "docs#forms", as: :docs_forms
     get "docs/icons", to: "docs#icons", as: :docs_icons
     get "docs/accessibility", to: "docs#accessibility", as: :docs_accessibility
+    get "docs/localisation", to: "docs#localisation", as: :docs_localisation
 
     # Component catalog index and documentation pages.
     get "components", to: "components#index"

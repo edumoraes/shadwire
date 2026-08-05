@@ -87,6 +87,7 @@ en:
         forms: Forms
         icons: Icons
         accessibility: Accessibility
+        localisation: Localisation
 
     # Reference tables. These are read back as arrays of hashes by DocsController
     # — see the note there on why they are not Ruby constants.

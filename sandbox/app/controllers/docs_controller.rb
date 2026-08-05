@@ -55,4 +55,12 @@ class DocsController < ApplicationController
   def icons; end
 
   def accessibility; end
+
+  def localisation
+    # Every I18n key a registry component reads, grouped by component. The
+    # defaults are what an installed component says with no locale file at all,
+    # so they are the same text in both languages and belong here rather than in
+    # the locale files.
+    @keys = DocsLocaleKeys.grouped
+  end
 end
