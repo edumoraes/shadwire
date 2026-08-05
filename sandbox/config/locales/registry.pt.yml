@@ -1,0 +1,78 @@
+# Portuguese descriptions for the registry catalog.
+#
+# registry/registry.json is the public API and its `description` is English on
+# purpose: `shadwire list`, `search` and `info`, the published /r/*.json,
+# llms.txt and the agent skill all read it, and their audience is worldwide.
+# Translating it in place is not on the table.
+#
+# So the site overrides it per locale, the same contract an installed component
+# uses for its own strings: the English text lives in the source and a locale
+# file that defines the key wins. There is deliberately no en.yml counterpart —
+# English already lives in registry.json, and a second copy would drift.
+#
+# One entry per registry item, components and blocks alike, keyed by the item
+# name with dashes as underscores. RegistryDescriptionsTest fails when the two
+# key sets disagree, which is the point: without it a component added without a
+# translation would render English inside /pt and nothing would report it,
+# because config.i18n.fallbacks resolves the miss silently.
+pt:
+  registry:
+    descriptions:
+      button: Exibe um botão, ou um link com aparência de botão.
+      badge: Um rótulo pequeno e em linha para status, contagens ou categorias.
+      card: Um contêiner que agrupa conteúdo relacionado, com slots de cabeçalho, corpo e rodapé.
+      alert: Um destaque para mensagens importantes dentro da página.
+      separator: Um traço fino que divide o conteúdo visualmente.
+      avatar: A imagem de uma pessoa ou entidade, com um texto de reserva.
+      accordion: Seções empilhadas na vertical que expandem e recolhem.
+      scroll_area: Uma região rolável com barras de rolagem estilizadas.
+      icon: Um ícone Lucide com as variantes de tamanho do shadcn.
+      input: Um campo de texto de uma linha.
+      label: Uma legenda acessível ligada a um controle de formulário.
+      textarea: Um campo de texto de várias linhas.
+      checkbox: Um controle binário para aceitar algo ou selecionar vários itens.
+      radio_group: Um conjunto de opções mutuamente exclusivas.
+      switch: Uma chave para uma configuração que passa a valer na hora.
+      skeleton: Um bloco de espera exibido enquanto o conteúdo carrega.
+      progress: Uma barra que mostra o avanço rumo a um total conhecido.
+      table: Uma tabela HTML estilizada, com seções de cabeçalho, corpo e rodapé.
+      breadcrumb: Uma trilha que mostra onde a página atual está na hierarquia.
+      pagination: Controles de navegação entre páginas de resultados.
+      tabs: Alterna entre visões irmãs no mesmo espaço.
+      dialog: Uma janela modal sobreposta à página.
+      alert_dialog: Um modal que interrompe a pessoa para confirmar uma ação de consequência.
+      sheet: Um painel que desliza a partir de uma borda da tela.
+      tooltip: Uma dica curta exibida ao passar o cursor ou ao focar.
+      popover: Um painel flutuante ancorado a um gatilho.
+      dropdown_menu: Um menu de ações ou opções aberto por um botão.
+      select: Um controle estilizado para escolher uma opção de uma lista.
+      sidebar: Uma sidebar de aplicação, componível e recolhível.
+      sidebar_01: Um layout de dashboard no estilo da documentação, com sidebar recolhível, seletor de versão e busca.
+      aspect_ratio: Mantém o conteúdo numa proporção fixa entre largura e altura.
+      spinner: Um indicador de carregamento indeterminado.
+      kbd: Exibe uma tecla ou um atalho de teclado.
+      empty: Um espaço reservado para quando não há nada a mostrar.
+      item: Uma linha compacta com mídia, texto e ações ao final.
+      input_group: Um input com adornos, texto ou botões acoplados.
+      button_group: Botões relacionados unidos num único controle.
+      field: Layout de campo de formulário, com label, descrição e mensagem de erro.
+      native_select: O elemento select nativo do navegador, estilizado para combinar.
+      collapsible: Uma única região que expande e recolhe.
+      toggle: Um botão de dois estados que permanece pressionado.
+      toggle_group: Um conjunto de botões de alternância que agem como um só controle.
+      slider: Escolhe um valor numérico dentro de uma faixa, arrastando.
+      hover_card: Um cartão de prévia detalhada exibido ao passar o cursor.
+      input_otp: Um campo segmentado para códigos de uso único.
+      drawer: Um painel que sobe a partir da base da tela.
+      context_menu: Um menu aberto ao clicar com o botão direito numa região.
+      menubar: Uma barra de menus horizontal, no estilo de aplicação.
+      navigation_menu: Navegação do site, com painéis suspensos detalhados opcionais.
+      command: Uma lista de comandos pesquisável e navegável pelo teclado.
+      calendar: Uma grade de mês para escolher uma data ou um intervalo de datas.
+      resizable: Painéis que a pessoa redimensiona arrastando uma alça.
+      carousel: Um conjunto de slides deslizáveis na horizontal ou na vertical.
+      combobox: Um select único e pesquisável, composto de popover, command e button.
+      date_picker: Um campo de data que abre um calendário num popover.
+      sonner: Notificações toast passageiras.
+      chart: Gráficos do Chart.js usando os tokens de tema do Shadwire.
+      data_table: Uma tabela com ordenação, filtro, paginação e seleção de linhas.

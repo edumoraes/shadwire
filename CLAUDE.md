@@ -133,9 +133,15 @@ keeps generated links inside the language being read.
 - **Page prose** → locale-suffixed templates, `installation.en.html.erb` /
   `installation.pt.html.erb`. This text is threaded through markup and inline
   `<code>` and reads as a document, not a string table.
-- **Example partials** under `components/examples/` → English, one copy. They
-  illustrate a registry whose language is English, and their source is shown
-  verbatim as the documentation.
+- **Example partials** under `components/examples/` → English by default, one
+  copy. They illustrate a registry whose language is English, and their source is
+  shown verbatim as the documentation, so `ui_button { "Save" }` stays as it is.
+  A demo whose *content* is prose or domain data (an accordion's FAQ, a table of
+  invoices, a toast's message) gets a second file, `_foo.pt.html.erb`. Rails
+  picks it by locale on its own; `DocsHelper#example_source` makes the same
+  choice when reading the file back, so the snippet always matches the preview.
+  `ExampleLocalisationTest` guards both directions — most of all that no English
+  partial contains Portuguese, which is the leak that matters.
 
 Two traps this arrangement sets:
 
