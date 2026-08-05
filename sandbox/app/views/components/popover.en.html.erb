@@ -48,37 +48,25 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th><%= t("components.api.component") %></th>
-            <th><%= t("components.api.argument") %></th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>Popover::Trigger</code></td>
-            <td><code>variant</code>, <code>size</code></td>
-            <td><code>:outline</code></td>
-            <td>The Button that opens and closes it; keeps <code>aria-expanded</code> current.</td>
-          </tr>
-          <tr>
-            <td><code>Popover::Content</code></td>
-            <td><code>side</code></td>
-            <td><code>:bottom</code></td>
-            <td><code>:top</code>, <code>:right</code>, <code>:bottom</code>, <code>:left</code>.</td>
-          </tr>
-          <tr>
-            <td><code>Popover::Content</code></td>
-            <td><code>align</code></td>
-            <td><code>:center</code></td>
-            <td><code>:start</code>, <code>:center</code>, <code>:end</code> no eixo cruzado.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>Popover::Trigger</code></td>
+        <td><code>variant</code>, <code>size</code></td>
+        <td><code>:outline</code></td>
+        <td>The Button that opens and closes it; keeps <code>aria-expanded</code> current.</td>
+      </tr>
+      <tr>
+        <td><code>Popover::Content</code></td>
+        <td><code>side</code></td>
+        <td><code>:bottom</code></td>
+        <td><code>:top</code>, <code>:right</code>, <code>:bottom</code>, <code>:left</code>.</td>
+      </tr>
+      <tr>
+        <td><code>Popover::Content</code></td>
+        <td><code>align</code></td>
+        <td><code>:center</code></td>
+        <td><code>:start</code>, <code>:center</code>, <code>:end</code> no eixo cruzado.</td>
+      </tr>
     <% end %>
   </section>
 </article>

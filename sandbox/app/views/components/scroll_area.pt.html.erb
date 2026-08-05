@@ -67,33 +67,22 @@
       livres, incluindo <code class="rounded bg-muted px-1 py-0.5 text-xs">data:</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">aria:</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th>Helper</th>
-            <th>Argumentos principais</th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>ui_scroll_area</code></td>
-            <td><code>scrollbars</code>, <code>class</code> / <code>class_name</code></td>
-            <td>Componente raiz: renderiza viewport, conteúdo, barras, canto e o controller Stimulus.</td>
-          </tr>
-          <tr>
-            <td><code>ui_scroll_bar</code></td>
-            <td><code>orientation</code></td>
-            <td>Subcomponente opcional para uma barra vertical ou horizontal.</td>
-          </tr>
-          <tr>
-            <td><code>Ui::ScrollAreaComponent</code></td>
-            <td><code>scrollbars</code>, atributos HTML</td>
-            <td>API ViewComponent para renderizar o port Rails diretamente.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ "Helper", t("components.api.main_arguments"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>ui_scroll_area</code></td>
+        <td><code>scrollbars</code>, <code>class</code> / <code>class_name</code></td>
+        <td>Componente raiz: renderiza viewport, conteúdo, barras, canto e o controller Stimulus.</td>
+      </tr>
+      <tr>
+        <td><code>ui_scroll_bar</code></td>
+        <td><code>orientation</code></td>
+        <td>Subcomponente opcional para uma barra vertical ou horizontal.</td>
+      </tr>
+      <tr>
+        <td><code>Ui::ScrollAreaComponent</code></td>
+        <td><code>scrollbars</code>, atributos HTML</td>
+        <td>API ViewComponent para renderizar o port Rails diretamente.</td>
+      </tr>
     <% end %>
   </section>
 </article>

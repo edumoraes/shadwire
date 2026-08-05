@@ -290,6 +290,10 @@ pt:
       default: Padrão
       description: Descrição
       element: Elemento
+      attribute: Atributo
+      arguments: Argumentos
+      main_arguments: Argumentos principais
+      notes: Notas
       component: Componente
       api: API
     install:

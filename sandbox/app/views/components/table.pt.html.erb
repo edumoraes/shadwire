@@ -53,48 +53,37 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code>,
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code> e bloco.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th>Helper</th>
-            <th><%= t("components.api.element") %></th>
-            <th>Notas</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>ui_table</code></td>
-            <td><code>div &gt; table</code></td>
-            <td>Container com <code>overflow-x-auto</code>; classes extras vão na <code>&lt;table&gt;</code>.</td>
-          </tr>
-          <tr>
-            <td><code>ui_table_header</code> / <code>ui_table_body</code> / <code>ui_table_footer</code></td>
-            <td><code>thead</code> / <code>tbody</code> / <code>tfoot</code></td>
-            <td>Seções da tabela.</td>
-          </tr>
-          <tr>
-            <td><code>ui_table_row</code></td>
-            <td><code>tr</code></td>
-            <td><code>data: { state: "selected" }</code> destaca a linha.</td>
-          </tr>
-          <tr>
-            <td><code>ui_table_head</code></td>
-            <td><code>th</code></td>
-            <td>Passe <code>scope: "col"</code> ou <code>scope: "row"</code>.</td>
-          </tr>
-          <tr>
-            <td><code>ui_table_cell</code></td>
-            <td><code>td</code></td>
-            <td>Aceita <code>colspan</code>/<code>rowspan</code> via attrs.</td>
-          </tr>
-          <tr>
-            <td><code>ui_table_caption</code></td>
-            <td><code>caption</code></td>
-            <td>Descrição acessível, exibida abaixo da tabela (<code>caption-bottom</code>).</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ "Helper", t("components.api.element"), t("components.api.notes") ] } do %>
+      <tr>
+        <td><code>ui_table</code></td>
+        <td><code>div &gt; table</code></td>
+        <td>Container com <code>overflow-x-auto</code>; classes extras vão na <code>&lt;table&gt;</code>.</td>
+      </tr>
+      <tr>
+        <td><code>ui_table_header</code> / <code>ui_table_body</code> / <code>ui_table_footer</code></td>
+        <td><code>thead</code> / <code>tbody</code> / <code>tfoot</code></td>
+        <td>Seções da tabela.</td>
+      </tr>
+      <tr>
+        <td><code>ui_table_row</code></td>
+        <td><code>tr</code></td>
+        <td><code>data: { state: "selected" }</code> destaca a linha.</td>
+      </tr>
+      <tr>
+        <td><code>ui_table_head</code></td>
+        <td><code>th</code></td>
+        <td>Passe <code>scope: "col"</code> ou <code>scope: "row"</code>.</td>
+      </tr>
+      <tr>
+        <td><code>ui_table_cell</code></td>
+        <td><code>td</code></td>
+        <td>Aceita <code>colspan</code>/<code>rowspan</code> via attrs.</td>
+      </tr>
+      <tr>
+        <td><code>ui_table_caption</code></td>
+        <td><code>caption</code></td>
+        <td>Descrição acessível, exibida abaixo da tabela (<code>caption-bottom</code>).</td>
+      </tr>
     <% end %>
   </section>
 </article>

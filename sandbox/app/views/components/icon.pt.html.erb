@@ -31,16 +31,11 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground"><code class="rounded bg-muted px-1 py-0.5 text-xs">ui_icon(name, **options)</code> encapsula <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::IconComponent.new(name, **options)</code>.</p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50"><tr><th><%= t("components.api.argument") %></th><th><%= t("components.api.type") %></th><th><%= t("components.api.default") %></th><th><%= t("components.api.description") %></th></tr></thead>
-        <tbody>
-          <tr><td><code>name</code></td><td>String</td><td>Obrigatório</td><td>Nome do ícone Lucide em kebab-case.</td></tr>
-          <tr><td><code>size</code></td><td>Symbol/String</td><td><code>:default</code></td><td><code>:sm</code>, <code>:default</code>, <code>:lg</code> ou <code>:xl</code>.</td></tr>
-          <tr><td><code>label</code></td><td>String</td><td><code>nil</code></td><td>Quando presente, expõe o SVG com <code>role="img"</code> e <code>aria-label</code>.</td></tr>
-          <tr><td><code>**attrs</code></td><td>Hash</td><td><code>{}</code></td><td>Atributos HTML livres para o SVG.</td></tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.type"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr><td><code>name</code></td><td>String</td><td>Obrigatório</td><td>Nome do ícone Lucide em kebab-case.</td></tr>
+      <tr><td><code>size</code></td><td>Symbol/String</td><td><code>:default</code></td><td><code>:sm</code>, <code>:default</code>, <code>:lg</code> ou <code>:xl</code>.</td></tr>
+      <tr><td><code>label</code></td><td>String</td><td><code>nil</code></td><td>Quando presente, expõe o SVG com <code>role="img"</code> e <code>aria-label</code>.</td></tr>
+      <tr><td><code>**attrs</code></td><td>Hash</td><td><code>{}</code></td><td>Atributos HTML livres para o SVG.</td></tr>
     <% end %>
   </section>
 </article>

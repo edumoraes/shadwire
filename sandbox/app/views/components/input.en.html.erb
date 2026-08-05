@@ -43,37 +43,25 @@
       encapsula
       <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::InputComponent.new(**options)</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th><%= t("components.api.argument") %></th>
-            <th><%= t("components.api.type") %></th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>type</code></td>
-            <td>Symbol/String</td>
-            <td><code>:text</code></td>
-            <td>Any native input type (<code>:email</code>, <code>:password</code>, <code>:file</code>, <code>:number</code>, …).</td>
-          </tr>
-          <tr>
-            <td><code>class</code> / <code>class_name</code></td>
-            <td>String</td>
-            <td><code>nil</code></td>
-            <td>Extra classes, merged after the base classes.</td>
-          </tr>
-          <tr>
-            <td><code>**attrs</code></td>
-            <td>Hash</td>
-            <td><code>{}</code></td>
-            <td>Atributos HTML livres (<code>name</code>, <code>id</code>, <code>placeholder</code>, <code>disabled</code>, <code>required</code>, <code>data:</code>, <code>aria:</code>, …).</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.type"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>type</code></td>
+        <td>Symbol/String</td>
+        <td><code>:text</code></td>
+        <td>Any native input type (<code>:email</code>, <code>:password</code>, <code>:file</code>, <code>:number</code>, …).</td>
+      </tr>
+      <tr>
+        <td><code>class</code> / <code>class_name</code></td>
+        <td>String</td>
+        <td><code>nil</code></td>
+        <td>Extra classes, merged after the base classes.</td>
+      </tr>
+      <tr>
+        <td><code>**attrs</code></td>
+        <td>Hash</td>
+        <td><code>{}</code></td>
+        <td>Atributos HTML livres (<code>name</code>, <code>id</code>, <code>placeholder</code>, <code>disabled</code>, <code>required</code>, <code>data:</code>, <code>aria:</code>, …).</td>
+      </tr>
     <% end %>
   </section>
 </article>

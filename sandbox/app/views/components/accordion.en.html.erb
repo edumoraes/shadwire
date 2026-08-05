@@ -51,43 +51,32 @@
       incluindo <code class="rounded bg-muted px-1 py-0.5 text-xs">data:</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">aria:</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th>Helper</th>
-            <th>Argumentos principais</th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>ui_accordion</code></td>
-            <td><code>multiple</code>, <code>default_value</code>, <code>orientation</code>, <code>disabled</code>, <code>loop_focus</code></td>
-            <td>Root, with the Stimulus controller, initial values and keyboard navigation.</td>
-          </tr>
-          <tr>
-            <td><code>ui_accordion_item</code></td>
-            <td><code>value</code>, <code>disabled</code></td>
-            <td>The item, with <code>border-b last:border-b-0</code>. Pass <code>value</code> whenever you set <code>default_value</code>.</td>
-          </tr>
-          <tr>
-            <td><code>ui_accordion_header</code></td>
-            <td><code>tag</code></td>
-            <td>Renders the semantic heading; defaults to <code>:h3</code>.</td>
-          </tr>
-          <tr>
-            <td><code>ui_accordion_trigger</code></td>
-            <td><code>disabled</code></td>
-            <td>The button that toggles the item, with a <code>chevron-down</code> icon and Stimulus actions.</td>
-          </tr>
-          <tr>
-            <td><code>ui_accordion_content</code> / <code>ui_accordion_panel</code></td>
-            <td><code>class</code> / <code>class_name</code></td>
-            <td>The panel, with <code>role="region"</code>, shadcn animations and an inner <code>pt-0 pb-4</code> wrapper.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ "Helper", t("components.api.main_arguments"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>ui_accordion</code></td>
+        <td><code>multiple</code>, <code>default_value</code>, <code>orientation</code>, <code>disabled</code>, <code>loop_focus</code></td>
+        <td>Root, with the Stimulus controller, initial values and keyboard navigation.</td>
+      </tr>
+      <tr>
+        <td><code>ui_accordion_item</code></td>
+        <td><code>value</code>, <code>disabled</code></td>
+        <td>The item, with <code>border-b last:border-b-0</code>. Pass <code>value</code> whenever you set <code>default_value</code>.</td>
+      </tr>
+      <tr>
+        <td><code>ui_accordion_header</code></td>
+        <td><code>tag</code></td>
+        <td>Renders the semantic heading; defaults to <code>:h3</code>.</td>
+      </tr>
+      <tr>
+        <td><code>ui_accordion_trigger</code></td>
+        <td><code>disabled</code></td>
+        <td>The button that toggles the item, with a <code>chevron-down</code> icon and Stimulus actions.</td>
+      </tr>
+      <tr>
+        <td><code>ui_accordion_content</code> / <code>ui_accordion_panel</code></td>
+        <td><code>class</code> / <code>class_name</code></td>
+        <td>The panel, with <code>role="region"</code>, shadcn animations and an inner <code>pt-0 pb-4</code> wrapper.</td>
+      </tr>
     <% end %>
   </section>
 </article>

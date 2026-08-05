@@ -47,38 +47,27 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th>Helper</th>
-            <th>Argumentos</th>
-            <th>Notas</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>ui_pagination</code> / <code>ui_pagination_content</code> / <code>ui_pagination_item</code></td>
-            <td>—</td>
-            <td>Landmark <code>nav</code>, lista <code>ul</code> e itens <code>li</code>.</td>
-          </tr>
-          <tr>
-            <td><code>ui_pagination_link</code></td>
-            <td><code>active: false</code>, <code>size: :icon</code></td>
-            <td>Renderiza <code>&lt;a&gt;</code> com visual de Button (outline quando ativo, ghost caso contrário).</td>
-          </tr>
-          <tr>
-            <td><code>ui_pagination_previous</code> / <code>ui_pagination_next</code></td>
-            <td>—</td>
-            <td>Chevron + rótulo (oculto em telas pequenas); o bloco substitui o texto padrão.</td>
-          </tr>
-          <tr>
-            <td><code>ui_pagination_ellipsis</code></td>
-            <td>—</td>
-            <td>Decorativo, com texto <code>sr-only</code> "Mais páginas".</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ "Helper", t("components.api.arguments"), t("components.api.notes") ] } do %>
+      <tr>
+        <td><code>ui_pagination</code> / <code>ui_pagination_content</code> / <code>ui_pagination_item</code></td>
+        <td>—</td>
+        <td>Landmark <code>nav</code>, lista <code>ul</code> e itens <code>li</code>.</td>
+      </tr>
+      <tr>
+        <td><code>ui_pagination_link</code></td>
+        <td><code>active: false</code>, <code>size: :icon</code></td>
+        <td>Renderiza <code>&lt;a&gt;</code> com visual de Button (outline quando ativo, ghost caso contrário).</td>
+      </tr>
+      <tr>
+        <td><code>ui_pagination_previous</code> / <code>ui_pagination_next</code></td>
+        <td>—</td>
+        <td>Chevron + rótulo (oculto em telas pequenas); o bloco substitui o texto padrão.</td>
+      </tr>
+      <tr>
+        <td><code>ui_pagination_ellipsis</code></td>
+        <td>—</td>
+        <td>Decorativo, com texto <code>sr-only</code> "Mais páginas".</td>
+      </tr>
     <% end %>
   </section>
 </article>

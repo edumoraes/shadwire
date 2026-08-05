@@ -47,43 +47,31 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th><%= t("components.api.component") %></th>
-            <th><%= t("components.api.argument") %></th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>Tabs</code></td>
-            <td><code>default_value</code></td>
-            <td><code>nil</code></td>
-            <td>Aba aberta inicialmente; sem valor, a primeira habilitada é ativada.</td>
-          </tr>
-          <tr>
-            <td><code>Tabs::Trigger</code></td>
-            <td><code>value:</code> (obrigatório)</td>
-            <td>—</td>
-            <td>Identificador que liga o trigger ao painel de mesmo <code>value</code>.</td>
-          </tr>
-          <tr>
-            <td><code>Tabs::Trigger</code></td>
-            <td><code>disabled</code></td>
-            <td><code>false</code></td>
-            <td>Remove o trigger da ativação e da navegação por teclado.</td>
-          </tr>
-          <tr>
-            <td><code>Tabs::Content</code></td>
-            <td><code>value:</code> (obrigatório)</td>
-            <td>—</td>
-            <td>Painel correspondente; renderiza <code>hidden</code> até ser ativado.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>Tabs</code></td>
+        <td><code>default_value</code></td>
+        <td><code>nil</code></td>
+        <td>Aba aberta inicialmente; sem valor, a primeira habilitada é ativada.</td>
+      </tr>
+      <tr>
+        <td><code>Tabs::Trigger</code></td>
+        <td><code>value:</code> (obrigatório)</td>
+        <td>—</td>
+        <td>Identificador que liga o trigger ao painel de mesmo <code>value</code>.</td>
+      </tr>
+      <tr>
+        <td><code>Tabs::Trigger</code></td>
+        <td><code>disabled</code></td>
+        <td><code>false</code></td>
+        <td>Remove o trigger da ativação e da navegação por teclado.</td>
+      </tr>
+      <tr>
+        <td><code>Tabs::Content</code></td>
+        <td><code>value:</code> (obrigatório)</td>
+        <td>—</td>
+        <td>Painel correspondente; renderiza <code>hidden</code> até ser ativado.</td>
+      </tr>
     <% end %>
   </section>
 </article>

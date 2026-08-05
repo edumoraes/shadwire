@@ -49,49 +49,37 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th><%= t("components.api.component") %></th>
-            <th><%= t("components.api.argument") %></th>
-            <th><%= t("components.api.default") %></th>
-            <th><%= t("components.api.description") %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>Select</code></td>
-            <td><code>name</code></td>
-            <td><code>nil</code></td>
-            <td>Nome do input hidden para submissão em formulários.</td>
-          </tr>
-          <tr>
-            <td><code>Select</code></td>
-            <td><code>value</code></td>
-            <td><code>nil</code></td>
-            <td>Valor inicialmente selecionado.</td>
-          </tr>
-          <tr>
-            <td><code>Select</code></td>
-            <td><code>placeholder</code></td>
-            <td><code>nil</code></td>
-            <td>Texto exibido quando nada está selecionado.</td>
-          </tr>
-          <tr>
-            <td><code>Select::Trigger</code></td>
-            <td><code>size</code></td>
-            <td><code>:default</code></td>
-            <td><code>:default</code> ou <code>:sm</code>.</td>
-          </tr>
-          <tr>
-            <td><code>Select::Item</code></td>
-            <td><code>value:</code> (obrigatório), <code>disabled</code></td>
-            <td>—</td>
-            <td>Valor da opção; itens desabilitados são pulados na navegação.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>Select</code></td>
+        <td><code>name</code></td>
+        <td><code>nil</code></td>
+        <td>Nome do input hidden para submissão em formulários.</td>
+      </tr>
+      <tr>
+        <td><code>Select</code></td>
+        <td><code>value</code></td>
+        <td><code>nil</code></td>
+        <td>Valor inicialmente selecionado.</td>
+      </tr>
+      <tr>
+        <td><code>Select</code></td>
+        <td><code>placeholder</code></td>
+        <td><code>nil</code></td>
+        <td>Texto exibido quando nada está selecionado.</td>
+      </tr>
+      <tr>
+        <td><code>Select::Trigger</code></td>
+        <td><code>size</code></td>
+        <td><code>:default</code></td>
+        <td><code>:default</code> ou <code>:sm</code>.</td>
+      </tr>
+      <tr>
+        <td><code>Select::Item</code></td>
+        <td><code>value:</code> (obrigatório), <code>disabled</code></td>
+        <td>—</td>
+        <td>Valor da opção; itens desabilitados são pulados na navegação.</td>
+      </tr>
     <% end %>
   </section>
 </article>

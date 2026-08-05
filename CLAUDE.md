@@ -105,6 +105,14 @@ breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
   assigns the page's hash to `@snippets` in a `before_action`.
 - The "Nesta página" rail is built client-side by `docs_toc_controller.js` from
   the `h2`/`h3` already in `<main>`, so no page declares its own outline.
+- **Reference tables render through `docs/_table`, never by hand.** It is the one
+  copy of the card, the column classes and the header row — otherwise a markup
+  change is made twice on each of thirty locale pairs. Pass `rows:` when the
+  cells are values, or `render layout: "docs/table"` with a block of `<tr>` when
+  a cell is prose threaded through inline `<code>`. Headers are repeated text, so
+  they come from `components.api.*` in the locale files;
+  `test/controllers/component_api_tables_test.rb` fails on a hand-built `<thead>`
+  or a header string written into a template.
 
 ### The site is bilingual
 

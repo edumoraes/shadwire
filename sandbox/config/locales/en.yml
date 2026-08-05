@@ -257,6 +257,10 @@ en:
       default: Default
       description: Description
       element: Element
+      attribute: Attribute
+      arguments: Arguments
+      main_arguments: Main arguments
+      notes: Notes
       component: Component
       api: API
     install:

@@ -45,48 +45,37 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
-    <%= ui_card(class: "overflow-x-auto") do %>
-      <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
-        <thead class="bg-muted/50">
-          <tr>
-            <th>Helper</th>
-            <th><%= t("components.api.element") %></th>
-            <th>Notas</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>ui_breadcrumb</code></td>
-            <td><code>nav</code></td>
-            <td>Já vem com <code>aria-label="breadcrumb"</code> (sobrescritível).</td>
-          </tr>
-          <tr>
-            <td><code>ui_breadcrumb_list</code> / <code>ui_breadcrumb_item</code></td>
-            <td><code>ol</code> / <code>li</code></td>
-            <td>Estrutura da trilha.</td>
-          </tr>
-          <tr>
-            <td><code>ui_breadcrumb_link</code></td>
-            <td><code>a</code></td>
-            <td>Passe <code>href</code> via attrs.</td>
-          </tr>
-          <tr>
-            <td><code>ui_breadcrumb_page</code></td>
-            <td><code>span</code></td>
-            <td>Página atual: <code>role="link"</code>, <code>aria-disabled</code>, <code>aria-current="page"</code>.</td>
-          </tr>
-          <tr>
-            <td><code>ui_breadcrumb_separator</code></td>
-            <td><code>li</code></td>
-            <td>Chevron por padrão; o bloco substitui o ícone.</td>
-          </tr>
-          <tr>
-            <td><code>ui_breadcrumb_ellipsis</code></td>
-            <td><code>span</code></td>
-            <td>Indicador decorativo de itens recolhidos.</td>
-          </tr>
-        </tbody>
-      </table>
+    <%= render layout: "docs/table", locals: { headers: [ "Helper", t("components.api.element"), t("components.api.notes") ] } do %>
+      <tr>
+        <td><code>ui_breadcrumb</code></td>
+        <td><code>nav</code></td>
+        <td>Já vem com <code>aria-label="breadcrumb"</code> (sobrescritível).</td>
+      </tr>
+      <tr>
+        <td><code>ui_breadcrumb_list</code> / <code>ui_breadcrumb_item</code></td>
+        <td><code>ol</code> / <code>li</code></td>
+        <td>Estrutura da trilha.</td>
+      </tr>
+      <tr>
+        <td><code>ui_breadcrumb_link</code></td>
+        <td><code>a</code></td>
+        <td>Passe <code>href</code> via attrs.</td>
+      </tr>
+      <tr>
+        <td><code>ui_breadcrumb_page</code></td>
+        <td><code>span</code></td>
+        <td>Página atual: <code>role="link"</code>, <code>aria-disabled</code>, <code>aria-current="page"</code>.</td>
+      </tr>
+      <tr>
+        <td><code>ui_breadcrumb_separator</code></td>
+        <td><code>li</code></td>
+        <td>Chevron por padrão; o bloco substitui o ícone.</td>
+      </tr>
+      <tr>
+        <td><code>ui_breadcrumb_ellipsis</code></td>
+        <td><code>span</code></td>
+        <td>Indicador decorativo de itens recolhidos.</td>
+      </tr>
     <% end %>
   </section>
 </article>
