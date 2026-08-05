@@ -205,6 +205,41 @@ class RegistryBuildTest < Minitest::Test
     end
   end
 
+  # A single-item fetch has to be self-describing: an agent installing into a
+  # company codebase, or a tool auditing what entered a repository, should not
+  # have to leave the payload to find out the terms.
+  def test_every_published_item_carries_the_licence
+    expected = REGISTRY.fetch("license")
+
+    REGISTRY.fetch("items").each do |item|
+      published = item_json(item.fetch("name"))
+
+      assert_equal expected, published["license"], "#{item.fetch("name")} lost its license"
+      assert_equal REGISTRY.fetch("licenseUrl"), published["licenseUrl"]
+      assert_equal REGISTRY.fetch("attribution"), published["attribution"]
+    end
+  end
+
+  def test_index_carries_the_licence
+    index = index_json
+
+    assert_equal REGISTRY.fetch("license"), index["license"]
+    assert_equal REGISTRY.fetch("licenseUrl"), index["licenseUrl"]
+    assert_equal REGISTRY.fetch("attribution"), index["attribution"]
+  end
+
+  # llms.txt is what an agent reads when it cannot run the CLI.
+  def test_llms_files_state_the_licence
+    %w[llms.txt llms-full.txt].each do |name|
+      text = R_DIR.join(name).read
+
+      assert_includes text, "## Licence", "#{name} has no licence section"
+      assert_includes text, REGISTRY.fetch("license"), "#{name} does not name the licence"
+      assert_includes text, REGISTRY.fetch("attribution").fetch("derivedFrom"),
+                      "#{name} does not say what it derives from"
+    end
+  end
+
   def test_index_base_block_carries_the_shared_install
     base = index_json.fetch("base")
 

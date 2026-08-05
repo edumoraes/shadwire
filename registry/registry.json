@@ -3,6 +3,14 @@
   "name": "shadwire",
   "version": "0.2.0",
   "framework": "rails",
+  "license": "MIT",
+  "licenseUrl": "https://github.com/edumoraes/shadwire/blob/main/LICENSE",
+  "attribution": {
+    "derivedFrom": "shadcn/ui",
+    "url": "https://ui.shadcn.com",
+    "license": "MIT",
+    "notice": "Component anatomy, variant class strings and the default theme tokens derive from shadcn/ui. Files installed into an application carry no attribution requirement of their own; see https://github.com/edumoraes/shadwire/blob/main/NOTICE."
+  },
   "dependencies": {
     "ruby": ">= 3.2",
     "rails": ">= 7.1",
