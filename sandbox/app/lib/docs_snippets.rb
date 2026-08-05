@@ -15,20 +15,20 @@ module DocsSnippets
       # global
       gem install shadwire
 
-      # ou no próprio app, no grupo de desenvolvimento
+      # or straight into the app, in the development group
       bundle add shadwire --group development
     SHELL
 
     init: <<~SHELL,
-      shadwire init                     # gem instalada globalmente
-      bundle exec shadwire init         # gem no Gemfile
+      shadwire init                     # gem installed globally
+      bundle exec shadwire init         # gem in the Gemfile
     SHELL
 
     usage: <<~'ERB',
-      <%= ui_button(variant: :outline, size: :sm) { "Salvar" } %>
+      <%= ui_button(variant: :outline, size: :sm) { "Save" } %>
 
       <%= render Ui::ButtonComponent.new(variant: :outline, size: :sm) do %>
-        Salvar
+        Save
       <% end %>
     ERB
 
@@ -81,7 +81,7 @@ module DocsSnippets
 
     registry_override: <<~SHELL
       bin/shadwire add button --registry file://$PWD/build/r
-      shadwire init --registry https://ui.exemplo.com/r
+      shadwire init --registry https://ui.example.com/r
     SHELL
   }.freeze
 
@@ -89,7 +89,7 @@ module DocsSnippets
     layers: <<~CSS,
       @custom-variant dark (&:is(.dark *));   /* dark mode por classe */
 
-      @theme inline {                         /* mapeia tokens para utilitários */
+      @theme inline {                         /* maps tokens to utilities */
         --color-background: var(--background);
         --color-primary: var(--primary);
         /* ... */
@@ -144,8 +144,8 @@ module DocsSnippets
     ERB
 
     keep_edits: <<~SHELL
-      bin/shadwire diff button      # veja o que você mudou
-      bin/shadwire update button    # sem --yes: pergunta por arquivo e mostra o diff
+      bin/shadwire diff button      # see what you changed
+      bin/shadwire update button    # without --yes: asks per file and shows the diff
     SHELL
   }.freeze
 
@@ -186,27 +186,27 @@ module DocsSnippets
     ERB
 
     wrong: <<~'ERB',
-      <%# Errado: cor no claro e no escuro, escrita à mão %>
+      <%# Wrong: light and dark colours written by hand %>
       <%= ui_card(class: "bg-white text-gray-900 dark:bg-gray-900 dark:text-white") do %>
     ERB
 
     right: <<~'ERB'
-      <%# Certo: os tokens já resolvem os dois modos %>
+      <%# Right: the tokens already handle both modes %>
       <%= ui_card do %>
     ERB
   }.freeze
 
   CLI = {
     quick_reference: <<~SHELL,
-      bin/shadwire status --json        # contexto do projeto
-      bin/shadwire search <termo>       # achar um componente
-      bin/shadwire info <nome> --json   # a API completa dele
-      bin/shadwire add <nome> --yes     # instalar, com dependências
-      bin/shadwire list                 # catálogo inteiro
-      bin/shadwire diff [nome]          # drift local
-      bin/shadwire diff --exit-code     # não-zero se houver drift (CI)
-      bin/shadwire update [nome] --yes  # reaplicar o registry (sobrescreve!)
-      bin/shadwire remove <nome> --yes  # desinstalar
+      bin/shadwire status --json        # the project's context
+      bin/shadwire search <term>       # find a component
+      bin/shadwire info <name> --json   # its full API
+      bin/shadwire add <name> --yes     # install it, dependencies included
+      bin/shadwire list                 # the whole catalog
+      bin/shadwire diff [name]          # local drift
+      bin/shadwire diff --exit-code     # non-zero if there is drift (CI)
+      bin/shadwire update [name] --yes  # reapply the registry (overwrites!)
+      bin/shadwire remove <name> --yes  # uninstall
     SHELL
 
     status_json: <<~JSON,
@@ -244,12 +244,12 @@ module DocsSnippets
     diff: <<~SHELL,
       bin/shadwire diff
       bin/shadwire diff --json
-      bin/shadwire diff --exit-code    # não-zero quando existe drift (para o CI)
+      bin/shadwire diff --exit-code    # non-zero when there is drift (fails CI)
     SHELL
 
     update: <<~SHELL,
-      bin/shadwire diff button          # olhe primeiro
-      bin/shadwire update button --yes  # depois sobrescreva
+      bin/shadwire diff button          # look first
+      bin/shadwire update button --yes  # then overwrite
     SHELL
 
     remove: "bin/shadwire remove chart --yes",
@@ -272,10 +272,10 @@ module DocsSnippets
     TEXT
 
     ci: <<~YAML
-      - name: Instalar as dependências (com o grupo development)
+      - name: Install dependencies (with the development group)
         run: bundle install
 
-      # Falha quando um arquivo instalado divergiu do registry.
+      # Fails when an installed file has diverged from the registry.
       - name: Checar drift do Shadwire
         run: bin/shadwire diff --exit-code
     YAML
@@ -310,11 +310,11 @@ module DocsSnippets
     MARKDOWN
 
     workflow: <<~SHELL
-      bin/shadwire status --json      # 1. o que já existe neste app
-      bin/shadwire search modal       # 2. achar o componente
-      bin/shadwire info dialog --json # 3. ler a API antes de escrever ERB
+      bin/shadwire status --json      # 1. what already exists in this app
+      bin/shadwire search modal       # 2. find the component
+      bin/shadwire info dialog --json # 3. read the API before writing ERB
       bin/shadwire add dialog --yes   # 4. instalar
-      bin/shadwire status --json      # 5. confirmar os novos helpers
+      bin/shadwire status --json      # 5. confirm the new helpers
     SHELL
   }.freeze
 
@@ -375,7 +375,7 @@ module DocsSnippets
     JSON
 
     build: <<~SHELL,
-      bin/build_registry            # registry/registry.json → build/r/{nome}.json + index.json
+      bin/build_registry            # registry/registry.json → build/r/{name}.json + index.json
       ls build/r | head
     SHELL
 
@@ -411,24 +411,24 @@ module DocsSnippets
 
   COMPOSITION = {
     wrong_props: <<~'ERB',
-      <%# Errado: essas props não existem %>
-      <%= ui_card(header: "Time", footer: "Salvar") %>
+      <%# Wrong: these props do not exist %>
+      <%= ui_card(header: "Time", footer: "Save") %>
     ERB
 
     right_props: <<~'ERB',
-      <%# Certo %>
+      <%# Right %>
       <%= ui_card do %>
         <%= ui_card_header do %>
           <%= ui_card_title { "Time" } %>
           <%= ui_card_description { "Gerencie quem tem acesso." } %>
         <% end %>
         <%= ui_card_content { "Corpo" } %>
-        <%= ui_card_footer { ui_button { "Salvar" } } %>
+        <%= ui_card_footer { ui_button { "Save" } } %>
       <% end %>
     ERB
 
     wrong_collapse: <<~'ERB',
-      <%# Errado: tudo despejado no content %>
+      <%# Wrong: everything dumped into the content %>
       <%= ui_card do %>
         <%= ui_card_content do %>
           <h3>Time</h3>
@@ -438,14 +438,14 @@ module DocsSnippets
     ERB
 
     wrong_group: <<~'ERB',
-      <%# Errado: item renderizado direto na raiz %>
+      <%# Wrong: item rendered straight at the root %>
       <%= ui_select do %>
         <%= ui_select_item(value: "a") { "A" } %>
       <% end %>
     ERB
 
     right_group: <<~'ERB',
-      <%# Certo %>
+      <%# Right %>
       <%= ui_select(name: "role", placeholder: "Escolha um papel") do %>
         <%= ui_select_trigger { ui_select_value } %>
         <%= ui_select_content do %>
@@ -455,30 +455,30 @@ module DocsSnippets
     ERB
 
     wrong_title: <<~'ERB',
-      <%# Errado: o diálogo não tem nome acessível %>
+      <%# Wrong: the dialog has no accessible name %>
       <%= ui_dialog_content do %>
         <p>Tem certeza?</p>
       <% end %>
     ERB
 
     right_title: <<~'ERB',
-      <%# Certo: escondido visualmente, mas anunciado %>
+      <%# Right: visually hidden, but announced %>
       <%= ui_dialog_content do %>
         <%= ui_dialog_header do %>
-          <%= ui_dialog_title(class: "sr-only") { "Confirmar exclusão" } %>
+          <%= ui_dialog_title(class: "sr-only") { "Confirm deletion" } %>
         <% end %>
         <p>Tem certeza?</p>
       <% end %>
     ERB
 
     helper_vs_class: <<~'ERB',
-      <%= ui_button(variant: :outline) { "Salvar" } %>
-      <%= render Ui::ButtonComponent.new(variant: :outline) do %>Salvar<% end %>
+      <%= ui_button(variant: :outline) { "Save" } %>
+      <%= render Ui::ButtonComponent.new(variant: :outline) do %>Save<% end %>
     ERB
 
     inside_component: <<~RUBY
       class DashboardCardComponent < ViewComponent::Base
-        # Componentes não recebem helpers automaticamente.
+        # Components do not get helpers automatically.
         include Ui::ButtonHelper
       end
     RUBY
@@ -486,41 +486,41 @@ module DocsSnippets
 
   STYLING = {
     wrong_colors: <<~'ERB',
-      <%# Errado: cores fixas e um override manual de dark %>
+      <%# Wrong: hardcoded colours and a hand-written dark override %>
       <%= ui_card(class: "bg-white text-gray-900 dark:bg-gray-900 dark:text-white") do %>
     ERB
 
     right_colors: <<~'ERB',
-      <%# Certo: os tokens já cuidam dos dois modos %>
+      <%# Right: the tokens already cover both modes %>
       <%= ui_card do %>
     ERB
 
     class_alias: <<~'ERB',
-      <%= ui_button(class: "w-full") { "Salvar" } %>
-      <%= ui_button(class_name: "w-full") { "Salvar" } %>
+      <%= ui_button(class: "w-full") { "Save" } %>
+      <%= ui_button(class_name: "w-full") { "Save" } %>
     ERB
 
     order: "base_classes → variant_classes → size_classes → a sua class",
 
     wrong_restyle: <<~'ERB',
-      <%# Errado: brigando com o design system %>
-      <%= ui_button(class: "bg-red-600 hover:bg-red-700") { "Excluir" } %>
+      <%# Wrong: fighting the design system %>
+      <%= ui_button(class: "bg-red-600 hover:bg-red-700") { "Delete" } %>
     ERB
 
     right_restyle: <<~'ERB',
-      <%# Certo: a variante existe %>
-      <%= ui_button(variant: :destructive) { "Excluir" } %>
+      <%# Right: the variant already exists %>
+      <%= ui_button(variant: :destructive) { "Delete" } %>
     ERB
 
     layout: <<~'ERB',
-      <%= ui_button(variant: :outline, class: "w-full sm:w-auto") { "Salvar" } %>
+      <%= ui_button(variant: :outline, class: "w-full sm:w-auto") { "Save" } %>
     ERB
 
     attrs: <<~'ERB',
       <%= ui_button(id: "save", data: { turbo: false, controller: "form" },
-                    "aria-describedby": "hint") { "Salvar" } %>
+                    "aria-describedby": "hint") { "Save" } %>
 
-      <%= ui_button(tag: :a, href: post_path(post), data: { turbo_method: :delete }) { "Excluir" } %>
+      <%= ui_button(tag: :a, href: post_path(post), data: { turbo_method: :delete }) { "Delete" } %>
     ERB
 
     info: <<~CONSOLE,
@@ -530,19 +530,19 @@ module DocsSnippets
     CONSOLE
 
     wrong_utilities: <<~'ERB',
-      <%# Errado %>
+      <%# Wrong %>
       <%= ui_button(class: "h-8 px-3 text-xs border") { "Pequeno" } %>
     ERB
 
     right_utilities: <<~'ERB'
-      <%# Certo %>
+      <%# Right %>
       <%= ui_button(variant: :outline, size: :sm) { "Pequeno" } %>
     ERB
   }.freeze
 
   FORMS = {
     wrong_field: <<~'ERB',
-      <%# Errado %>
+      <%# Wrong %>
       <div class="space-y-2">
         <%= ui_label(for: "email") { "Email" } %>
         <%= ui_input(type: :email, id: "email", name: "email") %>
@@ -551,7 +551,7 @@ module DocsSnippets
     ERB
 
     right_field: <<~'ERB',
-      <%# Certo %>
+      <%# Right %>
       <%= ui_field do %>
         <%= ui_field_label(for: "email") { "Email" } %>
         <%= ui_input(type: :email, id: "email", name: "email") %>
@@ -579,7 +579,7 @@ module DocsSnippets
           <%= ui_field_error(errors: @user.errors[:email]) %>
         <% end %>
 
-        <%= ui_button(type: :submit) { "Salvar" } %>
+        <%= ui_button(type: :submit) { "Save" } %>
       <% end %>
     ERB
 
@@ -590,7 +590,7 @@ module DocsSnippets
     ERB
 
     wrong_input_group: <<~'ERB',
-      <%# Errado %>
+      <%# Wrong %>
       <%= ui_input_group do %>
         <%= ui_input_group_addon { ui_icon("search") } %>
         <%= ui_input(name: "q") %>
@@ -598,7 +598,7 @@ module DocsSnippets
     ERB
 
     right_input_group: <<~'ERB',
-      <%# Certo %>
+      <%# Right %>
       <%= ui_input_group do %>
         <%= ui_input_group_addon { ui_icon("search") } %>
         <%= ui_input_group_input(name: "q", placeholder: "Buscar") %>
@@ -623,13 +623,13 @@ module DocsSnippets
 
   ICONS = {
     wrong_names: <<~'ERB',
-      <%# Errado: nomes de componente React não existem aqui %>
+      <%# Wrong: React component names do not exist here %>
       <%= ui_icon("ChevronDown") %>
       <%= ui_icon(:chevron_down) %>
     ERB
 
     right_names: <<~'ERB',
-      <%# Certo %>
+      <%# Right %>
       <%= ui_icon("chevron-down") %>
     ERB
 
@@ -638,28 +638,28 @@ module DocsSnippets
     ERB
 
     decorative: <<~'ERB',
-      <%# Certo: "Baixar" já é o rótulo; o ícone é decoração %>
+      <%# Right: "Download" is already the label; the icon is decoration %>
       <%= ui_button { safe_join([ ui_icon("download"), " Baixar" ]) } %>
     ERB
 
     wrong_label: <<~'ERB',
-      <%# Errado: botão só de ícone, sem nome acessível %>
+      <%# Wrong: icon-only button with no accessible name %>
       <%= ui_button(size: :icon) { ui_icon("trash-2") } %>
     ERB
 
     right_label: <<~'ERB',
-      <%# Certo: qualquer um dos dois serve %>
-      <%= ui_button(size: :icon) { ui_icon("trash-2", label: "Excluir") } %>
-      <%= ui_button(size: :icon, "aria-label": "Excluir") { ui_icon("trash-2") } %>
+      <%# Right: either of these works %>
+      <%= ui_button(size: :icon) { ui_icon("trash-2", label: "Delete") } %>
+      <%= ui_button(size: :icon, "aria-label": "Delete") { ui_icon("trash-2") } %>
     ERB
 
     wrong_prop: <<~'ERB',
-      <%# Errado: nenhum componente tem essa prop %>
+      <%# Wrong: no component has that prop %>
       <%= ui_button(icon: "plus") { "Adicionar" } %>
     ERB
 
     right_prop: <<~'ERB'
-      <%# Certo %>
+      <%# Right %>
       <%= ui_button { safe_join([ ui_icon("plus"), " Adicionar" ]) } %>
     ERB
   }.freeze
@@ -668,24 +668,24 @@ module DocsSnippets
     overlay: <<~'ERB',
       <%= ui_dialog_content do %>
         <%= ui_dialog_header do %>
-          <%= ui_dialog_title(class: "sr-only") { "Confirmar exclusão" } %>
+          <%= ui_dialog_title(class: "sr-only") { "Confirm deletion" } %>
         <% end %>
-        <p>Essa ação não pode ser desfeita.</p>
+        <p>This action cannot be undone.</p>
       <% end %>
     ERB
 
     icon_label: <<~'ERB',
-      <%= ui_icon("bell", label: "Notificações") %>
+      <%= ui_icon("bell", label: "Notifications") %>
     ERB
 
     test: <<~RUBY
       test "dialog renders a native <dialog> with an accessible name" do
         render_inline(Ui::Dialog::ContentComponent.new) do
-          render_inline(Ui::Dialog::TitleComponent.new) { "Editar perfil" }
+          render_inline(Ui::Dialog::TitleComponent.new) { "Edit profile" }
         end
 
         assert_selector "dialog[aria-labelledby]"
-        assert_text "Editar perfil"
+        assert_text "Edit profile"
       end
     RUBY
   }.freeze

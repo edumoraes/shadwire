@@ -88,6 +88,159 @@ en:
         icons: Icons
         accessibility: Accessibility
 
+    # Reference tables. These are read back as arrays of hashes by DocsController
+    # — see the note there on why they are not Ruby constants.
+    cli:
+      commands:
+        - signature: shadwire init
+          summary: >-
+            Prepares the app: writes shadwire.json, installs the shared base files
+            (ui_component.rb, shadwire.css) and the base gems, adds shadwire to the
+            development group, creates the bin/shadwire binstub, and inserts the Tailwind @import.
+        - signature: bin/shadwire add NAME...
+          summary: >-
+            Installs one or more components along with their registry dependencies, applies
+            gems and importmap pins, and records all of it in shadwire.json.
+        - signature: bin/shadwire list
+          summary: Lists every component in the registry's catalog.
+        - signature: bin/shadwire search QUERY
+          summary: >-
+            Searches the catalog by name, title, description and when-to-use text, so
+            conceptual terms like form, modal or loading work.
+        - signature: bin/shadwire info NAME
+          summary: >-
+            Shows the component's full API: helpers, variants, sizes, props, files, gems,
+            pins and registry dependencies.
+        - signature: bin/shadwire diff [NAME...]
+          summary: >-
+            Compares the installed files against the registry and reports unchanged, modified
+            or missing, with a unified diff for the modified ones. Read-only.
+        - signature: bin/shadwire update [NAME...]
+          summary: >-
+            Reapplies the registry's version of the installed components. Overwrites local
+            edits, so run diff first.
+        - signature: bin/shadwire remove NAME...
+          summary: >-
+            Uninstalls components, deleting only the files exclusive to them — never the
+            shared base, and never a file another installed component still uses.
+        - signature: bin/shadwire status
+          summary: >-
+            Describes the whole app in one call: detected stack, installed components with the
+            helpers they define, and drift.
+        - signature: bin/shadwire version
+          summary: Prints the installed version of the CLI.
+      flags:
+        - flag: --cwd DIR
+          commands: all
+          description: Runs against another application directory instead of the current one.
+        - flag: --registry URL
+          commands: all
+          description: Reads from another registry. Accepts https:// and file://, which is how you test a locally built registry.
+        - flag: --json
+          commands: all but version
+          description: Emits machine-readable JSON instead of human output. This is what agents and CI use.
+        - flag: --yes, -y
+          commands: init, add, update, remove
+          description: Applies file and dependency changes without asking.
+        - flag: --overwrite
+          commands: add, update
+          description: Overwrites locally modified files without asking.
+        - flag: --no-deps
+          commands: add, update
+          description: Skips transitive registry dependencies (on by default).
+        - flag: --force
+          commands: init
+          description: Rewrites an existing shadwire.json and recreates the binstub.
+        - flag: --exit-code
+          commands: diff
+          description: Exits non-zero when there is drift, so CI can fail on it.
+
+    theming:
+      tokens:
+        - token: background / foreground
+          controls: Application background and default text
+          used_by: Page shell, sections, default text
+        - token: card / card-foreground
+          controls: Raised surfaces
+          used_by: Card, dashboard and settings panels
+        - token: popover / popover-foreground
+          controls: Floating surfaces
+          used_by: Popover, DropdownMenu, ContextMenu, overlays
+        - token: primary / primary-foreground
+          controls: High-emphasis actions, brand
+          used_by: Default Button, selected states, badges
+        - token: secondary / secondary-foreground
+          controls: Lower-emphasis filled actions
+          used_by: Secondary buttons and badges
+        - token: muted / muted-foreground
+          controls: Subtle surfaces, secondary content
+          used_by: Descriptions, placeholders, empty states, supporting text
+        - token: accent / accent-foreground
+          controls: Hover, focus and active surfaces
+          used_by: Ghost buttons, menu highlight, hovered rows
+        - token: destructive / destructive-foreground
+          controls: Destructive actions, errors
+          used_by: Destructive buttons, invalid states
+        - token: border
+          controls: Borders and separators
+          used_by: Cards, menus, tables, dividers
+        - token: input
+          controls: Form control borders
+          used_by: Input, Textarea, Select, outline controls
+        - token: ring
+          controls: Focus rings
+          used_by: Buttons, inputs, checkboxes, menus
+        - token: chart-1 … chart-5
+          controls: Chart palette
+          used_by: Charts and chart-driven blocks
+        - token: sidebar / sidebar-foreground
+          controls: Sidebar surface and text
+          used_by: The Sidebar container
+        - token: sidebar-primary / -foreground
+          controls: High-emphasis actions in the sidebar
+          used_by: Active items, icon tiles, CTAs
+        - token: sidebar-accent / -foreground
+          controls: Hover and selection in the sidebar
+          used_by: Menu hover, open items
+        - token: sidebar-border
+          controls: Sidebar borders
+          used_by: Sidebar headers, groups and dividers
+        - token: sidebar-ring
+          controls: Sidebar focus rings
+          used_by: Focused controls in the sidebar
+        - token: radius
+          controls: Base corner radius
+          used_by: Cards, inputs, buttons, popovers
+
+    agent_skill:
+      files:
+        - path: SKILL.md
+          summary: >-
+            Principles, critical rules, the component selection table and the workflow. Injects
+            bin/shadwire status --json as project context.
+        - path: cli.md
+          summary: >-
+            A reference for every command and flag, the shape of the JSON payload, and how to
+            read errors and exit codes.
+        - path: theming.md
+          summary: >-
+            Where the tokens live, class-based dark mode, how to retheme, how to add a token,
+            and how to keep edits across updates.
+        - path: rules/composition.md
+          summary: >-
+            Subcomponents as nested helpers, items inside their group, mandatory titles on
+            overlays, Stimulus.
+        - path: rules/styling.md
+          summary: >-
+            Semantic tokens, class precedence, free-form HTML attributes, Tailwind utility
+            conventions.
+        - path: rules/forms.md
+          summary: >-
+            The field family, validation state, wiring into form_with, and choosing the control.
+        - path: rules/icons.md
+          summary: >-
+            lucide-rails, kebab-case names, sizes, and when an icon needs an accessible label.
+
   components:
     sections:
       installation: Installation

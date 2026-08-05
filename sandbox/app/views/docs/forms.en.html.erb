@@ -1,0 +1,139 @@
+<% content_for :title, "Forms — Shadwire" %>
+<% content_for :description, "The field family, validation state, wiring into form_with, and how to pick the right control in Shadwire forms." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Forms",
+        description: "field is the layout primitive for a form row. There is no form builder integration." %>
+
+  <section class="space-y-4">
+    <%= docs_h2("Wrap every control in ui_field") %>
+    <p class="leading-7 text-muted-foreground">
+      Never build a form row out of <%= docs_code("div") %>s and spacing utilities.
+      <%= docs_code("field") %> already handles the label, the description, the error and the
+      space between them.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_field]) %>
+    <%= docs_code_block(@snippets[:right_field]) %>
+
+    <p class="leading-7 text-muted-foreground">The whole family:</p>
+
+    <%= render "docs/table",
+          headers: [ "Helper", "Role" ],
+          rows: [
+            [ docs_code("ui_field"), "The row. Takes orientation: :vertical (default), :horizontal or :responsive." ],
+            [ docs_code("ui_field_group"), "Stacks several fields with consistent spacing." ],
+            [ docs_code("ui_field_set") + " + " + docs_code("ui_field_legend"), "Groups related checkboxes or radios, in place of a div with a heading." ],
+            [ docs_code("ui_field_label"), "The field's label." ],
+            [ docs_code("ui_field_title") + " / " + docs_code("ui_field_description"), "Supporting text above and below the control." ],
+            [ docs_code("ui_field_error"), "The error message, with role=\"alert\"." ],
+            [ docs_code("ui_field_content"), "Wraps the control when it needs a container of its own." ],
+            [ docs_code("ui_field_separator"), "Divides sections inside a group." ]
+          ] %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Validation state") %>
+    <p class="leading-7 text-muted-foreground">
+      Pass <%= docs_code("invalid: true") %> to <%= docs_code("ui_field") %>. It sets
+      <%= docs_code("data-invalid") %> and turns the row's text destructive; the message goes in
+      <%= docs_code("ui_field_error") %>.
+    </p>
+
+    <%= docs_code_block(@snippets[:invalid]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("ui_field_error") %> takes either block content or an array in
+      <%= docs_code("errors:") %>, and renders nothing when both are empty — so you can leave it
+      permanently in place, with no conditional.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("There is no form builder integration") %>
+    <p class="leading-7 text-muted-foreground">
+      There is no <%= docs_code("f.ui_input") %>. The controls accept free-form HTML attributes
+      and forward them to the element, so you wire them to <%= docs_code("form_with") %> by hand:
+    </p>
+
+    <%= docs_code_block(@snippets[:form_with]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("form.field_name") %> and <%= docs_code("form.field_id") %> produce the
+      <%= docs_code("user[email]") %> / <%= docs_code("user_email") %> pair Rails expects, so the
+      params arrive as usual. The same holds for
+      <%= docs_code("ui_checkbox") %>, <%= docs_code("ui_switch") %>,
+      <%= docs_code("ui_textarea") %>, <%= docs_code("ui_select") %>,
+      <%= docs_code("ui_radio_group") %> and <%= docs_code("ui_slider") %>.
+    </p>
+
+    <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "Checkbox does not emit Rails' hidden input" } do %>
+      Unlike <code>form.check_box</code>, there is no hidden field carrying the unchecked value.
+      Treat a missing parameter as unchecked, or declare the hidden input yourself when the form
+      has to submit a value either way:
+    <% end %>
+
+    <%= docs_code_block(@snippets[:checkbox_hidden]) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Choosing the control") %>
+
+    <%= render "docs/table",
+          headers: [ "Situation", "Control" ],
+          rows: [
+            [ "One line of text", docs_code("ui_input") ],
+            [ "Several lines", docs_code("ui_textarea") ],
+            [ "Text with a prefix, suffix or button", docs_code("ui_input_group") ],
+            [ "One of a long list", safe_join([ docs_code("ui_select"), ", or ", docs_code("combobox"), " when it needs searching" ]) ],
+            [ "One of a few visible options", docs_code("ui_radio_group") ],
+            [ "The native mobile picker, no JS", docs_code("ui_native_select") ],
+            [ "Several independent choices", docs_code("ui_checkbox") ],
+            [ "Two to seven compact choices", docs_code("ui_toggle_group") ],
+            [ "A setting applied immediately", docs_code("ui_switch") ],
+            [ "An imprecise number", docs_code("ui_slider") ],
+            [ "An exact number", docs_code("ui_input(type: :number)") ],
+            [ "A date or a range", safe_join([ docs_code("date-picker"), ", or ", docs_code("ui_calendar"), " inline" ]) ],
+            [ "A one-time code", docs_code("ui_input_otp") ]
+          ] %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("The date picker is a recipe") %>
+    <p class="leading-7 text-muted-foreground">
+      There is no <%= docs_code("Ui::DatePickerComponent") %>. A date field is
+      <%= docs_code("ui_popover") %> + <%= docs_code("ui_calendar") %>, with the
+      <%= docs_code("ui-date-picker") %> controller writing the chosen date into the trigger and
+      closing the popover. The calendar owns the value: <%= docs_code("name:") %> renders the
+      hidden input, so it submits like any other field.
+    </p>
+
+    <%= docs_code_block(@snippets[:date_picker]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      The popover needs <%= docs_code("w-auto! p-0!") %>, because the default
+      <%= docs_code("w-72") %> with padding is too narrow for the grid. The variations are
+      calendar arguments:
+      <%= docs_code("mode: :range") %>, <%= docs_code("caption_layout: :dropdown") %>,
+      <%= docs_code("dir: :rtl") %>.
+      <%= docs_code("bin/shadwire info date-picker") %> prints them all, and the
+      <%= link_to "Date Picker page", components_date_picker_path, class: "font-medium underline underline-offset-4" %>
+      shows each one live.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Input group brings its own input") %>
+    <p class="leading-7 text-muted-foreground">
+      Inside <%= docs_code("ui_input_group") %>, use its own helpers, not a bare
+      <%= docs_code("ui_input") %>.
+    </p>
+
+    <%= docs_code_block(@snippets[:wrong_input_group]) %>
+    <%= docs_code_block(@snippets[:right_input_group]) %>
+  </section>
+</article>

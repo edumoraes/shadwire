@@ -1,0 +1,126 @@
+<% content_for :title, "Theming — Shadwire" %>
+<% content_for :description, "Shadwire's semantic tokens: where they live, what each one controls, how to change your brand colour, and how to keep your edits across updates." %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <%= render "docs/header",
+        title: "Theming",
+        description: "Every colour comes from a token. Retheming means editing two lists of CSS variables; no component has to change." %>
+
+  <section class="space-y-4">
+    <%= docs_h2("Where the tokens live") %>
+    <p class="leading-7 text-muted-foreground">
+      In <%= docs_code("vendor/shadwire/shadwire.css") %>, installed by
+      <%= docs_code("shadwire init") %> and imported from the application's Tailwind entrypoint.
+      <%= docs_code("bin/shadwire status --json") %> reports the real path under
+      <%= docs_code("tailwind.css") %>.
+    </p>
+
+    <p class="leading-7 text-muted-foreground">The file has three layers:</p>
+
+    <%= docs_code_block(@snippets[:layers], language: :css) %>
+
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("@theme inline") %> is what turns <%= docs_code("--primary") %> into the
+      <%= docs_code("bg-primary") %> and <%= docs_code("text-primary") %> utilities. The colours
+      are OKLCH.
+    </p>
+
+    <%= render layout: "docs/callout", locals: { icon: "info", title: "Edit :root and .dark, never @theme inline" } do %>
+      The <code>@theme inline</code> block is plumbing: it maps a variable to a utility. The
+      theme itself lives in the <code>:root</code> (light) and <code>.dark</code> blocks.
+    <% end %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("The tokens") %>
+    <p class="leading-7 text-muted-foreground">
+      Every surface has a matching <%= docs_code("-foreground") %>. Always use them as a pair:
+      <%= docs_code("bg-muted text-muted-foreground") %>, never
+      <%= docs_code("bg-muted") %> with the default text colour.
+    </p>
+
+    <%= render "docs/table",
+          headers: [ "Token", "Controls", "Used by" ],
+          rows: @tokens.map { |token| [ docs_code(token[:token]), token[:controls], token[:used_by] ] } %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Changing the brand colour") %>
+    <p class="leading-7 text-muted-foreground">
+      Set <%= docs_code("--primary") %> and <%= docs_code("--primary-foreground") %> in both
+      blocks. Every component that uses <%= docs_code("bg-primary") %> follows.
+    </p>
+
+    <%= docs_code_block(@snippets[:brand], language: :css) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Pick the foreground by its contrast against that surface, and check it in both modes.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Adding a token") %>
+    <p class="leading-7 text-muted-foreground">
+      Declare the variable in both blocks and map it in <%= docs_code("@theme inline") %> so
+      Tailwind generates the utilities:
+    </p>
+
+    <%= docs_code_block(@snippets[:new_token], language: :css) %>
+
+    <p class="leading-7 text-muted-foreground">
+      From then on <%= docs_code("bg-success") %> and
+      <%= docs_code("text-success-foreground") %> behave like any other token.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Corner radius") %>
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("--radius") %> feeds the derived
+      <%= docs_code("radius-sm") %> / <%= docs_code("radius-md") %> /
+      <%= docs_code("radius-lg") %> scale, so changing it reshapes cards, inputs, buttons and
+      popovers at once.
+    </p>
+
+    <%= docs_code_block(@snippets[:radius], language: :css) %>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Adding a variant") %>
+    <p class="leading-7 text-muted-foreground">
+      Variants are frozen Ruby hashes inside the component's class. Since the file is yours,
+      adding one is adding a key:
+    </p>
+
+    <%= docs_code_block(@snippets[:variant], language: :ruby) %>
+    <%= docs_code_block(@snippets[:variant_usage]) %>
+
+    <p class="leading-7 text-muted-foreground">
+      That is a local edit: <%= docs_code("bin/shadwire diff") %> will report the file as
+      <%= docs_code("modified") %>, and <%= docs_code("bin/shadwire update") %> would overwrite it.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <%= docs_h2("Keeping your edits") %>
+
+    <ol class="ml-4 list-decimal space-y-2 leading-7 text-muted-foreground marker:font-medium marker:text-foreground">
+      <li><%= docs_code("bin/shadwire diff <name>") %>: see what you changed.</li>
+      <li>
+        <%= docs_code("bin/shadwire update <name>") %> <strong class="font-medium text-foreground">without</strong>
+        <%= docs_code("--yes") %>: it asks about each modified file and shows the diff.
+      </li>
+      <li>Reapply your edits on top.</li>
+    </ol>
+
+    <%= docs_code_block(@snippets[:keep_edits], language: :shell) %>
+
+    <p class="leading-7 text-muted-foreground">
+      Prefer adding (a new variant key, a new token) over rewriting existing classes. Additive
+      changes survive updates with far less conflict.
+    </p>
+  </section>
+</article>

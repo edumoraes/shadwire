@@ -3,34 +3,46 @@
 require "test_helper"
 
 class DocsControllerTest < ActionDispatch::IntegrationTest
-  # Every guide page, with a heading that must appear on it. Keeps a renamed or
-  # emptied page from passing on a bare 200.
+  # Every guide page, with the heading each language must show on it. Keeps a
+  # renamed or emptied page from passing on a bare 200 — and, since each page is
+  # two independent templates, keeps one of the pair from silently going missing.
   PAGES = {
-    "/docs" => "Introdução",
-    "/docs/installation" => "Instalação",
-    "/docs/configuration" => "shadwire.json",
-    "/docs/theming" => "Theming",
-    "/docs/dark-mode" => "Dark mode",
-    "/docs/cli" => "CLI",
-    "/docs/agent-skill" => "Agent skill",
-    "/docs/registry" => "Registry",
-    "/docs/llms-txt" => "llms.txt",
-    "/docs/composition" => "Composição",
-    "/docs/styling" => "Estilização",
-    "/docs/forms" => "Formulários",
-    "/docs/icons" => "Ícones",
-    "/docs/accessibility" => "Acessibilidade"
+    "/docs" => [ "Introduction", "Introdução" ],
+    "/docs/installation" => [ "Installation", "Instalação" ],
+    "/docs/configuration" => [ "shadwire.json", "shadwire.json" ],
+    "/docs/theming" => [ "Theming", "Theming" ],
+    "/docs/dark-mode" => [ "Dark mode", "Dark mode" ],
+    "/docs/cli" => [ "CLI", "CLI" ],
+    "/docs/agent-skill" => [ "Agent skill", "Agent skill" ],
+    "/docs/registry" => [ "Registry", "Registry" ],
+    "/docs/llms-txt" => [ "llms.txt", "llms.txt" ],
+    "/docs/composition" => [ "Composition", "Composição" ],
+    "/docs/styling" => [ "Styling", "Estilização" ],
+    "/docs/forms" => [ "Forms", "Formulários" ],
+    "/docs/icons" => [ "Icons", "Ícones" ],
+    "/docs/accessibility" => [ "Accessibility", "Acessibilidade" ]
   }.freeze
 
-  PAGES.each do |path, heading|
+  PAGES.each do |path, (english, portuguese)|
     test "#{path} renders inside the documentation shell" do
       get path
 
       assert_response :success
-      assert_select "h1", text: heading
+      assert_select "html[lang='en']"
+      assert_select "h1", text: english
       assert_select "nav[aria-label='Documentation']"
       assert_select "[data-controller='docs-toc']"
       assert_select "nav[aria-label='Documentation'] a[aria-current='page'][href='#{path}']"
+    end
+
+    test "/pt#{path} renders inside the documentation shell" do
+      get "/pt#{path}"
+
+      assert_response :success
+      assert_select "html[lang='pt-BR']"
+      assert_select "h1", text: portuguese
+      assert_select "nav[aria-label='Documentação']"
+      assert_select "nav[aria-label='Documentação'] a[aria-current='page'][href='/pt#{path}']"
     end
   end
 
@@ -51,10 +63,10 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     get docs_cli_path
 
     assert_response :success
-    DocsController::COMMANDS.each do |command|
+    I18n.t("docs.cli.commands").each do |command|
       assert_select "table td code", text: command[:signature]
     end
-    DocsController::FLAGS.each do |flag|
+    I18n.t("docs.cli.flags").each do |flag|
       assert_select "table td code", text: flag[:flag]
     end
   end
@@ -71,7 +83,7 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     get docs_agent_skill_path
 
     assert_response :success
-    DocsController::SKILL_FILES.each do |file|
+    I18n.t("docs.agent_skill.files").each do |file|
       assert_select "table td code", text: file[:path]
     end
     assert_select "pre.highlight", text: /npx skills add edumoraes\/shadwire/
@@ -83,7 +95,24 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "table td code", text: "primary / primary-foreground"
     assert_select "table td code", text: "sidebar-ring"
-    assert_select "table td code", count: DocsController::TOKENS.size, text: /./
+    assert_select "table td code", count: I18n.t("docs.theming.tokens").size, text: /./
+  end
+
+  # The reference tables come out of the locale files, so a table that is present
+  # in English can be entirely absent in Portuguese without any page 500ing.
+  test "the reference tables are translated, not just present" do
+    I18n.available_locales.each do |locale|
+      %w[docs.cli.commands docs.cli.flags docs.theming.tokens docs.agent_skill.files].each do |key|
+        rows = I18n.t(key, locale: locale)
+
+        assert_kind_of Array, rows, "#{key} is not a table in #{locale}"
+        refute_empty rows, "#{key} is empty in #{locale}"
+      end
+    end
+
+    # Portuguese must not be silently falling back to the English text.
+    assert_equal "all", I18n.t("docs.cli.flags", locale: :en).first[:commands]
+    assert_equal "todos", I18n.t("docs.cli.flags", locale: :pt).first[:commands]
   end
 
   test "guide pages render highlighted code with copy controls" do
