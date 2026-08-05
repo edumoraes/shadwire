@@ -10,7 +10,7 @@ module Ui
 
       def call
         tag.span(**ellipsis_attrs) do
-          safe_join([ render(Ui::IconComponent.new("ellipsis")), tag.span("Mais", class: "sr-only") ])
+          safe_join([ render(Ui::IconComponent.new("ellipsis")), tag.span(I18n.t("ui.breadcrumb.more", default: "More"), class: "sr-only") ])
         end
       end
 

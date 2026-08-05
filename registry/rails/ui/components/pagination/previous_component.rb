@@ -24,12 +24,12 @@ module Ui
 
       def previous_attrs
         html_attrs.dup.tap do |attrs|
-          attrs[:aria] = { label: "Ir para a página anterior" }.merge(attrs.fetch(:aria, {}))
+          attrs[:aria] = { label: I18n.t("ui.pagination.previous_label", default: "Go to the previous page") }.merge(attrs.fetch(:aria, {}))
         end
       end
 
       def label_html
-        tag.span(content.presence || "Anterior", class: "hidden sm:block")
+        tag.span(content.presence || I18n.t("ui.pagination.previous", default: "Previous"), class: "hidden sm:block")
       end
     end
   end

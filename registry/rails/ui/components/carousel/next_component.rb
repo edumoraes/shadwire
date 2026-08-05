@@ -13,7 +13,7 @@ module Ui
         tag.button(**button_attrs) do
           safe_join([
             helpers.lucide_icon("arrow-right", class: "size-4"),
-            tag.span("Próximo slide", class: "sr-only")
+            tag.span(I18n.t("ui.carousel.next", default: "Next slide"), class: "sr-only")
           ])
         end
       end

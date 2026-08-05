@@ -13,23 +13,29 @@ class DocsPagesTest < ActionDispatch::IntegrationTest
   ITEMS = REGISTRY.fetch("items").to_h { |item| [ item.fetch("name"), item ] }.freeze
 
   # Component doc routes, derived from the routing table so a new page is
-  # covered the moment it is routed.
+  # covered the moment it is routed. Every page sits inside the optional locale
+  # scope, so its spec is prefixed with (/:locale); stripping that leaves the
+  # English address, which is the one the registry item name is derived from.
   DOC_PATHS = Rails.application.routes.routes.filter_map { |route|
-    path = route.path.spec.to_s.sub("(.:format)", "")
+    path = route.path.spec.to_s.sub("(.:format)", "").sub("(/:locale)", "")
     path if path.start_with?("/components/") && route.verb == "GET"
   }.uniq.freeze
 
-  test "every component documentation page renders" do
+  # The same pages in both languages. A page that renders in English can still
+  # be broken in Portuguese: the two are separate templates.
+  BILINGUAL_DOC_PATHS = DOC_PATHS.flat_map { |path| [ path, "/pt#{path}" ] }.freeze
+
+  test "every component documentation page renders in both languages" do
     refute_empty DOC_PATHS, "expected component documentation routes"
 
-    DOC_PATHS.each do |path|
+    BILINGUAL_DOC_PATHS.each do |path|
       get path
       assert_response :success, "#{path} did not render"
     end
   end
 
   test "documentation pages never advertise the removed monolithic helper" do
-    DOC_PATHS.each do |path|
+    BILINGUAL_DOC_PATHS.each do |path|
       get path
       assert_no_match %r{app/helpers/ui_helper\.rb}, response.body,
                       "#{path} still lists the removed app/helpers/ui_helper.rb"
@@ -40,11 +46,12 @@ class DocsPagesTest < ActionDispatch::IntegrationTest
   # and flagged an example that legitimately reads "Enterprise (em breve)".
   STALE_CLAIMS = [
     "CLI de instalação ainda está por vir",
+    "install CLI is still to come",
     "bin/sync_registry" # the monorepo's internal dev script, not a user command
   ].freeze
 
   test "documentation pages never advertise a stale install story" do
-    DOC_PATHS.each do |path|
+    BILINGUAL_DOC_PATHS.each do |path|
       get path
 
       STALE_CLAIMS.each do |claim|
@@ -62,15 +69,20 @@ class DocsPagesTest < ActionDispatch::IntegrationTest
       next unless item
 
       covered += 1
-      get path
-      assert_response :success
 
-      assert_match(/shadwire add #{Regexp.escape(name)}/, response.body,
-                   "#{path} does not show its install command")
+      # Both languages: the install section is one partial, but it is rendered
+      # per locale and the file list it prints must not depend on the language.
+      [ path, "/pt#{path}" ].each do |localised|
+        get localised
+        assert_response :success
 
-      item.fetch("files").map { |file| file.fetch("target") }.each do |target|
-        assert_includes response.body, target,
-                        "#{path} omits #{target}, which the registry installs"
+        assert_match(/shadwire add #{Regexp.escape(name)}/, response.body,
+                     "#{localised} does not show its install command")
+
+        item.fetch("files").map { |file| file.fetch("target") }.each do |target|
+          assert_includes response.body, target,
+                          "#{localised} omits #{target}, which the registry installs"
+        end
       end
     end
 

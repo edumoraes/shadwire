@@ -21,6 +21,48 @@ pt:
     footer:
       label: Rodapé
 
+  # Registry components carry their own English strings as I18n defaults, so an
+  # app that installs one needs no setup at all. This block is the override side
+  # of that contract — the same keys a consuming app would define to localise
+  # them — and it is what makes the live demos on the Portuguese pages read in
+  # Portuguese. There is deliberately no matching block in en.yml: English
+  # already lives in the component source, and a second copy would drift.
+  ui:
+    breadcrumb:
+      more: Mais
+    calendar:
+      previous_month: Mês anterior
+      next_month: Próximo mês
+      month: Mês
+      year: Ano
+    carousel:
+      previous: Slide anterior
+      next: Próximo slide
+    dialog:
+      close: Fechar
+    sheet:
+      close: Fechar
+    pagination:
+      more: Mais páginas
+      previous: Anterior
+      next: Próxima
+      previous_label: Ir para a página anterior
+      next_label: Ir para a próxima página
+    sonner:
+      label: Notificações
+      close: Fechar
+    spinner:
+      label: Carregando
+    data_table:
+      columns: Colunas
+      filter_placeholder: Filtrar…
+      empty: Sem resultados.
+      select_all: Selecionar todas as linhas
+      select_row: Selecionar linha
+      previous: Anterior
+      next: Próximo
+      selection: "%{selected} de %{total} linha(s) selecionada(s)."
+
   home:
     showcase:
       with_icon:

@@ -68,14 +68,14 @@ class DocsNavigationTest < ApplicationSystemTestCase
   test "the sidebar marks the current page and moves between pages" do
     visit docs_theming_path
 
-    assert_selector "nav[aria-label='Documentação'] a[aria-current='page']", text: "Theming"
+    assert_selector "nav[aria-label='Documentation'] a[aria-current='page']", text: "Theming"
 
-    within "nav[aria-label='Páginas']" do
+    within "nav[aria-label='Pages']" do
       click_link "Dark mode"
     end
 
     assert_selector "h1", text: "Dark mode"
-    assert_selector "nav[aria-label='Documentação'] a[aria-current='page']", text: "Dark mode"
+    assert_selector "nav[aria-label='Documentation'] a[aria-current='page']", text: "Dark mode"
   end
 
   test "the palette opens with the keyboard, filters and navigates" do
@@ -129,7 +129,7 @@ class DocsNavigationTest < ApplicationSystemTestCase
     find("[data-slot='sheet-trigger']").click
 
     within "dialog[data-slot='sheet-content'][open]" do
-      assert_selector "nav[aria-label='Documentação']"
+      assert_selector "nav[aria-label='Documentation']"
       click_link "CLI"
     end
 

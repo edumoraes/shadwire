@@ -67,7 +67,7 @@ class ScrollAreaComponentTest < ApplicationSystemTestCase
     collapsed_scroll_area.assert_selector "[data-orientation='horizontal']", visible: :all
     collapsed_scroll_area.assert_no_selector "[data-orientation='vertical']", visible: :all
 
-    code_block.click_button "Expandir"
+    code_block.click_button "Expand"
 
     assert_equal "true", code_block["data-code-block-expanded-value"]
     expanded_scroll_area = code_block.find("[data-slot='scroll-area']", visible: :visible)
@@ -83,6 +83,6 @@ class ScrollAreaComponentTest < ApplicationSystemTestCase
     assert_equal "false", code_block["data-code-block-expanded-value"]
     code_block.assert_selector "[data-code-block-target='collapsed'][data-slot='scroll-area']", visible: :visible
     code_block.assert_no_selector "[data-code-block-target='expanded'][data-slot='scroll-area']", visible: :visible
-    code_block.assert_selector "button", text: "Expandir"
+    code_block.assert_selector "button", text: "Expand"
   end
 end

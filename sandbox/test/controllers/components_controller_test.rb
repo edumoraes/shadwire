@@ -164,7 +164,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", text: "Scroll Area"
     assert_select "p", text: /Aprimora a rolagem nativa/
-    assert_select "h2", text: "Instalação"
+    assert_select "h2", text: "Installation"
     assert_select "h2", text: "Uso"
     assert_select "h2", text: "Composição"
     assert_select "h2", text: "Exemplos"
@@ -302,8 +302,8 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", text: "Pagination"
     assert_select "nav[aria-label='pagination'] a[aria-current='page'][data-active]", text: "2"
-    assert_select "a[aria-label='Ir para a página anterior'] svg"
-    assert_select "[data-slot='pagination-ellipsis'] span.sr-only", text: "Mais páginas"
+    assert_select "a[aria-label='Go to the previous page'] svg"
+    assert_select "[data-slot='pagination-ellipsis'] span.sr-only", text: "More pages"
     assert_select "table td code", text: "active: false"
   end
 
@@ -327,7 +327,7 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "[data-controller='ui-dialog'] button[aria-haspopup='dialog']", text: "Editar perfil"
     assert_select "dialog[data-slot='dialog-content'] h2[data-slot='dialog-title']", text: "Editar perfil"
     assert_select "[data-ui-dialog-close-on-backdrop-value='false']"
-    assert_select "dialog [data-slot='dialog-close-x'] span.sr-only", text: "Fechar"
+    assert_select "dialog [data-slot='dialog-close-x'] span.sr-only", text: "Close"
     assert_select "table td code", text: "close_on_backdrop"
   end
 
@@ -510,8 +510,8 @@ class ComponentsControllerTest < ActionDispatch::IntegrationTest
     assert_select "section#example-scroll_area_horizontal [data-code-block-target='collapsed'][data-slot='scroll-area']"
     assert_select "section#example-scroll_area_horizontal [data-code-block-target='collapsed'] [data-orientation='horizontal']"
     assert_select "section#example-scroll_area_horizontal [data-code-block-target='collapsed'] [data-orientation='vertical']", count: 0
-    assert_select "section#example-scroll_area_horizontal [data-action='code-block#toggle']", text: "Expandir"
-    assert_select "section#example-scroll_area_horizontal [data-action='clipboard#copy']", text: "Copiar"
+    assert_select "section#example-scroll_area_horizontal [data-action='code-block#toggle']", text: "Expand"
+    assert_select "section#example-scroll_area_horizontal [data-action='clipboard#copy']", text: "Copy"
     assert_select "section#example-scroll_area_horizontal [data-controller~='code-block']" do |blocks|
       assert_includes blocks.first["data-clipboard-source-value"], "Vladimir Malyavko"
     end

@@ -29,7 +29,7 @@ class SonnerComponentTest < ViewComponent::TestCase
   def test_list_is_a_polite_live_region
     render_inline(Ui::SonnerComponent.new)
 
-    assert_selector "ol[data-ui-sonner-target='list'][role='region'][aria-live='polite'][aria-label='Notificações']"
+    assert_selector "ol[data-ui-sonner-target='list'][role='region'][aria-live='polite'][aria-label='Notifications']"
   end
 
   def test_position_sets_placement_classes

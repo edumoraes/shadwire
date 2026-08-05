@@ -37,7 +37,7 @@ class CarouselComponentTest < ViewComponent::TestCase
 
   def test_controls_wire_actions
     render_inline(Ui::Carousel::PreviousComponent.new)
-    assert_selector "button[data-ui-carousel-target='previous'][data-action='click->ui-carousel#previous'] span.sr-only", text: "Slide anterior"
+    assert_selector "button[data-ui-carousel-target='previous'][data-action='click->ui-carousel#previous'] span.sr-only", text: "Previous slide"
   end
 
   def test_helper_composes_carousel

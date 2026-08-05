@@ -13,7 +13,7 @@ module Ui
         tag.button(**button_attrs) do
           safe_join([
             helpers.lucide_icon("arrow-left", class: "size-4"),
-            tag.span("Slide anterior", class: "sr-only")
+            tag.span(I18n.t("ui.carousel.previous", default: "Previous slide"), class: "sr-only")
           ])
         end
       end

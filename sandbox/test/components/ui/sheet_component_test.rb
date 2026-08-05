@@ -34,7 +34,7 @@ class SheetComponentTest < ViewComponent::TestCase
                     visible: :all, text: "Corpo"
     assert_selector "dialog[data-action='click->ui-dialog#backdropClick cancel->ui-dialog#cancel close->ui-dialog#closed']",
                     visible: :all
-    assert_selector "dialog [data-slot='sheet-close-x'] span.sr-only", visible: :all, text: "Fechar"
+    assert_selector "dialog [data-slot='sheet-close-x'] span.sr-only", visible: :all, text: "Close"
   end
 
   def test_content_side_variants

@@ -22,6 +22,8 @@ export default class extends Controller {
     weekStart: { type: Number, default: 0 },
     monthNames: { type: Array, default: [] },
     dayNames: { type: Array, default: [] },
+    monthLabel: { type: String, default: "Month" },
+    yearLabel: { type: String, default: "Year" },
   }
 
   static MONTH_NAMES = [
@@ -255,8 +257,8 @@ export default class extends Controller {
 
     return (
       `<div class="flex h-7 items-center justify-center gap-1">` +
-      this.dropdown("Mês", "changeMonth", months) +
-      this.dropdown("Ano", "changeYear", years) +
+      this.dropdown(this.monthLabelValue, "changeMonth", months) +
+      this.dropdown(this.yearLabelValue, "changeYear", years) +
       `</div>`
     )
   }

@@ -28,9 +28,9 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
 
       assert_response :success
       assert_select "h1", text: heading
-      assert_select "nav[aria-label='Documentação']"
+      assert_select "nav[aria-label='Documentation']"
       assert_select "[data-controller='docs-toc']"
-      assert_select "nav[aria-label='Documentação'] a[aria-current='page'][href='#{path}']"
+      assert_select "nav[aria-label='Documentation'] a[aria-current='page'][href='#{path}']"
     end
   end
 
@@ -38,12 +38,12 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     get docs_path
 
     assert_response :success
-    %w[Começar Ferramentas Guias Blocks Componentes].each do |group|
-      assert_select "nav[aria-label='Documentação'] ul[aria-label='#{group}'] li a"
+    [ "Get started", "Tools", "Guides", "Blocks", "Components" ].each do |group|
+      assert_select "nav[aria-label='Documentation'] ul[aria-label='#{group}'] li a"
     end
     # Group labels must not be headings: six of them would push the page's own
     # h1 down to seventh in the heading list.
-    nav = "nav[aria-label='Documentação']"
+    nav = "nav[aria-label='Documentation']"
     assert_select "#{nav} h1, #{nav} h2, #{nav} h3, #{nav} h4, #{nav} h5, #{nav} h6", count: 0
   end
 
@@ -98,22 +98,22 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     get docs_installation_path
 
     assert_response :success
-    assert_select "nav[aria-label='Páginas'] a[rel='prev'][href='#{docs_path}']"
-    assert_select "nav[aria-label='Páginas'] a[rel='next'][href='#{docs_configuration_path}']"
+    assert_select "nav[aria-label='Pages'] a[rel='prev'][href='#{docs_path}']"
+    assert_select "nav[aria-label='Pages'] a[rel='next'][href='#{docs_configuration_path}']"
   end
 
   test "the first page has no previous link" do
     get docs_path
 
-    assert_select "nav[aria-label='Páginas'] a[rel='prev']", count: 0
-    assert_select "nav[aria-label='Páginas'] a[rel='next'][href='#{docs_installation_path}']"
+    assert_select "nav[aria-label='Pages'] a[rel='prev']", count: 0
+    assert_select "nav[aria-label='Pages'] a[rel='next'][href='#{docs_installation_path}']"
   end
 
   test "the breadcrumb names the topic the page belongs to" do
     get docs_cli_path
 
     assert_select "nav[aria-label='breadcrumb'] a[href='#{docs_path}']", text: "Docs"
-    assert_select "nav[aria-label='breadcrumb']", text: /Ferramentas/
+    assert_select "nav[aria-label='breadcrumb']", text: /Tools/
     assert_select "nav[aria-label='breadcrumb'] [data-slot='breadcrumb-page']", text: "CLI"
   end
 
@@ -121,8 +121,8 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     get root_path
 
     assert_response :success
-    assert_select "nav[aria-label='Principal'] a[href='#{docs_path}']", text: "Documentação"
-    assert_select "nav[aria-label='Rodapé'] a[href='#{docs_path}']", text: "Documentação"
+    assert_select "nav[aria-label='Main'] a[href='#{docs_path}']", text: "Documentation"
+    assert_select "nav[aria-label='Footer'] a[href='#{docs_path}']", text: "Documentation"
   end
 
   test "the search palette offers every page the sidebar lists" do
@@ -130,19 +130,19 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
 
     assert_select "[data-controller='docs-search'] [data-slot='command']"
     # The sidebar renders twice (sticky aside + mobile sheet); the palette once.
-    sidebar_entries = css_select("nav[aria-label='Documentação'] a").size / 2
+    sidebar_entries = css_select("nav[aria-label='Documentation'] a").size / 2
     assert_operator sidebar_entries, :>, 60
     assert_select "[data-slot='command-item']", count: sidebar_entries
     assert_select "[data-slot='command-item'][data-href='#{docs_cli_path}']", text: /CLI/
     assert_select "[data-slot='command-item'][data-href='/components/button']", text: /Button/
     # The palette is a dialog, so it needs a name even though the header is sr-only.
-    assert_select "[data-controller='docs-search'] [data-slot='dialog-title']", text: "Buscar na documentação"
+    assert_select "[data-controller='docs-search'] [data-slot='dialog-title']", text: "Search the documentation"
   end
 
   test "the search palette advertises its shortcut" do
     get docs_path
 
-    assert_select "[data-controller='docs-search'] [data-docs-search-target='trigger'][aria-label='Buscar na documentação']"
+    assert_select "[data-controller='docs-search'] [data-docs-search-target='trigger'][aria-label='Search the documentation']"
     assert_select "[data-controller='docs-search'] [data-slot='kbd']", text: "K"
   end
 
@@ -156,10 +156,10 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
   test "small screens reach the sidebar through a labelled sheet" do
     get docs_path
 
-    assert_select "[data-slot='sheet'] [data-slot='sheet-trigger'][aria-label='Abrir a navegação da documentação']"
+    assert_select "[data-slot='sheet'] [data-slot='sheet-trigger'][aria-label='Open the documentation navigation']"
     assert_select "[data-slot='sheet'] dialog[data-slot='sheet-content'][data-side='left']"
     # The nav is rendered twice, once in the sticky aside and once in the sheet,
     # from the same partial, so the two can never disagree.
-    assert_select "nav[aria-label='Documentação']", count: 2
+    assert_select "nav[aria-label='Documentation']", count: 2
   end
 end

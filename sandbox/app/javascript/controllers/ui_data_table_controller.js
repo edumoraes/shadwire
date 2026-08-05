@@ -20,7 +20,8 @@ export default class extends Controller {
   static values = {
     pageSize: { type: Number, default: 10 },
     page: { type: Number, default: 0 },
-    filterKey: { type: String, default: "" }
+    filterKey: { type: String, default: "" },
+    selectionLabel: { type: String, default: "%{selected} of %{total} row(s) selected." }
   }
 
   connect() {
@@ -188,6 +189,8 @@ export default class extends Controller {
     if (!this.hasSelectionInfoTarget) return
     const total = this.rowTargets.length
     const selected = this.rowTargets.filter((row) => row.dataset.state === "selected").length
-    this.selectionInfoTarget.textContent = `${selected} de ${total} linha(s) selecionada(s).`
+    this.selectionInfoTarget.textContent = this.selectionLabelValue
+      .replace("%{selected}", selected)
+      .replace("%{total}", total)
   }
 }

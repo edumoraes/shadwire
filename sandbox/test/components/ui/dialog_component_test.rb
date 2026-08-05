@@ -48,7 +48,7 @@ class DialogComponentTest < ViewComponent::TestCase
     assert_selector "dialog[data-action='click->ui-dialog#backdropClick cancel->ui-dialog#cancel close->ui-dialog#closed']",
                     visible: :all
     assert_selector "dialog button[data-slot='dialog-close-x'][data-action='click->ui-dialog#close'] span.sr-only",
-                    visible: :all, text: "Fechar"
+                    visible: :all, text: "Close"
   end
 
   def test_content_can_omit_close_button

@@ -1,7 +1,7 @@
 <%# The documentation sidebar: one <nav> of topic groups, rendered both in the
     sticky desktop aside and inside the mobile sheet. Data comes from
     DocsNavHelper, so the two can never drift. %>
-<nav aria-label="Documentação" class="flex flex-col gap-6 text-sm">
+<nav aria-label="<%= t("site.nav.docs") %>" class="flex flex-col gap-6 text-sm">
   <% docs_nav_groups.each do |group| %>
     <%# The group label is not a heading: six of them ahead of the page's own h1
         would bury it in the heading list a screen reader announces. The list

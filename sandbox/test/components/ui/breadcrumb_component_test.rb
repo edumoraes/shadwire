@@ -59,7 +59,7 @@ class BreadcrumbComponentTest < ViewComponent::TestCase
     render_inline(Ui::Breadcrumb::EllipsisComponent.new)
 
     assert_selector "span[role='presentation'][aria-hidden='true'][data-slot='breadcrumb-ellipsis'] svg"
-    assert_selector "span.sr-only", text: "Mais"
+    assert_selector "span.sr-only", text: "More"
   end
 
   def test_helper_methods_render_breadcrumb_trail
