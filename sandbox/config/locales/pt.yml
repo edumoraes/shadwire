@@ -120,6 +120,7 @@ pt:
         forms: Formulários
         icons: Ícones
         accessibility: Acessibilidade
+        localisation: Localização
 
     cli:
       commands:
