@@ -119,7 +119,7 @@ Always enforced. Each links to a file with Wrong/Right pairs.
 | Feedback | `alert` (inline), `sonner` (toast) |
 | Layout | `separator`, `aspect-ratio`, `scroll-area`, `resizable`, `accordion`, `collapsible` |
 | Command palette | `command` inside `dialog` |
-| Charts | `chart` |
+| Charts | `chart` (one part per layer; `ui_chart_layer` for your own D3 drawing) |
 | Keyboard shortcut | `kbd` |
 | Full dashboard scaffold | `sidebar-01` |
 

@@ -88,7 +88,7 @@ in English.
 | `combobox` | A searchable single-select built from popover, command, and button. |
 | `date-picker` | A date field that opens a calendar in a popover. |
 | `sonner` | Transient toast notifications. |
-| `chart` | Chart.js charts using the Shadwire theme tokens. |
+| `chart` | Composable charts drawn with D3: bars, lines, areas, pies, radars and radial bars, with a tooltip and a legend, in the Shadwire theme tokens. |
 | `data-table` | A table with sorting, filtering, pagination, and row selection. |
 
 Helpers use the `ui_*` prefix.
