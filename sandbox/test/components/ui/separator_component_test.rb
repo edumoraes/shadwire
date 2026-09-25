@@ -41,4 +41,18 @@ class SeparatorComponentTest < ViewComponent::TestCase
       "[data-orientation='horizontal'][data-testid='section-divider']"
     )
   end
+
+  # The button group's and the item's separators are this component with a slot
+  # of their own; passing `data:` used to drop it.
+  def test_each_separator_keeps_its_slot_when_given_data
+    {
+      Ui::SeparatorComponent => "separator",
+      Ui::ButtonGroup::SeparatorComponent => "button-group-separator",
+      Ui::Item::SeparatorComponent => "item-separator"
+    }.each do |component, slot|
+      render_inline(component.new(data: { testid: "divider" }))
+
+      assert_selector "[data-slot='#{slot}'][data-testid='divider']"
+    end
+  end
 end

@@ -26,4 +26,28 @@ class CardComponentTest < ViewComponent::TestCase
     assert_selector ".p-6", text: "Content"
     assert_selector ".flex.items-center.justify-end", text: "Footer"
   end
+
+  def test_every_part_names_its_slot
+    {
+      Ui::CardComponent => "card", Ui::Card::HeaderComponent => "card-header", Ui::Card::TitleComponent => "card-title",
+      Ui::Card::DescriptionComponent => "card-description", Ui::Card::ContentComponent => "card-content",
+      Ui::Card::FooterComponent => "card-footer"
+    }.each do |component, slot|
+      render_inline(component.new) { "x" }
+
+      assert_selector "[data-slot='#{slot}']", text: "x"
+    end
+  end
+
+  # `tag:` like every other component; `tag_name:`, the old spelling, still works.
+  def test_title_takes_its_heading_level_from_tag
+    render_inline(Ui::Card::TitleComponent.new) { "Project" }
+    assert_selector "h3[data-slot='card-title']", text: "Project"
+
+    render_inline(Ui::Card::TitleComponent.new(tag: :h2)) { "Project" }
+    assert_selector "h2[data-slot='card-title']", text: "Project"
+
+    render_inline(Ui::Card::TitleComponent.new(tag_name: :h4)) { "Project" }
+    assert_selector "h4[data-slot='card-title']", text: "Project"
+  end
 end

@@ -146,17 +146,18 @@ class DocsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  # These four are written into data-*-value attributes and read by a Stimulus
-  # controller. Someone translating them needs to know that, and one of them
-  # carries placeholders that JavaScript — not I18n — substitutes.
+  # These five are written into data-*-value attributes and read by a Stimulus
+  # controller. Someone translating them needs to know that, and two of them
+  # carry placeholders that JavaScript — not I18n — substitutes.
   test "the localisation page marks the keys JavaScript reads" do
     get docs_localisation_path
 
-    %w[ui.data_table.selection ui.calendar.month ui.calendar.year ui.sonner.close].each do |key|
+    %w[ui.data_table.selection ui.data_table.page ui.calendar.month ui.calendar.year ui.sonner.close].each do |key|
       assert_select "table tr", html: /#{Regexp.escape(key)}.*>value</m,
                     message: "#{key} is not marked as a Stimulus value"
     end
     assert_select "pre.highlight", text: /%\{selected\}/
+    assert_select "pre.highlight", text: /%\{page\}/
   end
 
   test "guide pages render highlighted code with copy controls" do

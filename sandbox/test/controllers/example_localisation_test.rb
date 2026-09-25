@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require_relative "../support/portuguese_text"
 
 # The live examples under components/examples/, in both language trees.
 #
@@ -17,12 +18,9 @@ class ExampleLocalisationTest < ActionDispatch::IntegrationTest
 
   LOCALISED = Dir[DocsHelper::EXAMPLES_DIR.join("_*.pt.html.erb")].sort.freeze
 
-  # Portuguese has diacritics English does not, and these words have no English
-  # homograph. Between them they catch the leak without flagging prose.
-  DIACRITICS = /[çãõáéíóúâêôà]/i
-  WORDS = /\b(você|voce|não|nao|uma|para|seu|sua|aqui|então|também|arquivo|salvar|
-             cancelar|criar|editar|excluir|inscrever|buscar|entrar|novo|nova|
-             mensagem|senha|nome|conta|perfil|escolha|selecione|digite|clique)\b/xi
+  # The words live in PortugueseText, shared with DocsLanguageTest. The list this
+  # test kept on its own let "Componentes", "Carregando", "Direita" and a
+  # Portuguese code comment through, on seventeen English partials.
 
   # The RTL demos are written in Arabic on purpose, in both trees: the point of
   # the example is the direction, and a Latin-script string would not show it.
@@ -32,9 +30,8 @@ class ExampleLocalisationTest < ActionDispatch::IntegrationTest
   # in the Portuguese tree reads badly; Portuguese in the English tree is wrong.
   test "no English example partial contains Portuguese" do
     leaking = BASE.reject { |path| path.match?(RTL) }.filter_map do |path|
-      source = File.read(path)
-      hits = source.scan(DIACRITICS).uniq + source.scan(WORDS).flatten.compact.uniq
-      "#{File.basename(path)}: #{hits.uniq.join(", ")}" if hits.any?
+      hits = PortugueseText.hits(File.read(path))
+      "#{File.basename(path)}: #{hits.join(", ")}" if hits.any?
     end
 
     assert_empty leaking, "Portuguese in the English examples:\n#{leaking.join("\n")}"

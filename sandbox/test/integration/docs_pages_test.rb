@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require_relative "../support/class_conflicts"
+require_relative "../support/html_nesting"
 
 # Every component documentation page must render, and its install section must
 # describe what the registry actually installs.
@@ -87,6 +89,41 @@ class DocsPagesTest < ActionDispatch::IntegrationTest
     end
 
     assert_operator covered, :>, 20, "expected most doc pages to map to a registry item"
+  end
+
+  # Every page the site publishes, guides included, in both languages.
+  SITE_PATHS = Rails.application.routes.routes.filter_map { |route|
+    path = route.path.spec.to_s.sub("(.:format)", "").sub("(/:locale)", "")
+    path if path.match?(%r{\A/(docs|components)(/|\z)}) && route.verb == "GET"
+  }.uniq.flat_map { |path| [ path, "/pt#{path}" ] }.freeze
+
+  # Checks on the markup as rendered, one request per page:
+  #
+  # - No raw ERB in the text a reader sees. An ERB comment ends at the first
+  #   `%>` — even one inside an escaped `<%%` — and docs/_table's header comment
+  #   printed its own tail, "<% end %> %>", under every reference table on the
+  #   site.
+  # - No interactive content inside a button or a link (HtmlNesting), which the
+  #   browser silently splits apart.
+  # - No element left with two classes that set the same thing
+  #   (ClassConflicts). The examples pass their widths and alignments to
+  #   components that set their own, the way upstream's do; until class_names
+  #   merged them, sixty of those overrides lost — the combobox trigger stayed
+  #   centred, the ⌘K palette kept the dialog's padding.
+  test "no page shows raw ERB, nests interactive content or keeps an overridden class" do
+    assert_operator SITE_PATHS.size, :>, 100
+
+    SITE_PATHS.each do |path|
+      get path
+      assert_response :success
+
+      assert_empty ClassConflicts.in_fragment(Nokogiri::HTML5(response.body)), "#{path} keeps classes a later one overrides"
+      assert_empty HtmlNesting.nested_interactive(response.body), "#{path} nests interactive content"
+
+      document = Nokogiri::HTML5(response.body)
+      document.css("pre, code, script, style, template, textarea").each(&:remove)
+      assert_no_match(/<%|%>/, document.text, "#{path} prints raw ERB")
+    end
   end
 
   test "pages for Stimulus components say so" do

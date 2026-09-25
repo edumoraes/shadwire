@@ -40,6 +40,15 @@ class InputGroupComponentTest < ViewComponent::TestCase
 
     assert_selector "div[data-slot='input-group'] div[data-slot='input-group-addon'][data-align='inline-start']", text: "@"
     assert_selector "input[data-slot='input-group-control'][placeholder='username']"
-    assert_selector "div[data-slot='input-group-addon'][data-align='inline-end'] button[data-slot='input-group-control']", text: "Go"
+    assert_selector "div[data-slot='input-group-addon'][data-align='inline-end'] button[data-slot='input-group-button']", text: "Go"
+  end
+
+  # The group rings itself around a focused `input-group-control`; a button
+  # carrying that slot drew the group's ring and its own at once.
+  def test_only_the_input_is_a_control_the_group_rings_around
+    render_inline(HelperHarnessComponent.new)
+
+    assert_selector "[data-slot='input-group-control']", count: 1
+    assert_selector "input[data-slot='input-group-control']"
   end
 end

@@ -34,4 +34,23 @@ class ToggleGroupComponentTest < ViewComponent::TestCase
     assert_selector "button[data-value='bold'][data-state='on']", text: "B"
     assert_selector "button[data-value='italic'][data-state='off']", text: "I"
   end
+
+  # The items are one segmented control: square inner corners, rounded ends,
+  # and a single border between neighbours. Each item used to be a rounded
+  # button with its own border, so an outline group showed doubled lines.
+  def test_items_join_into_one_segmented_control
+    render_inline(Ui::ToggleGroup::ItemComponent.new(value: "a", variant: :outline)) { "A" }
+    classes = page.find("button[data-slot='toggle-group-item']")[:class].split
+
+    %w[
+      rounded-none
+      group-data-[orientation=horizontal]/toggle-group:first:rounded-l-md
+      group-data-[orientation=horizontal]/toggle-group:last:rounded-r-md
+      group-data-[orientation=horizontal]/toggle-group:border-l-0
+      group-data-[orientation=horizontal]/toggle-group:first:border-l
+      group-data-[orientation=vertical]/toggle-group:border-t-0
+      focus-visible:z-10
+    ].each { |utility| assert_includes classes, utility }
+    refute_includes classes, "rounded-md"
+  end
 end
