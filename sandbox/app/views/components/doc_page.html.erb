@@ -1,5 +1,6 @@
 <%# Generic component documentation page driven by controller ivars: %>
 <%#   @page_title, @page_subtitle, @usage_helper (optional), @examples (array). %>
+<%# The API reference is generated from the component source (components/_api). %>
 <% content_for :title, "#{@page_title} — Shadwire" %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
@@ -31,4 +32,6 @@
       <% end %>
     </section>
   <% end %>
+
+  <%= render "components/api", name: action_name.tr("_", "-") %>
 </article>

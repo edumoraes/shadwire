@@ -42,7 +42,7 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
       Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> and
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ "Helper", t("components.api.element"), t("components.api.notes") ] } do %>
@@ -74,7 +74,7 @@
       <tr>
         <td><code>ui_breadcrumb_ellipsis</code></td>
         <td><code>span</code></td>
-        <td>Indicador decorativo de itens recolhidos.</td>
+        <td>A decorative marker for collapsed items.</td>
       </tr>
     <% end %>
   </section>

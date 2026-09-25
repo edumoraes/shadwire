@@ -29,11 +29,21 @@
 
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
-    <p class="text-sm text-muted-foreground"><code class="rounded bg-muted px-1 py-0.5 text-xs">ui_alert(**options, &block)</code> encapsula <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::AlertComponent.new(**options)</code>.</p>
-    <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.type"), t("components.api.default"), t("components.api.description") ] } do %>
-      <tr><td><code>variant</code></td><td>Symbol/String</td><td><code>:default</code></td><td><code>:default</code> ou <code>:destructive</code>.</td></tr>
-      <tr><td><code>role</code></td><td>String</td><td><code>"alert"</code></td><td>Pode ser sobrescrito quando a mensagem não deve ser anunciada imediatamente.</td></tr>
-      <tr><td><code>**attrs</code></td><td>Hash</td><td><code>{}</code></td><td>Atributos HTML livres.</td></tr>
+    <p class="text-sm text-muted-foreground">
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_alert</code>,
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_alert_title</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_alert_description</code> encapsulam os
+      componentes correspondentes. Um <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_icon</code>
+      colocado primeiro ganha uma coluna própria, e o texto se alinha ao lado dele. Toda parte aceita
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
+    </p>
+    <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr><td><code>Alert</code></td><td><code>variant</code></td><td><code>:default</code></td><td><code>:default</code> ou <code>:destructive</code>.</td></tr>
+      <tr><td><code>Alert</code></td><td><code>role</code> (atributo)</td><td><code>"alert"</code></td><td>Pode ser sobrescrito quando a mensagem não deve ser anunciada imediatamente.</td></tr>
+      <tr><td><code>Alert::Title</code></td><td>—</td><td>—</td><td>A linha de título, limitada a uma linha.</td></tr>
+      <tr><td><code>Alert::Description</code></td><td>—</td><td>—</td><td>O corpo, em tom neutro; comporta uma linha de texto ou vários <code>&lt;p&gt;</code>.</td></tr>
     <% end %>
   </section>
 </article>

@@ -264,6 +264,144 @@ en:
       notes: Notes
       component: Component
       api: API
+    # The generated API tables (components/_api): one line per keyword argument,
+    # keyed by the helper that renders the component. An argument without a
+    # line of its own falls back to `shared`. `code` in backticks renders as
+    # inline code; variant and size names are appended from the source.
+    api_docs:
+      intro_html: "Every part accepts %{class} / %{class_name} and %{attrs}."
+      none: "None of its parts takes another argument."
+      values: "One of %{values}."
+      shared:
+        variant: "The look."
+        size: "The size."
+        disabled: "Disables it: not clickable, and skipped by the keyboard."
+        inset: "Indents it to line up with the items that have an icon."
+        side: "The edge it opens on: `:top`, `:right`, `:bottom` or `:left`."
+        align: "Its alignment along that edge: `:start`, `:center` or `:end`."
+        tag_name: "The old name of `tag:`, still accepted."
+        close_on_backdrop: "Closes on a click outside the panel."
+      args:
+        ui_aspect_ratio:
+          ratio: "Width over height: a number (`16.0 / 9`) or a string (`\"16 / 9\"`)."
+        ui_spinner:
+          label: "The name `role=\"status\"` announces. Pass `nil` beside visible text to make the spinner decorative."
+        ui_empty_media:
+          variant: "`:icon` draws a muted tile around an icon; `:default` is a bare slot."
+        ui_item:
+          tag: "The element to render: `:a` with `href:`, or `:button`, for a row you can click."
+          variant: "The row's surface."
+          size: "Its padding and gap."
+        ui_item_media:
+          variant: "`:icon` draws a bordered tile, `:image` crops a square thumbnail, `:default` is a bare slot."
+        ui_input_group_addon:
+          align: "Where it sits: `:inline_start`/`:inline_end` beside the control, `:block_start`/`:block_end` on a full row above or below it."
+        ui_input_group_input:
+          type: "The input's `type`."
+        ui_input_group_button:
+          size: "The size; the `icon_` sizes are square."
+          type: "The button's `type` — `\"button\"`, so it never submits the form by accident."
+        ui_button_group:
+          orientation: "Joins the buttons in a row (`:horizontal`) or a column (`:vertical`)."
+        ui_button_group_text:
+          tag: "The element to render — `:label` to name an input in the group."
+        ui_button_group_separator:
+          orientation: "`:vertical` between buttons in a row, `:horizontal` in a column."
+        ui_field:
+          orientation: "`:vertical` stacks the label over the control, `:horizontal` sets them side by side, `:responsive` switches at the field group's `md` width."
+          invalid: "Marks the field invalid: sets `data-invalid` and colours the label."
+        ui_field_legend:
+          variant: "`:legend` is base size, `:label` is small."
+        ui_field_error:
+          errors: "The messages to list, e.g. `form.object.errors[:email]`. A single message can be the block instead."
+        ui_collapsible:
+          open: "Starts open."
+        ui_collapsible_trigger:
+          open: "Give it the root's `open:` too, so the server already renders the right `aria-expanded`."
+        ui_collapsible_content:
+          open: "Give it the root's `open:` too, so it is not hidden until the controller connects."
+        ui_toggle:
+          pressed: "Starts pressed (`aria-pressed=\"true\"`)."
+        ui_toggle_group:
+          type: "`:single` keeps at most one item pressed; `:multiple` lets each one toggle on its own."
+          variant: "Sets `data-variant`; `:outline` gives the group its shadow. Each item takes its own `variant:`."
+          size: "Sets `data-size`. Each item takes its own `size:`."
+          orientation: "Lays the items out in a row (`:horizontal`) or a column (`:vertical`)."
+        ui_toggle_group_item:
+          value: "Identifies the item in the group's value."
+          variant: "The look; give it the group's `variant:`."
+          size: "The size; give it the group's `size:`."
+          pressed: "Starts pressed."
+        ui_slider:
+          min: "The lowest value."
+          max: "The highest value."
+          step: "How far the arrow keys and a drag move the value."
+          value: "The starting value."
+          name: "The name of the hidden input that submits the value; no input without it."
+          label: "The thumb's accessible name (`aria-label`)."
+        ui_hover_card:
+          open_delay: "Milliseconds of hover or focus before it opens."
+          close_delay: "Milliseconds before it closes once the pointer or focus leaves."
+        ui_hover_card_trigger:
+          tag: "The element to render; a link by default, so give it `href:`."
+        ui_input_otp:
+          name: "The name of the hidden input that submits the whole code."
+          value: "A code to start with."
+        ui_input_otp_slot:
+          value: "The character the slot starts with."
+          inputmode: "The keyboard touch devices show; `\"text\"` for letters."
+        ui_drawer_trigger:
+          variant: "Passed to the button it renders: any Button variant."
+          size: "Passed to the button it renders: any Button size."
+        ui_drawer_content:
+          side: "The edge it slides in from: `:bottom`, `:top`, `:right` or `:left`. Top and bottom drawers get a drag handle."
+        ui_drawer_title:
+          tag: "The heading element."
+        ui_drawer_close:
+          variant: "Passed to the button it renders: any Button variant."
+          size: "Passed to the button it renders: any Button size."
+        ui_context_menu_item:
+          variant: "`:destructive` marks a dangerous action."
+          tag: "`:a` with `href:` for an item that navigates."
+        ui_menubar_content:
+          align: "Aligns the menu with its trigger: `:start`, `:center` or `:end`."
+        ui_menubar_item:
+          variant: "`:destructive` marks a dangerous action."
+          tag: "`:a` with `href:` for an item that navigates."
+        ui_navigation_menu_link:
+          active: "Marks the current page: sets `aria-current=\"page\"` and `data-active`."
+        ui_command_input:
+          placeholder: "The search field's placeholder."
+        ui_command_group:
+          heading: "A heading shown above the group's items."
+        ui_command_item:
+          value: "What the search matches and the `select` event reports; the item's text when absent."
+        ui_resizable_panel_group:
+          direction: "`:horizontal` for panels side by side, `:vertical` for stacked ones."
+        ui_resizable_panel:
+          default_size: "The panel's starting share, as a weight relative to its siblings."
+        ui_resizable_handle:
+          with_handle: "Draws a grip on the handle."
+        ui_carousel:
+          orientation: "`:horizontal` or `:vertical`; give `ui_carousel_content` the same value."
+        ui_carousel_content:
+          orientation: "The carousel's `orientation:`, repeated."
+        ui_sonner:
+          position: "Where toasts stack: `:top_left`, `:top_center`, `:top_right`, `:bottom_left`, `:bottom_center` or `:bottom_right`."
+          duration: "Milliseconds a toast stays before it dismisses itself."
+        ui_chart:
+          type: "Any Chart.js type: `:bar`, `:line`, `:pie`, `:doughnut`…"
+          data: "The Chart.js `data` hash (`labels` and `datasets`). It takes the `data:` keyword, so pass HTML data attributes as `\"data-*\"` keys."
+          options: "Chart.js `options`, over responsive defaults."
+          label: "The chart's accessible name, on the canvas."
+        ui_data_table:
+          columns: "The columns, as `{ key:, label:, sortable:, sort_value: }` hashes."
+          rows: "The rows, as hashes keyed by the columns' `key`. An `id` identifies a row."
+          filter_key: "The column the filter input searches; without it there is no filter input."
+          filter_placeholder: "The filter input's placeholder."
+          page_size: "Rows per page."
+          selectable: "Adds a checkbox column to select rows."
+          empty_text: "What the table shows when no row matches."
     install:
       lead_html: "Shadwire follows shadcn/ui's <em>open code</em> model: the component's source is copied into your application and becomes yours. Install it with the CLI:"
       files_html: "The %{name} registry item installs these files:"

@@ -8,12 +8,12 @@
     Rows arrive one of two ways. Pass `rows` — an array of arrays of cell HTML —
     when the cells are values. Pass a block of <tr> instead when the cells are
     prose threaded through inline <code>, where the markup reads better than the
-    array would:
+    array would: render layout: "docs/table", locals: { headers: [...] }, with
+    the rows in the block.
 
-      <%%= render layout: "docs/table", locals: { headers: [...] } do %>
-        <tr><td>…</td></tr>
-      <%% end %>
-%>
+    Never write an ERB closing tag inside this comment, even escaped: the
+    comment ends at the first one, and everything after it is printed on every
+    page that renders a table. It was, on sixty of them. %>
 <%= ui_card(class: "overflow-x-auto") do %>
   <table class="w-full text-left text-sm [&_td]:border-t [&_td]:p-3 [&_td]:align-top [&_th]:p-3 [&_th]:font-medium">
     <thead class="bg-muted/50">

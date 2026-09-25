@@ -44,14 +44,14 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
       Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> and
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ "Helper", t("components.api.arguments"), t("components.api.notes") ] } do %>
       <tr>
         <td><code>ui_pagination</code> / <code>ui_pagination_content</code> / <code>ui_pagination_item</code></td>
         <td>—</td>
-        <td>Landmark <code>nav</code>, lista <code>ul</code> e itens <code>li</code>.</td>
+        <td>A <code>nav</code> landmark, a <code>ul</code> list and <code>li</code> items.</td>
       </tr>
       <tr>
         <td><code>ui_pagination_link</code></td>

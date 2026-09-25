@@ -47,9 +47,9 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_radio_group(**options, &block)</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_radio_group(**options, &block)</code> and
       <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_radio_group_item(**options)</code>
-      encapsulam os componentes correspondentes.
+      wrap the matching components.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
       <tr>
@@ -80,7 +80,7 @@
         <td><code>RadioGroup::Item</code></td>
         <td><code>**attrs</code></td>
         <td><code>{}</code></td>
-        <td>Atributos HTML livres (<code>id</code>, <code>data:</code>, <code>aria:</code>, …).</td>
+        <td>Free HTML attributes (<code>id</code>, <code>data:</code>, <code>aria:</code>, …).</td>
       </tr>
     <% end %>
   </section>

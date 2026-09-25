@@ -55,12 +55,13 @@
       <tr><td><code>ui_sidebar_inset</code></td><td><code>main</code></td><td>The content area beside the sidebar.</td></tr>
       <tr><td><code>ui_sidebar_header</code> / <code>ui_sidebar_footer</code></td><td><code>div</code></td><td>The top and bottom regions.</td></tr>
       <tr><td><code>ui_sidebar_content</code></td><td><code>div</code></td><td>The scrollable region holding the groups.</td></tr>
-      <tr><td><code>ui_sidebar_group</code> / <code>_group_label</code> / <code>_group_content</code></td><td><code>div</code></td><td>A labelled menu section.</td></tr>
+      <tr><td><code>ui_sidebar_group</code> / <code>_group_label</code> / <code>_group_content</code></td><td><code>div</code></td><td>A labelled menu section. The label takes <code>tag:</code>.</td></tr>
+      <tr><td><code>ui_sidebar_group_action</code></td><td><code>button</code></td><td>An action pinned to the group's label; <code>tag:</code>.</td></tr>
       <tr><td><code>ui_sidebar_menu</code> / <code>_menu_item</code></td><td><code>ul</code> / <code>li</code></td><td>The list of menu items.</td></tr>
-      <tr><td><code>ui_sidebar_menu_button</code></td><td><code>button</code>/<code>a</code></td><td><code>is_active:</code>, <code>variant:</code>, <code>size:</code> and <code>tooltip:</code> (visible in icon mode only).</td></tr>
-      <tr><td><code>ui_sidebar_menu_action</code> / <code>_menu_badge</code></td><td><code>button</code> / <code>div</code></td><td>An action and a badge pinned to the right of the item.</td></tr>
-      <tr><td><code>ui_sidebar_menu_sub</code> / <code>_menu_sub_item</code> / <code>_menu_sub_button</code></td><td><code>ul</code> / <code>li</code> / <code>a</code></td><td>Submenu aninhado.</td></tr>
-      <tr><td><code>ui_sidebar_menu_skeleton</code></td><td><code>div</code></td><td>Placeholder de carregamento; <code>show_icon:</code>.</td></tr>
+      <tr><td><code>ui_sidebar_menu_button</code></td><td><code>button</code>/<code>a</code></td><td><code>is_active:</code>, <code>variant:</code>, <code>size:</code>, <code>tag:</code> and <code>tooltip:</code> (visible in icon mode only).</td></tr>
+      <tr><td><code>ui_sidebar_menu_action</code> / <code>_menu_badge</code></td><td><code>button</code> / <code>div</code></td><td>An action and a badge pinned to the right of the item. The action takes <code>tag:</code>, and <code>show_on_hover:</code> to show it only while the row is hovered or focused.</td></tr>
+      <tr><td><code>ui_sidebar_menu_sub</code> / <code>_menu_sub_item</code> / <code>_menu_sub_button</code></td><td><code>ul</code> / <code>li</code> / <code>a</code></td><td>A nested submenu. The button takes <code>is_active:</code>, <code>size:</code> and <code>tag:</code>.</td></tr>
+      <tr><td><code>ui_sidebar_menu_skeleton</code></td><td><code>div</code></td><td>A loading placeholder; <code>show_icon:</code>.</td></tr>
     <% end %>
   </section>
 </article>

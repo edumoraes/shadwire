@@ -28,7 +28,7 @@
     <p class="text-sm text-muted-foreground">
       shadcn's anatomy is <code class="rounded bg-muted px-1 py-0.5 text-xs">ScrollArea</code>
       with an optional <code class="rounded bg-muted px-1 py-0.5 text-xs">ScrollBar</code>.
-      No Shadwire, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_scroll_area</code>
+      In Shadwire, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_scroll_area</code>
       renders the viewport, the content, the bars, the thumb and the corner for you.
     </p>
     <%= docs_code_block(@composition, language: :text) %>
@@ -64,7 +64,7 @@
     <p class="text-sm text-muted-foreground">
       This Rails port mirrors those Base UI-style parts with ViewComponent
       classes and data attributes. The helpers preserve free-form HTML
-      livres, incluindo <code class="rounded bg-muted px-1 py-0.5 text-xs">data:</code> e
+      attributes, including <code class="rounded bg-muted px-1 py-0.5 text-xs">data:</code> and
       <code class="rounded bg-muted px-1 py-0.5 text-xs">aria:</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ "Helper", t("components.api.main_arguments"), t("components.api.description") ] } do %>
@@ -80,7 +80,7 @@
       </tr>
       <tr>
         <td><code>Ui::ScrollAreaComponent</code></td>
-        <td><code>scrollbars</code>, atributos HTML</td>
+        <td><code>scrollbars</code>, HTML attributes</td>
         <td>The ViewComponent API for rendering the Rails port directly.</td>
       </tr>
     <% end %>

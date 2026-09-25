@@ -44,6 +44,38 @@ module DocsHelper
     registry_items[name.to_s]
   end
 
+  # Rows for a generated API table — component, argument, default, description —
+  # one per keyword argument of the item's own components. See DocsComponentApi.
+  def docs_component_api_rows(name)
+    DocsComponentApi.parts(name).flat_map do |part|
+      part.props.map do |prop|
+        [
+          tag.code(part.name),
+          tag.code(prop.name),
+          tag.code(DocsComponentApi.display_default(prop)),
+          docs_component_api_description(part, prop) || "—"
+        ]
+      end
+    end
+  end
+
+  # The hand-written line for one argument, from components.api_docs: specific
+  # to the helper when it needs to be, shared otherwise. Variant and size names
+  # are appended from the source, so they are never listed by hand. `code` in
+  # backticks renders as inline code. Nil when the locale has no line for it,
+  # which DocsComponentApiTest turns into a failure.
+  def docs_component_api_description(part, prop)
+    text = t("components.api_docs.args.#{part.helper}.#{prop.name}", default: nil) ||
+           t("components.api_docs.shared.#{prop.name}", default: nil)
+    return if text.blank?
+
+    values = { "variant" => part.variants, "size" => part.sizes }.fetch(prop.name, [])
+    text = [ text, t("components.api_docs.values", values: values.map { |value| "`:#{value}`" }.join(", ")) ].join(" ") if values.any?
+
+    # Escaped first, so the text inside the backticks is already safe.
+    ERB::Util.html_escape(text).to_str.gsub(/`([^`]+)`/) { "<code>#{Regexp.last_match(1)}</code>" }.html_safe
+  end
+
   # The catalog blurb for a registry item, in the language being read.
   #
   # registry.json's `description` is the public API and is English by design —

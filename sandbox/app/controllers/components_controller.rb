@@ -37,8 +37,8 @@ class ComponentsController < ApplicationController
   CARD_USAGE_HELPER = <<~ERB
     <%= ui_card do %>
       <%= ui_card_header do %>
-        <%= ui_card_title { "Criar projeto" } %>
-        <%= ui_card_description { "Configure o novo workspace." } %>
+        <%= ui_card_title { "Create project" } %>
+        <%= ui_card_description { "Deploy your new project in one click." } %>
       <% end %>
       <%= ui_card_content { "Card content." } %>
     <% end %>
@@ -48,7 +48,7 @@ class ComponentsController < ApplicationController
     <%= render Ui::CardComponent.new do %>
       <%= render Ui::Card::HeaderComponent.new do %>
         <%= render Ui::Card::TitleComponent.new do %>
-          Criar projeto
+          Create project
         <% end %>
       <% end %>
     <% end %>
@@ -67,13 +67,17 @@ class ComponentsController < ApplicationController
 
   ALERT_USAGE_HELPER = <<~ERB
     <%= ui_alert do %>
-      Heads up! You can add components to your app.
+      <%= ui_icon("terminal") %>
+      <%= ui_alert_title { "Heads up!" } %>
+      <%= ui_alert_description { "You can add components to your app with the CLI." } %>
     <% end %>
   ERB
 
   ALERT_USAGE_COMPONENT = <<~ERB
     <%= render Ui::AlertComponent.new(variant: :destructive) do %>
-      Could not save your changes.
+      <%= render Ui::Alert::TitleComponent.new do %>
+        Could not save your changes.
+      <% end %>
     <% end %>
   ERB
 
@@ -184,7 +188,7 @@ class ComponentsController < ApplicationController
   INPUT_EXAMPLES = %w[input_default input_with_label input_disabled input_file input_form].freeze
 
   INPUT_USAGE_HELPER = <<~ERB
-    <%= ui_input(type: :email, placeholder: "voce@exemplo.com") %>
+    <%= ui_input(type: :email, placeholder: "you@example.com") %>
   ERB
 
   INPUT_USAGE_COMPONENT = <<~ERB
@@ -207,11 +211,11 @@ class ComponentsController < ApplicationController
   TEXTAREA_EXAMPLES = %w[textarea_default textarea_with_label textarea_disabled].freeze
 
   TEXTAREA_USAGE_HELPER = <<~ERB
-    <%= ui_textarea(name: "post[body]", placeholder: "Digite sua mensagem") %>
+    <%= ui_textarea(name: "post[body]", placeholder: "Type your message here.") %>
   ERB
 
   TEXTAREA_USAGE_COMPONENT = <<~ERB
-    <%= render Ui::TextareaComponent.new(placeholder: "Digite sua mensagem") do %>
+    <%= render Ui::TextareaComponent.new(placeholder: "Type your message here.") do %>
       Initial content
     <% end %>
   ERB
@@ -220,7 +224,7 @@ class ComponentsController < ApplicationController
 
   CHECKBOX_USAGE_HELPER = <<~ERB
     <%= ui_checkbox(id: "terms") %>
-    <%= ui_label(for: "terms") { "Aceitar termos" } %>
+    <%= ui_label(for: "terms") { "Accept terms" } %>
   ERB
 
   CHECKBOX_USAGE_COMPONENT = <<~ERB
@@ -273,10 +277,10 @@ class ComponentsController < ApplicationController
   RADIO_GROUP_EXAMPLES = %w[radio_group_default radio_group_disabled radio_group_form].freeze
 
   RADIO_GROUP_USAGE_HELPER = <<~ERB
-    <%= ui_radio_group(aria: { label: "Plano" }) do %>
+    <%= ui_radio_group(aria: { label: "Plan" }) do %>
       <div class="flex items-center gap-2">
         <%= ui_radio_group_item(name: "plan", value: "free", id: "plan-free", checked: true) %>
-        <%= ui_label(for: "plan-free") { "Gratuito" } %>
+        <%= ui_label(for: "plan-free") { "Free" } %>
       </div>
     <% end %>
   ERB
@@ -335,7 +339,7 @@ class ComponentsController < ApplicationController
   PROGRESS_EXAMPLES = %w[progress_default progress_values progress_custom].freeze
 
   PROGRESS_USAGE_HELPER = <<~ERB
-    <%= ui_progress(value: 60, aria: { label: "Progresso do envio" }) %>
+    <%= ui_progress(value: 60, aria: { label: "Upload progress" }) %>
   ERB
 
   PROGRESS_USAGE_COMPONENT = <<~ERB
@@ -378,7 +382,7 @@ class ComponentsController < ApplicationController
   ERB
 
   TABLE_COMPOSITION = <<~TEXT
-    Table (container com overflow + <table>)
+    Table (overflow container + <table>)
     |-- Table::Caption
     |-- Table::Header
     |   `-- Table::Row > Table::Head (th)
@@ -425,9 +429,9 @@ class ComponentsController < ApplicationController
   BREADCRUMB_COMPOSITION = <<~TEXT
     Breadcrumb (nav aria-label="breadcrumb")
     `-- Breadcrumb::List (ol)
-        |-- Breadcrumb::Item (li) > Breadcrumb::Link (a) ou Breadcrumb::Page (span)
-        |-- Breadcrumb::Separator (li decorativo)
-        `-- Breadcrumb::Ellipsis (span decorativo)
+        |-- Breadcrumb::Item (li) > Breadcrumb::Link (a) or Breadcrumb::Page (span)
+        |-- Breadcrumb::Separator (decorative li)
+        `-- Breadcrumb::Ellipsis (decorative span)
   TEXT
 
   def table
@@ -480,11 +484,11 @@ class ComponentsController < ApplicationController
   TABS_USAGE_HELPER = <<~ERB
     <%= ui_tabs(default_value: :account) do %>
       <%= ui_tabs_list do %>
-        <%= ui_tabs_trigger(value: :account) { "Conta" } %>
+        <%= ui_tabs_trigger(value: :account) { "Account" } %>
         <%= ui_tabs_trigger(value: :password) { "Password" } %>
       <% end %>
-      <%= ui_tabs_content(value: :account) { "Painel da conta" } %>
-      <%= ui_tabs_content(value: :password) { "Painel de senha" } %>
+      <%= ui_tabs_content(value: :account) { "Account settings" } %>
+      <%= ui_tabs_content(value: :password) { "Password settings" } %>
     <% end %>
   ERB
 
@@ -492,11 +496,11 @@ class ComponentsController < ApplicationController
     <%= render Ui::TabsComponent.new(default_value: :account) do %>
       <%= render Ui::Tabs::ListComponent.new do %>
         <%= render Ui::Tabs::TriggerComponent.new(value: :account) do %>
-          Conta
+          Account
         <% end %>
       <% end %>
       <%= render Ui::Tabs::ContentComponent.new(value: :account) do %>
-        Painel da conta
+        Account settings
       <% end %>
     <% end %>
   ERB
@@ -504,8 +508,8 @@ class ComponentsController < ApplicationController
   TABS_COMPOSITION = <<~TEXT
     Tabs (data-controller="ui-tabs")
     |-- Tabs::List (role="tablist")
-    |   `-- Tabs::Trigger (role="tab", um por painel)
-    `-- Tabs::Content (role="tabpanel", um por value)
+    |   `-- Tabs::Trigger (role="tab", one per panel)
+    `-- Tabs::Content (role="tabpanel", one per value)
   TEXT
 
   def pagination
@@ -547,8 +551,8 @@ class ComponentsController < ApplicationController
 
   DIALOG_COMPOSITION = <<~TEXT
     Dialog (data-controller="ui-dialog")
-    |-- Dialog::Trigger (Button que chama showModal)
-    `-- Dialog::Content (<dialog> nativo)
+    |-- Dialog::Trigger (a Button that calls showModal)
+    `-- Dialog::Content (native <dialog>)
         |-- Dialog::Header > Dialog::Title + Dialog::Description
         `-- Dialog::Footer > Dialog::Close (Button)
   TEXT
@@ -567,7 +571,7 @@ class ComponentsController < ApplicationController
       <%= ui_alert_dialog_trigger(variant: :destructive) { "Delete" } %>
       <%= ui_alert_dialog_content do %>
         <%= ui_alert_dialog_header do %>
-          <%= ui_alert_dialog_title { "Tem certeza?" } %>
+          <%= ui_alert_dialog_title { "Are you sure?" } %>
           <%= ui_alert_dialog_description { "This action cannot be undone." } %>
         <% end %>
         <%= ui_alert_dialog_footer do %>
@@ -585,16 +589,16 @@ class ComponentsController < ApplicationController
       <% end %>
       <%= render Ui::AlertDialog::ContentComponent.new do %>
         <%= render Ui::AlertDialog::TitleComponent.new do %>
-          Tem certeza?
+          Are you sure?
         <% end %>
       <% end %>
     <% end %>
   ERB
 
   ALERT_DIALOG_COMPOSITION = <<~TEXT
-    AlertDialog (ui-dialog com backdrop/Esc desativados)
+    AlertDialog (ui-dialog with backdrop and Esc dismissal off)
     |-- AlertDialog::Trigger (Button)
-    `-- AlertDialog::Content (<dialog role="alertdialog">, sem X)
+    `-- AlertDialog::Content (<dialog role="alertdialog">, no X)
         |-- AlertDialog::Header > AlertDialog::Title + AlertDialog::Description
         `-- AlertDialog::Footer > AlertDialog::Cancel + AlertDialog::Action
   TEXT
@@ -639,7 +643,7 @@ class ComponentsController < ApplicationController
   SHEET_COMPOSITION = <<~TEXT
     Sheet (ui-dialog)
     |-- Sheet::Trigger (Button)
-    `-- Sheet::Content (<dialog> ancorado em uma borda, side:)
+    `-- Sheet::Content (<dialog> anchored to an edge, side:)
         |-- Sheet::Header > Sheet::Title + Sheet::Description
         `-- Sheet::Footer > Sheet::Close (Button)
   TEXT
@@ -670,17 +674,17 @@ class ComponentsController < ApplicationController
   TOOLTIP_USAGE_COMPONENT = <<~ERB
     <%= render Ui::TooltipComponent.new(open_delay: 150) do %>
       <%= render Ui::Tooltip::TriggerComponent.new do %>
-        Ajuda
+        Help
       <% end %>
       <%= render Ui::Tooltip::ContentComponent.new(side: :right) do %>
-        Mais detalhes
+        More details
       <% end %>
     <% end %>
   ERB
 
   TOOLTIP_COMPOSITION = <<~TEXT
     Tooltip (data-controller="ui-tooltip", relative)
-    |-- Tooltip::Trigger (Button descrito via aria-describedby)
+    |-- Tooltip::Trigger (a Button described through aria-describedby)
     `-- Tooltip::Content (role="tooltip", absolute, side:)
   TEXT
 
@@ -732,7 +736,7 @@ class ComponentsController < ApplicationController
     <%= ui_dropdown_menu do %>
       <%= ui_dropdown_menu_trigger(variant: :outline) { "Open" } %>
       <%= ui_dropdown_menu_content do %>
-        <%= ui_dropdown_menu_label { "Minha conta" } %>
+        <%= ui_dropdown_menu_label { "My account" } %>
         <%= ui_dropdown_menu_separator %>
         <%= ui_dropdown_menu_item do %>
           Profile
@@ -892,16 +896,16 @@ class ComponentsController < ApplicationController
   ERB
 
   SIDEBAR_COMPOSITION = <<~TEXT
-    Sidebar::Provider (data-controller="ui-sidebar"; define as larguras via CSS vars)
+    Sidebar::Provider (data-controller="ui-sidebar"; sets the widths as CSS vars)
     |-- Sidebar (peer/group; data-state/collapsible/side/variant/mobile)
-    |   |-- Sidebar::Header  (ex.: switcher + Sidebar::Input)
+    |   |-- Sidebar::Header  (e.g. a switcher + Sidebar::Input)
     |   |-- Sidebar::Content
     |   |   `-- Sidebar::Group > Sidebar::GroupLabel + Sidebar::GroupContent
     |   |       `-- Sidebar::Menu > Sidebar::MenuItem
     |   |           > Sidebar::MenuButton (+ MenuAction / MenuBadge / MenuSub)
     |   |-- Sidebar::Footer
     |   `-- Sidebar::Rail
-    `-- Sidebar::Inset (Sidebar::Trigger abre/fecha; Cmd/Ctrl+B alterna)
+    `-- Sidebar::Inset (Sidebar::Trigger opens/closes; Cmd/Ctrl+B toggles)
   TEXT
 
   def sidebar
@@ -954,11 +958,11 @@ class ComponentsController < ApplicationController
       <%= ui_empty do %>
         <%= ui_empty_header do %>
           <%= ui_empty_media(variant: :icon) { ui_icon("inbox") } %>
-          <%= ui_empty_title { "Sem mensagens" } %>
-          <%= ui_empty_description { "Elas aparecem aqui." } %>
+          <%= ui_empty_title { "No messages" } %>
+          <%= ui_empty_description { "New messages show up here." } %>
         <% end %>
         <%= ui_empty_content do %>
-          <%= ui_button(size: :sm) { "Atualizar" } %>
+          <%= ui_button(size: :sm) { "Refresh" } %>
         <% end %>
       <% end %>
     ERB
@@ -974,7 +978,7 @@ class ComponentsController < ApplicationController
         <%= ui_item_media(variant: :icon) { ui_icon("file-text") } %>
         <%= ui_item_content do %>
           <%= ui_item_title { "Report.pdf" } %>
-          <%= ui_item_description { "2,4 MB" } %>
+          <%= ui_item_description { "2.4 MB" } %>
         <% end %>
       <% end %>
     ERB
@@ -1016,7 +1020,7 @@ class ComponentsController < ApplicationController
       <%= ui_field do %>
         <%= ui_field_label(for: "email") { "Email" } %>
         <%= ui_input(type: :email, id: "email") %>
-        <%= ui_field_description { "Nunca compartilhamos seu email." } %>
+        <%= ui_field_description { "We never share your email." } %>
       <% end %>
     ERB
     @examples = examples_for(%w[field_default])
@@ -1088,7 +1092,7 @@ class ComponentsController < ApplicationController
     @usage_helper = <<~ERB
       <%= ui_hover_card do %>
         <%= ui_hover_card_trigger(href: "#") { "@shadwire" } %>
-        <%= ui_hover_card_content { "Detalhes do perfil." } %>
+        <%= ui_hover_card_content { "Profile details." } %>
       <% end %>
     ERB
     @examples = examples_for(%w[hover_card_default])
@@ -1148,9 +1152,9 @@ class ComponentsController < ApplicationController
     @usage_helper = <<~ERB
       <%= ui_menubar do %>
         <%= ui_menubar_menu do %>
-          <%= ui_menubar_trigger { "Arquivo" } %>
+          <%= ui_menubar_trigger { "File" } %>
           <%= ui_menubar_content do %>
-            <%= ui_menubar_item { "Novo" } %>
+            <%= ui_menubar_item { "New" } %>
           <% end %>
         <% end %>
       <% end %>
@@ -1185,9 +1189,9 @@ class ComponentsController < ApplicationController
       <%= ui_command do %>
         <%= ui_command_input(placeholder: "Search...") %>
         <%= ui_command_list do %>
-          <%= ui_command_empty { "Nada encontrado." } %>
+          <%= ui_command_empty { "No results found." } %>
           <%= ui_command_group(heading: "Suggestions") do %>
-            <%= ui_command_item(value: "perfil") { "Profile" } %>
+            <%= ui_command_item(value: "profile") { "Profile" } %>
           <% end %>
         <% end %>
       <% end %>
@@ -1221,7 +1225,7 @@ class ComponentsController < ApplicationController
   CALENDAR_USAGE_HELPER = <<~ERB
     <%= ui_calendar(selected: Date.current, name: "date", class: "border") %>
 
-    <%# Intervalo: duas datas, dois inputs, dois meses. %>
+    <%# Range: two dates, two inputs, two months. %>
     <%= ui_calendar(
           mode: :range,
           selected: Date.current..(Date.current + 7),
@@ -1243,7 +1247,7 @@ class ComponentsController < ApplicationController
       <%= ui_popover do %>
         <%= ui_popover_trigger(variant: :outline, class: "w-[212px] justify-between font-normal") do %>
           <span data-ui-date-picker-target="label" data-empty="true"
-                class="data-[empty=true]:text-muted-foreground">Select uma data</span>
+                class="data-[empty=true]:text-muted-foreground">Pick a date</span>
           <%= ui_icon("chevron-down", class: "opacity-50") %>
         <% end %>
         <%= ui_popover_content(align: :start, class: "w-auto! p-0!") do %>
@@ -1339,7 +1343,7 @@ class ComponentsController < ApplicationController
               { key: :amount, label: "Valor", sortable: true }
             ],
             rows: [
-              { id: 1, status: "Sucesso", email: "ada@example.com", amount: 316 }
+              { id: 1, status: "Success", email: "ada@example.com", amount: 316 }
             ]) %>
     ERB
     @examples = examples_for(%w[data_table_default])

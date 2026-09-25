@@ -1,0 +1,21 @@
+<%= ui_popover do %>
+  <%= ui_popover_trigger(variant: :outline) { "Abrir dimensões" } %>
+  <%= ui_popover_content do %>
+    <div class="grid gap-4">
+      <div class="space-y-1">
+        <h4 class="font-medium leading-none">Dimensões</h4>
+        <p class="text-sm text-muted-foreground">Defina as dimensões da camada.</p>
+      </div>
+      <div class="grid gap-2">
+        <div class="grid grid-cols-3 items-center gap-4">
+          <%= ui_label(for: "popover-width") { "Largura" } %>
+          <%= ui_input(id: "popover-width", value: "100%", class: "col-span-2 h-8") %>
+        </div>
+        <div class="grid grid-cols-3 items-center gap-4">
+          <%= ui_label(for: "popover-height") { "Altura" } %>
+          <%= ui_input(id: "popover-height", value: "25px", class: "col-span-2 h-8") %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

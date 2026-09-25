@@ -39,7 +39,7 @@
       Dates accept a <code class="rounded bg-muted px-1 py-0.5 text-xs">Date</code> or an ISO
       <code class="rounded bg-muted px-1 py-0.5 text-xs">YYYY-MM-DD</code>. Like every component, it
       also accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> and
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
@@ -85,7 +85,7 @@
       </tr>
       <tr>
         <td><code>year_range</code></td>
-        <td>−100…+10 anos</td>
+        <td>−100…+10 years</td>
         <td>The years in the select. <code>min:</code>/<code>max:</code> win when given.</td>
       </tr>
       <tr>
@@ -100,8 +100,8 @@
       </tr>
       <tr>
         <td><code>month_names</code>, <code>day_names</code></td>
-        <td>pt-BR</td>
-        <td>Caption and header labels, e.g. <code>I18n.t("date.month_names").compact</code>.</td>
+        <td>From I18n</td>
+        <td>Caption and header labels. By default Rails' <code>date.month_names</code> and <code>date.abbr_day_names</code>, in the app's locale; pass arrays to override them.</td>
       </tr>
     <% end %>
 
@@ -109,7 +109,7 @@
       Events: <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:change</code> on each
       selection and <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:connect</code> when
       the calendar builds, both carrying <code class="rounded bg-muted px-1 py-0.5 text-xs">detail: { date, from, to }</code>.
-      No sentido inverso, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar#setDate</code>
+      The other way round, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar#setDate</code>
       moves the calendar to a date coming from elsewhere.
     </p>
   </section>

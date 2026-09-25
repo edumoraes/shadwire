@@ -17,8 +17,8 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">showModal()</code> entrega
-      focus trap, top layer, <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">showModal()</code> provides the
+      focus trap, the top layer, <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>
       and focus restoration natively; the controller adds animations, closing
       through the backdrop, and the wiring for
       <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-labelledby</code>/<code class="rounded bg-muted px-1 py-0.5 text-xs">aria-describedby</code>.
@@ -46,7 +46,7 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
       Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> and
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
@@ -59,7 +59,7 @@
       <tr>
         <td><code>Dialog::Trigger</code> / <code>Dialog::Close</code></td>
         <td><code>variant</code>, <code>size</code></td>
-        <td><code>:default</code> / <code>:outline</code></td>
+        <td><code>:outline</code>, <code>:default</code></td>
         <td>Wrap <code>Ui::ButtonComponent</code> with the open/close actions.</td>
       </tr>
       <tr>

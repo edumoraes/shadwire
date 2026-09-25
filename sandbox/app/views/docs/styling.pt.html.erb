@@ -52,6 +52,15 @@
     <%= docs_code_block(@snippets[:order], language: :text) %>
 
     <p class="leading-7 text-muted-foreground">
+      Quando duas delas definem a mesma coisa — o <%= docs_code("w-full") %> do componente e o seu
+      <%= docs_code("w-80") %> —, a anterior é descartada, como faz o <%= docs_code("cn()") %> no
+      original. Sem isso, as duas chegariam à página e a folha de estilos escolheria uma. A fusão
+      conhece os utilitários de todo dia do Tailwind: cor, tipografia, tamanho, espaçamento, raio,
+      sombra, display, posição e alinhamento. Fora deles, termine a sua classe com
+      <%= docs_code("!") %> para ela ganhar.
+    </p>
+
+    <p class="leading-7 text-muted-foreground">
       Por isso <%= docs_code("class:") %> sobrescreve os utilitários do componente. Mesmo
       assim, não use para reestilizar:
     </p>

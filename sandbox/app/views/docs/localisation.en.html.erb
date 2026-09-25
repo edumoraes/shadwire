@@ -65,26 +65,28 @@
   </section>
 
   <section class="space-y-4">
-    <%= docs_h2("Four of them are read by JavaScript") %>
+    <%= docs_h2("Five of them are read by JavaScript") %>
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("ui.data_table.selection") %>, <%= docs_code("ui.calendar.month") %>,
-      <%= docs_code("ui.calendar.year") %> and <%= docs_code("ui.sonner.close") %> are not
+      <%= docs_code("ui.data_table.selection") %>, <%= docs_code("ui.data_table.page") %>,
+      <%= docs_code("ui.calendar.month") %>, <%= docs_code("ui.calendar.year") %> and
+      <%= docs_code("ui.sonner.close") %> are not
       printed into the page. They are resolved once, when the component renders, and
       written into a <%= docs_code("data-*-value") %> attribute the controller reads.
       Translating them works exactly the same way — they are still ordinary I18n keys.
     </p>
 
     <p class="leading-7 text-muted-foreground">
-      One of them carries a trap. The data table's selection count is interpolated
-      <em>by the controller</em>, not by I18n, so both tokens have to survive the
-      translation:
+      Two of them carry a trap. The data table's selection count and page counter
+      are interpolated <em>by the controller</em>, not by I18n, so their tokens have
+      to survive the translation:
     </p>
 
     <%= docs_code_block(@snippets[:interpolated], language: :yaml) %>
 
     <p class="leading-7 text-muted-foreground">
-      Translating or dropping <%= docs_code("%{selected}") %> or <%= docs_code("%{total}") %>
-      leaves the caption with a literal token or no numbers at all, and nothing
+      Translating or dropping <%= docs_code("%{selected}") %>, <%= docs_code("%{page}") %>
+      or <%= docs_code("%{total}") %> leaves the caption with a literal token or no
+      numbers at all, and nothing
       reports it — I18n never sees these placeholders.
     </p>
   </section>
@@ -93,16 +95,19 @@
     <%= docs_h2("Month and day names come from Rails") %>
     <p class="leading-7 text-muted-foreground">
       The calendar's caption and column headers are not in the
-      <%= docs_code("ui.") %> namespace. They are props, so they can come from Rails'
-      own date translations — which your app already has if it loads a locale
-      from <%= link_to "rails-i18n", "https://github.com/svenfuchs/rails-i18n", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>:
+      <%= docs_code("ui.") %> namespace. The calendar reads them from Rails' own date
+      translations, <%= docs_code("date.month_names") %> and
+      <%= docs_code("date.abbr_day_names") %>: English out of the box, and your
+      language as soon as your app loads it — from
+      <%= link_to "rails-i18n", "https://github.com/svenfuchs/rails-i18n", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
+      or from your own locale file. To use other names for one calendar, pass them:
     </p>
 
     <%= docs_code_block(@snippets[:calendar_names]) %>
 
     <p class="leading-7 text-muted-foreground">
       <%= docs_code(".compact") %> matters: Rails'
-      <%= docs_code("date.month_names") %> is 1-indexed and starts with a
+      <%= docs_code("date.abbr_month_names") %> is 1-indexed and starts with a
       <%= docs_code("nil") %>.
     </p>
   </section>

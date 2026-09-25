@@ -52,6 +52,14 @@
     <%= docs_code_block(@snippets[:order], language: :text) %>
 
     <p class="leading-7 text-muted-foreground">
+      Where two of them set the same thing — the component's <%= docs_code("w-full") %> and your
+      <%= docs_code("w-80") %> — the earlier is dropped, as <%= docs_code("cn()") %> does upstream.
+      Without that, both would reach the page and the stylesheet would pick one. The merge knows
+      Tailwind's everyday utilities: colour, type, size, spacing, radius, shadow, display,
+      position and alignment. Past those, end your class with <%= docs_code("!") %> to make it win.
+    </p>
+
+    <p class="leading-7 text-muted-foreground">
       That is why <%= docs_code("class:") %> overrides the component's utilities. Even so, do not
       use it to restyle:
     </p>

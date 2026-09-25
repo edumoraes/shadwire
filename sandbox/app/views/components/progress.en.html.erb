@@ -24,7 +24,7 @@
     <p class="text-sm text-muted-foreground">
       Or render the component
       <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::ProgressComponent</code>
-      diretamente:
+      directly:
     </p>
     <%= docs_code_block(@usage_component) %>
   </section>
@@ -40,7 +40,7 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
       <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_progress(**options)</code>
-      encapsula
+      wraps
       <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::ProgressComponent.new(**options)</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.type"), t("components.api.default"), t("components.api.description") ] } do %>
@@ -60,7 +60,7 @@
         <td><code>class</code> / <code>class_name</code></td>
         <td>String</td>
         <td><code>nil</code></td>
-        <td>Classes extras (largura, altura, …).</td>
+        <td>Extra classes (width, height, …).</td>
       </tr>
       <tr>
         <td><code>**attrs</code></td>

@@ -1,0 +1,24 @@
+<%# The API reference of a registry item, generated from its component source
+    by DocsComponentApi: every keyword argument of every part the item ships,
+    with its default. The pages written by hand keep their own tables;
+    DocsComponentApiTest holds both kinds to the same arguments.
+
+    Locals: name (registry item name). %>
+<% rows = docs_component_api_rows(name) %>
+<% if DocsComponentApi.parts(name).any? %>
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
+    <p class="text-sm text-muted-foreground">
+      <%= t("components.api_docs.intro_html",
+            class: docs_code_sm("class"), class_name: docs_code_sm("class_name"), attrs: docs_code_sm("**attrs")) %>
+      <% if rows.empty? %>
+        <%= t("components.api_docs.none") %>
+      <% end %>
+    </p>
+    <% if rows.any? %>
+      <%= render "docs/table",
+                 headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ],
+                 rows: rows %>
+    <% end %>
+  </section>
+<% end %>
