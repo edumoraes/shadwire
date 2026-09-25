@@ -1,0 +1,18 @@
+<%# The site's two typefaces, in one place because three layouts need them.
+
+    The reference sets Calibre, which is licensed, so the page carries Figtree:
+    the closest free face, with the same double-storey a, single-storey g and
+    high x-height. IBM Plex Mono is not a substitution — it is the mono
+    rubyonrails.org itself loads.
+
+    Only the weights the reference uses are requested: 400 for body, 600 for
+    anything emphasised, 700 for headlines. Nothing heavier is fetched because
+    nothing heavier is set.
+
+    Loaded from Google Fonts rather than vendored: this is the docs site, not
+    the registry, and an installed component must never depend on a webfont.
+    display=swap means the fallback stack renders first if the request is slow
+    or the reader is offline. %>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap">

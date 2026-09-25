@@ -7,17 +7,17 @@
   <%= tag.style rouge_stylesheet %>
 <% end %>
 
-<%# 1. Hero %>
-<section class="border-b border-border/60">
-  <div class="mx-auto max-w-6xl px-5 py-20 text-center sm:py-28">
-    <%= ui_badge(variant: :secondary, class: "mb-6") do %>
-      <%= ui_icon("sparkles", size: :sm) %>v<%= registry_version %> · Rails + ViewComponent
+<%# 1. Hero — the one white sheet at the top of the page, closing on the curve. %>
+<section class="relative bg-card">
+  <div class="mx-auto max-w-6xl px-5 pb-24 pt-20 text-center sm:pb-32 sm:pt-28">
+    <%= ui_badge(variant: :secondary, class: "mb-6 font-mono text-xs font-medium tracking-[0.02em]") do %>
+      v<%= registry_version %> · Rails + ViewComponent
     <% end %>
-    <h1 class="mx-auto max-w-4xl text-balance text-5xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-6xl lg:text-7xl">
-      shadcn/ui components that become <span class="text-primary">your code</span>
+    <h1 class="mx-auto max-w-4xl text-balance text-5xl font-bold tracking-[-0.01em] leading-[0.92] text-primary sm:text-6xl lg:text-7xl">
+      shadcn/ui components that become your code.
     </h1>
     <p class="mx-auto mt-6 max-w-2xl text-balance text-xl leading-[1.2] tracking-[-0.006em] text-muted-foreground sm:text-2xl">
-      Shadwire brings shadcn/ui's <strong class="font-medium text-foreground">Open Code</strong> model
+      Shadwire brings shadcn/ui's <strong class="font-semibold text-foreground">Open Code</strong> model
       to Ruby on Rails: open, copyable ViewComponent source that your app installs
       and then owns — with no runtime gem.
     </p>
@@ -33,12 +33,20 @@
       <% end %>
     </div>
   </div>
+
+  <%# The site's one curve. The reference sweeps the ground up and down the page
+      several times; once, here, is enough to carry the reference and still read
+      as a decision rather than a motif. %>
+  <svg class="pointer-events-none absolute inset-x-0 bottom-0 block h-14 w-full fill-background sm:h-24"
+       viewBox="0 0 1440 96" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M0 96V62C420 6 1020 22 1440 44V96Z" />
+  </svg>
 </section>
 
 <%# 2. Built on (social proof / stack) %>
-<section class="border-b border-border/60 bg-muted/30">
+<section>
   <div class="mx-auto max-w-6xl px-5 py-14">
-    <p class="text-center text-sm font-medium uppercase tracking-wide text-muted-foreground">
+    <p class="text-center text-xs font-semibold uppercase tracking-[0.04em] text-muted-foreground">
       Built on
     </p>
     <ul class="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -61,10 +69,10 @@
 </section>
 
 <%# 3. Everything you need (showcase with preview + code) %>
-<section class="border-b border-border/60">
+<section>
   <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Everything you need</h2>
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] text-primary sm:text-5xl">Everything you need.</h2>
       <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
         Accessible, copy-ready components — from buttons and forms to dialogs and
         sidebars. Here are a few of them running live, with the code beside them.
@@ -88,18 +96,20 @@
   </div>
 </section>
 
-<%# 4. The code is yours (philosophy / Open Code) %>
-<section class="border-b border-border/60 bg-muted/30">
-  <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
+<%# 4. The code is yours (philosophy / Open Code) — the second white sheet.
+    The three principles are columns rather than cards: a card on this panel
+    would be white on white, and the reference's white panels hold plain type. %>
+<section class="px-4 py-8 sm:px-6 sm:py-12">
+  <div class="mx-auto max-w-6xl rounded-[1.75rem] bg-card px-5 py-16 sm:px-12 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">The code is yours</h2>
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] text-primary sm:text-5xl">The code is yours.</h2>
       <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
         Shadwire is not a runtime gem. You install the component source into your
         app and maintain it from there, free to adapt it to whatever you are building.
       </p>
     </div>
 
-    <div class="mt-12 grid gap-6 sm:grid-cols-3">
+    <div class="mx-auto mt-14 grid max-w-4xl gap-10 sm:grid-cols-3">
       <% [
         { icon: "package-open", title: "You own it",
           description: "The files are copied into your project and run with no Shadwire dependency at all." },
@@ -108,14 +118,13 @@
         { icon: "palette", title: "Semantic tokens",
           description: "Styled with shadcn tokens (bg-primary, text-muted-foreground…), dark mode included." }
       ].each do |principle| %>
-        <%= ui_card(class: "h-full") do %>
-          <%= ui_card_header do %>
-            <%= ui_card_title(class: "flex items-center gap-2") do %>
-              <%= ui_icon(principle[:icon], class: "text-primary") %><%= principle[:title] %>
-            <% end %>
-            <%= ui_card_description { principle[:description] } %>
-          <% end %>
-        <% end %>
+        <div>
+          <span class="inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <%= ui_icon(principle[:icon], size: :lg) %>
+          </span>
+          <h3 class="mt-4 text-lg font-semibold tracking-[-0.006em]"><%= principle[:title] %></h3>
+          <p class="mt-2 leading-7 text-muted-foreground"><%= principle[:description] %></p>
+        </div>
       <% end %>
     </div>
   </div>
@@ -125,26 +134,31 @@
 <section>
   <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.95] sm:text-5xl">Start here</h2>
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] text-primary sm:text-5xl">Start here.</h2>
       <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
         Browse the catalog, look through the ready-made compositions, or follow the project on GitHub.
       </p>
     </div>
 
-    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+    <%# The tab over each card names the verb, not the destination: the title
+        below it already says where you land. %>
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <% [
-        { icon: "book-open", title: "Documentation", description: "Installation, the CLI, the agent skill, theming, and the guides on composition, styling and forms.", cta: "Read the docs", path: docs_path, external: false },
-        { icon: "blocks", title: "Components", description: "#{docs_component_items.size} documented components, each with live examples and an API reference.", cta: "Browse the catalog", path: components_path, external: false },
-        { icon: "layout-dashboard", title: "Blocks", description: "Ready-made compositions built out of the components, like sidebar-01.", cta: "See the blocks", path: blocks_path, external: false },
-        { icon: "github", title: "GitHub", description: "Read the source and the registry, and contribute to the project.", cta: "Open the repository", path: "https://github.com/edumoraes/shadwire", external: true }
+        { eyebrow: "Learn", icon: "book-open", title: "Documentation", description: "Installation, the CLI, the agent skill, theming, and the guides on composition, styling and forms.", cta: "Read the docs", path: docs_path, external: false },
+        { eyebrow: "Browse", icon: "blocks", title: "Components", description: "#{docs_component_items.size} documented components, each with live examples and an API reference.", cta: "Browse the catalog", path: components_path, external: false },
+        { eyebrow: "Compose", icon: "layout-dashboard", title: "Blocks", description: "Ready-made compositions built out of the components, like sidebar-01.", cta: "See the blocks", path: blocks_path, external: false },
+        { eyebrow: "Contribute", icon: "github", title: "GitHub", description: "Read the source and the registry, and contribute to the project.", cta: "Open the repository", path: "https://github.com/edumoraes/shadwire", external: true }
       ].each do |card| %>
         <%= link_to card[:path],
               **(card[:external] ? { target: "_blank", rel: "noopener" } : {}),
-              class: "group flex h-full flex-col gap-3 rounded-xl border bg-card p-6 text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
+              class: "group relative flex h-full flex-col gap-3 rounded-xl border bg-card p-6 text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
+          <span aria-hidden="true" class="absolute -top-3 left-5 inline-flex items-center rounded-md bg-primary px-2.5 py-1 text-[0.6875rem] font-semibold uppercase tracking-[0.04em] text-primary-foreground">
+            <%= card[:eyebrow] %>
+          </span>
           <span class="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
             <%= ui_icon(card[:icon], size: :lg) %>
           </span>
-          <span class="text-lg font-bold tracking-[-0.01em]"><%= card[:title] %></span>
+          <span class="text-lg font-semibold tracking-[-0.006em]"><%= card[:title] %></span>
           <span class="text-sm text-muted-foreground group-hover:text-accent-foreground"><%= card[:description] %></span>
           <span class="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-medium">
             <%= card[:cta] %>

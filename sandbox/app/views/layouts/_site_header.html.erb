@@ -1,7 +1,10 @@
 <%# Sticky top bar shared by the landing page and the documentation shell.
     Pass `docs_nav: true` to prepend the sheet that carries the documentation
     sidebar on small screens, where the sticky aside is hidden. %>
-<header class="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+<%# White rather than the paper ground: the landing page opens on a white sheet
+    and the bar has to be part of it, and over the tinted docs pages a white bar
+    reads as chrome the content scrolls under. %>
+<header class="sticky top-0 z-40 w-full border-b border-border/60 bg-card/85 backdrop-blur supports-[backdrop-filter]:bg-card/70">
   <div class="mx-auto flex h-16 w-full max-w-[100rem] items-center gap-2 px-4 sm:px-6 lg:px-8">
     <% if local_assigns[:docs_nav] %>
       <%= ui_sheet(class: "lg:hidden") do %>
