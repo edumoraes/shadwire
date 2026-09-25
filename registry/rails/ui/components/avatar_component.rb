@@ -11,21 +11,24 @@ module Ui
     end
 
     def call
-      tag.span(**html_attrs, class: avatar_classes) do
+      tag.span(**avatar_attrs) do
         content.presence || safe_join([ image_tag_html, fallback_html ].compact)
       end
     end
 
     private
 
-    def avatar_classes
-      class_names("relative flex size-10 shrink-0 overflow-hidden rounded-full", @class_name)
+    def avatar_attrs
+      html_attrs.dup.tap do |attrs|
+        attrs[:class] = class_names("relative flex size-10 shrink-0 overflow-hidden rounded-full", @class_name)
+        attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "avatar")
+      end
     end
 
     def image_tag_html
       return if @src.blank?
 
-      tag.img(src: @src, alt: @alt, class: "aspect-square size-full")
+      tag.img(src: @src, alt: @alt, class: "aspect-square size-full", data: { slot: "avatar-image" })
     end
 
     def fallback_html
@@ -35,7 +38,7 @@ module Ui
     end
 
     def fallback_attrs
-      attrs = { class: "flex size-full items-center justify-center rounded-full bg-muted" }
+      attrs = { class: "flex size-full items-center justify-center rounded-full bg-muted", data: { slot: "avatar-fallback" } }
       attrs[:aria] = { hidden: "true" } if @src.present?
       attrs
     end

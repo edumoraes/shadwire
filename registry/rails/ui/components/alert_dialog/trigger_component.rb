@@ -4,7 +4,7 @@ module Ui
   module AlertDialog
     # A Button that opens the surrounding alert dialog.
     class TriggerComponent < UiComponent
-      def initialize(variant: :default, size: :default, class_name: nil, **attrs)
+      def initialize(variant: :outline, size: :default, class_name: nil, **attrs)
         @variant = variant
         @size = size
         @attrs = attrs

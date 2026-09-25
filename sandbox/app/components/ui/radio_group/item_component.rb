@@ -32,7 +32,7 @@ module Ui
       end
 
       def base_classes
-        "shadwire-radio aspect-square size-4 shrink-0 appearance-none rounded-full border border-input bg-background shadow-xs transition-shadow outline-none checked:border-primary disabled:cursor-not-allowed disabled:opacity-50 focus-visible:ring-1 focus-visible:ring-ring aria-invalid:border-destructive dark:bg-input/30"
+        "shadwire-radio aspect-square size-4 shrink-0 appearance-none rounded-full border border-input bg-background shadow-xs transition-shadow outline-none checked:border-primary disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 dark:bg-input/30"
       end
     end
   end

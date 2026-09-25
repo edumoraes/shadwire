@@ -4,6 +4,10 @@ module Ui
   module InputGroup
     # A compact button addon for an input group. `size:` maps to the small
     # variants shadcn uses inside input groups (`:xs`, `:sm`, `:icon_xs`, `:icon_sm`).
+    #
+    # Its slot is its own, not the group's `input-group-control`: the group
+    # draws its focus ring around a focused control, so a button carrying that
+    # slot lit the whole group as well as itself.
     class ButtonComponent < UiComponent
       VARIANTS = {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
@@ -42,12 +46,12 @@ module Ui
             fetch_variant(SIZES, @size, fallback: :xs),
             @class_name
           )
-          attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "input-group-control")
+          attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "input-group-button")
         end
       end
 
       def base_classes
-        "inline-flex shrink-0 items-center justify-center gap-1 text-sm font-medium whitespace-nowrap shadow-none transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4"
+        "inline-flex shrink-0 items-center justify-center gap-1 text-sm font-medium whitespace-nowrap shadow-none transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4"
       end
     end
   end

@@ -4,7 +4,7 @@ module Ui
   module Dialog
     # A Button that opens the surrounding dialog.
     class TriggerComponent < UiComponent
-      def initialize(variant: :default, size: :default, class_name: nil, **attrs)
+      def initialize(variant: :outline, size: :default, class_name: nil, **attrs)
         @variant = variant
         @size = size
         @attrs = attrs

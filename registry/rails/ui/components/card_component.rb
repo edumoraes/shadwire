@@ -8,13 +8,16 @@ module Ui
     end
 
     def call
-      tag.div(content, **html_attrs, class: card_classes)
+      tag.div(content, **card_attrs)
     end
 
     private
 
-    def card_classes
-      class_names(base_classes, @class_name)
+    def card_attrs
+      html_attrs.dup.tap do |attrs|
+        attrs[:class] = class_names(base_classes, @class_name)
+        attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "card")
+      end
     end
 
     def base_classes

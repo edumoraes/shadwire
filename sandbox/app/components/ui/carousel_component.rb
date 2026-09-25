@@ -21,7 +21,7 @@ module Ui
       html_attrs.dup.tap do |attrs|
         attrs[:role] = attrs.fetch(:role, "region")
         attrs[:tabindex] = attrs.fetch(:tabindex, "0")
-        attrs[:aria] = { roledescription: "carousel" }.merge(attrs.fetch(:aria, {}))
+        attrs[:aria] = { roledescription: I18n.t("ui.carousel.roledescription", default: "carousel") }.merge(attrs.fetch(:aria, {}))
         attrs[:class] = class_names("relative", @class_name)
         attrs[:data] = carousel_data(attrs[:data])
       end

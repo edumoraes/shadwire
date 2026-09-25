@@ -12,7 +12,7 @@ module Ui
 
       def call
         render(Ui::ButtonComponent.new(variant: :ghost, size: :icon, class_name: trigger_classes, **trigger_attrs)) do
-          safe_join([ trigger_content, tag.span("Toggle Sidebar", class: "sr-only") ])
+          safe_join([ trigger_content, tag.span(I18n.t("ui.sidebar.toggle", default: "Toggle Sidebar"), class: "sr-only") ])
         end
       end
 

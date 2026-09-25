@@ -20,8 +20,10 @@ module Ui
       "bottom-right": "bottom-0 right-0 sm:items-end"
     }.freeze
 
-    def initialize(position: :"bottom-right", duration: 4000, class_name: nil, **attrs)
-      @position = position
+    # `position:` reads either way: `:bottom_right`, like every other Ruby
+    # argument in the registry, or `:"bottom-right"`, as Sonner spells it.
+    def initialize(position: :bottom_right, duration: 4000, class_name: nil, **attrs)
+      @position = position.to_s.tr("_", "-")
       @duration = duration
       @attrs = attrs
       @class_name = extract_class_name(@attrs, class_name)

@@ -37,7 +37,7 @@ module Ui
       end
 
       def base_classes
-        "absolute top-1/2 -left-12 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-input bg-background shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50"
+        "absolute top-1/2 -left-12 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-input bg-background shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 outline-none disabled:pointer-events-none disabled:opacity-50"
       end
     end
   end

@@ -54,6 +54,8 @@ module Ui
           data[:"ui-data-table-filter-key-value"] = @filter_key if @filter_key
           data[:"ui-data-table-selection-label-value"] =
             I18n.t("ui.data_table.selection", default: "%{selected} of %{total} row(s) selected.")
+          data[:"ui-data-table-page-label-value"] =
+            I18n.t("ui.data_table.page", default: "Page %{page} of %{total}")
         end
       end
     end

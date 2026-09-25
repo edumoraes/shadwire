@@ -21,7 +21,8 @@ export default class extends Controller {
     pageSize: { type: Number, default: 10 },
     page: { type: Number, default: 0 },
     filterKey: { type: String, default: "" },
-    selectionLabel: { type: String, default: "%{selected} of %{total} row(s) selected." }
+    selectionLabel: { type: String, default: "%{selected} of %{total} row(s) selected." },
+    pageLabel: { type: String, default: "Page %{page} of %{total}" }
   }
 
   connect() {
@@ -115,8 +116,10 @@ export default class extends Controller {
     if (this.hasPreviousTarget) this.previousTarget.disabled = this.pageValue === 0
     if (this.hasNextTarget) this.nextTarget.disabled = this.pageValue >= pageCount - 1
     if (this.hasPageInfoTarget) {
-      this.pageInfoTarget.textContent =
-        rows.length === 0 ? "0 de 0" : `Página ${this.pageValue + 1} de ${pageCount}`
+      const empty = rows.length === 0
+      this.pageInfoTarget.textContent = this.pageLabelValue
+        .replace("%{page}", empty ? 0 : this.pageValue + 1)
+        .replace("%{total}", empty ? 0 : pageCount)
     }
 
     this.updateSortIndicators()

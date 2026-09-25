@@ -16,7 +16,7 @@ module Ui
     def breadcrumb_attrs
       html_attrs.dup.tap do |attrs|
         attrs[:class] = class_names(@class_name)
-        attrs[:aria] = { label: "breadcrumb" }.merge(attrs.fetch(:aria, {}))
+        attrs[:aria] = { label: I18n.t("ui.breadcrumb.label", default: "breadcrumb") }.merge(attrs.fetch(:aria, {}))
         attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "breadcrumb")
       end
     end

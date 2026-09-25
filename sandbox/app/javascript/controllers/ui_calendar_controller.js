@@ -27,10 +27,10 @@ export default class extends Controller {
   }
 
   static MONTH_NAMES = [
-    "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
-    "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
   ]
-  static DAY_NAMES = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"]
+  static DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   // `appearance-none` is not cosmetic: a UA-painted select keeps the light
   // widget chrome inside a dark popover, so the control has to draw itself.
   static SELECT_CLASS =

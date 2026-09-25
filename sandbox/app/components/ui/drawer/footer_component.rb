@@ -9,10 +9,16 @@ module Ui
       end
 
       def call
-        tag.div(content, **html_attrs.dup.tap do |attrs|
+        tag.div(content, **footer_attrs)
+      end
+
+      private
+
+      def footer_attrs
+        html_attrs.dup.tap do |attrs|
           attrs[:class] = class_names("mt-auto flex flex-col gap-2", @class_name)
           attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "drawer-footer")
-        end)
+        end
       end
     end
   end

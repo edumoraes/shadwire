@@ -14,8 +14,8 @@ module Ui
         render(Ui::SeparatorComponent.new(
           orientation: @orientation,
           class: class_names("bg-input relative m-0! self-stretch data-[orientation=vertical]:h-auto", @class_name),
-          data: { slot: "button-group-separator" },
-          **html_attrs
+          **html_attrs,
+          data: html_attrs[:data].to_h.merge(slot: "button-group-separator")
         ))
       end
     end

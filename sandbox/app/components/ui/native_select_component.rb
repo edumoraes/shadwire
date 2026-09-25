@@ -11,7 +11,7 @@ module Ui
     end
 
     def call
-      tag.div(class: "relative") do
+      tag.div(class: "relative", data: { slot: "native-select-wrapper" }) do
         safe_join([ tag.select(content, **select_attrs), chevron ])
       end
     end

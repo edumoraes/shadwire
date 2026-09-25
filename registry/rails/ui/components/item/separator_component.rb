@@ -13,8 +13,8 @@ module Ui
         render(Ui::SeparatorComponent.new(
           orientation: :horizontal,
           class: class_names("my-0", @class_name),
-          data: { slot: "item-separator" },
-          **html_attrs
+          **html_attrs,
+          data: html_attrs[:data].to_h.merge(slot: "item-separator")
         ))
       end
     end

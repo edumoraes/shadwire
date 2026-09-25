@@ -9,7 +9,16 @@ module Ui
       end
 
       def call
-        tag.div(content, **html_attrs, class: class_names("flex items-center p-6 pt-0", @class_name))
+        tag.div(content, **footer_attrs)
+      end
+
+      private
+
+      def footer_attrs
+        html_attrs.dup.tap do |attrs|
+          attrs[:class] = class_names("flex items-center p-6 pt-0", @class_name)
+          attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "card-footer")
+        end
       end
     end
   end
