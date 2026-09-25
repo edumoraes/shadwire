@@ -1,2 +1,150 @@
 @import "tailwindcss";
 @import "../../../vendor/shadwire/shadwire.css";
+
+/* ---------------------------------------------------------------------------
+   The docs site's own theme.
+
+   The registry ships shadcn/ui's default tokens, and vendor/shadwire.css above
+   is that file, synced verbatim. This layer is what the theming guide tells a
+   consuming app to do: redeclare :root and .dark after the import and every
+   component follows. Nothing below belongs in registry/ — an installed app gets
+   the neutral shadcn theme, and this is the site wearing its own.
+
+   The palette is rubyonrails.org's own, read off its stylesheet and kept at the
+   values it uses, with one substitution: everywhere the reference is #D30001,
+   this is tangerine. The neutrals are theirs untouched, which is why they carry
+   a trace of pink — Rails tints its greys with its brand, and the ink is a plum
+   rather than a black.
+
+       #F0E7E9  ground      #261B23  ink        #5A5153  supporting prose
+       #E6DDDF  soft fill   #DCD3D5  border     #D30001  brand  →  tangerine
+
+   Their type scale is here too: 400 for body, 600 for anything emphasised, 700
+   for headlines, and nothing heavier. The reference sets Calibre, which is
+   licensed; Figtree is the closest free face — same double-storey a, same
+   single-storey g, same high x-height — and IBM Plex Mono is the mono the
+   reference itself uses.
+--------------------------------------------------------------------------- */
+
+@theme {
+  --font-sans: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, monospace;
+}
+
+/* --radius is deliberately absent: the reference rounds at 4, 6, 8 and 12px,
+   which is exactly what shadcn's default 0.5rem derives for
+   radius-sm/md/lg/xl. The two scales already agree, and the large white panels
+   take their 28px inline. */
+:root {
+  --background: oklch(0.9356 0.0101 2); /* #F0E7E9 */
+  --foreground: oklch(0.239 0.0224 336); /* #261B23 */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.239 0.0224 336);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.239 0.0224 336);
+  /* Tangerine standing in for #D30001 — between the red and the orange, which
+     is a narrow place to stand. Orange at its natural lightness is around 2:1
+     on this ground; this is the most saturated it can be and still clear AA on
+     both sides at once (4.5:1 as text on the ground, 4.5:1 for white on it).
+     That lands it at 4.5 / 5.5, almost exactly where the reference's red sits
+     at 4.6 / 5.6 — the same tonal position, a different hue.
+
+     Both sides matter because the brand colour is read at body size, not only
+     in headlines: the Button's `link` variant is `text-primary` on white. */
+  --primary: oklch(0.54 0.173 39); /* #BD3D00 */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.9052 0.0102 2); /* #E6DDDF */
+  --secondary-foreground: oklch(0.239 0.0224 336);
+  --muted: oklch(0.9052 0.0102 2);
+  --muted-foreground: oklch(0.4444 0.0123 2.5); /* #5A5153 */
+  --accent: oklch(0.9052 0.0102 2);
+  --accent-foreground: oklch(0.239 0.0224 336);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.8746 0.0103 2); /* #DCD3D5 */
+  --input: oklch(0.8746 0.0103 2);
+  /* The focus ring is the brand colour, not a grey: it is the one piece of
+     chrome every keyboard user sees on every page. */
+  --ring: oklch(0.54 0.173 39);
+
+  /* Re-spaced around the brand: an amber and a rose either side of tangerine
+     would have read as three shades of the same thing. */
+  --chart-1: oklch(0.54 0.173 39);
+  --chart-2: oklch(0.6 0.11 195);
+  --chart-3: oklch(0.55 0.18 300);
+  --chart-4: oklch(0.62 0.14 145);
+  --chart-5: oklch(0.58 0.17 250);
+
+  --sidebar: oklch(0.9356 0.0101 2);
+  --sidebar-foreground: oklch(0.239 0.0224 336);
+  --sidebar-primary: oklch(0.54 0.173 39);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.9052 0.0102 2);
+  --sidebar-accent-foreground: oklch(0.239 0.0224 336);
+  --sidebar-border: oklch(0.8746 0.0103 2);
+  --sidebar-ring: oklch(0.54 0.173 39);
+
+  /* The reference's code card is its ink at 90% over whatever is behind it. Two
+     nested elements carry .highlight here, so a translucent value would stack
+     and double-darken; this is that composite, resolved. Not a registry token —
+     the site owns it, and .highlight below is its only user. */
+  --code: oklch(0.3243 0.0208 336); /* #3B3038 */
+}
+
+.dark {
+  /* The reference has no dark mode, so this one is derived rather than read:
+     the same plum hue as the ink, run down the lightness scale. */
+  --background: oklch(0.185 0.012 336);
+  --foreground: oklch(0.955 0.006 336);
+  --card: oklch(0.228 0.014 336);
+  --card-foreground: oklch(0.955 0.006 336);
+  --popover: oklch(0.228 0.014 336);
+  --popover-foreground: oklch(0.955 0.006 336);
+  /* Bright, with the ink on top rather than white. A tangerine dark enough to
+     carry white text would be a brown against this ground, and no orange at a
+     readable lightness clears 4.5:1 under white — so the pair inverts, which is
+     shadcn's dark convention anyway. */
+  --primary: oklch(0.66 0.199 42); /* #F15B01 */
+  --primary-foreground: oklch(0.239 0.0224 336);
+  --secondary: oklch(0.28 0.016 336);
+  --secondary-foreground: oklch(0.955 0.006 336);
+  --muted: oklch(0.28 0.016 336);
+  --muted-foreground: oklch(0.715 0.014 336);
+  --accent: oklch(0.33 0.02 336);
+  --accent-foreground: oklch(0.955 0.006 336);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.66 0.199 42);
+
+  --chart-1: oklch(0.66 0.199 42);
+  --chart-2: oklch(0.72 0.11 195);
+  --chart-3: oklch(0.68 0.16 300);
+  --chart-4: oklch(0.74 0.14 145);
+  --chart-5: oklch(0.7 0.15 250);
+
+  --sidebar: oklch(0.205 0.013 336);
+  --sidebar-foreground: oklch(0.955 0.006 336);
+  --sidebar-primary: oklch(0.66 0.199 42);
+  --sidebar-primary-foreground: oklch(0.239 0.0224 336);
+  --sidebar-accent: oklch(0.33 0.02 336);
+  --sidebar-accent-foreground: oklch(0.955 0.006 336);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.66 0.199 42);
+
+  --code: oklch(0.145 0.011 336);
+}
+
+/* The surface of a code card. CodeTheme draws the tokens on top and sets no
+   background of its own, so this is the only rule painting it.
+
+   Unlayered on purpose: the Rouge stylesheet is inlined in a <style> in the
+   head, which is unlayered too, and an @layer rule here would lose the cascade
+   to it whatever its specificity. Same selector, later sheet, this one wins. */
+.highlight {
+  background-color: var(--code);
+  border-color: oklch(1 0 0 / 8%);
+}

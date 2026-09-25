@@ -20,11 +20,11 @@ module DocsHelper
   # rail (built client-side by the docs-toc controller) sees a consistent
   # hierarchy, and so the class strings live in one place.
   def docs_h2(text)
-    tag.h2(text, id: text.to_s.parameterize, class: "scroll-mt-24 border-b pb-2 text-2xl font-bold tracking-[-0.01em]")
+    tag.h2(text, id: text.to_s.parameterize, class: "scroll-mt-24 border-b pb-2 text-2xl font-extrabold tracking-[-0.025em]")
   end
 
   def docs_h3(text)
-    tag.h3(text, id: text.to_s.parameterize, class: "scroll-mt-24 text-lg font-bold tracking-[-0.01em]")
+    tag.h3(text, id: text.to_s.parameterize, class: "scroll-mt-24 text-lg font-extrabold tracking-[-0.02em]")
   end
 
   # Inline code, as it appears inside documentation prose.
@@ -119,7 +119,7 @@ module DocsHelper
 
   # The Rouge theme stylesheet, scoped to the .highlight code blocks.
   def rouge_stylesheet
-    Rouge::Themes::Base16.mode(:dark).render(scope: ".highlight").html_safe
+    CodeTheme.render(scope: ".highlight").html_safe
   end
 
   # The registry's published version, as the landing page badge shows it.
