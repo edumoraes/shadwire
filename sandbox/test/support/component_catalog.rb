@@ -19,7 +19,13 @@ module ComponentCatalog
     "Ui::Select::ItemComponent" => [ [], { value: "one" } ],
     "Ui::Tabs::TriggerComponent" => [ [], { value: "one" } ],
     "Ui::Tabs::ContentComponent" => [ [], { value: "one" } ],
-    "Ui::DataTableComponent" => [ [], { columns: [ { key: :name, label: "Name" } ], rows: [ { name: "Ada" } ] } ]
+    "Ui::DataTableComponent" => [ [], { columns: [ { key: :name, label: "Name" } ], rows: [ { name: "Ada" } ] } ],
+    "Ui::Chart::BarComponent" => [ [], { data_key: :value } ],
+    "Ui::Chart::LineComponent" => [ [], { data_key: :value } ],
+    "Ui::Chart::AreaComponent" => [ [], { data_key: :value } ],
+    "Ui::Chart::PieComponent" => [ [], { data_key: :value } ],
+    "Ui::Chart::RadialBarComponent" => [ [], { data_key: :value } ],
+    "Ui::Chart::RadarComponent" => [ [], { data_key: :value } ]
   }.freeze
 
   module_function

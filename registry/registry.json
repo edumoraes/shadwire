@@ -2620,15 +2620,18 @@
       "name": "chart",
       "type": "component",
       "title": "Chart",
-      "description": "Chart.js charts using the Shadwire theme tokens.",
-      "whenToUse": "Visualising series data. Pins chart.js via importmap and needs Stimulus. For plain tabular numbers use table.",
+      "description": "Composable charts drawn with D3: bars, lines, areas, pies, radars and radial bars, with a tooltip and a legend, in the Shadwire theme tokens.",
+      "whenToUse": "Visualising series data. Compose ui_chart from the parts you need — grid, axes, series, label lists, tooltip, legend — or draw your own D3 layer with ui_chart_layer. Pins d3 via importmap and needs Stimulus. For plain tabular numbers use table.",
       "usage": [
-        "<%= ui_chart(type: :bar, data: { labels: %w[Jan Feb], datasets: [{ label: \"Sales\", data: [12, 19] }] }) %>"
+        "<%= ui_chart(config: { desktop: { label: \"Desktop\", color: \"var(--chart-1)\" },\n                       mobile: { label: \"Mobile\", color: \"var(--chart-2)\" } },\n             rows: [ { month: \"January\", desktop: 186, mobile: 80 },\n                     { month: \"February\", desktop: 305, mobile: 200 },\n                     { month: \"March\", desktop: 237, mobile: 120 } ],\n             class: \"min-h-[200px] w-full\") do %>\n  <%= ui_chart_grid %>\n  <%= ui_chart_x_axis(data_key: :month) %>\n  <%= ui_chart_tooltip %>\n  <%= ui_chart_legend %>\n  <%= ui_chart_bar(data_key: :desktop, radius: 4) %>\n  <%= ui_chart_bar(data_key: :mobile, radius: 4) %>\n<% end %>"
+      ],
+      "registryDependencies": [
+        "icon"
       ],
       "importmap": [
         {
-          "name": "chart.js/auto",
-          "to": "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/auto/+esm"
+          "name": "d3",
+          "to": "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm"
         }
       ],
       "files": [
@@ -2641,12 +2644,124 @@
           "target": "app/components/ui/chart_component.rb"
         },
         {
+          "source": "registry/rails/ui/components/chart/layer_component.rb",
+          "target": "app/components/ui/chart/layer_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/grid_component.rb",
+          "target": "app/components/ui/chart/grid_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/x_axis_component.rb",
+          "target": "app/components/ui/chart/x_axis_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/y_axis_component.rb",
+          "target": "app/components/ui/chart/y_axis_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/bar_component.rb",
+          "target": "app/components/ui/chart/bar_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/line_component.rb",
+          "target": "app/components/ui/chart/line_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/area_component.rb",
+          "target": "app/components/ui/chart/area_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/pie_component.rb",
+          "target": "app/components/ui/chart/pie_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/radial_bar_component.rb",
+          "target": "app/components/ui/chart/radial_bar_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/radar_component.rb",
+          "target": "app/components/ui/chart/radar_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/polar_grid_component.rb",
+          "target": "app/components/ui/chart/polar_grid_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/polar_angle_axis_component.rb",
+          "target": "app/components/ui/chart/polar_angle_axis_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/label_list_component.rb",
+          "target": "app/components/ui/chart/label_list_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/tooltip_component.rb",
+          "target": "app/components/ui/chart/tooltip_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/chart/legend_component.rb",
+          "target": "app/components/ui/chart/legend_component.rb"
+        },
+        {
           "source": "registry/rails/ui/helpers/ui/chart_helper.rb",
           "target": "app/helpers/ui/chart_helper.rb"
         },
         {
           "source": "registry/rails/ui/javascript/controllers/ui_chart_controller.js",
           "target": "app/javascript/controllers/ui_chart_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_grid_controller.js",
+          "target": "app/javascript/controllers/ui_chart_grid_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_axis_controller.js",
+          "target": "app/javascript/controllers/ui_chart_axis_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_bar_controller.js",
+          "target": "app/javascript/controllers/ui_chart_bar_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_line_controller.js",
+          "target": "app/javascript/controllers/ui_chart_line_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_area_controller.js",
+          "target": "app/javascript/controllers/ui_chart_area_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_pie_controller.js",
+          "target": "app/javascript/controllers/ui_chart_pie_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_radial_bar_controller.js",
+          "target": "app/javascript/controllers/ui_chart_radial_bar_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_radar_controller.js",
+          "target": "app/javascript/controllers/ui_chart_radar_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_polar_grid_controller.js",
+          "target": "app/javascript/controllers/ui_chart_polar_grid_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_polar_angle_axis_controller.js",
+          "target": "app/javascript/controllers/ui_chart_polar_angle_axis_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_label_list_controller.js",
+          "target": "app/javascript/controllers/ui_chart_label_list_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_tooltip_controller.js",
+          "target": "app/javascript/controllers/ui_chart_tooltip_controller.js"
+        },
+        {
+          "source": "registry/rails/ui/javascript/controllers/ui_chart_legend_controller.js",
+          "target": "app/javascript/controllers/ui_chart_legend_controller.js"
         },
         {
           "source": "registry/rails/ui/styles/shadwire.css",

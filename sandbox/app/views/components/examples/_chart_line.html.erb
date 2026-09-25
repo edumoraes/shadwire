@@ -1,10 +1,22 @@
 <%= ui_chart(
-      type: :line,
-      class: "w-full max-w-lg",
-      label: "Visitors per month",
-      data: {
-        labels: %w[Jan Fev Mar Abr Mai Jun],
-        datasets: [
-          { label: "Visitors", data: [ 186, 305, 237, 273, 209, 264 ], tension: 0.4, fill: true }
-        ]
-      }) %>
+      config: {
+        desktop: { label: "Desktop", color: "var(--chart-1)" },
+        mobile: { label: "Mobile", color: "var(--chart-2)" }
+      },
+      rows: [
+        { month: Date.new(2024, 1), desktop: 186, mobile: 80 },
+        { month: Date.new(2024, 2), desktop: 305, mobile: 200 },
+        { month: Date.new(2024, 3), desktop: 237, mobile: 120 },
+        { month: Date.new(2024, 4), desktop: 73, mobile: 190 },
+        { month: Date.new(2024, 5), desktop: 209, mobile: 130 },
+        { month: Date.new(2024, 6), desktop: 214, mobile: 140 }
+      ],
+      margin: { left: 12, right: 12 },
+      label: "Visitors per month, desktop and mobile",
+      class: "min-h-[200px] w-full max-w-xl") do %>
+  <%= ui_chart_grid %>
+  <%= ui_chart_x_axis(data_key: :month, tick_format: "%b") %>
+  <%= ui_chart_tooltip(label_format: "%B", indicator: :line, cursor: false) %>
+  <%= ui_chart_line(data_key: :desktop, dot: true) %>
+  <%= ui_chart_line(data_key: :mobile, curve: :step, dot: true) %>
+<% end %>

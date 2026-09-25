@@ -70,11 +70,23 @@ pt:
       selection: "%{selected} de %{total} linha(s) selecionada(s)."
       page: "Página %{page} de %{total}"
 
-  # Rails' own date translations, which the calendar reads for its caption
-  # and column headers. An app that loads rails-i18n already has these.
+  # Rails' own date and number translations. The calendar reads the names for
+  # its caption and column headers; the chart formats its dates and numbers
+  # with all of them, so "%b" reads "Fev" and 1234.5 reads "1.234,5". An app
+  # that loads rails-i18n already has these.
   date:
     month_names: [~, Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro]
+    abbr_month_names: [~, Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez]
+    day_names: [Domingo, Segunda-feira, Terça-feira, Quarta-feira, Quinta-feira, Sexta-feira, Sábado]
     abbr_day_names: [Dom, Seg, Ter, Qua, Qui, Sex, Sáb]
+  number:
+    format:
+      separator: ","
+      delimiter: "."
+    currency:
+      format:
+        unit: "R$"
+        format: "%u %n"
 
   home:
     showcase:
@@ -432,10 +444,113 @@ pt:
           position: "Onde os toasts se empilham: `:top_left`, `:top_center`, `:top_right`, `:bottom_left`, `:bottom_center` ou `:bottom_right`."
           duration: "Milissegundos que um toast fica antes de se dispensar."
         ui_chart:
-          type: "Qualquer tipo do Chart.js: `:bar`, `:line`, `:pie`, `:doughnut`…"
-          data: "O hash `data` do Chart.js (`labels` e `datasets`). Ele ocupa a keyword `data:`, então passe atributos data do HTML como chaves `\"data-*\"`."
-          options: "As `options` do Chart.js, sobre padrões responsivos."
-          label: "O nome acessível do gráfico, no canvas."
+          config: "As séries — e as categorias que uma pizza ou uma legenda nomeiam — como `{ chave: { label:, color:, icon: } }`, ou `theme: { light:, dark: }` no lugar de `color:`. Cada cor vira `--color-<chave>` no gráfico."
+          rows: "Os dados, um hash por categoria. É `rows:` e não `data:`, para que `data:` continue sendo os atributos data do HTML."
+          layout: "`:horizontal` põe as categorias ao longo do eixo x; `:vertical`, descendo o eixo y, para barras horizontais."
+          stack_offset: "O offset do D3 para as séries que compartilham um `stack_id:`: `:none`, `:expand` (até 100%), `:diverging`, `:silhouette` ou `:wiggle`."
+          margin: "Espaço em volta da área do gráfico, em pixels por lado: `{ left: 12, right: 12 }`. Os eixos e a legenda reservam o deles por cima disso."
+          inner_radius: "O raio interno que pizzas, anéis e radares compartilham: em pixels, ou uma porcentagem do espaço disponível (`\"30%\"`)."
+          outer_radius: "O raio externo deles, do mesmo jeito."
+          start_angle: "Onde pizzas, anéis e radares começam, em graus no sentido horário a partir do meio-dia."
+          end_angle: "Onde terminam, nos mesmos graus."
+          label: "O nome acessível do gráfico."
+        ui_chart_layer:
+          controller: "O controller Stimulus que desenha a camada. Ele recebe `ui-chart:render`, com as escalas do gráfico em `event.detail.chart`."
+          options: "O que esse controller precisar, em `event.detail.options`."
+        ui_chart_grid:
+          horizontal: "Desenha as linhas horizontais. Sem valor, só as linhas que cruzam o eixo de valores."
+          vertical: "Desenha as linhas verticais, nas mesmas condições."
+        ui_chart_x_axis:
+          data_key: "No eixo de categorias, o campo cujos valores rotulam as categorias — e o tooltip."
+          hide: "Mantém as categorias do eixo sem desenhá-lo."
+          tick_line: "Desenha um traço em cada rótulo."
+          axis_line: "Desenha a linha do eixo."
+          tick_margin: "Pixels entre a área do gráfico e os rótulos."
+          tick_count: "Quantas marcas, aproximadamente, o eixo de valores recebe."
+          tick_format: "Um especificador do d3-format para números (`\"~s\"`, `\"$,.0f\"`) ou do d3-time-format para datas (`\"%b %d\"`)."
+          min_tick_gap: "O menor espaço entre dois rótulos de categoria, em pixels: os rótulos que colidiriam ficam de fora."
+          domain: "O `[mín, máx]` do eixo de valores; `nil` em uma das pontas deixa essa ponta para os dados."
+          height: "O espaço que o eixo ocupa, em pixels. Sem valor, ele mede os próprios rótulos."
+        ui_chart_y_axis:
+          data_key: "No eixo de categorias — o eixo y de um layout vertical —, o campo cujos valores rotulam as categorias e o tooltip."
+          hide: "Mantém as categorias do eixo sem desenhá-lo."
+          tick_line: "Desenha um traço em cada rótulo."
+          axis_line: "Desenha a linha do eixo."
+          tick_margin: "Pixels entre a área do gráfico e os rótulos."
+          tick_count: "Quantas marcas, aproximadamente, o eixo de valores recebe."
+          tick_format: "Um especificador do d3-format para números (`\"~s\"`, `\"$,.0f\"`) ou do d3-time-format para datas (`\"%b %d\"`)."
+          min_tick_gap: "O menor espaço entre dois rótulos de categoria, em pixels: os rótulos que colidiriam ficam de fora."
+          domain: "O `[mín, máx]` do eixo de valores; `nil` em uma das pontas deixa essa ponta para os dados."
+          width: "O espaço que o eixo ocupa, em pixels. Sem valor, ele mede os próprios rótulos."
+        ui_chart_bar:
+          data_key: "O campo que cada barra mostra."
+          color: "A cor das barras, por cima da do config."
+          stack_id: "Barras com o mesmo `stack_id` se empilham; as outras ficam lado a lado."
+          radius: "O raio dos cantos em pixels: um número, ou `[sup_esq, sup_dir, inf_dir, inf_esq]`."
+        ui_chart_line:
+          data_key: "O campo por onde a linha passa."
+          color: "A cor da linha, por cima da do config."
+          curve: "A curva do D3: `:natural`, `:linear`, `:monotone`, `:step`, `:step_before`, `:step_after`, `:basis`, `:cardinal` ou `:catmull_rom`."
+          stroke_width: "A espessura da linha, em pixels."
+          dot: "Marca cada ponto."
+          connect_nulls: "Atravessa um valor ausente em vez de interromper a linha ali."
+        ui_chart_area:
+          data_key: "O campo até onde a área sobe."
+          color: "A cor da área, por cima da do config."
+          stack_id: "Áreas com o mesmo `stack_id` se empilham."
+          curve: "A curva do D3, como na linha."
+          fill_opacity: "A opacidade do preenchimento, de 0 a 1."
+          gradient: "Preenche com um degradê da cor, mais forte no alto."
+          stroke_width: "A espessura da borda, em pixels."
+          dot: "Marca cada ponto."
+          connect_nulls: "Atravessa um valor ausente em vez de interromper a área ali."
+        ui_chart_pie:
+          data_key: "O campo de onde vem o tamanho de cada fatia."
+          name_key: "O campo que nomeia cada fatia: a chave do config que lhe dá rótulo e cor."
+          inner_radius: "Por cima do raio do gráfico: pixels ou porcentagem. Qualquer valor acima de zero faz uma rosca."
+          outer_radius: "Por cima do raio do gráfico."
+          padding_angle: "Um vão entre as fatias, em graus."
+          corner_radius: "Arredonda os cantos das fatias, em pixels."
+          stroke_width: "Um contorno entre as fatias na cor do fundo; `class: \"stroke-card\"` combina com um card."
+        ui_chart_radial_bar:
+          data_key: "O campo de onde vem a varredura de cada anel."
+          name_key: "O campo que nomeia cada anel, que passa a ter o rótulo e a cor da sua entrada no config."
+          color: "A cor dos anéis, por cima da do config."
+          stack_id: "Barras radiais com o mesmo `stack_id` se empilham ao longo dos anéis."
+          background: "Desenha o resto de cada anel como uma trilha apagada."
+          corner_radius: "Arredonda as pontas dos anéis, em pixels."
+        ui_chart_radar:
+          data_key: "O campo de onde vem a distância de cada vértice."
+          color: "A cor do polígono, por cima da do config."
+          fill_opacity: "A opacidade do preenchimento, de 0 a 1; 0 deixa só o contorno."
+          stroke_width: "Contorna o polígono, em pixels."
+          dot: "Marca cada vértice."
+        ui_chart_polar_grid:
+          grid_type: "`:polygon`, anéis que passam pelos raios, ou `:circle`."
+          radial_lines: "Desenha um raio por categoria."
+        ui_chart_polar_angle_axis:
+          data_key: "O campo cujos valores rotulam os raios — e o tooltip."
+          tick_format: "Um especificador do d3 para os rótulos."
+          tick_margin: "Pixels entre o anel externo e os rótulos."
+        ui_chart_label_list:
+          data_key: "O campo a imprimir; sem valor, o próprio valor. Um campo que nomeia uma entrada do config imprime o rótulo dela."
+          position: "Onde fica cada rótulo: `:top`, `:bottom`, `:left`, `:right`, `:center`, e `:inside_top`, `:inside_bottom`, `:inside_left` ou `:inside_right` nas barras; `:outside`, `:inside` ou `:inside_start` nas fatias e anéis."
+          offset: "Pixels entre um rótulo e o seu ponto."
+          format: "Um especificador do d3 para os rótulos."
+        ui_chart_tooltip:
+          indicator: "A marca ao lado de cada nome: `:dot`, `:line` ou `:dashed`."
+          hide_label: "Deixa o rótulo de fora."
+          hide_indicator: "Deixa os indicadores de fora."
+          label_key: "Tira o rótulo desta entrada do config ou deste campo, em vez da categoria."
+          name_key: "Tira cada nome deste campo da linha, passando pelo config."
+          label_format: "Um especificador do d3 para o rótulo (`\"%B\"`)."
+          value_format: "Um especificador do d3 para os valores (`\",d\"`)."
+          cursor: "Sombreia a categoria sob o ponteiro."
+          default_index: "Abre nesta categoria antes que alguém aponte."
+        ui_chart_legend:
+          name_key: "Lista cada linha, nomeada por este campo, em vez de cada série."
+          hide_icon: "Mantém a amostra de cor onde o config tem um ícone."
+          vertical_align: "A borda onde fica: `:bottom` ou `:top`."
         ui_data_table:
           columns: "As colunas, como hashes `{ key:, label:, sortable:, sort_value: }`."
           rows: "As linhas, como hashes indexados pelo `key` das colunas. Um `id` identifica a linha."
@@ -791,14 +906,35 @@ pt:
         title: "Padrão"
         description: "Variantes default, sucesso, erro e com ação."
       chart_bar:
-        title: "Barras"
-        description: "Dois conjuntos de dados com a paleta do tema."
+        title: "Gráfico de barras"
+        description: "Uma grade, um eixo, um tooltip e uma legenda em volta de duas séries de barras: o gráfico montado passo a passo acima."
+      chart_bar_horizontal:
+        title: "Barras horizontais"
+        description: "Um layout vertical põe os meses descendo o eixo y. Duas listas de rótulos dentro das barras imprimem o mês e o valor."
+      chart_bar_stacked:
+        title: "Barras empilhadas"
+        description: "Barras que compartilham um stack id se empilham. Cada raio arredonda só os cantos externos da pilha."
       chart_line:
-        title: "Linha"
-        description: "Série temporal com tensão e área preenchida."
+        title: "Linhas"
+        description: "Uma curva natural e uma em degraus, ambas com pontos, sob um tooltip com indicador de linha."
+      chart_area:
+        title: "Áreas empilhadas"
+        description: "Três meses de linhas diárias sob um degradê. As datas saem no idioma da página, e os rótulos que colidiriam ficam de fora."
       chart_pie:
-        title: "Pizza"
-        description: "Distribuição categórica colorida por rótulo."
+        title: "Rosca"
+        description: "Uma pizza com raio interno, e marcação comum no furo: as camadas também compõem com HTML."
+      chart_radar:
+        title: "Radar"
+        description: "Dois radares sobre uma grade polar, com os meses em volta."
+      chart_radial:
+        title: "Barras radiais"
+        description: "Um anel por navegador sobre uma trilha apagada, com o rótulo onde cada anel começa."
+      chart_tooltip:
+        title: "Indicadores do tooltip"
+        description: "Os indicadores de ponto, linha e tracejado, cada um aberto na terça-feira antes que alguém aponte."
+      chart_layer:
+        title: "Uma camada sua"
+        description: "Uma linha de meta desenhada por um controller Stimulus do próprio app, na escala de valores do gráfico."
       data_table_default:
         title: "Padrão"
         description: "Filtro por e-mail, colunas ordenáveis e seleção de linhas."
@@ -856,7 +992,7 @@ pt:
       sonner:
         subtitle: "Notificações temporárias empilhadas numa região live polida. Dispare com window.toast ou via Stimulus."
       chart:
-        subtitle: "Gráficos com Chart.js. A paleta usa os tokens --chart-1..5 do tema. É a única dependência JS de terceiros."
+        subtitle: "Gráficos componíveis desenhados com D3. Monte uma grade, eixos, séries, um tooltip e uma legenda — ou uma camada que você mesmo desenha."
       data_table:
         subtitle: "Tabela com filtro, ordenação, paginação, seleção de linhas e visibilidade de colunas — tudo no cliente."
 

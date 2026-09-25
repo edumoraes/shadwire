@@ -16,6 +16,7 @@ class UiComponent < ViewComponent::Base
     "text-align" => /\A()text-(?:left|center|right|justify|start|end)\z/,
     "font-weight" => /\A(font)-(?:thin|light|normal|medium|semibold|bold|extrabold|black)\z/,
     "dimension" => /\A(h|w|size|min-w|min-h|max-w|max-h)-#{TAILWIND_LENGTH}\z/,
+    "aspect-ratio" => %r{\A(aspect)-(?:auto|square|video|\d+/\d+|\[.+\])\z},
     "spacing" => /\A(p|px|py|pt|pr|pb|pl|m|mx|my|mt|mr|mb|ml|gap|gap-x|gap-y)-#{TAILWIND_LENGTH}\z/,
     "shadow" => /\A(shadow)(?:-(?:none|2xs|xs|sm|md|lg|xl|2xl))?\z/,
     "radius" => /\A(rounded(?:-[trbl]|-[tb][lr])?)(?:-(?:none|xs|sm|md|lg|xl|2xl|3xl|full|\[.+\]))?\z/,

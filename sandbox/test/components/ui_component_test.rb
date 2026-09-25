@@ -24,6 +24,7 @@ class UiComponentTest < ViewComponent::TestCase
     assert_equal "hidden", merge("inline-flex hidden")
     assert_equal "justify-between font-normal", merge("justify-center font-medium justify-between font-normal")
     assert_equal "rounded-full", merge("rounded-md rounded-full")
+    assert_equal "flex aspect-auto h-[250px]", merge("flex aspect-video aspect-auto h-[250px]")
   end
 
   test "classes that set different things are all kept, in order" do

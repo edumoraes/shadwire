@@ -184,8 +184,8 @@ class RegistryBuildTest < Minitest::Test
 
   def test_item_importmap_pins_are_published
     pins = item_json("chart").fetch("importmap")
-    assert_equal "chart.js/auto", pins.first.fetch("name")
-    assert_equal "https://cdn.jsdelivr.net/npm/chart.js@4.4.6/auto/+esm", pins.first.fetch("to")
+    assert_equal "d3", pins.first.fetch("name")
+    assert_equal "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm", pins.first.fetch("to")
   end
 
   def test_items_without_importmap_or_gems_publish_empty_arrays

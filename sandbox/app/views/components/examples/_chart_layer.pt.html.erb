@@ -1,0 +1,20 @@
+<%= ui_chart(
+      config: { desktop: { label: "Computador", color: "var(--chart-1)" } },
+      rows: [
+        { month: Date.new(2024, 1), desktop: 186 },
+        { month: Date.new(2024, 2), desktop: 305 },
+        { month: Date.new(2024, 3), desktop: 237 },
+        { month: Date.new(2024, 4), desktop: 73 },
+        { month: Date.new(2024, 5), desktop: 209 },
+        { month: Date.new(2024, 6), desktop: 214 }
+      ],
+      label: "Visitantes no computador por mês, contra uma meta de 250",
+      class: "min-h-[200px] w-full max-w-xl") do %>
+  <%= ui_chart_grid %>
+  <%= ui_chart_x_axis(data_key: :month, tick_format: "%b") %>
+  <%= ui_chart_tooltip(label_format: "%B") %>
+  <%= ui_chart_bar(data_key: :desktop, radius: 4) %>
+  <%# Desenhada por chart_goal_controller.js, abaixo. %>
+  <%= ui_chart_layer(controller: "chart-goal", options: { value: 250, label: "Meta" },
+        class: "stroke-foreground fill-foreground") %>
+<% end %>

@@ -119,6 +119,36 @@ screen readers, even when the design does not show one.
 <% end %>
 ```
 
+## Charts are composed from parts
+
+A chart is `ui_chart` with one part per layer inside it — a grid, the axes, a
+series per `data_key:`, a tooltip, a legend — drawn with D3. There is no chart
+type and no Chart.js data hash. The rows go in as `rows:`, so `data:` stays the
+HTML data attributes.
+
+```erb
+<%# Wrong — the Chart.js-shaped API is gone %>
+<%= ui_chart(type: :bar, data: { labels: %w[Jan Feb], datasets: [ { data: [ 186, 305 ] } ] }) %>
+```
+
+```erb
+<%# Right — rows, a config for labels and colors, and the parts you want %>
+<%= ui_chart(config: { desktop: { label: "Desktop", color: "var(--chart-1)" } },
+             rows: [ { month: "Jan", desktop: 186 }, { month: "Feb", desktop: 305 } ],
+             class: "min-h-[200px] w-full") do %>
+  <%= ui_chart_grid %>
+  <%= ui_chart_x_axis(data_key: :month) %>
+  <%= ui_chart_tooltip %>
+  <%= ui_chart_bar(data_key: :desktop, radius: 4) %>
+<% end %>
+```
+
+Give the chart a height (`min-h-*`, `h-*` or `aspect-*`): its layers are
+absolutely positioned and take no room of their own. Colors come from the config
+as theme tokens, never a palette class. For drawing no part covers, use
+`ui_chart_layer` and a Stimulus controller of the app's own rather than editing
+the installed parts.
+
 ## Interactive components need Stimulus
 
 29 of 57 components ship a Stimulus controller. `bin/shadwire info <name>` reports

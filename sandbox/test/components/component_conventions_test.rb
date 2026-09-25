@@ -19,10 +19,6 @@ class ComponentConventionsTest < ViewComponent::TestCase
   # The icon is lucide-rails' own <svg>; upstream's icons carry no slot either.
   NO_SLOT = %w[Ui::IconComponent].freeze
 
-  # `data:` is the chart's Chart.js data, so HTML data attributes go in as
-  # "data-*" keys — which is what this component's documentation says.
-  FLAT_DATA = %w[Ui::ChartComponent].freeze
-
   ComponentCatalog::NAMES.each do |class_name|
     define_method("test_#{class_name.underscore.tr("/", "_")}_follows_the_conventions") do
       assert_conventions(class_name)
@@ -36,8 +32,7 @@ class ComponentConventionsTest < ViewComponent::TestCase
   private
 
   def assert_conventions(class_name)
-    probe = FLAT_DATA.include?(class_name) ? { "data-probe": "1" } : { data: { probe: "1" } }
-    component = ComponentCatalog.build(class_name, class: "probe-class", class_name: "probe-class-name", id: "probe-id", **probe)
+    component = ComponentCatalog.build(class_name, class: "probe-class", class_name: "probe-class-name", id: "probe-id", data: { probe: "1" })
 
     fragment = render_inline(component.with_content("content"))
     root = fragment.children.find(&:element?)
