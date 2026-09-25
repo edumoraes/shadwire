@@ -69,6 +69,16 @@ class ChartComponentTest < ViewComponent::TestCase
     assert_includes chart_element["data-action"], "pointermove->ui-chart#pointer"
   end
 
+  # The old Chart.js call would render an empty figure without complaint.
+  test "the Chart.js-shaped call says what changed" do
+    error = assert_raises(ArgumentError) do
+      Ui::ChartComponent.new(type: :bar, data: { labels: %w[Jan], datasets: [ { data: [ 1 ] } ] })
+    end
+    assert_includes error.message, "rows:"
+
+    assert_raises(ArgumentError) { Ui::ChartComponent.new(data: { "datasets" => [] }) }
+  end
+
   test "each configured color becomes a custom property scoped to the chart" do
     render_inline(Ui::ChartComponent.new(config: CONFIG, id: "visits"))
 

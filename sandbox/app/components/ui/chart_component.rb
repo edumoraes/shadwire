@@ -69,6 +69,7 @@ module Ui
       @label = label
       @attrs = attrs
       @class_name = extract_class_name(@attrs, class_name)
+      refuse_chart_js_arguments!
     end
 
     def call
@@ -78,6 +79,19 @@ module Ui
     end
 
     private
+
+    # The Chart.js call this component used to take — `type:`, and the
+    # `labels:`/`datasets:` hash as `data:` — would now render an empty figure
+    # carrying the hash as data-* attributes. Say what changed instead.
+    def refuse_chart_js_arguments!
+      data = @attrs[:data]
+      chart_js_data = data.respond_to?(:key?) && (data.key?(:datasets) || data.key?("datasets"))
+      return unless @attrs.key?(:type) || chart_js_data
+
+      raise ArgumentError, "ui_chart no longer takes Chart.js' `type:` and `data:`. Pass the data as " \
+                           "`rows:` and compose the chart from parts inside it: ui_chart_bar, " \
+                           "ui_chart_line, ui_chart_x_axis, ui_chart_tooltip…"
+    end
 
     def figure_attrs
       html_attrs.dup.tap do |attrs|
