@@ -46,4 +46,12 @@ class DrawerComponentTest < ViewComponent::TestCase
     assert_selector "dialog h2[data-slot='drawer-title']", visible: :all, text: "Title"
     assert_selector "dialog [data-slot='drawer-footer'] button[data-slot='drawer-close']", visible: :all, text: "Close"
   end
+
+  def test_title_takes_its_heading_level_from_tag
+    render_inline(Ui::Drawer::TitleComponent.new(tag: :h3)) { "Title" }
+    assert_selector "h3[data-slot='drawer-title']", text: "Title"
+
+    render_inline(Ui::Drawer::TitleComponent.new(tag_name: :h4)) { "Title" }
+    assert_selector "h4[data-slot='drawer-title']", text: "Title"
+  end
 end

@@ -7,7 +7,11 @@ module Ui
     class ItemComponent < UiComponent
       VARIANTS = {
         default: "bg-transparent",
-        outline: "border border-input bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground"
+        # Neighbours share a border rather than doubling it; the group carries
+        # the shadow.
+        outline: "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground " \
+                 "group-data-[orientation=horizontal]/toggle-group:border-l-0 group-data-[orientation=horizontal]/toggle-group:first:border-l " \
+                 "group-data-[orientation=vertical]/toggle-group:border-t-0 group-data-[orientation=vertical]/toggle-group:first:border-t"
       }.freeze
 
       SIZES = {
@@ -60,8 +64,16 @@ module Ui
         class_names(base_classes, fetch_variant(VARIANTS, @variant, fallback: :default), fetch_variant(SIZES, @size, fallback: :default), @class_name)
       end
 
+      # The items join into one segmented control: square inside, rounded only
+      # at the two ends of the group's axis. A focused item rises above its
+      # neighbours so the whole ring shows.
       def base_classes
-        "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-colors outline-none hover:bg-muted hover:text-muted-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground first:rounded-l-md last:rounded-r-md [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0"
+        "inline-flex items-center justify-center gap-2 rounded-none text-sm font-medium whitespace-nowrap shadow-none transition-[color,box-shadow] outline-none " \
+          "hover:bg-muted hover:text-muted-foreground focus:z-10 focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 " \
+          "disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground " \
+          "group-data-[orientation=horizontal]/toggle-group:first:rounded-l-md group-data-[orientation=horizontal]/toggle-group:last:rounded-r-md " \
+          "group-data-[orientation=vertical]/toggle-group:first:rounded-t-md group-data-[orientation=vertical]/toggle-group:last:rounded-b-md " \
+          "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0"
       end
     end
   end

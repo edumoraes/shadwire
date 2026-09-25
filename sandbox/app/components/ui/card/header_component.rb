@@ -9,7 +9,16 @@ module Ui
       end
 
       def call
-        tag.div(content, **html_attrs, class: class_names("flex flex-col gap-1.5 p-6", @class_name))
+        tag.div(content, **header_attrs)
+      end
+
+      private
+
+      def header_attrs
+        html_attrs.dup.tap do |attrs|
+          attrs[:class] = class_names("flex flex-col gap-1.5 p-6", @class_name)
+          attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "card-header")
+        end
       end
     end
   end

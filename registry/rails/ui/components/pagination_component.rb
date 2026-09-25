@@ -17,7 +17,7 @@ module Ui
       html_attrs.dup.tap do |attrs|
         attrs[:role] = attrs.fetch(:role, "navigation")
         attrs[:class] = class_names("mx-auto flex w-full justify-center", @class_name)
-        attrs[:aria] = { label: "pagination" }.merge(attrs.fetch(:aria, {}))
+        attrs[:aria] = { label: I18n.t("ui.pagination.label", default: "pagination") }.merge(attrs.fetch(:aria, {}))
         attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "pagination")
       end
     end

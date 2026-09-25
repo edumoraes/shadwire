@@ -38,6 +38,17 @@ class SonnerComponentTest < ViewComponent::TestCase
     assert_selector "ol[data-ui-sonner-target='list'].top-0.left-0"
   end
 
+  # Every other placement argument in the registry is an underscored symbol
+  # (`align: :center`, `side: :inline_end`); `:top_left` used to fall back to
+  # the default corner without a word.
+  def test_position_reads_underscored_like_every_other_symbol
+    render_inline(Ui::SonnerComponent.new(position: :top_left))
+    assert_selector "ol[data-ui-sonner-target='list'].top-0.left-0"
+
+    render_inline(Ui::SonnerComponent.new(position: :bottom_center))
+    assert_selector "ol[data-ui-sonner-target='list'].bottom-0.left-1\\/2"
+  end
+
   def test_block_content_renders_inside_the_region
     render_inline(Ui::SonnerComponent.new) { "trigger" }
 

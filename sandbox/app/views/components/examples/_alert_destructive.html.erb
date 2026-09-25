@@ -1,9 +1,5 @@
 <%= ui_alert(variant: :destructive) do %>
-  <div class="flex gap-3">
-    <%= ui_icon("circle-alert", class: "mt-0.5") %>
-    <div class="grid gap-1">
-      <p class="font-medium leading-none">Could not save</p>
-      <p class="text-sm">Check the highlighted fields and try again.</p>
-    </div>
-  </div>
+  <%= ui_icon("circle-alert") %>
+  <%= ui_alert_title { "Could not save" } %>
+  <%= ui_alert_description { "Check the highlighted fields and try again." } %>
 <% end %>

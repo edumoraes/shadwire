@@ -21,7 +21,7 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">tbody</code>,
       <code class="rounded bg-muted px-1 py-0.5 text-xs">th</code>, …) — use
       <code class="rounded bg-muted px-1 py-0.5 text-xs">scope:</code> on the headers
-      e <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_table_caption</code>
+      and <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_table_caption</code>
       to describe the table.
     </p>
     <%= docs_code_block(@usage_helper) %>
@@ -51,7 +51,7 @@
     <p class="text-sm text-muted-foreground">
       Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code>,
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code> e bloco.
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code> and a block.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ "Helper", t("components.api.element"), t("components.api.notes") ] } do %>
       <tr>
@@ -67,7 +67,7 @@
       <tr>
         <td><code>ui_table_row</code></td>
         <td><code>tr</code></td>
-        <td><code>data: { state: "selected" }</code> destaca a linha.</td>
+        <td><code>data: { state: "selected" }</code> highlights the row.</td>
       </tr>
       <tr>
         <td><code>ui_table_head</code></td>
@@ -77,7 +77,7 @@
       <tr>
         <td><code>ui_table_cell</code></td>
         <td><code>td</code></td>
-        <td>Aceita <code>colspan</code>/<code>rowspan</code> via attrs.</td>
+        <td>Takes <code>colspan</code>/<code>rowspan</code> through attrs.</td>
       </tr>
       <tr>
         <td><code>ui_table_caption</code></td>

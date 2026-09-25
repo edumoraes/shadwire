@@ -18,7 +18,7 @@
     <p class="text-sm text-muted-foreground">
       O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dropdown-menu</code>
       implementa o padrão WAI-ARIA de menu: foco rotativo entre os itens,
-      <kbd class="rounded bg-muted px-1 text-xs">↑</kbd>/<kbd class="rounded bg-muted px-1 text-xs">↓</kbd> com wrap,
+      <kbd class="rounded bg-muted px-1 text-xs">↑</kbd>/<kbd class="rounded bg-muted px-1 text-xs">↓</kbd> circulares,
       <kbd class="rounded bg-muted px-1 text-xs">Home</kbd>/<kbd class="rounded bg-muted px-1 text-xs">End</kbd>,
       busca por digitação (typeahead) e fechamento por
       <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>, Tab ou clique fora.
@@ -50,6 +50,12 @@
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>DropdownMenu::Trigger</code></td>
+        <td><code>variant</code>, <code>size</code></td>
+        <td><code>:outline</code>, <code>:default</code></td>
+        <td>Repassados ao <code>Ui::ButtonComponent</code> que ele renderiza.</td>
+      </tr>
       <tr>
         <td><code>DropdownMenu::Content</code></td>
         <td><code>side</code>, <code>align</code></td>

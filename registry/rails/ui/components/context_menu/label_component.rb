@@ -11,7 +11,7 @@ module Ui
 
       def call
         tag.div(content, **html_attrs.dup.tap do |attrs|
-          attrs[:class] = class_names("px-2 py-1.5 text-sm font-semibold data-[inset]:pl-8", @class_name)
+          attrs[:class] = class_names("px-2 py-1.5 text-sm font-medium data-[inset]:pl-8", @class_name)
           attrs[:data] = attrs.fetch(:data, {}).dup.tap do |data|
             data[:slot] = "context-menu-label"
             data[:inset] = "" if @inset

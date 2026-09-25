@@ -40,6 +40,11 @@ Classes compose in this order, with yours last:
 base_classes → variant_classes → size_classes → your class
 ```
 
+Where yours sets what the component already does — `w-80` over its `w-full` —
+`class_names` drops the component's class, as `cn()` does upstream. The merge
+covers Tailwind's everyday utilities (colour, type, size, spacing, radius,
+shadow, display, position, alignment); past those, end your class with `!`.
+
 So `class:` reliably overrides the component's own utilities. That is also why
 you should not use it to restyle:
 

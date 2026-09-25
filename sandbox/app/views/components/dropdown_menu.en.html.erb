@@ -16,7 +16,7 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dropdown-menu</code>
+      The <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dropdown-menu</code> controller
       implements the WAI-ARIA menu pattern: roving focus across the items,
       <kbd class="rounded bg-muted px-1 text-xs">↑</kbd>/<kbd class="rounded bg-muted px-1 text-xs">↓</kbd> with wrapping,
       <kbd class="rounded bg-muted px-1 text-xs">Home</kbd>/<kbd class="rounded bg-muted px-1 text-xs">End</kbd>,
@@ -46,10 +46,16 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
       Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> and
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
+      <tr>
+        <td><code>DropdownMenu::Trigger</code></td>
+        <td><code>variant</code>, <code>size</code></td>
+        <td><code>:outline</code>, <code>:default</code></td>
+        <td>Passed to the <code>Ui::ButtonComponent</code> it renders.</td>
+      </tr>
       <tr>
         <td><code>DropdownMenu::Content</code></td>
         <td><code>side</code>, <code>align</code></td>

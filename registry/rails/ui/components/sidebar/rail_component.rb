@@ -16,12 +16,16 @@ module Ui
 
       private
 
+      def toggle_label
+        I18n.t("ui.sidebar.toggle", default: "Toggle Sidebar")
+      end
+
       def rail_attrs
         html_attrs.dup.tap do |attrs|
           attrs[:type] = attrs.fetch(:type, "button")
           attrs[:tabindex] = attrs.fetch(:tabindex, "-1")
-          attrs[:title] = attrs.fetch(:title, "Toggle Sidebar")
-          attrs[:aria] = { label: "Toggle Sidebar" }.merge(attrs.fetch(:aria, {}))
+          attrs[:title] = attrs.fetch(:title, toggle_label)
+          attrs[:aria] = { label: toggle_label }.merge(attrs.fetch(:aria, {}))
           attrs[:class] = rail_classes
           attrs[:data] = attrs.fetch(:data, {}).dup.tap do |data|
             data[:slot] = "sidebar-rail"

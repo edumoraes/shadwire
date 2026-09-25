@@ -38,6 +38,12 @@ class ThemeLintTest < Minitest::Test
     "%23171717" => "--primary-foreground, dark theme"
   }.freeze
 
+  # Tailwind v4's own theme variables, declared by Tailwind in every app that
+  # compiles the registry. `--spacing` is the unit each spacing utility
+  # multiplies, so the alert's icon column, `calc(var(--spacing)*4)`, stays as
+  # wide as the `size-4` icon in it — upstream's alert says the same.
+  TAILWIND_THEME_VARIABLES = %w[--spacing].freeze
+
   # `selection:bg-*` paints ::selection, `file:bg-*` the file button — a
   # different box from the element's own background, so they cannot collide with
   # `dark:bg-*` the way a state variant does.
@@ -143,7 +149,7 @@ class ThemeLintTest < Minitest::Test
     used = (sources + body).scan(/var\((--[a-z0-9-]+)/).flatten.uniq
     # Sidebar widths and the skeleton's width are declared inline at render time.
     declared = root + dark + sources.scan(/(--[a-z0-9-]+)\s*:/).flatten
-    used.reject! { |name| name.start_with?("--tw-", "--radix-") }
+    used.reject! { |name| name.start_with?("--tw-", "--radix-") || TAILWIND_THEME_VARIABLES.include?(name) }
 
     assert_empty(used - declared, "referenced but nothing declares them")
     # --radius is a length, not a colour, so it does not vary by theme.

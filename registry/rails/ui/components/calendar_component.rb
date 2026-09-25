@@ -12,8 +12,10 @@ module Ui
   # - `caption_layout: :dropdown` swaps the month label for month/year selects,
   #   bounded by `year_range:` (or by `min:`/`max:` when given).
   # - `dir: :rtl` flips the grid, the nav arrows and the arrow keys.
-  # - `month_names:`/`day_names:` localize the caption and column headers, e.g.
-  #   `month_names: I18n.t("date.month_names").compact`.
+  # - The caption and column headers come from Rails' own date translations,
+  #   `date.month_names` and `date.abbr_day_names`: English out of the box,
+  #   and the app's language wherever it loads one (rails-i18n does). Pass
+  #   `month_names:`/`day_names:` to override them.
   #
   # `month:`/`selected:`/`from:`/`to:`/`min:`/`max:` accept `Date`s or
   # `YYYY-MM(-DD)` strings; `selected:` also accepts a `Date` range or array.
@@ -47,8 +49,8 @@ module Ui
       @year_range = year_bounds(year_range)
       @dir = dir.presence&.to_s
       @week_start = week_start
-      @month_names = month_names.presence
-      @day_names = day_names.presence
+      @month_names = month_names.presence || rails_date_names("date.month_names")
+      @day_names = day_names.presence || rails_date_names("date.abbr_day_names")
       @attrs = attrs
       @class_name = extract_class_name(@attrs, class_name)
     end
@@ -132,7 +134,7 @@ module Ui
     def nav_button(icon, action, label)
       tag.button(
         type: "button",
-        class: "pointer-events-auto inline-flex size-7 items-center justify-center rounded-md border border-input bg-transparent text-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none",
+        class: "pointer-events-auto inline-flex size-7 items-center justify-center rounded-md border border-input bg-transparent text-sm opacity-70 transition-opacity hover:opacity-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
         aria: { label: label },
         data: { action: "click->ui-calendar##{action}" }
       ) { helpers.lucide_icon(icon, class: "size-4") }
@@ -202,6 +204,13 @@ module Ui
       return value.strftime("%Y-%m-%d") if value.respond_to?(:strftime)
 
       value.to_s
+    end
+
+    # `date.month_names` is 1-indexed and starts with a nil. An app without
+    # the key gets nil, and the controller's English names apply.
+    def rails_date_names(key)
+      names = I18n.t(key, default: nil)
+      names.compact.presence if names.is_a?(Array)
     end
 
     def append_token(existing, token)

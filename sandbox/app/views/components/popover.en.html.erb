@@ -16,7 +16,7 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-popover</code>
+      The <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-popover</code> controller
       toggles the panel, moves focus into it on open, and hands focus back to the trigger on
       closing with <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>. Clicking outside closes it too.
       Positioning is utilities only (<code class="rounded bg-muted px-1 py-0.5 text-xs">side</code>/<code class="rounded bg-muted px-1 py-0.5 text-xs">align</code>),
@@ -45,7 +45,7 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
       Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> and
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
@@ -65,7 +65,7 @@
         <td><code>Popover::Content</code></td>
         <td><code>align</code></td>
         <td><code>:center</code></td>
-        <td><code>:start</code>, <code>:center</code>, <code>:end</code> no eixo cruzado.</td>
+        <td><code>:start</code>, <code>:center</code>, <code>:end</code> along the cross axis.</td>
       </tr>
     <% end %>
   </section>

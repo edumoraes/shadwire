@@ -43,7 +43,7 @@ class SelectComponentTest < ApplicationSystemTestCase
     within "#example-select_default" do
       assert_no_selector "[role='listbox']", visible: true
       assert_equal "pineapple", find("input[type='hidden']", visible: :all).value
-      assert_selector "[data-slot='select-value']", text: "Abacaxi"
+      assert_selector "[data-slot='select-value']", text: "Pineapple"
       assert_selector "[role='option'][data-value='pineapple'][aria-selected='true']", visible: :all
     end
   end

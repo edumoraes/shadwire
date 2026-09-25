@@ -65,10 +65,11 @@
   </section>
 
   <section class="space-y-4">
-    <%= docs_h2("Quatro delas são lidas por JavaScript") %>
+    <%= docs_h2("Cinco delas são lidas por JavaScript") %>
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("ui.data_table.selection") %>, <%= docs_code("ui.calendar.month") %>,
-      <%= docs_code("ui.calendar.year") %> e <%= docs_code("ui.sonner.close") %> não são
+      <%= docs_code("ui.data_table.selection") %>, <%= docs_code("ui.data_table.page") %>,
+      <%= docs_code("ui.calendar.month") %>, <%= docs_code("ui.calendar.year") %> e
+      <%= docs_code("ui.sonner.close") %> não são
       impressas na página. Elas são resolvidas uma vez, quando o componente
       renderiza, e escritas num atributo <%= docs_code("data-*-value") %> que o
       controller lê. Traduzir funciona exatamente igual — continuam sendo chaves
@@ -76,16 +77,17 @@
     </p>
 
     <p class="leading-7 text-muted-foreground">
-      Uma delas carrega uma armadilha. A contagem de seleção da data table é
-      interpolada <em>pelo controller</em>, não pelo I18n, então os dois tokens
-      precisam sobreviver à tradução:
+      Duas delas carregam uma armadilha. A contagem de seleção e o contador de
+      páginas da data table são interpolados <em>pelo controller</em>, não pelo I18n,
+      então os tokens precisam sobreviver à tradução:
     </p>
 
     <%= docs_code_block(@snippets[:interpolated], language: :yaml) %>
 
     <p class="leading-7 text-muted-foreground">
-      Traduzir ou remover <%= docs_code("%{selected}") %> ou <%= docs_code("%{total}") %>
-      deixa a legenda com um token literal ou sem número nenhum, e nada acusa —
+      Traduzir ou remover <%= docs_code("%{selected}") %>, <%= docs_code("%{page}") %>
+      ou <%= docs_code("%{total}") %> deixa a legenda com um token literal ou sem
+      número nenhum, e nada acusa —
       o I18n nunca vê esses marcadores.
     </p>
   </section>
@@ -94,16 +96,19 @@
     <%= docs_h2("Nomes de meses e dias vêm do Rails") %>
     <p class="leading-7 text-muted-foreground">
       A legenda e os cabeçalhos do calendário não estão no namespace
-      <%= docs_code("ui.") %>. São props, para poderem vir das traduções de data do
-      próprio Rails — que seu app já tem se carrega um locale do
-      <%= link_to "rails-i18n", "https://github.com/svenfuchs/rails-i18n", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>:
+      <%= docs_code("ui.") %>. O calendário os lê das traduções de data do próprio
+      Rails, <%= docs_code("date.month_names") %> e
+      <%= docs_code("date.abbr_day_names") %>: em inglês de fábrica, e no seu idioma
+      assim que o app o carrega — pelo
+      <%= link_to "rails-i18n", "https://github.com/svenfuchs/rails-i18n", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
+      ou pelo seu próprio arquivo de locale. Para usar outros nomes num calendário, passe-os:
     </p>
 
     <%= docs_code_block(@snippets[:calendar_names]) %>
 
     <p class="leading-7 text-muted-foreground">
       O <%= docs_code(".compact") %> importa: o
-      <%= docs_code("date.month_names") %> do Rails é indexado a partir de 1 e começa
+      <%= docs_code("date.abbr_month_names") %> do Rails é indexado a partir de 1 e começa
       com um <%= docs_code("nil") %>.
     </p>
   </section>

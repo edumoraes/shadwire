@@ -28,7 +28,7 @@ module Ui
       end
 
       def base_classes
-        "flex select-none flex-col gap-1 rounded-md p-2 text-sm leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground data-[active]:bg-accent/50"
+        "flex select-none flex-col gap-1 rounded-md p-2 text-sm leading-none no-underline outline-none transition-[color,box-shadow] hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 data-[active]:bg-accent/50"
       end
     end
   end

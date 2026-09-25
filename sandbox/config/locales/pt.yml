@@ -29,6 +29,7 @@ pt:
   # already lives in the component source, and a second copy would drift.
   ui:
     breadcrumb:
+      label: trilha de navegação
       more: Mais
     calendar:
       previous_month: Mês anterior
@@ -36,6 +37,8 @@ pt:
       month: Mês
       year: Ano
     carousel:
+      roledescription: carrossel
+      slide: slide
       previous: Slide anterior
       next: Próximo slide
     dialog:
@@ -43,11 +46,14 @@ pt:
     sheet:
       close: Fechar
     pagination:
+      label: paginação
       more: Mais páginas
       previous: Anterior
       next: Próxima
       previous_label: Ir para a página anterior
       next_label: Ir para a próxima página
+    sidebar:
+      toggle: Alternar barra lateral
     sonner:
       label: Notificações
       close: Fechar
@@ -62,6 +68,13 @@ pt:
       previous: Anterior
       next: Próximo
       selection: "%{selected} de %{total} linha(s) selecionada(s)."
+      page: "Página %{page} de %{total}"
+
+  # Rails' own date translations, which the calendar reads for its caption
+  # and column headers. An app that loads rails-i18n already has these.
+  date:
+    month_names: [~, Janeiro, Fevereiro, Março, Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro]
+    abbr_day_names: [Dom, Seg, Ter, Qua, Qui, Sex, Sáb]
 
   home:
     showcase:
@@ -297,6 +310,140 @@ pt:
       notes: Notas
       component: Componente
       api: API
+    api_docs:
+      intro_html: "Toda parte aceita %{class} / %{class_name} e %{attrs}."
+      none: "Nenhuma das partes recebe outro argumento."
+      values: "Um de %{values}."
+      shared:
+        variant: "A aparência."
+        size: "O tamanho."
+        disabled: "Desabilita: não recebe clique e o teclado o pula."
+        inset: "Recua o texto para alinhar com os itens que têm ícone."
+        side: "A borda em que abre: `:top`, `:right`, `:bottom` ou `:left`."
+        align: "O alinhamento ao longo dessa borda: `:start`, `:center` ou `:end`."
+        tag_name: "O nome antigo de `tag:`, ainda aceito."
+        close_on_backdrop: "Fecha com um clique fora do painel."
+      args:
+        ui_aspect_ratio:
+          ratio: "Largura sobre altura: um número (`16.0 / 9`) ou uma string (`\"16 / 9\"`)."
+        ui_spinner:
+          label: "O nome que o `role=\"status\"` anuncia. Passe `nil` ao lado de um texto visível para deixar o spinner decorativo."
+        ui_empty_media:
+          variant: "`:icon` desenha um quadrado neutro em volta de um ícone; `:default` é um espaço sem moldura."
+        ui_item:
+          tag: "O elemento renderizado: `:a` com `href:`, ou `:button`, para uma linha clicável."
+          variant: "A superfície da linha."
+          size: "O espaçamento interno e o gap."
+        ui_item_media:
+          variant: "`:icon` desenha um quadrado com borda, `:image` recorta uma miniatura quadrada, `:default` é um espaço sem moldura."
+        ui_input_group_addon:
+          align: "Onde fica: `:inline_start`/`:inline_end` ao lado do controle, `:block_start`/`:block_end` numa linha inteira acima ou abaixo dele."
+        ui_input_group_input:
+          type: "O `type` do input."
+        ui_input_group_button:
+          size: "O tamanho; os tamanhos `icon_` são quadrados."
+          type: "O `type` do botão — `\"button\"`, para nunca enviar o formulário sem querer."
+        ui_button_group:
+          orientation: "Junta os botões numa linha (`:horizontal`) ou numa coluna (`:vertical`)."
+        ui_button_group_text:
+          tag: "O elemento renderizado — `:label` para nomear um input do grupo."
+        ui_button_group_separator:
+          orientation: "`:vertical` entre botões numa linha, `:horizontal` numa coluna."
+        ui_field:
+          orientation: "`:vertical` empilha o label sobre o controle, `:horizontal` põe os dois lado a lado, `:responsive` alterna na largura `md` do field group."
+          invalid: "Marca o campo como inválido: define `data-invalid` e colore o label."
+        ui_field_legend:
+          variant: "`:legend` tem o tamanho base, `:label` é pequeno."
+        ui_field_error:
+          errors: "As mensagens da lista, ex.: `form.object.errors[:email]`. Uma mensagem só pode vir no bloco."
+        ui_collapsible:
+          open: "Começa aberto."
+        ui_collapsible_trigger:
+          open: "Passe também o `open:` da raiz, para o servidor já renderizar o `aria-expanded` certo."
+        ui_collapsible_content:
+          open: "Passe também o `open:` da raiz, para o conteúdo não ficar oculto até o controller conectar."
+        ui_toggle:
+          pressed: "Começa pressionado (`aria-pressed=\"true\"`)."
+        ui_toggle_group:
+          type: "`:single` mantém no máximo um item pressionado; `:multiple` deixa cada um alternar sozinho."
+          variant: "Define `data-variant`; `:outline` dá a sombra ao grupo. Cada item recebe seu próprio `variant:`."
+          size: "Define `data-size`. Cada item recebe seu próprio `size:`."
+          orientation: "Dispõe os itens numa linha (`:horizontal`) ou numa coluna (`:vertical`)."
+        ui_toggle_group_item:
+          value: "Identifica o item no valor do grupo."
+          variant: "A aparência; passe o `variant:` do grupo."
+          size: "O tamanho; passe o `size:` do grupo."
+          pressed: "Começa pressionado."
+        ui_slider:
+          min: "O menor valor."
+          max: "O maior valor."
+          step: "Quanto as setas e o arraste movem o valor."
+          value: "O valor inicial."
+          name: "O nome do input oculto que envia o valor; sem ele não há input."
+          label: "O nome acessível do marcador (`aria-label`)."
+        ui_hover_card:
+          open_delay: "Milissegundos de hover ou foco antes de abrir."
+          close_delay: "Milissegundos até fechar depois que o ponteiro ou o foco saem."
+        ui_hover_card_trigger:
+          tag: "O elemento renderizado; um link por padrão, então passe `href:`."
+        ui_input_otp:
+          name: "O nome do input oculto que envia o código inteiro."
+          value: "Um código para começar."
+        ui_input_otp_slot:
+          value: "O caractere com que a casa começa."
+          inputmode: "O teclado que dispositivos de toque mostram; `\"text\"` para letras."
+        ui_drawer_trigger:
+          variant: "Repassado ao botão que ele renderiza: qualquer variante do Button."
+          size: "Repassado ao botão que ele renderiza: qualquer tamanho do Button."
+        ui_drawer_content:
+          side: "A borda de onde desliza: `:bottom`, `:top`, `:right` ou `:left`. Drawers de cima e de baixo ganham uma alça de arraste."
+        ui_drawer_title:
+          tag: "O elemento do título."
+        ui_drawer_close:
+          variant: "Repassado ao botão que ele renderiza: qualquer variante do Button."
+          size: "Repassado ao botão que ele renderiza: qualquer tamanho do Button."
+        ui_context_menu_item:
+          variant: "`:destructive` marca uma ação perigosa."
+          tag: "`:a` com `href:` para um item que navega."
+        ui_menubar_content:
+          align: "Alinha o menu com o gatilho: `:start`, `:center` ou `:end`."
+        ui_menubar_item:
+          variant: "`:destructive` marca uma ação perigosa."
+          tag: "`:a` com `href:` para um item que navega."
+        ui_navigation_menu_link:
+          active: "Marca a página atual: define `aria-current=\"page\"` e `data-active`."
+        ui_command_input:
+          placeholder: "O placeholder do campo de busca."
+        ui_command_group:
+          heading: "Um título acima dos itens do grupo."
+        ui_command_item:
+          value: "O que a busca compara e o evento `select` informa; o texto do item quando ausente."
+        ui_resizable_panel_group:
+          direction: "`:horizontal` para painéis lado a lado, `:vertical` para empilhados."
+        ui_resizable_panel:
+          default_size: "A fatia inicial do painel, como um peso relativo aos irmãos."
+        ui_resizable_handle:
+          with_handle: "Desenha uma alça no divisor."
+        ui_carousel:
+          orientation: "`:horizontal` ou `:vertical`; passe o mesmo valor ao `ui_carousel_content`."
+        ui_carousel_content:
+          orientation: "O `orientation:` do carrossel, repetido."
+        ui_sonner:
+          position: "Onde os toasts se empilham: `:top_left`, `:top_center`, `:top_right`, `:bottom_left`, `:bottom_center` ou `:bottom_right`."
+          duration: "Milissegundos que um toast fica antes de se dispensar."
+        ui_chart:
+          type: "Qualquer tipo do Chart.js: `:bar`, `:line`, `:pie`, `:doughnut`…"
+          data: "O hash `data` do Chart.js (`labels` e `datasets`). Ele ocupa a keyword `data:`, então passe atributos data do HTML como chaves `\"data-*\"`."
+          options: "As `options` do Chart.js, sobre padrões responsivos."
+          label: "O nome acessível do gráfico, no canvas."
+        ui_data_table:
+          columns: "As colunas, como hashes `{ key:, label:, sortable:, sort_value: }`."
+          rows: "As linhas, como hashes indexados pelo `key` das colunas. Um `id` identifica a linha."
+          filter_key: "A coluna que o campo de filtro busca; sem ela não há campo de filtro."
+          filter_placeholder: "O placeholder do campo de filtro."
+          page_size: "Linhas por página."
+          selectable: "Adiciona uma coluna de checkboxes para selecionar linhas."
+          empty_text: "O que a tabela mostra quando nenhuma linha corresponde."
     install:
       lead_html: "O Shadwire segue o modelo <em>open-code</em> do shadcn/ui: o código-fonte do componente é copiado para a sua aplicação e passa a ser seu. Instale com a CLI:"
       files_html: "O item %{name} do registry instala estes arquivos:"

@@ -25,7 +25,7 @@
     <p class="text-sm text-muted-foreground">
       Or render the component
       <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::LabelComponent</code>
-      diretamente:
+      directly:
     </p>
     <%= docs_code_block(@usage_component) %>
   </section>
@@ -41,7 +41,7 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
       <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_label(**options, &block)</code>
-      encapsula
+      wraps
       <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::LabelComponent.new(**options)</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.type"), t("components.api.default"), t("components.api.description") ] } do %>
@@ -55,7 +55,7 @@
         <td><code>**attrs</code></td>
         <td>Hash</td>
         <td><code>{}</code></td>
-        <td>Atributos HTML livres (<code>for</code>, <code>id</code>, <code>data:</code>, <code>aria:</code>, …).</td>
+        <td>Free HTML attributes (<code>for</code>, <code>id</code>, <code>data:</code>, <code>aria:</code>, …).</td>
       </tr>
       <tr>
         <td><code>&block</code></td>

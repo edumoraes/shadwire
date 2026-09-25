@@ -31,7 +31,7 @@ class SheetComponentTest < ApplicationSystemTestCase
     assert_no_selector "dialog[data-slot='sheet-content']"
 
     within "#example-sheet_sides" do
-      click_button "Base"
+      click_button "Bottom"
     end
 
     bottom_sheet = find("dialog[data-slot='sheet-content'][open]")

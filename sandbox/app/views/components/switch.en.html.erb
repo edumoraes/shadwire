@@ -25,7 +25,7 @@
     <p class="text-sm text-muted-foreground">
       Or render the component
       <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::SwitchComponent</code>
-      diretamente:
+      directly:
     </p>
     <%= docs_code_block(@usage_component) %>
   </section>
@@ -41,7 +41,7 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
       <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_switch(**options)</code>
-      encapsula
+      wraps
       <code class="rounded bg-muted px-1 py-0.5 text-xs">Ui::SwitchComponent.new(**options)</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.argument"), t("components.api.type"), t("components.api.default"), t("components.api.description") ] } do %>
@@ -67,7 +67,7 @@
         <td><code>**attrs</code></td>
         <td>Hash</td>
         <td><code>{}</code></td>
-        <td>Atributos HTML livres (<code>name</code>, <code>id</code>, <code>value</code>, <code>data:</code>, <code>aria:</code>, …).</td>
+        <td>Free HTML attributes (<code>name</code>, <code>id</code>, <code>value</code>, <code>data:</code>, <code>aria:</code>, …).</td>
       </tr>
     <% end %>
   </section>

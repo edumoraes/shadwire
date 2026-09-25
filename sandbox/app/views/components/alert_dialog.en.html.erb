@@ -16,9 +16,9 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      Compartilha o controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dialog</code>
+      Shares the <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dialog</code> controller
       with Dialog, but with backdrop dismissal and <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd> turned off
-      e <code class="rounded bg-muted px-1 py-0.5 text-xs">role="alertdialog"</code>.
+      and <code class="rounded bg-muted px-1 py-0.5 text-xs">role="alertdialog"</code>.
       <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_alert_dialog_action</code> closes the dialog —
       attach your real action (a form, Turbo, Stimulus) to the button.
     </p>
@@ -45,7 +45,7 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
       Every part accepts <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> and
       <code class="rounded bg-muted px-1 py-0.5 text-xs">**attrs</code>.
     </p>
     <%= render layout: "docs/table", locals: { headers: [ t("components.api.component"), t("components.api.argument"), t("components.api.default"), t("components.api.description") ] } do %>
@@ -53,12 +53,12 @@
         <td><code>AlertDialog</code></td>
         <td>—</td>
         <td>—</td>
-        <td>Sempre injeta <code>close_on_backdrop: false</code> e <code>close_on_escape: false</code>.</td>
+        <td>Always sets <code>close_on_backdrop: false</code> and <code>close_on_escape: false</code>.</td>
       </tr>
       <tr>
         <td><code>AlertDialog::Trigger</code></td>
         <td><code>variant</code>, <code>size</code></td>
-        <td><code>:default</code></td>
+        <td><code>:outline</code>, <code>:default</code></td>
         <td>The Button that opens the dialog.</td>
       </tr>
       <tr>

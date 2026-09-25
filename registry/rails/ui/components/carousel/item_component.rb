@@ -12,7 +12,7 @@ module Ui
       def call
         tag.div(content, **html_attrs.dup.tap do |attrs|
           attrs[:role] = attrs.fetch(:role, "group")
-          attrs[:aria] = { roledescription: "slide" }.merge(attrs.fetch(:aria, {}))
+          attrs[:aria] = { roledescription: I18n.t("ui.carousel.slide", default: "slide") }.merge(attrs.fetch(:aria, {}))
           attrs[:class] = class_names("min-w-0 shrink-0 grow-0 basis-full", @class_name)
           attrs[:data] = attrs.fetch(:data, {}).dup.tap do |data|
             data[:slot] = "carousel-item"

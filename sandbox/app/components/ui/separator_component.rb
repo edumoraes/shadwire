@@ -23,7 +23,7 @@ module Ui
     def separator_attrs
       html_attrs.dup.merge(role: separator_role, class: separator_classes).tap do |attrs|
         attrs[:aria] = separator_aria_attrs(attrs[:aria])
-        attrs[:data] = (attrs[:data] || {}).dup.merge(orientation: @orientation)
+        attrs[:data] = { slot: "separator" }.merge(attrs[:data].to_h).merge(orientation: @orientation)
       end
     end
 

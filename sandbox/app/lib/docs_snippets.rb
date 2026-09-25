@@ -87,7 +87,7 @@ module DocsSnippets
 
   THEMING = {
     layers: <<~CSS,
-      @custom-variant dark (&:is(.dark *));   /* dark mode por classe */
+      @custom-variant dark (&:is(.dark *));   /* class-based dark mode */
 
       @theme inline {                         /* maps tokens to utilities */
         --color-background: var(--background);
@@ -95,8 +95,8 @@ module DocsSnippets
         /* ... */
       }
 
-      :root { --background: oklch(1 0 0); }      /* valores do tema claro */
-      .dark { --background: oklch(0.145 0 0); }  /* valores do tema escuro */
+      :root { --background: oklch(1 0 0); }      /* light theme values */
+      .dark { --background: oklch(0.145 0 0); }  /* dark theme values */
     CSS
 
     brand: <<~CSS,
@@ -179,7 +179,7 @@ module DocsSnippets
     toggle_markup: <<~'ERB',
       <%= ui_button(size: :icon, variant: :ghost,
                     data: { controller: "theme", action: "theme#toggle" },
-                    aria: { label: "Alternar tema" }) do %>
+                    aria: { label: "Toggle theme" }) do %>
         <%= ui_icon("moon", class: "dark:hidden") %>
         <%= ui_icon("sun", class: "hidden dark:block") %>
       <% end %>
@@ -276,7 +276,7 @@ module DocsSnippets
         run: bundle install
 
       # Fails when an installed file has diverged from the registry.
-      - name: Checar drift do Shadwire
+      - name: Check for Shadwire drift
         run: bin/shadwire diff --exit-code
     YAML
   }.freeze
@@ -313,7 +313,7 @@ module DocsSnippets
       bin/shadwire status --json      # 1. what already exists in this app
       bin/shadwire search modal       # 2. find the component
       bin/shadwire info dialog --json # 3. read the API before writing ERB
-      bin/shadwire add dialog --yes   # 4. instalar
+      bin/shadwire add dialog --yes   # 4. install it
       bin/shadwire status --json      # 5. confirm the new helpers
     SHELL
   }.freeze
@@ -431,10 +431,10 @@ module DocsSnippets
       <%# Right %>
       <%= ui_card do %>
         <%= ui_card_header do %>
-          <%= ui_card_title { "Time" } %>
-          <%= ui_card_description { "Gerencie quem tem acesso." } %>
+          <%= ui_card_title { "Team" } %>
+          <%= ui_card_description { "Manage who has access." } %>
         <% end %>
-        <%= ui_card_content { "Corpo" } %>
+        <%= ui_card_content { "Body" } %>
         <%= ui_card_footer { ui_button { "Save" } } %>
       <% end %>
     ERB
@@ -443,8 +443,8 @@ module DocsSnippets
       <%# Wrong: everything dumped into the content %>
       <%= ui_card do %>
         <%= ui_card_content do %>
-          <h3>Time</h3>
-          <p>Gerencie quem tem acesso.</p>
+          <h3>Team</h3>
+          <p>Manage who has access.</p>
         <% end %>
       <% end %>
     ERB
@@ -458,7 +458,7 @@ module DocsSnippets
 
     right_group: <<~'ERB',
       <%# Right %>
-      <%= ui_select(name: "role", placeholder: "Escolha um papel") do %>
+      <%= ui_select(name: "role", placeholder: "Select a role") do %>
         <%= ui_select_trigger { ui_select_value } %>
         <%= ui_select_content do %>
           <%= ui_select_item(value: "admin") { "Admin" } %>
@@ -469,7 +469,7 @@ module DocsSnippets
     wrong_title: <<~'ERB',
       <%# Wrong: the dialog has no accessible name %>
       <%= ui_dialog_content do %>
-        <p>Tem certeza?</p>
+        <p>Are you sure?</p>
       <% end %>
     ERB
 
@@ -479,7 +479,7 @@ module DocsSnippets
         <%= ui_dialog_header do %>
           <%= ui_dialog_title(class: "sr-only") { "Confirm deletion" } %>
         <% end %>
-        <p>Tem certeza?</p>
+        <p>Are you sure?</p>
       <% end %>
     ERB
 
@@ -512,7 +512,7 @@ module DocsSnippets
       <%= ui_button(class_name: "w-full") { "Save" } %>
     ERB
 
-    order: "base_classes → variant_classes → size_classes → a sua class",
+    order: "base_classes → variant_classes → size_classes → your class",
 
     wrong_restyle: <<~'ERB',
       <%# Wrong: fighting the design system %>
@@ -543,12 +543,12 @@ module DocsSnippets
 
     wrong_utilities: <<~'ERB',
       <%# Wrong %>
-      <%= ui_button(class: "h-8 px-3 text-xs border") { "Pequeno" } %>
+      <%= ui_button(class: "h-8 px-3 text-xs border") { "Small" } %>
     ERB
 
     right_utilities: <<~'ERB'
       <%# Right %>
-      <%= ui_button(variant: :outline, size: :sm) { "Pequeno" } %>
+      <%= ui_button(variant: :outline, size: :sm) { "Small" } %>
     ERB
   }.freeze
 
@@ -558,7 +558,7 @@ module DocsSnippets
       <div class="space-y-2">
         <%= ui_label(for: "email") { "Email" } %>
         <%= ui_input(type: :email, id: "email", name: "email") %>
-        <p class="text-sm text-muted-foreground">Nunca compartilhamos.</p>
+        <p class="text-sm text-muted-foreground">We never share it.</p>
       </div>
     ERB
 
@@ -567,7 +567,7 @@ module DocsSnippets
       <%= ui_field do %>
         <%= ui_field_label(for: "email") { "Email" } %>
         <%= ui_input(type: :email, id: "email", name: "email") %>
-        <%= ui_field_description { "Nunca compartilhamos." } %>
+        <%= ui_field_description { "We never share it." } %>
       <% end %>
     ERB
 
@@ -613,7 +613,7 @@ module DocsSnippets
       <%# Right %>
       <%= ui_input_group do %>
         <%= ui_input_group_addon { ui_icon("search") } %>
-        <%= ui_input_group_input(name: "q", placeholder: "Buscar") %>
+        <%= ui_input_group_input(name: "q", placeholder: "Search") %>
       <% end %>
     ERB
 
@@ -622,7 +622,7 @@ module DocsSnippets
         <%= ui_popover do %>
           <%= ui_popover_trigger(variant: :outline, class: "w-[212px] justify-between font-normal") do %>
             <span data-ui-date-picker-target="label" data-empty="true"
-                  class="data-[empty=true]:text-muted-foreground">Escolha uma data</span>
+                  class="data-[empty=true]:text-muted-foreground">Pick a date</span>
             <%= ui_icon("chevron-down", class: "opacity-50") %>
           <% end %>
           <%= ui_popover_content(align: :start, class: "w-auto! p-0!") do %>
@@ -651,7 +651,7 @@ module DocsSnippets
 
     decorative: <<~'ERB',
       <%# Right: "Download" is already the label; the icon is decoration %>
-      <%= ui_button { safe_join([ ui_icon("download"), " Baixar" ]) } %>
+      <%= ui_button { safe_join([ ui_icon("download"), " Download" ]) } %>
     ERB
 
     wrong_label: <<~'ERB',
@@ -725,14 +725,16 @@ module DocsSnippets
       pt:
         ui:
           data_table:
-            # %{selected} and %{total} are substituted by the Stimulus
-            # controller, not by I18n. Keep both tokens, in any order.
+            # The Stimulus controller substitutes these tokens, not I18n.
+            # Keep every one of them, in any order.
             selection: "%{selected} de %{total} linha(s) selecionada(s)."
+            page: "Página %{page} de %{total}"
     YAML
 
     calendar_names: <<~'ERB'
-      <%= ui_calendar(month_names: I18n.t("date.month_names").compact,
-                      day_names: I18n.t("date.abbr_day_names")) %>
+      <%# Abbreviated months in the caption, two-letter column headers %>
+      <%= ui_calendar(month_names: I18n.t("date.abbr_month_names").compact,
+                      day_names: I18n.t("date.abbr_day_names").map { |name| name.first(2) }) %>
     ERB
   }.freeze
 

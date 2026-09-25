@@ -137,9 +137,9 @@
       "type": "component",
       "title": "Alert",
       "description": "A callout for important inline messages.",
-      "whenToUse": "Persistent inline messages inside the page. For a message that interrupts the user use alert-dialog; for transient feedback use sonner.",
+      "whenToUse": "Persistent inline messages inside the page. Compose ui_alert_title and ui_alert_description inside it; a ui_icon placed first gets its own column and the text lines up beside it. For a message that interrupts the user use alert-dialog; for transient feedback use sonner.",
       "usage": [
-        "<%= ui_alert(variant: :destructive) { \"Your session expired.\" } %>"
+        "<%= ui_alert(variant: :destructive) do %>\n  <%= ui_alert_title { \"Your session expired.\" } %>\n  <%= ui_alert_description { \"Sign in again to continue.\" } %>\n<% end %>"
       ],
       "files": [
         {
@@ -149,6 +149,14 @@
         {
           "source": "registry/rails/ui/components/alert_component.rb",
           "target": "app/components/ui/alert_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert/title_component.rb",
+          "target": "app/components/ui/alert/title_component.rb"
+        },
+        {
+          "source": "registry/rails/ui/components/alert/description_component.rb",
+          "target": "app/components/ui/alert/description_component.rb"
         },
         {
           "source": "registry/rails/ui/helpers/ui/alert_helper.rb",
@@ -195,7 +203,7 @@
       "description": "A user or entity image with a text fallback.",
       "whenToUse": "Representing a person or account. Always supply fallback for when the image fails to load.",
       "usage": [
-        "<%= ui_avatar(src: user.avatar_url, alt: user.name, fallback: \"JD\") %>"
+        "<%= ui_avatar(src: \"/avatars/ada.png\", alt: \"Ada Lovelace\", fallback: \"AL\") %>"
       ],
       "files": [
         {
@@ -223,7 +231,7 @@
       "description": "Vertically stacked sections that expand and collapse.",
       "whenToUse": "Several collapsible sections, typically FAQs. For a single collapsible region use collapsible; for switching between peer views use tabs.",
       "usage": [
-        "<%= ui_accordion(multiple: false) do %>\n  <%= ui_accordion_item(value: \"one\") do %>\n    <%= ui_accordion_trigger { \"Is it accessible?\" } %>\n    <%= ui_accordion_content { \"Yes.\" } %>\n  <% end %>\n<% end %>"
+        "<%= ui_accordion do %>\n  <%= ui_accordion_item(value: \"one\") do %>\n    <%= ui_accordion_header { ui_accordion_trigger { \"Is it accessible?\" } } %>\n    <%= ui_accordion_content { \"Yes.\" } %>\n  <% end %>\n<% end %>"
       ],
       "files": [
         {
@@ -476,7 +484,7 @@
       "description": "A set of mutually exclusive options.",
       "whenToUse": "Picking exactly one of a few visible options. For many options use select; for a compact toolbar-style choice use toggle-group.",
       "usage": [
-        "<%= ui_radio_group(name: \"plan\", value: \"pro\") do %>\n  <%= ui_radio_group_item(value: \"free\") %>\n  <%= ui_radio_group_item(value: \"pro\") %>\n<% end %>"
+        "<%= ui_radio_group(aria: { label: \"Plan\" }) do %>\n  <%= ui_radio_group_item(name: \"plan\", value: \"free\", \"aria-label\": \"Free\") %>\n  <%= ui_radio_group_item(name: \"plan\", value: \"pro\", checked: true, \"aria-label\": \"Pro\") %>\n<% end %>"
       ],
       "files": [
         {
@@ -820,7 +828,7 @@
       "description": "A modal window overlaying the page.",
       "whenToUse": "Focused tasks that interrupt the current flow. For a destructive confirmation use alert-dialog; for a side panel use sheet; for a bottom sheet use drawer. Always include ui_dialog_title, visually hidden if needed.",
       "usage": [
-        "<%= ui_dialog do %>\n  <%= ui_dialog_trigger { ui_button { \"Open\" } } %>\n  <%= ui_dialog_content do %>\n    <%= ui_dialog_header do %>\n      <%= ui_dialog_title { \"Edit profile\" } %>\n      <%= ui_dialog_description { \"Update your details.\" } %>\n    <% end %>\n    <%= ui_dialog_footer { ui_button { \"Save\" } } %>\n  <% end %>\n<% end %>"
+        "<%= ui_dialog do %>\n  <%= ui_dialog_trigger { \"Open\" } %>\n  <%= ui_dialog_content do %>\n    <%= ui_dialog_header do %>\n      <%= ui_dialog_title { \"Edit profile\" } %>\n      <%= ui_dialog_description { \"Update your details.\" } %>\n    <% end %>\n    <%= ui_dialog_footer { ui_button { \"Save\" } } %>\n  <% end %>\n<% end %>"
       ],
       "files": [
         {
@@ -896,7 +904,7 @@
       "description": "A modal that interrupts the user to confirm a consequential action.",
       "whenToUse": "Confirming destructive or irreversible actions — it cannot be dismissed by clicking outside. For ordinary modal content use dialog.",
       "usage": [
-        "<%= ui_alert_dialog do %>\n  <%= ui_alert_dialog_trigger { ui_button(variant: :destructive) { \"Delete\" } } %>\n  <%= ui_alert_dialog_content do %>\n    <%= ui_alert_dialog_header do %>\n      <%= ui_alert_dialog_title { \"Are you sure?\" } %>\n      <%= ui_alert_dialog_description { \"This cannot be undone.\" } %>\n    <% end %>\n    <%= ui_alert_dialog_footer do %>\n      <%= ui_alert_dialog_cancel { \"Cancel\" } %>\n      <%= ui_alert_dialog_action { \"Delete\" } %>\n    <% end %>\n  <% end %>\n<% end %>"
+        "<%= ui_alert_dialog do %>\n  <%= ui_alert_dialog_trigger(variant: :destructive) { \"Delete\" } %>\n  <%= ui_alert_dialog_content do %>\n    <%= ui_alert_dialog_header do %>\n      <%= ui_alert_dialog_title { \"Are you sure?\" } %>\n      <%= ui_alert_dialog_description { \"This cannot be undone.\" } %>\n    <% end %>\n    <%= ui_alert_dialog_footer do %>\n      <%= ui_alert_dialog_cancel { \"Cancel\" } %>\n      <%= ui_alert_dialog_action { \"Delete\" } %>\n    <% end %>\n  <% end %>\n<% end %>"
       ],
       "files": [
         {
@@ -968,7 +976,7 @@
       "description": "A panel that slides in from an edge of the screen.",
       "whenToUse": "Secondary content or forms alongside the page, anchored to an edge. For a centred modal use dialog; for app navigation use sidebar.",
       "usage": [
-        "<%= ui_sheet do %>\n  <%= ui_sheet_trigger { ui_button(variant: :outline) { \"Open\" } } %>\n  <%= ui_sheet_content(side: :right) do %>\n    <%= ui_sheet_header { ui_sheet_title { \"Filters\" } } %>\n  <% end %>\n<% end %>"
+        "<%= ui_sheet do %>\n  <%= ui_sheet_trigger { \"Open\" } %>\n  <%= ui_sheet_content(side: :right) do %>\n    <%= ui_sheet_header { ui_sheet_title { \"Filters\" } } %>\n  <% end %>\n<% end %>"
       ],
       "files": [
         {
@@ -1044,7 +1052,7 @@
       "description": "A short hint shown on hover or focus.",
       "whenToUse": "Naming an icon-only control or adding a brief hint. Never put interactive content inside — use popover or hover-card for that.",
       "usage": [
-        "<%= ui_tooltip do %>\n  <%= ui_tooltip_trigger { ui_button(size: :icon) { ui_icon(\"info\") } } %>\n  <%= ui_tooltip_content { \"More information\" } %>\n<% end %>"
+        "<%= ui_tooltip do %>\n  <%= ui_tooltip_trigger { \"Hover\" } %>\n  <%= ui_tooltip_content { \"Add to library\" } %>\n<% end %>"
       ],
       "files": [
         {
@@ -1092,7 +1100,7 @@
       "description": "A floating panel anchored to a trigger.",
       "whenToUse": "Rich or interactive content anchored to a control, opened by click. For a plain hint use tooltip; for a list of actions use dropdown-menu.",
       "usage": [
-        "<%= ui_popover do %>\n  <%= ui_popover_trigger { ui_button(variant: :outline) { \"Open\" } } %>\n  <%= ui_popover_content { \"Panel content\" } %>\n<% end %>"
+        "<%= ui_popover do %>\n  <%= ui_popover_trigger { \"Open\" } %>\n  <%= ui_popover_content { \"Panel content\" } %>\n<% end %>"
       ],
       "files": [
         {
@@ -1140,7 +1148,7 @@
       "description": "A menu of actions or options triggered by a button.",
       "whenToUse": "Row actions, overflow menus, and account menus. For right-click use context-menu; for an application menu bar use menubar; for choosing a form value use select.",
       "usage": [
-        "<%= ui_dropdown_menu do %>\n  <%= ui_dropdown_menu_trigger { ui_button(variant: :outline) { \"Open\" } } %>\n  <%= ui_dropdown_menu_content do %>\n    <%= ui_dropdown_menu_label { \"My account\" } %>\n    <%= ui_dropdown_menu_separator %>\n    <%= ui_dropdown_menu_item { \"Profile\" } %>\n  <% end %>\n<% end %>"
+        "<%= ui_dropdown_menu do %>\n  <%= ui_dropdown_menu_trigger { \"Open\" } %>\n  <%= ui_dropdown_menu_content do %>\n    <%= ui_dropdown_menu_label { \"My account\" } %>\n    <%= ui_dropdown_menu_separator %>\n    <%= ui_dropdown_menu_item { \"Profile\" } %>\n  <% end %>\n<% end %>"
       ],
       "files": [
         {
@@ -1463,7 +1471,7 @@
       "description": "Constrains its content to a fixed width-to-height ratio.",
       "whenToUse": "Keeping images, video, or embeds at a consistent shape while they scale.",
       "usage": [
-        "<%= ui_aspect_ratio(ratio: 16.0 / 9) { image_tag(\"cover.jpg\", class: \"size-full object-cover\") } %>"
+        "<%= ui_aspect_ratio(ratio: 16.0 / 9) { image_tag(\"/cover.jpg\", alt: \"Cover\", class: \"size-full object-cover\") } %>"
       ],
       "files": [
         {
@@ -1491,7 +1499,7 @@
       "description": "An indeterminate loading indicator.",
       "whenToUse": "Waits of unknown length, including inside a button. For measurable progress use progress; for content placeholders use skeleton.",
       "usage": [
-        "<%= ui_button(disabled: true) { ui_spinner + \" Saving\" } %>"
+        "<%= ui_button(disabled: true) { ui_spinner(label: nil) + \" Saving\" } %>"
       ],
       "files": [
         {
@@ -1863,7 +1871,7 @@
       "description": "A single region that expands and collapses.",
       "whenToUse": "One show/hide region. For several coordinated sections use accordion.",
       "usage": [
-        "<%= ui_collapsible do %>\n  <%= ui_collapsible_trigger { ui_button(variant: :ghost) { \"Toggle\" } } %>\n  <%= ui_collapsible_content { \"Hidden content\" } %>\n<% end %>"
+        "<%= ui_collapsible do %>\n  <%= ui_collapsible_trigger { \"Toggle\" } %>\n  <%= ui_collapsible_content { \"Hidden content\" } %>\n<% end %>"
       ],
       "files": [
         {
@@ -2003,7 +2011,7 @@
       "description": "A rich preview card shown on hover.",
       "whenToUse": "Previewing linked content, such as a user profile. For a short hint use tooltip; for click-triggered content use popover.",
       "usage": [
-        "<%= ui_hover_card do %>\n  <%= ui_hover_card_trigger { link_to \"@ada\", \"#\" } %>\n  <%= ui_hover_card_content { \"Ada Lovelace — mathematician\" } %>\n<% end %>"
+        "<%= ui_hover_card do %>\n  <%= ui_hover_card_trigger(href: \"#\") { \"@ada\" } %>\n  <%= ui_hover_card_content { \"Ada Lovelace — mathematician\" } %>\n<% end %>"
       ],
       "files": [
         {
@@ -2043,7 +2051,7 @@
       "description": "A segmented field for one-time passcodes.",
       "whenToUse": "Verification codes split into boxes. For ordinary text use input.",
       "usage": [
-        "<%= ui_input_otp(name: \"code\") do %>\n  <%= ui_input_otp_group do %>\n    <%= ui_input_otp_slot(index: 0) %>\n    <%= ui_input_otp_slot(index: 1) %>\n  <% end %>\n<% end %>"
+        "<%= ui_input_otp(name: \"code\") do %>\n  <%= ui_input_otp_group do %>\n    <%= ui_input_otp_slot %>\n    <%= ui_input_otp_slot %>\n    <%= ui_input_otp_slot %>\n  <% end %>\n<% end %>"
       ],
       "files": [
         {
@@ -2087,7 +2095,7 @@
       "description": "A panel that slides up from the bottom of the screen.",
       "whenToUse": "Mobile-friendly overlays anchored to the bottom edge. For a side panel use sheet; for a centred modal use dialog.",
       "usage": [
-        "<%= ui_drawer do %>\n  <%= ui_drawer_trigger { ui_button(variant: :outline) { \"Open\" } } %>\n  <%= ui_drawer_content do %>\n    <%= ui_drawer_header { ui_drawer_title { \"Filters\" } } %>\n  <% end %>\n<% end %>"
+        "<%= ui_drawer do %>\n  <%= ui_drawer_trigger { \"Open\" } %>\n  <%= ui_drawer_content do %>\n    <%= ui_drawer_header { ui_drawer_title { \"Filters\" } } %>\n  <% end %>\n<% end %>"
       ],
       "files": [
         {
@@ -2398,7 +2406,7 @@
         "<%# Inline it draws no frame of its own — a popover would. Add one here. %>\n<%= ui_calendar(name: \"starts_on\", selected: Date.current, class: \"border\") %>",
         "<%# Range: two hidden inputs, two months side by side. %>\n<%= ui_calendar(\n      mode: :range,\n      selected: Date.current..(Date.current + 7),\n      number_of_months: 2,\n      name: \"trip[starts_on]\",\n      end_name: \"trip[ends_on]\"\n    ) %>",
         "<%# Month and year selects instead of a label. min:/max: disable the days\n    outside the range and bound the year select. %>\n<%= ui_calendar(name: \"born_on\", caption_layout: :dropdown, max: Date.current) %>",
-        "<%# Mirrored grid and localized labels. %>\n<%= ui_calendar(\n      name: \"date\",\n      dir: :rtl,\n      month_names: I18n.t(\"date.month_names\").compact,\n      day_names: I18n.t(\"date.abbr_day_names\")\n    ) %>"
+        "<%# Mirrored grid. Month and day names follow the app's locale\n    (date.month_names, date.abbr_day_names); pass month_names:/day_names:\n    to override them. %>\n<%= ui_calendar(name: \"date\", dir: :rtl) %>"
       ],
       "files": [
         {
@@ -2518,7 +2526,7 @@
       "description": "A searchable single-select built from popover, command, and button.",
       "whenToUse": "Choosing one option from a long list where typing to filter matters. For short lists use select; for the native control use native-select. This item installs its parts rather than a Ui::ComboboxComponent — compose them yourself.",
       "usage": [
-        "<%= ui_popover do %>\n  <%= ui_popover_trigger { ui_button(variant: :outline) { \"Select framework…\" } } %>\n  <%= ui_popover_content do %>\n    <%= ui_command do %>\n      <%= ui_command_input(placeholder: \"Search…\") %>\n      <%= ui_command_list { ui_command_item { \"Rails\" } } %>\n    <% end %>\n  <% end %>\n<% end %>"
+        "<%= ui_popover do %>\n  <%= ui_popover_trigger(class: \"w-[200px] justify-between\") { \"Select framework…\" } %>\n  <%= ui_popover_content do %>\n    <%= ui_command do %>\n      <%= ui_command_input(placeholder: \"Search…\") %>\n      <%= ui_command_list { ui_command_item { \"Rails\" } } %>\n    <% end %>\n  <% end %>\n<% end %>"
       ],
       "registryDependencies": [
         "popover",
@@ -2550,7 +2558,7 @@
         "<%# Text input. What is typed is parsed into the calendar, what is picked comes\n    back formatted. Down arrow opens the popover. %>\n<%= ui_field(class: \"w-60\", data: { controller: \"ui-date-picker\" }) do %>\n  <%= ui_field_label(for: \"subscribed-on\") { \"Subscription date\" } %>\n  <%= ui_input_group do %>\n    <%= ui_input_group_input(id: \"subscribed-on\", autocomplete: \"off\",\n          data: { ui_date_picker_target: \"input\" }) %>\n    <%= ui_input_group_addon(align: :inline_end) do %>\n      <%# Popover + Calendar, triggered by\n          ui_popover_trigger(variant: :ghost, size: :icon, class: \"size-6! rounded-sm\") %>\n    <% end %>\n  <% end %>\n<% end %>",
         "<%# Date and time. The picker owns the day; a native time input owns the clock. %>\n<%= ui_input(type: :time, name: \"meeting[at]\", step: 1, value: \"10:30:00\",\n      class: \"appearance-none bg-background [&::-webkit-calendar-picker-indicator]:hidden\") %>",
         "<%# Natural language. Accepts \"today\", \"in 2 weeks\", \"next friday\". The phrase\n    table lives in the Stimulus controller this item installs — extend it for\n    the locales you ship. %>\n<%= ui_field(data: { controller: \"ui-date-picker\", ui_date_picker_natural_language_value: \"true\" }) do %>\n  <%# ...input-group as above, plus an echo of the parsed date: %>\n  <%= ui_field_description do %>\n    Publishing on <span data-ui-date-picker-target=\"preview\"></span>.\n  <% end %>\n<% end %>",
-        "<%# RTL. dir: :rtl mirrors the grid, the nav arrows and the ← → keys. %>\n<%= ui_calendar(\n      name: \"date\",\n      dir: :rtl,\n      month_names: I18n.t(\"date.month_names\").compact,\n      day_names: I18n.t(\"date.abbr_day_names\")\n    ) %>"
+        "<%# RTL. dir: :rtl mirrors the grid, the nav arrows and the ← → keys. %>\n<%= ui_calendar(name: \"date\", dir: :rtl) %>"
       ],
       "registryDependencies": [
         "popover",
@@ -2653,7 +2661,7 @@
       "description": "A table with sorting, filtering, pagination, and row selection.",
       "whenToUse": "Tabular data that needs interaction out of the box. When you only need markup and styling use table.",
       "usage": [
-        "<%= ui_data_table(columns: [{ key: :name, label: \"Name\" }], rows: @users.map { |u| { name: u.name } }, filter_key: :name) %>"
+        "<%= ui_data_table(columns: [{ key: :name, label: \"Name\", sortable: true }], rows: [{ name: \"Ada\" }, { name: \"Grace\" }], filter_key: :name) %>"
       ],
       "registryDependencies": [
         "table",

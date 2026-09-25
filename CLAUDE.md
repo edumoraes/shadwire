@@ -20,8 +20,9 @@ and `docs/superpowers/plans/` for the phased implementation plans.
 
 - Edit component source in `registry/rails/ui/...` — never directly in `sandbox/app/...`.
 - Run `bin/sync_registry` to copy registry files into the sandbox.
-- Synced files under `sandbox/app/components/`, `sandbox/app/helpers/ui_helper.rb`,
-  and `sandbox/vendor/shadwire/` are generated artifacts. Changes there are lost
+- Synced files under `sandbox/app/components/`, `sandbox/app/helpers/ui/`,
+  `sandbox/app/javascript/controllers/ui_*` and `sandbox/vendor/shadwire/` are
+  generated artifacts. Changes there are lost
   on the next sync. If validation surfaces a fix, apply it in `registry/` and re-sync.
 - `registry/` is also published for the CLI: `bin/build_registry` inlines each
   item's file contents into `build/r/{name}.json` (plus `index.json`), the format
@@ -66,10 +67,11 @@ Monorepo; the repo root is **not** a Rails app.
 
 - `registry/registry.json` — public install manifest. Each `items[]` entry lists
   a component's `files[]` as `source` (path in registry) → `target` (path in a
-  consuming Rails app). Every item bundles the shared `ui_component.rb`,
-  `ui_helper.rb`, and `shadwire.css` alongside its own component file(s).
-- `registry/rails/ui/` — source of truth: `components/`, `helpers/ui_helper.rb`,
-  `styles/shadwire.css`, `javascript/controllers/` (reserved for future Stimulus).
+  consuming Rails app). Every item bundles the shared `ui_component.rb` and
+  `shadwire.css` alongside its own component file(s) and helper module.
+- `registry/rails/ui/` — source of truth: `components/`, `helpers/ui/` (one
+  `Ui::<Name>Helper` module per item), `styles/shadwire.css`, and
+  `javascript/controllers/` (the Stimulus controllers of the interactive items).
 - `sandbox/` — Rails app (ViewComponent, Tailwind v4, importmap, Turbo, Stimulus)
   that validates synced components via render tests and accessibility checks.
   It is also the **docs site**: CI freezes it to static HTML and publishes it.
@@ -122,6 +124,16 @@ breadcrumb, "Nesta página" rail, previous/next pager, ⌘K palette.
   they come from `components.api.*` in the locale files;
   `test/controllers/component_api_tables_test.rb` fails on a hand-built `<thead>`
   or a header string written into a template.
+- **The API reference is read off the component source.** Pages rendered by the
+  generic `doc_page` get `components/_api`: `DocsComponentApi` runs the registry's
+  own `ApiExtractor` over the item's components, so every keyword argument and
+  its default appear by construction; only the one-line descriptions are
+  written, under `components.api_docs` in both locale files. The hand-written
+  pages keep their tables, and `DocsComponentApiTest` fails when either kind
+  leaves an argument out.
+- **Never put an ERB closing tag inside an ERB comment**, not even escaped as
+  `<%%`: the comment ends at the first one and the rest prints on the page.
+  `docs/_table`'s header comment did exactly that, on every page with a table.
 
 ### The site is bilingual
 
@@ -175,17 +187,45 @@ in Portuguese and a worked example for consuming apps.
   Files are flat at the root (`ui/button_component.rb`) with nested subcomponents
   for named parts (`ui/card/header_component.rb` → `Ui::Card::HeaderComponent`).
 - `UiComponent` provides shared helpers: `extract_class_name`, `fetch_variant`, `html_attrs`.
-- ViewComponent classes are the official API. `ui_*` methods in `ui_helper.rb` are
-  thin convenience wrappers — add one per new root component / common subcomponent.
+- ViewComponent classes are the official API. The `ui_*` methods in each item's
+  `helpers/ui/<name>_helper.rb` are thin convenience wrappers — one per component.
 - Rendering is hybrid: start with a `call` method; add an ERB template only when
   structure, conditionals, or slots would make `call` hard to read.
 - Accept both `class:` and `class_name:`, normalized to `@class_name`. Pass free
   HTML attributes through `**attrs`, preserving Rails nested forms (`data: { turbo: false }`).
 - Compose classes in this order: `class_names(base_classes, variant_classes, size_classes, @class_name)`.
+  `UiComponent#class_names` settles Tailwind conflicts the way upstream's `cn()`
+  does: of two utilities that set the same thing (`w-full`, then `w-80`), the
+  later is kept and the earlier dropped. Without that, both reach the page and
+  Tailwind's emit order picks one, so overrides lost about half the time.
+  `ComponentStyleTest` renders every variant and size, and `DocsPagesTest` every
+  page, and fails on an element left with both.
+- Every part renders a `data-slot` named after it, as upstream does (`card-title`,
+  `dialog-trigger`). Parts built on another component pass their own slot, which
+  wins over the generic one (`button`, `separator`). `ComponentConventionsTest`
+  renders every component and checks this, `class:`/`class_name:` and attribute
+  passthrough.
+- The element-choosing argument is `tag:` everywhere (`tag_name:` survives only
+  as an alias on the two titles that used it). User-facing text — sr-only labels,
+  `aria-label`s, `aria-roledescription` — goes through `I18n.t(..., default:)`;
+  so do the names the calendar shows, from Rails' own `date.*` keys.
+  `ComponentLocalisationTest` renders every component in both of the sandbox's
+  languages and fails on accessible text that comes out the same in both.
 - Use shadcn semantic Tailwind tokens (`bg-primary`, `text-muted-foreground`,
   `border-input`, …) — no hardcoded colors unless upstream shadcn does so.
   See `README.md` for the Theme Tokens table that documents what each token
   controls and where it is used.
+- One focus treatment for controls: `outline-none focus-visible:border-ring
+  focus-visible:ring-[3px] focus-visible:ring-ring/50`, plus
+  `aria-invalid:border-destructive aria-invalid:ring-destructive/20
+  dark:aria-invalid:ring-destructive/40` on form controls. The exceptions are
+  upstream's own: the overlay close X, the sidebar and the resizable hairline
+  keep a thinner ring, the slider thumb a wider one. `ComponentStyleTest` fails
+  on any other thin ring.
+- Size nested icons with `[&_svg:not([class*='size-'])]:size-4`, not
+  `[&_svg]:size-4`: a `ui_icon(size: :lg)` inside a control must keep its size.
+  The badge, the alert, the breadcrumb separator and the sidebar size theirs
+  outright, as upstream does; `ComponentStyleTest` holds everything else to it.
 
 ### Icons
 
@@ -194,16 +234,18 @@ Lucide, shadcn/ui's icon set. `Ui::IconComponent` / `ui_icon(name, ...)` wraps i
 with shadcn-style size variants (`:sm`/`:default`/`:lg`/`:xl`) and is decorative
 (`aria-hidden`) by default; pass `label:` to expose a meaningful icon. Icon names
 are Lucide kebab-case (`"chevron-down"`). Compose icons into other components
-(shadcn-style) instead of adding `icon:` props — `ButtonComponent` carries
-`[&_svg]` utilities so a nested `ui_icon` is sized correctly, and `size: :icon`
-gives an icon-only button.
+(shadcn-style) instead of adding `icon:` props — `ButtonComponent` sizes a nested
+svg that has no size class of its own, so a `ui_icon` keeps the size it was given,
+and `size: :icon` gives an icon-only button.
 
 ### Adding a component
 
 1. Create the component file(s) under `registry/rails/ui/components/`.
-2. Add an `items[]` entry in `registry/registry.json` (include `ui_component.rb`,
-   `ui_helper.rb`, `shadwire.css` in `files[]`).
-3. Add a `ui_*` wrapper in `registry/rails/ui/helpers/ui_helper.rb`.
+2. Add a `Ui::<Name>Helper` module with one `ui_*` wrapper per component in
+   `registry/rails/ui/helpers/ui/<name>_helper.rb`.
+3. Add an `items[]` entry in `registry/registry.json` (include `ui_component.rb`,
+   the helper module and `shadwire.css` in `files[]`). Its `usage` snippets are
+   published as they are — `RegistryUsageTest` renders each one.
 4. `bin/sync_registry`, then add render tests in `sandbox/test/components/`.
 
 React → Rails translation: `cva` variants → frozen Ruby hashes; `cn()`/`className`

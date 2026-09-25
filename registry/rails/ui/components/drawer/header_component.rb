@@ -9,10 +9,16 @@ module Ui
       end
 
       def call
-        tag.div(content, **html_attrs.dup.tap do |attrs|
+        tag.div(content, **header_attrs)
+      end
+
+      private
+
+      def header_attrs
+        html_attrs.dup.tap do |attrs|
           attrs[:class] = class_names("flex flex-col gap-1.5 text-center sm:text-left", @class_name)
           attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "drawer-header")
-        end)
+        end
       end
     end
   end

@@ -9,7 +9,16 @@ module Ui
       end
 
       def call
-        tag.p(content, **html_attrs, class: class_names("text-sm text-muted-foreground", @class_name))
+        tag.p(content, **description_attrs)
+      end
+
+      private
+
+      def description_attrs
+        html_attrs.dup.tap do |attrs|
+          attrs[:class] = class_names("text-sm text-muted-foreground", @class_name)
+          attrs[:data] = attrs.fetch(:data, {}).dup.merge(slot: "card-description")
+        end
       end
     end
   end

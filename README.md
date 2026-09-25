@@ -235,7 +235,7 @@ should use semantic utilities such as `bg-primary`, `text-muted-foreground`,
 | --- | --- |
 | Base class string | `base_classes` method |
 | `cva` variants | frozen Ruby hashes |
-| `cn(...)` and `className` | `class_names(..., @class_name)` |
+| `cn(...)` and `className` | `class_names(..., @class_name)` — `UiComponent` merges Tailwind conflicts the same way |
 | React props | `initialize(...)` keyword arguments |
 | `children` | `content` |
 | `asChild` | configurable `tag:` or conditional rendering |
