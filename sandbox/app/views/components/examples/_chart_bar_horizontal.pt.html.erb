@@ -1,0 +1,21 @@
+<%= ui_chart(
+      config: { desktop: { label: "Computador", color: "var(--chart-1)" } },
+      rows: [
+        { month: Date.new(2024, 1), desktop: 186 },
+        { month: Date.new(2024, 2), desktop: 305 },
+        { month: Date.new(2024, 3), desktop: 237 },
+        { month: Date.new(2024, 4), desktop: 73 },
+        { month: Date.new(2024, 5), desktop: 209 },
+        { month: Date.new(2024, 6), desktop: 214 }
+      ],
+      layout: :vertical,
+      margin: { right: 32 },
+      label: "Visitantes no computador por mês",
+      class: "min-h-[200px] w-full max-w-xl") do %>
+  <%= ui_chart_y_axis(data_key: :month, hide: true) %>
+  <%= ui_chart_tooltip(label_format: "%B", indicator: :line, cursor: false) %>
+  <%= ui_chart_bar(data_key: :desktop, radius: 4) do %>
+    <%= ui_chart_label_list(data_key: :month, format: "%B", position: :inside_left, offset: 8, class: "fill-background") %>
+    <%= ui_chart_label_list(position: :right, offset: 8) %>
+  <% end %>
+<% end %>

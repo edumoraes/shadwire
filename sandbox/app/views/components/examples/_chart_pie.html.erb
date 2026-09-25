@@ -1,10 +1,27 @@
+<% rows = [
+     { browser: "chrome", visitors: 275 },
+     { browser: "safari", visitors: 200 },
+     { browser: "firefox", visitors: 187 },
+     { browser: "edge", visitors: 173 },
+     { browser: "other", visitors: 90 }
+   ] %>
 <%= ui_chart(
-      type: :doughnut,
-      class: "mx-auto aspect-square w-full max-w-xs",
-      label: "Browsers by share",
-      data: {
-        labels: %w[Chrome Safari Firefox Edge Other],
-        datasets: [
-          { label: "Share", data: [ 275, 200, 187, 173, 90 ] }
-        ]
-      }) %>
+      config: {
+        visitors: { label: "Visitors" },
+        chrome: { label: "Chrome", color: "var(--chart-1)" },
+        safari: { label: "Safari", color: "var(--chart-2)" },
+        firefox: { label: "Firefox", color: "var(--chart-3)" },
+        edge: { label: "Edge", color: "var(--chart-4)" },
+        other: { label: "Other", color: "var(--chart-5)" }
+      },
+      rows: rows,
+      label: "Visitors by browser",
+      class: "mx-auto aspect-square max-h-[250px] w-full") do %>
+  <%= ui_chart_tooltip(hide_label: true) %>
+  <%= ui_chart_pie(data_key: :visitors, name_key: :browser, inner_radius: 60) %>
+  <%# Plain markup composes too: the total, in the hole of the donut. %>
+  <div class="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+    <span class="text-3xl font-bold"><%= number_with_delimiter(rows.sum { |row| row[:visitors] }) %></span>
+    <span class="text-muted-foreground">Visitors</span>
+  </div>
+<% end %>

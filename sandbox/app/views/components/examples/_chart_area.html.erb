@@ -1,0 +1,21 @@
+<%# Three months of daily rows, as a query would return them. %>
+<% rows = (Date.new(2024, 4, 1)..Date.new(2024, 6, 30)).each_with_index.map do |day, i|
+     { date: day,
+       desktop: (240 + 110 * Math.sin(i / 5.0) + 40 * Math.cos(i / 2.0)).round,
+       mobile: (170 + 70 * Math.cos(i / 7.0) + 30 * Math.sin(i / 3.0)).round }
+   end %>
+<%= ui_chart(
+      config: {
+        desktop: { label: "Desktop", color: "var(--chart-1)" },
+        mobile: { label: "Mobile", color: "var(--chart-2)" }
+      },
+      rows: rows,
+      label: "Daily visitors from April to June, desktop and mobile",
+      class: "aspect-auto h-[250px] w-full") do %>
+  <%= ui_chart_grid %>
+  <%= ui_chart_x_axis(data_key: :date, tick_format: "%b %-d", min_tick_gap: 32) %>
+  <%= ui_chart_tooltip(label_format: "%B %-d") %>
+  <%= ui_chart_legend %>
+  <%= ui_chart_area(data_key: :mobile, stack_id: :a, gradient: true, fill_opacity: 1) %>
+  <%= ui_chart_area(data_key: :desktop, stack_id: :a, gradient: true, fill_opacity: 1) %>
+<% end %>

@@ -1,0 +1,26 @@
+<%= ui_chart(
+      config: {
+        chrome: { label: "Chrome", color: "var(--chart-1)" },
+        safari: { label: "Safari", color: "var(--chart-2)" },
+        firefox: { label: "Firefox", color: "var(--chart-3)" },
+        edge: { label: "Edge", color: "var(--chart-4)" },
+        other: { label: "Outros", color: "var(--chart-5)" }
+      },
+      rows: [
+        { browser: "chrome", visitors: 275 },
+        { browser: "safari", visitors: 200 },
+        { browser: "firefox", visitors: 187 },
+        { browser: "edge", visitors: 173 },
+        { browser: "other", visitors: 90 }
+      ],
+      inner_radius: 30,
+      outer_radius: 110,
+      end_angle: 270,
+      label: "Visitantes por navegador",
+      class: "mx-auto aspect-square max-h-[250px] w-full") do %>
+  <%= ui_chart_tooltip(hide_label: true) %>
+  <%= ui_chart_radial_bar(data_key: :visitors, name_key: :browser, background: true, corner_radius: 10) do %>
+    <%= ui_chart_label_list(data_key: :browser, position: :inside_start,
+          class: "fill-white mix-blend-luminosity") %>
+  <% end %>
+<% end %>

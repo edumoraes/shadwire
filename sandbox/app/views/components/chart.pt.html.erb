@@ -1,0 +1,218 @@
+<% content_for :title, "Chart — Shadwire" %>
+<% content_for :description, t("components.pages.chart.subtitle") %>
+<% content_for :head do %>
+  <%= tag.style rouge_stylesheet %>
+<% end %>
+
+<article class="space-y-12">
+  <header class="space-y-3">
+    <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-5xl">Chart</h1>
+    <p class="text-lg leading-snug text-muted-foreground"><%= t("components.pages.chart.subtitle") %></p>
+  </header>
+
+  <%= ui_card(class: "p-6", data: { docs_toc_skip: "" }) do %>
+    <%= render "components/examples/chart_area" %>
+  <% end %>
+
+  <%= render "components/install", name: "chart" %>
+
+  <section class="space-y-4">
+    <%= docs_code_block(@snippets[:importmap], language: :ruby) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Como um gráfico é montado</h2>
+    <p class="leading-7 text-muted-foreground">
+      Um gráfico é um contêiner e as partes que você põe nele. O contêiner, <%= docs_code("ui_chart") %>,
+      guarda o que todas as partes compartilham: as linhas de dados, o config e o layout. Cada parte
+      desenha uma camada do gráfico — <%= docs_code("ui_chart_grid") %>, <%= docs_code("ui_chart_x_axis") %>,
+      <%= docs_code("ui_chart_bar") %>, <%= docs_code("ui_chart_tooltip") %> — e as partes se empilham na
+      ordem em que você as escreve, como os filhos de um gráfico do Recharts. Não há tipo de gráfico a
+      escolher: barras e uma linha no mesmo contêiner formam um gráfico composto, e marcação comum
+      dentro dele fica por cima do desenho.
+    </p>
+    <p class="leading-7 text-muted-foreground">
+      O desenho é do D3. O controller Stimulus do contêiner, <%= docs_code("ui-chart") %>, mede o
+      gráfico, calcula as escalas e as pilhas e as entrega a cada parte num evento
+      <%= docs_code("ui-chart:render") %>. Cada parte tem um controller próprio, que desenha o seu
+      <%= docs_code("<svg>") %> com D3: uma parte que você não usa é um arquivo que você pode apagar — e
+      uma parte que falta é uma que você pode escrever. As cores são propriedades CSS: trocar o tema
+      repinta o gráfico sem redesenhá-lo. E o próprio D3 só é importado nas páginas que têm um gráfico.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Seu primeiro gráfico</h2>
+    <p class="leading-7 text-muted-foreground">
+      Vamos montar um gráfico de barras e depois acrescentar uma grade, um eixo, um tooltip e uma
+      legenda, uma parte de cada vez.
+    </p>
+
+    <h3 class="text-lg font-semibold tracking-[-0.006em]">Comece pelas linhas de dados</h3>
+    <p class="leading-7 text-muted-foreground">
+      Um hash por categoria, no formato que for: <%= docs_code("data_key:") %> diz o campo que cada
+      parte lê. Em geral as linhas vêm de uma consulta. Datas e horários viram strings ISO, que os eixos
+      e o tooltip formatam; um <%= docs_code("BigDecimal") %> chega como string e é lido como número.
+    </p>
+    <%= docs_code_block(@snippets[:rows], language: :ruby) %>
+
+    <h3 class="text-lg font-semibold tracking-[-0.006em]">Defina o config</h3>
+    <p class="leading-7 text-muted-foreground">
+      O config guarda o que as linhas não têm: o rótulo e a cor de cada série. Ele fica separado dos
+      dados de propósito, para que vários gráficos compartilhem um mesmo config — e para que os dados
+      possam vir de qualquer lugar.
+    </p>
+    <%= docs_code_block(@snippets[:config], language: :ruby) %>
+
+    <h3 class="text-lg font-semibold tracking-[-0.006em]">Componha o gráfico</h3>
+    <p class="leading-7 text-muted-foreground">
+      Um <%= docs_code("ui_chart_bar") %> por série. O contêiner é <%= docs_code("aspect-video") %> por
+      padrão; dê a ele também um <%= docs_code("min-h-*") %> ou uma altura, ou ele não terá espaço onde
+      desenhar.
+    </p>
+    <%= docs_code_block(@snippets[:bars]) %>
+
+    <h3 class="text-lg font-semibold tracking-[-0.006em]">Acrescente uma grade</h3>
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("ui_chart_grid") %> traça uma linha em cada marca do eixo de valores.
+    </p>
+    <%= docs_code_block(@snippets[:grid]) %>
+
+    <h3 class="text-lg font-semibold tracking-[-0.006em]">Acrescente um eixo</h3>
+    <p class="leading-7 text-muted-foreground">
+      O eixo x rotula as categorias com o campo de <%= docs_code("data_key:") %>. Aqui
+      <%= docs_code("tick_format:") %> é um especificador do d3-time-format — os meses são datas —, então
+      os rótulos saem <em>Jan</em>, <em>Fev</em>… no idioma da página.
+    </p>
+    <%= docs_code_block(@snippets[:axis]) %>
+
+    <h3 class="text-lg font-semibold tracking-[-0.006em]">Acrescente um tooltip</h3>
+    <p class="leading-7 text-muted-foreground">
+      Aponte para um mês e o <%= docs_code("ui_chart_tooltip") %> lista o valor de cada série ali, sob o
+      nome completo do mês.
+    </p>
+    <%= docs_code_block(@snippets[:tooltip]) %>
+
+    <h3 class="text-lg font-semibold tracking-[-0.006em]">Acrescente uma legenda</h3>
+    <p class="leading-7 text-muted-foreground">
+      O <%= docs_code("ui_chart_legend") %> nomeia as séries com os rótulos do config e ocupa o espaço de
+      que precisa abaixo da área do gráfico.
+    </p>
+    <%= docs_code_block(@snippets[:legend]) %>
+
+    <%= render "components/example", **@first_chart %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.composition") %></h2>
+    <%= docs_code_block(@snippets[:composition], language: :text) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">O config</h2>
+    <p class="leading-7 text-muted-foreground">
+      Cada chave do config é uma série — ou uma categoria que uma pizza, um anel ou uma legenda nomeiam.
+      Ela aceita um <%= docs_code("label:") %>, uma <%= docs_code("color:") %> ou um
+      <%= docs_code("theme:") %> com uma cor por tema, e um <%= docs_code("icon:") %> do Lucide, que a
+      legenda e o tooltip mostram no lugar da amostra de cor.
+    </p>
+    <%= docs_code_block(@snippets[:config_full], language: :ruby) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Temas</h2>
+    <p class="leading-7 text-muted-foreground">
+      Cada cor do config vira uma propriedade CSS <%= docs_code("--color-<chave>") %> no escopo do
+      gráfico, e é com elas que todas as partes pintam. Aponte-as para os tokens de gráfico do tema e o
+      gráfico acompanha o tema, modo escuro incluído.
+    </p>
+    <%= docs_code_block(@snippets[:theme_tokens], language: :css) %>
+    <p class="leading-7 text-muted-foreground">
+      Qualquer cor CSS também serve — hex, <%= docs_code("hsl()") %>, <%= docs_code("oklch()") %> —, e as
+      variáveis vão além das partes: a <%= docs_code("color:") %> própria de uma parte, o
+      <%= docs_code("fill") %> de uma linha e a sua própria marcação dentro do gráfico podem usá-las.
+    </p>
+    <%= docs_code_block(@snippets[:colors_elsewhere]) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Tooltip</h2>
+    <p class="leading-7 text-muted-foreground">
+      O tooltip mostra um rótulo — a categoria — e uma linha por série, com indicador, nome e valor.
+      <%= docs_code("indicator:") %> é <%= docs_code(":dot") %>, <%= docs_code(":line") %> ou
+      <%= docs_code(":dashed") %>; <%= docs_code("hide_label:") %> e <%= docs_code("hide_indicator:") %>
+      deixam um ou outro de fora. <%= docs_code("cursor:") %> sombreia a categoria sob o ponteiro, e
+      <%= docs_code("default_index:") %> abre o tooltip antes que alguém aponte.
+    </p>
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("label_key:") %> e <%= docs_code("name_key:") %> tiram o rótulo e os nomes de outra
+      entrada do config ou de outro campo. Aqui o rótulo é <em>Total visitors</em> e os nomes vêm do
+      navegador a que cada fatia pertence:
+    </p>
+    <%= docs_code_block(@snippets[:tooltip_keys]) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Legenda</h2>
+    <p class="leading-7 text-muted-foreground">
+      A legenda lista as séries — ou, numa pizza, as fatias — com os rótulos e as cores do config.
+      <%= docs_code("name_key:") %> lista as linhas de dados em vez disso, nomeadas por um campo, e
+      <%= docs_code("vertical_align: :top") %> a leva para cima da área do gráfico.
+    </p>
+    <%= docs_code_block(@snippets[:legend_name_key]) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Formatação</h2>
+    <p class="leading-7 text-muted-foreground">
+      O <%= docs_code("tick_format:") %> dos eixos, o <%= docs_code("label_format:") %> e o
+      <%= docs_code("value_format:") %> do tooltip e o <%= docs_code("format:") %> das listas de rótulos
+      são especificadores do D3: d3-format para números, d3-time-format para datas. Sem especificador, os
+      números saem do jeito que o idioma da página os escreve.
+    </p>
+    <%= docs_code_block(@snippets[:formats]) %>
+    <p class="leading-7 text-muted-foreground">
+      Os nomes de meses e dias e os separadores vêm das traduções do próprio app —
+      <%= docs_code("date.month_names") %>, <%= docs_code("date.abbr_day_names") %>,
+      <%= docs_code("number.format.delimiter") %> e as demais chaves do Rails —, então um app em
+      português ganha <em>Fev</em> e <em>1.234,5</em> sem configurar nada no gráfico.
+    </p>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Uma camada sua</h2>
+    <p class="leading-7 text-muted-foreground">
+      As partes que vêm prontas não são diferentes de uma que você escreve. O
+      <%= docs_code("ui_chart_layer") %> põe um <%= docs_code("<svg>") %> sobre o gráfico e o liga a um
+      controller Stimulus seu, que recebe as escalas do gráfico e desenha com D3. Este desenha uma linha
+      de meta:
+    </p>
+    <%= docs_code_block(@snippets[:layer]) %>
+    <%= docs_code_block(@snippets[:layer_controller], language: :javascript) %>
+    <p class="leading-7 text-muted-foreground">
+      Uma parte ouve três eventos, nesta ordem. <%= docs_code("event.detail.chart") %> traz as linhas de
+      dados, o config, a caixa da área do gráfico, as escalas de categoria e de valor, a geometria polar,
+      um formatador e o próprio <%= docs_code("d3") %>.
+    </p>
+    <%= docs_code_block(@snippets[:events], language: :text) %>
+  </section>
+
+  <section class="space-y-4">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Acessibilidade</h2>
+    <p class="leading-7 text-muted-foreground">
+      <%= docs_code("label:") %> dá nome ao gráfico. O desenho fica oculto para a tecnologia assistiva; a
+      legenda é texto. Com um tooltip, o gráfico recebe foco: as setas, <kbd>Home</kbd> e
+      <kbd>End</kbd> vão de categoria em categoria, <kbd>Escape</kbd> o fecha, e o que o tooltip mostra
+      é anunciado. Com movimento reduzido ativado, nada se anima.
+    </p>
+  </section>
+
+  <section class="space-y-8">
+    <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.examples") %></h2>
+    <% @examples.each do |example| %>
+      <%= render "components/example", **example %>
+    <% end %>
+  </section>
+
+  <%= render "components/api", name: "chart" %>
+</article>

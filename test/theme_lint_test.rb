@@ -146,7 +146,10 @@ class ThemeLintTest < Minitest::Test
     refute_empty dark
 
     sources = SOURCES.map { |f| File.read(f) }.join
-    used = (sources + body).scan(/var\((--[a-z0-9-]+)/).flatten.uniq
+    # A name finished at runtime — the chart's `var(--color-${key})` — is not
+    # one to look up: the chart's own <style> declares a --color-<key> per
+    # config key, and falls back to the --chart-N tokens.
+    used = (sources + body).scan(/var\((--[a-z0-9-]++)(?!\$\{)/).flatten.uniq
     # Sidebar widths and the skeleton's width are declared inline at render time.
     declared = root + dark + sources.scan(/(--[a-z0-9-]+)\s*:/).flatten
     used.reject! { |name| name.start_with?("--tw-", "--radix-") || TAILWIND_THEME_VARIABLES.include?(name) }

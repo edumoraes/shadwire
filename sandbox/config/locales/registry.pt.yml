@@ -74,5 +74,5 @@ pt:
       combobox: Um select único e pesquisável, composto de popover, command e button.
       date_picker: Um campo de data que abre um calendário num popover.
       sonner: Notificações toast passageiras.
-      chart: Gráficos do Chart.js usando os tokens de tema do Shadwire.
+      chart: "Gráficos componíveis desenhados com D3: barras, linhas, áreas, pizzas, radares e barras radiais, com tooltip e legenda, nos tokens de tema do Shadwire."
       data_table: Uma tabela com ordenação, filtro, paginação e seleção de linhas.

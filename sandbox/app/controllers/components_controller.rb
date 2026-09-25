@@ -19,6 +19,173 @@ class ComponentsController < ApplicationController
     <% end %>
   ERB
 
+  CHART_EXAMPLES = %w[
+    chart_bar_horizontal chart_bar_stacked chart_line chart_area chart_pie chart_radar chart_radial chart_tooltip chart_layer
+  ].freeze
+
+  # The chart page builds one chart a part at a time, so most of these are its
+  # steps: each is the one before with a part added.
+  CHART_SNIPPETS = {
+    importmap: <<~RUBY,
+      # config/importmap.rb — the CLI adds it with the component.
+      pin "d3", to: "https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm"
+    RUBY
+
+    rows: <<~RUBY,
+      rows = [
+        { month: Date.new(2024, 1), desktop: 186, mobile: 80 },
+        { month: Date.new(2024, 2), desktop: 305, mobile: 200 },
+        { month: Date.new(2024, 3), desktop: 237, mobile: 120 },
+        { month: Date.new(2024, 4), desktop: 73, mobile: 190 },
+        { month: Date.new(2024, 5), desktop: 209, mobile: 130 },
+        { month: Date.new(2024, 6), desktop: 214, mobile: 140 }
+      ]
+    RUBY
+
+    config: <<~RUBY,
+      config = {
+        desktop: { label: "Desktop", color: "var(--chart-1)" },
+        mobile: { label: "Mobile", color: "var(--chart-2)" }
+      }
+    RUBY
+
+    bars: <<~ERB,
+      <%= ui_chart(config: config, rows: rows, class: "min-h-[200px] w-full") do %>
+        <%= ui_chart_bar(data_key: :desktop, radius: 4) %>
+        <%= ui_chart_bar(data_key: :mobile, radius: 4) %>
+      <% end %>
+    ERB
+
+    grid: <<~ERB,
+      <%= ui_chart(config: config, rows: rows, class: "min-h-[200px] w-full") do %>
+        <%= ui_chart_grid %>
+        <%= ui_chart_bar(data_key: :desktop, radius: 4) %>
+        <%= ui_chart_bar(data_key: :mobile, radius: 4) %>
+      <% end %>
+    ERB
+
+    axis: <<~ERB,
+      <%= ui_chart(config: config, rows: rows, class: "min-h-[200px] w-full") do %>
+        <%= ui_chart_grid %>
+        <%= ui_chart_x_axis(data_key: :month, tick_format: "%b") %>
+        <%= ui_chart_bar(data_key: :desktop, radius: 4) %>
+        <%= ui_chart_bar(data_key: :mobile, radius: 4) %>
+      <% end %>
+    ERB
+
+    tooltip: <<~ERB,
+      <%= ui_chart(config: config, rows: rows, class: "min-h-[200px] w-full") do %>
+        <%= ui_chart_grid %>
+        <%= ui_chart_x_axis(data_key: :month, tick_format: "%b") %>
+        <%= ui_chart_tooltip(label_format: "%B") %>
+        <%= ui_chart_bar(data_key: :desktop, radius: 4) %>
+        <%= ui_chart_bar(data_key: :mobile, radius: 4) %>
+      <% end %>
+    ERB
+
+    legend: <<~ERB,
+      <%= ui_chart(config: config, rows: rows, class: "min-h-[200px] w-full") do %>
+        <%= ui_chart_grid %>
+        <%= ui_chart_x_axis(data_key: :month, tick_format: "%b") %>
+        <%= ui_chart_tooltip(label_format: "%B") %>
+        <%= ui_chart_legend %>
+        <%= ui_chart_bar(data_key: :desktop, radius: 4) %>
+        <%= ui_chart_bar(data_key: :mobile, radius: 4) %>
+      <% end %>
+    ERB
+
+    composition: <<~TEXT,
+      ui_chart                          rows, config, layout: what every part shares
+      |-- ui_chart_grid
+      |-- ui_chart_x_axis / ui_chart_y_axis
+      |-- ui_chart_bar / ui_chart_line / ui_chart_area
+      |   `-- ui_chart_label_list       labels on the series' points
+      |-- ui_chart_pie / ui_chart_radial_bar / ui_chart_radar
+      |   `-- ui_chart_label_list
+      |-- ui_chart_polar_grid / ui_chart_polar_angle_axis
+      |-- ui_chart_tooltip
+      |-- ui_chart_legend
+      |-- ui_chart_layer                a layer you draw with D3
+      `-- your markup                   a total in a donut, a note over the plot
+    TEXT
+
+    config_full: <<~RUBY,
+      config = {
+        desktop: {
+          label: "Desktop",
+          icon: "monitor",              # a Lucide icon, for the legend and the tooltip
+          color: "#2563eb"              # any CSS color, or var(--chart-1)…
+        },
+        mobile: {
+          label: "Mobile",
+          theme: { light: "#60a5fa", dark: "#1d4ed8" }  # …or one per theme
+        }
+      }
+    RUBY
+
+    theme_tokens: <<~CSS,
+      /* vendor/shadwire/shadwire.css */
+      :root {
+        --chart-1: oklch(0.646 0.222 41.116);
+        --chart-2: oklch(0.6 0.118 184.704);
+      }
+
+      .dark {
+        --chart-1: oklch(0.488 0.243 264.376);
+        --chart-2: oklch(0.696 0.17 162.48);
+      }
+    CSS
+
+    colors_elsewhere: <<~ERB,
+      <%# A part's own color, over the config's %>
+      <%= ui_chart_bar(data_key: :desktop, color: "var(--chart-3)") %>
+
+      <%# A row's own color: slices and bars take a row's `fill` %>
+      <% rows = [ { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" } ] %>
+
+      <%# And your own markup, inside the chart %>
+      <span class="text-(--color-desktop)">Desktop</span>
+    ERB
+
+    tooltip_keys: <<~ERB,
+      <%= ui_chart(config: { visitors: { label: "Total visitors" },
+                             chrome: { label: "Chrome", color: "var(--chart-1)" },
+                             safari: { label: "Safari", color: "var(--chart-2)" } },
+                   rows: [ { browser: "chrome", visitors: 187 },
+                           { browser: "safari", visitors: 200 } ]) do %>
+        <%# "Total visitors" as the label, "Chrome" and "Safari" as the names %>
+        <%= ui_chart_tooltip(label_key: :visitors) %>
+        <%= ui_chart_pie(data_key: :visitors, name_key: :browser) %>
+      <% end %>
+    ERB
+
+    legend_name_key: <<~ERB,
+      <%# One entry per bar, named by its browser, rather than one for the series %>
+      <%= ui_chart_legend(name_key: :browser) %>
+    ERB
+
+    formats: <<~ERB,
+      <%= ui_chart_y_axis(tick_format: "~s") %>              <%# 1.2k %>
+      <%= ui_chart_y_axis(tick_format: "$,.0f") %>           <%# $1,234 %>
+      <%= ui_chart_x_axis(data_key: :day, tick_format: "%b %-d") %>  <%# Apr 1 %>
+      <%= ui_chart_tooltip(label_format: "%A, %B %-d", value_format: ".1f") %>
+    ERB
+
+    layer: <<~ERB,
+      <%= ui_chart(config: config, rows: rows, class: "min-h-[200px] w-full") do %>
+        <%= ui_chart_bar(data_key: :desktop, radius: 4) %>
+        <%= ui_chart_layer(controller: "chart-goal", options: { value: 250, label: "Goal" },
+              class: "stroke-foreground fill-foreground") %>
+      <% end %>
+    ERB
+
+    events: <<~TEXT
+      ui-chart:layout     before the plot is sized: event.detail.reserve(side, px) claims room at an edge
+      ui-chart:render     the scales are ready: draw from event.detail.chart and event.detail.options
+      ui-chart:highlight  the tooltip moved: event.detail.active is { index } or null
+    TEXT
+  }.freeze
+
   BADGE_EXAMPLES = %w[badge_variants].freeze
 
   BADGE_USAGE_HELPER = <<~ERB
@@ -1320,15 +1487,11 @@ class ComponentsController < ApplicationController
   end
 
   def chart
-    @page_title = "Chart"
-    @page_subtitle = t("components.pages.chart.subtitle")
-    @usage_helper = <<~ERB
-      <%= ui_chart(type: :bar, label: "Visitors per month",
-            data: { labels: %w[Jan Feb Mar],
-                    datasets: [ { label: "Desktop", data: [ 186, 305, 237 ] } ] }) %>
-    ERB
-    @examples = examples_for(%w[chart_bar chart_line chart_pie])
-    render "doc_page"
+    @first_chart = examples_for(%w[chart_bar]).first
+    @examples = examples_for(CHART_EXAMPLES)
+    @snippets = CHART_SNIPPETS.merge(
+      layer_controller: Rails.root.join("app/javascript/controllers/chart_goal_controller.js").read
+    )
   end
 
   def data_table
