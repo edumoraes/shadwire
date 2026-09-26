@@ -213,8 +213,8 @@ in Portuguese and a worked example for consuming apps.
   languages and fails on accessible text that comes out the same in both.
 - Use shadcn semantic Tailwind tokens (`bg-primary`, `text-muted-foreground`,
   `border-input`, …) — no hardcoded colors unless upstream shadcn does so.
-  See `README.md` for the Theme Tokens table that documents what each token
-  controls and where it is used.
+  The docs site's Theming page documents what each token controls and where it
+  is used; its table is `docs.theming.tokens` in `sandbox/config/locales/en.yml`.
 - One focus treatment for controls: `outline-none focus-visible:border-ring
   focus-visible:ring-[3px] focus-visible:ring-ring/50`, plus
   `aria-invalid:border-destructive aria-invalid:ring-destructive/20
