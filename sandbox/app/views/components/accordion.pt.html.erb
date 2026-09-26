@@ -32,7 +32,7 @@
     <p class="text-sm text-muted-foreground">
       A anatomia segue a referência Base UI usada pelo shadcn: item, cabeçalho,
       trigger e painel de conteúdo. <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion_panel</code>
-      é um alias de nome para <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion_content</code>.
+      é outro nome para <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_accordion_content</code>.
     </p>
     <%= docs_code_block(@composition) %>
   </section>
@@ -47,7 +47,7 @@
   <section class="flex flex-col gap-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
-      Os helpers encapsulam os componentes ViewComponent e preservam atributos HTML livres,
+      Os helpers encapsulam os componentes ViewComponent e repassam qualquer atributo HTML,
       incluindo <code class="rounded bg-muted px-1 py-0.5 text-xs">data:</code> e
       <code class="rounded bg-muted px-1 py-0.5 text-xs">aria:</code>.
     </p>
@@ -55,12 +55,12 @@
       <tr>
         <td><code>ui_accordion</code></td>
         <td><code>multiple</code>, <code>default_value</code>, <code>orientation</code>, <code>disabled</code>, <code>loop_focus</code></td>
-        <td>Root com controller Stimulus, valores iniciais e navegação por teclado.</td>
+        <td>A raiz, com o controller Stimulus, os valores iniciais e a navegação por teclado.</td>
       </tr>
       <tr>
         <td><code>ui_accordion_item</code></td>
         <td><code>value</code>, <code>disabled</code></td>
-        <td>Item com <code>border-b last:border-b-0</code>. Use <code>value</code> quando configurar <code>default_value</code>.</td>
+        <td>O item, com <code>border-b last:border-b-0</code>. Passe <code>value</code> sempre que usar <code>default_value</code>.</td>
       </tr>
       <tr>
         <td><code>ui_accordion_header</code></td>
@@ -70,12 +70,12 @@
       <tr>
         <td><code>ui_accordion_trigger</code></td>
         <td><code>disabled</code></td>
-        <td>Botão que alterna o item, com ícone <code>chevron-down</code> e ações Stimulus.</td>
+        <td>O botão que abre e fecha o item, com o ícone <code>chevron-down</code> e as ações Stimulus.</td>
       </tr>
       <tr>
         <td><code>ui_accordion_content</code> / <code>ui_accordion_panel</code></td>
         <td><code>class</code> / <code>class_name</code></td>
-        <td>Painel com <code>role="region"</code>, animações shadcn e wrapper interno <code>pt-0 pb-4</code>.</td>
+        <td>O painel, com <code>role="region"</code>, as animações do shadcn e um wrapper interno <code>pt-0 pb-4</code>.</td>
       </tr>
     <% end %>
   </section>

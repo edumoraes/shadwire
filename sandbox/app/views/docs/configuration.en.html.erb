@@ -1,5 +1,5 @@
 <% content_for :title, "shadwire.json — Shadwire" %>
-<% content_for :description, "The manifest the CLI writes at your app's root: registry, install aliases, the Tailwind entrypoint, and an inventory of what is installed." %>
+<% content_for :description, "The manifest the CLI writes at your app's root: the registry URL, where files go, the Tailwind entrypoint, and a list of what is installed." %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
 <% end %>
@@ -7,13 +7,13 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "shadwire.json",
-        description: "The manifest the CLI writes at your app's root. It is what lets diff, update and remove know what exists." %>
+        description: "The manifest the CLI writes at your app's root. diff, update and remove read it to know what you have installed." %>
 
   <section class="space-y-4">
     <p class="leading-7">
       <%= docs_code("shadwire init") %> writes this file once. After that, every
       <%= docs_code("add") %>, <%= docs_code("update") %> and <%= docs_code("remove") %>
-      updates the <%= docs_code("installed") %> section. Commit the file alongside your code.
+      updates the <%= docs_code("installed") %> section. Commit it along with the rest of your code.
     </p>
 
     <%= docs_code_block(@snippets[:full], language: :json) %>
@@ -25,18 +25,18 @@
     <%= render "docs/table",
           headers: [ "Field", "What it is" ],
           rows: [
-            [ docs_code("registry"), "The base URL the CLI installs from. Persisted from #{docs_code("init --registry")}. Accepts #{docs_code("https://")} and #{docs_code("file://")}.".html_safe ],
-            [ docs_code("tailwind.css"), "The application's Tailwind entrypoint — the file that receives shadwire.css's #{docs_code("@import")}.".html_safe ],
+            [ docs_code("registry"), "The base URL the CLI installs from. #{docs_code("init --registry")} sets it. Accepts #{docs_code("https://")} and #{docs_code("file://")}.".html_safe ],
+            [ docs_code("tailwind.css"), "The app's Tailwind entrypoint, where #{docs_code("init")} adds the #{docs_code("@import")} of shadwire.css.".html_safe ],
             [ docs_code("aliases"), "Where each kind of file goes. Change these if your app does not follow the standard Rails tree." ],
-            [ docs_code("installed"), "A per-component inventory: the registry #{docs_code("version")} and the files it owns. It is the basis of #{docs_code("diff")}, #{docs_code("update")} and #{docs_code("remove")}.".html_safe ]
+            [ docs_code("installed"), "One entry per component: the registry #{docs_code("version")} and the files it owns. #{docs_code("diff")}, #{docs_code("update")} and #{docs_code("remove")} work from this list.".html_safe ]
           ] %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Aliases") %>
     <p class="leading-7 text-muted-foreground">
-      Every registry file declares a kind (component, helper, Stimulus controller, CSS), and the
-      matching alias decides its target directory.
+      Each file in the registry has a kind (component, helper, Stimulus controller, CSS), and
+      the alias for that kind sets the directory it is written to.
     </p>
 
     <%= render "docs/table",
@@ -46,44 +46,43 @@
             [ docs_code("ui"), docs_code("app/components/ui"), "The component classes and their templates." ],
             [ docs_code("helpers"), docs_code("app/helpers"), "The Ui::*Helper modules holding the ui_* wrappers." ],
             [ docs_code("controllers"), docs_code("app/javascript/controllers"), "The Stimulus controllers of the interactive components." ],
-            [ docs_code("vendorCss"), docs_code("vendor/shadwire"), "shadwire.css, which carries the tokens." ]
+            [ docs_code("vendorCss"), docs_code("vendor/shadwire"), "shadwire.css, which holds the tokens." ]
           ] %>
 
     <p class="leading-7 text-muted-foreground">
-      An app with a structure of its own, such as an engine, only has to point the aliases at
-      the right directories before the first <%= docs_code("add") %>:
+      If your app has a different layout, an engine for example, point the aliases at the right
+      directories before the first <%= docs_code("add") %>:
     </p>
 
     <%= docs_code_block(@snippets[:engine_aliases], language: :json) %>
 
     <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "Changing an alias after installing moves nothing" } do %>
-      The paths recorded in <code>installed[].files</code> keep pointing at wherever the files
-      were written. If you need to change an alias with components already installed, remove
-      them, adjust the alias, and install them again.
+      The paths in <code>installed[].files</code> still point to where the files were first
+      written. To change an alias after installing components, remove them, change the alias,
+      and install them again.
     <% end %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("The Tailwind @import") %>
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("init") %> inserts the import into the file
-      <%= docs_code("tailwind.css") %> points at, and that import is what pulls the tokens into
-      the build:
+      <%= docs_code("init") %> adds this import to the file <%= docs_code("tailwind.css") %>
+      points to. It is what brings the tokens into the Tailwind build:
     </p>
 
     <%= docs_code_block(@snippets[:import], language: :css) %>
 
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("bin/shadwire status --json") %> reports
-      <%= docs_code("tailwind.importPresent") %>. If it comes back
-      <%= docs_code("false") %>, the import is gone and the components will render with no colour.
+      <%= docs_code("bin/shadwire status --json") %> includes
+      <%= docs_code("tailwind.importPresent") %>. If it is <%= docs_code("false") %>, the
+      import has been removed and the components will render without colours.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("How the registry is resolved") %>
     <p class="leading-7 text-muted-foreground">
-      For any command, the base URL is resolved in this order:
+      Every command picks the registry URL in this order:
     </p>
 
     <ol class="ml-4 list-decimal space-y-1 text-sm leading-6 text-muted-foreground marker:text-foreground">
@@ -95,9 +94,10 @@
     <%= docs_code_block(@snippets[:registry_override], language: :shell) %>
 
     <p class="leading-7 text-muted-foreground">
-      Passing <%= docs_code("--registry") %> to <%= docs_code("init") %> persists the choice to
-      the file; on every other command it applies to that run alone. The format is documented
-      under <%= link_to "Registry", docs_registry_path, class: "font-medium underline underline-offset-4" %>.
+      Passed to <%= docs_code("init") %>, <%= docs_code("--registry") %> is saved in the file.
+      Passed to any other command, it only applies to that run. The
+      <%= link_to "Registry", docs_registry_path, class: "font-medium underline underline-offset-4" %>
+      page describes the format.
     </p>
   </section>
 </article>

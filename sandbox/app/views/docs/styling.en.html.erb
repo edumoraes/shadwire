@@ -1,5 +1,5 @@
 <% content_for :title, "Styling — Shadwire" %>
-<% content_for :description, "Semantic tokens, class precedence, free-form HTML attributes, and the utility conventions Shadwire components follow." %>
+<% content_for :description, "Semantic tokens, which classes win, passing HTML attributes, and the Tailwind conventions Shadwire components follow." %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
 <% end %>
@@ -7,61 +7,62 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Styling",
-        description: "Variants for appearance, class: for layout. Every colour comes from a token, and your class always wins." %>
+        description: "Use variants to change how a component looks and class: to place it on the page. Colours come from tokens, and your classes take priority." %>
 
   <section class="space-y-4">
     <%= docs_h2("Semantic tokens only") %>
     <p class="leading-7 text-muted-foreground">
-      Every colour comes from a shadcn token, so light mode, dark mode and any retheming work
-      without touching component code.
+      Components take every colour from a shadcn token, so light mode, dark mode and a new
+      theme all work without changes to the component code. Do the same in your own markup.
     </p>
 
     <%= docs_code_block(@snippets[:wrong_colors]) %>
     <%= docs_code_block(@snippets[:right_colors]) %>
 
     <p class="leading-7 text-muted-foreground">
-      The pairs are <%= docs_code("<surface>") %> /
+      Tokens come in pairs, <%= docs_code("<surface>") %> and
       <%= docs_code("<surface>-foreground") %>:
       <%= docs_code("bg-primary text-primary-foreground") %>,
       <%= docs_code("bg-muted text-muted-foreground") %>,
-      <%= docs_code("bg-destructive text-destructive-foreground") %>. The full table is under
-      <%= link_to "Theming", docs_theming_path, class: "font-medium underline underline-offset-4" %>.
+      <%= docs_code("bg-destructive text-destructive-foreground") %>. The full list is on the
+      <%= link_to "Theming", docs_theming_path, class: "font-medium underline underline-offset-4" %> page.
     </p>
     <p class="leading-7 text-muted-foreground">
-      Never write <%= docs_code("dark:") %> variants for colour. Use the prefix only for
-      mode-specific choices that are not colour, such as a different image.
+      Don't use <%= docs_code("dark:") %> to set colours. Keep the prefix for differences that
+      aren't about colour, such as showing a different image in dark mode.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("class: and class_name: are the same thing") %>
     <p class="leading-7 text-muted-foreground">
-      Both normalise to the same value. Use whichever reads better;
-      <%= docs_code("class:") %> is the more idiomatic Rails.
+      Both end up in the same place. Use whichever you prefer; <%= docs_code("class:") %> is
+      what Rails code usually uses.
     </p>
 
     <%= docs_code_block(@snippets[:class_alias]) %>
   </section>
 
   <section class="space-y-4">
-    <%= docs_h2("Your class always wins") %>
+    <%= docs_h2("Your classes take priority") %>
     <p class="leading-7 text-muted-foreground">
-      Classes compose in this order, with yours last:
+      Classes are combined in this order, with yours last:
     </p>
 
     <%= docs_code_block(@snippets[:order], language: :text) %>
 
     <p class="leading-7 text-muted-foreground">
-      Where two of them set the same thing — the component's <%= docs_code("w-full") %> and your
-      <%= docs_code("w-80") %> — the earlier is dropped, as <%= docs_code("cn()") %> does upstream.
-      Without that, both would reach the page and the stylesheet would pick one. The merge knows
-      Tailwind's everyday utilities: colour, type, size, spacing, radius, shadow, display,
-      position and alignment. Past those, end your class with <%= docs_code("!") %> to make it win.
+      When two classes set the same property, like the component's <%= docs_code("w-full") %>
+      and your <%= docs_code("w-80") %>, the earlier one is dropped, the same way
+      <%= docs_code("cn()") %> works in shadcn/ui. Otherwise both would end up on the element and
+      whichever Tailwind happened to emit last would apply. This works for the common
+      utilities: colour, text, size, spacing, radius, shadow, display, position and alignment.
+      For anything else, add <%= docs_code("!") %> to the end of your class to force it.
     </p>
 
     <p class="leading-7 text-muted-foreground">
-      That is why <%= docs_code("class:") %> overrides the component's utilities. Even so, do not
-      use it to restyle:
+      So <%= docs_code("class:") %> can override the component's own classes. Even so, don't use
+      it to restyle a component:
     </p>
 
     <%= docs_code_block(@snippets[:wrong_restyle]) %>
@@ -69,23 +70,23 @@
 
     <p class="leading-7 text-muted-foreground">
       Use <%= docs_code("class:") %> for <strong class="font-semibold text-foreground">layout</strong>:
-      width, margin, position in a grid.
+      width, margin, where it sits in a grid.
     </p>
 
     <%= docs_code_block(@snippets[:layout]) %>
   </section>
 
   <section class="space-y-4">
-    <%= docs_h2("HTML attributes pass straight through") %>
+    <%= docs_h2("HTML attributes are passed through") %>
     <p class="leading-7 text-muted-foreground">
-      Anything that is not a known prop is forwarded to the rendered element, Rails' nested
-      hashes included.
+      Any argument the component doesn't recognise goes to the rendered element as an HTML
+      attribute, and Rails' nested hashes like <%= docs_code("data: { … }") %> work too.
     </p>
 
     <%= docs_code_block(@snippets[:attrs]) %>
 
     <p class="leading-7 text-muted-foreground">
-      Use <%= docs_code("tag:") %> to swap the element where the component supports it.
+      Use <%= docs_code("tag:") %> to change the element, on components that support it.
       <%= docs_code("button") %> renders a <%= docs_code("<button>") %> by default and an
       <%= docs_code("<a>") %> with <%= docs_code("tag: :a") %>.
     </p>
@@ -94,7 +95,7 @@
   <section class="space-y-4">
     <%= docs_h2("Prefer variants and sizes over utilities") %>
     <p class="leading-7 text-muted-foreground">
-      Look at what already exists before writing classes:
+      Check which variants and sizes exist before writing your own classes:
     </p>
 
     <%= docs_code_block(@snippets[:info], language: :console) %>
@@ -105,8 +106,8 @@
   <section class="space-y-4">
     <%= docs_h2("Utility conventions") %>
     <p class="leading-7 text-muted-foreground">
-      Follow what the components themselves do, so your code does not read differently from what
-      the CLI installed:
+      Follow the same conventions as the components, so your code looks like the code the CLI
+      installed:
     </p>
 
     <ul class="space-y-2 text-sm leading-6 text-muted-foreground">
@@ -114,7 +115,7 @@
         [ "size-9", "rather than h-9 w-9, when width and height match." ],
         [ "gap-*", "with flex or grid, rather than space-x-* / space-y-*." ],
         [ "truncate", "rather than overflow-hidden text-ellipsis whitespace-nowrap." ],
-        [ "no manual z-index", "on overlays: dialog, sheet, popover and dropdown-menu already manage their own stacking." ]
+        [ "no manual z-index", "on overlays: dialog, sheet, popover and dropdown-menu already handle their own stacking." ]
       ].each do |token, body| %>
         <li class="flex gap-3">
           <%= ui_icon("check", size: :sm, class: "mt-1 shrink-0 text-primary") %>

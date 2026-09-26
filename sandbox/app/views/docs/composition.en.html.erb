@@ -7,7 +7,7 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Composition",
-        description: "Subcomponents are nested helpers, not props. The view's structure mirrors the HTML's, exactly as in shadcn/ui." %>
+        description: "You build a component by nesting helpers, the way shadcn/ui nests React components. The view ends up shaped like the HTML it renders." %>
 
   <section class="space-y-4">
     <%= docs_h2("Helpers exist only for what is installed") %>
@@ -20,32 +20,32 @@
     </p>
     <p class="leading-7 text-muted-foreground">
       The helper of a component that is <em>not</em> installed does not exist, and calling it
-      raises <%= docs_code("NoMethodError") %> at request time. Check
-      <%= docs_code("installed[].helpers") %> before you write.
+      raises <%= docs_code("NoMethodError") %> when the page renders. Check
+      <%= docs_code("installed[].helpers") %> before writing the view.
     </p>
 
     <%= docs_code_block("bin/shadwire status --json\nbin/shadwire add carousel --yes", language: :shell) %>
 
     <%= render layout: "docs/callout", locals: { icon: "info", title: "A leftover ui_helper.rb at the root?" } do %>
-      Older installs had a single <code>app/helpers/ui_helper.rb</code>. It defines helpers for
-      components that may not be installed. <code>status --json</code> reports it under
-      <code>helpers.legacyHelperPresent</code>; the file is safe to delete.
+      Older versions installed a single <code>app/helpers/ui_helper.rb</code>, which defines
+      helpers for components you may not have. <code>status --json</code> flags it as
+      <code>helpers.legacyHelperPresent</code>, and you can delete it.
     <% end %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Subcomponents are nested helpers") %>
     <p class="leading-7 text-muted-foreground">
-      There are no ViewComponent slots and no content props in this code. Composition happens
-      through nested calls.
+      These components don't use ViewComponent slots, and they don't take their content as
+      arguments. You put them together by nesting calls.
     </p>
 
     <%= docs_code_block(@snippets[:wrong_props]) %>
     <%= docs_code_block(@snippets[:right_props]) %>
 
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("bin/shadwire info <name>") %> lists each item's subcomponent helpers. Do not
-      invent names: the helper is <%= docs_code("ui_card_content") %>, not
+      <%= docs_code("bin/shadwire info <name>") %> lists the helper for each part. Look it up
+      rather than guessing: the helper is <%= docs_code("ui_card_content") %>, not
       <%= docs_code("ui_card_body") %>.
     </p>
   </section>
@@ -53,8 +53,8 @@
   <section class="space-y-4">
     <%= docs_h2("Use the whole composition") %>
     <p class="leading-7 text-muted-foreground">
-      Do not collapse a component into a single part. Header, title and description carry
-      semantics; dumping everything into the content throws that away.
+      Don't put everything into one part. The header, title and description each render their
+      own markup, and putting all of it in the content loses that.
     </p>
 
     <%= docs_code_block(@snippets[:wrong_collapse]) %>
@@ -67,7 +67,7 @@
     <%= docs_code_block(@snippets[:right_group]) %>
 
     <p class="leading-7 text-muted-foreground">
-      The same holds for <%= docs_code("ui_tabs_trigger") %> inside
+      The same goes for <%= docs_code("ui_tabs_trigger") %> inside
       <%= docs_code("ui_tabs_list") %>, <%= docs_code("ui_breadcrumb_item") %> inside
       <%= docs_code("ui_breadcrumb_list") %>, and <%= docs_code("ui_pagination_item") %> inside
       <%= docs_code("ui_pagination_content") %>.
@@ -78,8 +78,8 @@
     <%= docs_h2("Overlays always need a title") %>
     <p class="leading-7 text-muted-foreground">
       <%= docs_code("dialog") %>, <%= docs_code("alert-dialog") %>,
-      <%= docs_code("sheet") %> and <%= docs_code("drawer") %> need their title component for
-      screen readers, even when the design shows none.
+      <%= docs_code("sheet") %> and <%= docs_code("drawer") %> need their title component so
+      screen readers can announce them, even when the design has no visible title.
     </p>
 
     <%= docs_code_block(@snippets[:wrong_title]) %>
@@ -90,7 +90,7 @@
     <%= docs_h2("Interactive components need Stimulus") %>
     <p class="leading-7 text-muted-foreground">
       <%= registry_stimulus_component_count %> of the <%= docs_component_items.size %> components ship a controller.
-      <%= docs_code("bin/shadwire info <name>") %> reports
+      <%= docs_code("bin/shadwire info <name>") %> tells you which through
       <%= docs_code("requiresStimulus") %>, and <%= docs_code("status.stack") %> says whether the
       app has importmap and stimulus-rails.
     </p>
@@ -105,15 +105,15 @@
   <section class="space-y-4">
     <%= docs_h2("Rendering the class directly") %>
     <p class="leading-7 text-muted-foreground">
-      The helper is a thin wrapper. The two forms are equivalent:
+      The helper only wraps the class, so these two render the same thing:
     </p>
 
     <%= docs_code_block(@snippets[:helper_vs_class]) %>
 
     <p class="leading-7 text-muted-foreground">
-      Prefer the helper in views. Reach for the class when you need the component object itself,
-      or when you are inside another ViewComponent. Components do not get helpers automatically,
-      so include the module to call <%= docs_code("ui_button") %> from a template:
+      In views, use the helper. Use the class when you need the component object itself, or
+      inside another ViewComponent. ViewComponents don't get helpers automatically, so include
+      the module to call <%= docs_code("ui_button") %> from a component's template:
     </p>
 
     <%= docs_code_block(@snippets[:inside_component], language: :ruby) %>

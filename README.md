@@ -1,34 +1,41 @@
 # Shadwire
 
-Shadwire ports the shadcn/ui Open Code model to Ruby on Rails.
+Shadwire is shadcn/ui for Ruby on Rails. The components are ViewComponent
+classes styled with Tailwind CSS v4, and like shadcn/ui they are not a
+dependency: a CLI copies their source into your app, and from then on the code is
+yours to change.
 
-The source of truth is `registry/`. The Rails app in `sandbox/` consumes copied registry files so components are validated in a real Rails, ViewComponent, Tailwind CSS v4, and Hotwire environment.
+Component source lives in `registry/`. The Rails app in `sandbox/` runs copies of
+those files, so every component is tested in a real Rails app with ViewComponent,
+Tailwind CSS v4 and Hotwire.
 
 ## Documentation
 
-The docs site is <https://shadwire.edumoraes.dev.br>. It *is* the sandbox app,
-frozen to static HTML, so every live example on it is a real render.
+The docs are at <https://shadwire.edumoraes.dev.br>. The site is the sandbox app
+exported to static HTML, so the examples on it are rendered by the components
+themselves.
 
 | Page | What it covers |
 | --- | --- |
-| [Introduction](https://shadwire.edumoraes.dev.br/docs) | The Open Code model, how the registry / CLI / app fit together |
+| [Introduction](https://shadwire.edumoraes.dev.br/docs) | The Open Code model, and how the registry, the CLI and your app fit together |
 | [Installation](https://shadwire.edumoraes.dev.br/docs/installation) | Requirements, installing the CLI, what `init` does, the first component |
 | [shadwire.json](https://shadwire.edumoraes.dev.br/docs/configuration) | The manifest: registry, aliases, Tailwind entrypoint, installed inventory |
 | [Theming](https://shadwire.edumoraes.dev.br/docs/theming) | Tokens, brand color, adding a token, keeping local edits through updates |
 | [Dark mode](https://shadwire.edumoraes.dev.br/docs/dark-mode) | Class-based dark mode, the toggle, the anti-flash script |
 | [CLI](https://shadwire.edumoraes.dev.br/docs/cli) | Every command and flag, the `status` payload, errors and exit codes, CI |
-| [Agent skill](https://shadwire.edumoraes.dev.br/docs/agent-skill) | What the skill carries, how it injects project context, permissions |
+| [Agent skill](https://shadwire.edumoraes.dev.br/docs/agent-skill) | What the skill contains, how it loads project context, permissions |
 | [Registry](https://shadwire.edumoraes.dev.br/docs/registry) | The published JSON format and how to serve your own |
 | [llms.txt](https://shadwire.edumoraes.dev.br/docs/llms-txt) | The plain-text catalog for agents without the skill |
-| [Composition](https://shadwire.edumoraes.dev.br/docs/composition) · [Styling](https://shadwire.edumoraes.dev.br/docs/styling) · [Forms](https://shadwire.edumoraes.dev.br/docs/forms) · [Icons](https://shadwire.edumoraes.dev.br/docs/icons) · [Accessibility](https://shadwire.edumoraes.dev.br/docs/accessibility) | The conventions, with wrong/right pairs |
+| [Composition](https://shadwire.edumoraes.dev.br/docs/composition) · [Styling](https://shadwire.edumoraes.dev.br/docs/styling) · [Forms](https://shadwire.edumoraes.dev.br/docs/forms) · [Icons](https://shadwire.edumoraes.dev.br/docs/icons) · [Accessibility](https://shadwire.edumoraes.dev.br/docs/accessibility) | The conventions, each with a wrong and a right example |
 
-The pages are written in Portuguese; the CLI, the agent skill and this README are
-in English.
+The site is in English, with a Portuguese translation under
+[`/pt`](https://shadwire.edumoraes.dev.br/pt/docs).
 
 ## Components
 
-58 components, listed with `shadwire list`. Search by what you need
-(`shadwire search form`), then read a component API with `shadwire info button`.
+57 components and one block. `shadwire list` prints the same list,
+`shadwire search form` finds components by what they are for, and
+`shadwire info button` shows a component's API.
 
 | Component | Description |
 | --- | --- |
@@ -91,7 +98,7 @@ in English.
 | `chart` | Composable charts drawn with D3: bars, lines, areas, pies, radars and radial bars, with a tooltip and a legend, in the Shadwire theme tokens. |
 | `data-table` | A table with sorting, filtering, pagination, and row selection. |
 
-Helpers use the `ui_*` prefix.
+Every component has a `ui_*` helper. Both forms below render the same button:
 
 ```erb
 <%= render Ui::ButtonComponent.new(variant: :outline, size: :sm) do %>
@@ -101,9 +108,8 @@ Helpers use the `ui_*` prefix.
 <%= ui_button(variant: :outline, size: :sm) { "Save" } %>
 ```
 
-Icons are rendered with [lucide-rails](https://github.com/heyvito/lucide-rails)
-(add `gem "lucide-rails"` to the consuming app). Compose them inside other
-components:
+Icons come from [lucide-rails](https://github.com/heyvito/lucide-rails), so the
+app needs `gem "lucide-rails"`. Put them inside other components:
 
 ```erb
 <%= ui_button { (ui_icon("download") + " Download").html_safe } %>
@@ -112,20 +118,21 @@ components:
 
 ## CLI
 
-Shadwire ships a `shadwire` CLI (`packages/cli/`) that installs component source
-into a Rails app and keeps it in sync with the registry — the shadcn Open Code
-flow. Installed files are yours; there is no runtime dependency on Shadwire.
+The `shadwire` CLI (`packages/cli/`) copies component source into a Rails app and
+helps you keep it in sync with the registry, the same way the shadcn CLI works.
+The app does not depend on Shadwire at runtime.
 
-Install it globally, or add it to the consuming app directly:
+Install it globally, or add it to the app:
 
 ```bash
 gem install shadwire                       # global — bootstrap with `shadwire init`
 bundle add shadwire --group development    # in the app — bootstrap with `bundle exec shadwire init`
 ```
 
-Bootstrap once. `init` adds `shadwire` to the app's `development` group (if it is
-not there already) and writes the `bin/shadwire` binstub. That binstub is how you
-run the CLI from then on — one entry point, pinned to the app's bundle:
+Run `init` once. It adds `shadwire` to the app's `development` group if it is not
+there yet and writes a `bin/shadwire` binstub. Use the binstub from then on: it
+runs the CLI version from the app's bundle, so everyone on the project gets the
+same one.
 
 ```bash
 shadwire init                     # writes shadwire.json + base files + bin/shadwire
@@ -133,56 +140,54 @@ bin/shadwire add button dialog    # installs components and their registry depen
 bin/shadwire list                 # every component in the registry catalog
 ```
 
-`init` is the one command you run un-prefixed, because it is what creates the
-binstub. Use `bundle exec shadwire init` when the gem is in the Gemfile rather
-than installed globally.
+`init` is the only command you run without the `bin/` prefix, since the binstub
+does not exist yet. If you added the gem to the Gemfile instead of installing it
+globally, run `bundle exec shadwire init`.
 
-Components install from the hosted registry
-(`https://shadwire.edumoraes.dev.br/r`) by default; override with `--registry`
-(an `https://` URL or a local `file://` path).
+By default components come from the hosted registry
+(`https://shadwire.edumoraes.dev.br/r`). Pass `--registry` with an `https://` URL
+or a local `file://` path to use another one.
 
-**Agents / CI** — every command runs non-interactively with `--yes`, emits
-machine-readable output with `--json`, and can target another app with `--cwd`.
-`bin/shadwire status --json` reports the whole install in one call, and
-`bin/shadwire diff --exit-code` exits non-zero when an installed file has drifted
-from the registry, so CI can fail on drift. See
-[`packages/cli/README.md`](packages/cli/README.md) for the full command reference.
+For agents and CI, every command accepts `--yes` (no prompts), `--json`
+(machine-readable output) and `--cwd` (run against another directory).
+`bin/shadwire status --json` describes the whole install in one call, and
+`bin/shadwire diff --exit-code` exits non-zero when an installed file no longer
+matches the registry, which lets a CI job fail on it. The full command reference
+is in [`packages/cli/README.md`](packages/cli/README.md).
 
 ## Agent skill
 
-Coding agents — Claude Code, Codex, Cursor, OpenCode and ~20 others — can install
-the Shadwire skill for full context on the CLI and components:
+Coding agents (Claude Code, Codex, Cursor, OpenCode and about 20 others) can
+install the Shadwire skill, which teaches them the CLI and the components:
 
 ```bash
 npx skills add edumoraes/shadwire
 ```
 
-The skill lives in [`skills/shadwire/`](skills/shadwire/). It carries workflow and
-conventions, not data: component names, variants, props and helper names are
-pulled at runtime from `bin/shadwire status --json` and `bin/shadwire info --json`,
-so it always reflects what is actually installed. CI verifies that everything the
-skill names still exists.
+The skill is in [`skills/shadwire/`](skills/shadwire/). It describes the workflow
+and the conventions, but it does not list components: the agent reads names,
+variants, props and helpers from `bin/shadwire status --json` and
+`bin/shadwire info --json`, so what it sees matches what the app has installed.
+CI checks that every helper and command the skill mentions still exists.
 
-The skill's `allowed-tools` grant covers only the turn that invokes it, so it
-stops the permission prompts for that turn and no longer. To silence them for
-good, add an allow rule to the consuming app's `.claude/settings.json`:
+The skill's `allowed-tools` only applies to the turn that loads it, so the
+permission prompts come back afterwards. To turn them off for good, add an allow
+rule to the app's `.claude/settings.json`:
 
 ```json
 { "permissions": { "allow": ["Bash(bin/shadwire *)"] } }
 ```
 
-Agents that cannot install the skill can read the same catalog as plain text:
+Agents that cannot install the skill can read the catalog as plain text:
 
-- [`/r/llms.txt`](https://shadwire.edumoraes.dev.br/r/llms.txt) — every
-  component with when to use it
-- [`/r/llms-full.txt`](https://shadwire.edumoraes.dev.br/r/llms-full.txt) —
-  every component's full API and usage
+- [`/r/llms.txt`](https://shadwire.edumoraes.dev.br/r/llms.txt): each component
+  and when to use it
+- [`/r/llms-full.txt`](https://shadwire.edumoraes.dev.br/r/llms-full.txt): each
+  component's full API and usage examples
 
 ## Registry Workflow
 
-Edit source files in `registry/rails/ui`.
-
-Sync registry files into the sandbox:
+Edit component source in `registry/rails/ui`, then copy it into the sandbox:
 
 ```bash
 bin/sync_registry
@@ -203,10 +208,10 @@ bin/rails test test/components test/integration/ui_accessibility_test.rb
 
 ## Theme Tokens
 
-Theme tokens live in `registry/rails/ui/styles/shadwire.css` under `:root` and
-`.dark`. Tailwind v4 reads them through `@theme inline`, so component classes
-should use semantic utilities such as `bg-primary`, `text-muted-foreground`,
-`border-input`, and `ring-ring` instead of hardcoded colors.
+The theme tokens are CSS variables in `registry/rails/ui/styles/shadwire.css`,
+under `:root` and `.dark`. Tailwind v4 reads them through `@theme inline`, so
+components use semantic classes like `bg-primary`, `text-muted-foreground`,
+`border-input` and `ring-ring` instead of fixed colors.
 
 | Token | What it controls | Used by |
 | --- | --- | --- |
@@ -255,10 +260,10 @@ git commit -m "docs: update registry workflow"
 
 MIT. See [LICENSE](LICENSE).
 
-Components installed into your application by the CLI are yours: use, modify and
-ship them in commercial and closed-source products, with no attribution
-requirement on the installed files and no runtime dependency on Shadwire.
+The components the CLI installs in your app are yours. You can change them and
+ship them in commercial or closed-source products, without adding attribution to
+the installed files.
 
-Shadwire is a port of [shadcn/ui](https://ui.shadcn.com), which is MIT licensed.
-That notice, and the licences of everything an installed component brings along,
-are recorded in [NOTICE](NOTICE).
+Shadwire is a port of [shadcn/ui](https://ui.shadcn.com), which is also MIT
+licensed. Its notice, and the licenses of the libraries an installed component
+uses, are in [NOTICE](NOTICE).

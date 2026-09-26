@@ -16,9 +16,9 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      The value is clamped to <code class="rounded bg-muted px-1 py-0.5 text-xs">0..max</code>
-      on the server. For live updates, re-render through Turbo (Streams/Frames) —
-      the component holds no client-side state.
+      The server keeps the value within <code class="rounded bg-muted px-1 py-0.5 text-xs">0..max</code>.
+      The component has no state in the browser, so to update it live, re-render it with Turbo
+      Streams or Frames.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">

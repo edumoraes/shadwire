@@ -7,7 +7,7 @@
   <header class="space-y-3">
     <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-5xl">Calendar</h1>
     <p class="text-lg leading-snug text-muted-foreground">
-      Uma grade de mês construída no cliente: navegação, seleção simples ou por intervalo e teclado.
+      Uma grade de mês montada no navegador, com navegação, seleção de uma data ou de um intervalo e suporte a teclado.
     </p>
   </header>
 
@@ -16,11 +16,10 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      O servidor renderiza só o esqueleto; o controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar</code>
-      monta os dias, então trocar de mês não custa uma requisição. A data escolhida vai para um
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">input[type=hidden]</code> — o calendário
-      funciona dentro de um <code class="rounded bg-muted px-1 py-0.5 text-xs">form_with</code> como
-      qualquer outro campo. Para um campo que abre o calendário em um popover, veja
+      O servidor renderiza só a estrutura; o controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar</code>
+      monta os dias no navegador, então trocar de mês não faz nenhuma requisição. A data escolhida
+      vai para um <code class="rounded bg-muted px-1 py-0.5 text-xs">input[type=hidden]</code>, e por isso o calendário
+      funciona dentro de um <code class="rounded bg-muted px-1 py-0.5 text-xs">form_with</code> como qualquer outro campo. Para um campo que abre o calendário em um popover, veja
       <%= link_to "Date Picker", components_date_picker_path, class: "underline underline-offset-4" %>.
     </p>
     <%= docs_code_block(@usage_helper) %>
@@ -36,7 +35,7 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.api") %></h2>
     <p class="text-sm text-muted-foreground">
-      Datas aceitam <code class="rounded bg-muted px-1 py-0.5 text-xs">Date</code> ou string
+      As datas podem ser um <code class="rounded bg-muted px-1 py-0.5 text-xs">Date</code> ou uma string
       <code class="rounded bg-muted px-1 py-0.5 text-xs">YYYY-MM-DD</code>. Como todo componente,
       aceita também <code class="rounded bg-muted px-1 py-0.5 text-xs">class</code> /
       <code class="rounded bg-muted px-1 py-0.5 text-xs">class_name</code> e
@@ -46,7 +45,7 @@
       <tr>
         <td><code>mode</code></td>
         <td><code>:single</code></td>
-        <td><code>:range</code> seleciona um intervalo; o segundo clique fecha a ponta.</td>
+        <td><code>:range</code> seleciona um intervalo; o segundo clique define o fim.</td>
       </tr>
       <tr>
         <td><code>selected</code></td>
@@ -56,7 +55,7 @@
       <tr>
         <td><code>from</code>, <code>to</code></td>
         <td>—</td>
-        <td>As pontas do intervalo, quando prefere passá-las separadas.</td>
+        <td>O início e o fim do intervalo, se você preferir passá-los separados.</td>
       </tr>
       <tr>
         <td><code>name</code>, <code>end_name</code></td>
@@ -71,7 +70,7 @@
       <tr>
         <td><code>min</code>, <code>max</code></td>
         <td>—</td>
-        <td>Desabilitam os dias fora da faixa e delimitam o select de ano.</td>
+        <td>Desabilitam os dias fora desse período e limitam os anos do select.</td>
       </tr>
       <tr>
         <td><code>number_of_months</code></td>
@@ -86,7 +85,7 @@
       <tr>
         <td><code>year_range</code></td>
         <td>−100…+10 anos</td>
-        <td>Anos do select. <code>min:</code>/<code>max:</code> têm precedência quando informados.</td>
+        <td>Os anos do select. Se <code>min:</code>/<code>max:</code> forem passados, eles valem.</td>
       </tr>
       <tr>
         <td><code>dir</code></td>
@@ -109,7 +108,7 @@
       Eventos: <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:change</code> a cada
       escolha e <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar:connect</code> quando
       o calendário monta, ambos com <code class="rounded bg-muted px-1 py-0.5 text-xs">detail: { date, from, to }</code>.
-      No sentido inverso, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar#setDate</code>
+      No sentido contrário, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar#setDate</code>
       leva o calendário até uma data vinda de fora.
     </p>
   </section>

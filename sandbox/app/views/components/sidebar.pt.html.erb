@@ -7,14 +7,14 @@
   <header class="space-y-3">
     <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-5xl">Sidebar</h1>
     <p class="text-lg leading-snug text-muted-foreground">
-      Uma barra lateral componível, colapsável e responsiva para layouts de aplicação.
+      Uma barra lateral para layouts de aplicação, montada por partes, que recolhe e se adapta a telas pequenas.
     </p>
   </header>
 
   <%= ui_card(class: "flex flex-col gap-2 border-dashed p-6 sm:flex-row sm:items-center sm:justify-between") do %>
     <div class="space-y-1">
-      <p class="text-sm font-medium">Veja o sidebar em um layout completo</p>
-      <p class="text-sm text-muted-foreground">O bloco <code class="rounded bg-muted px-1 py-0.5 text-xs">sidebar-01</code> demonstra colapso, atalho Cmd/Ctrl+B e drawer mobile.</p>
+      <p class="text-sm font-medium">Veja a sidebar num layout completo</p>
+      <p class="text-sm text-muted-foreground">O bloco <code class="rounded bg-muted px-1 py-0.5 text-xs">sidebar-01</code> mostra a barra recolhendo, o atalho Cmd/Ctrl+B e a gaveta no celular.</p>
     </div>
     <%= link_to "Abrir o bloco", blocks_sidebar_01_path,
           class: "inline-flex shrink-0 items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground shadow-xs transition-colors hover:bg-primary/90" %>
@@ -26,7 +26,7 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
       Envolva a página com <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_sidebar_provider</code>;
-      ele hospeda o controller e expõe as larguras como CSS vars.
+      ele carrega o controller e expõe as larguras como variáveis CSS.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">Ou renderize os componentes diretamente:</p>

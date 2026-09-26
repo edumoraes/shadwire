@@ -7,15 +7,14 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Theming",
-        description: "Every colour comes from a token. Retheming means editing two lists of CSS variables; no component has to change." %>
+        description: "Components take their colours from CSS variables. To change the theme, you edit those variables and leave the components alone." %>
 
   <section class="space-y-4">
     <%= docs_h2("Where the tokens live") %>
     <p class="leading-7 text-muted-foreground">
-      In <%= docs_code("vendor/shadwire/shadwire.css") %>, installed by
-      <%= docs_code("shadwire init") %> and imported from the application's Tailwind entrypoint.
-      <%= docs_code("bin/shadwire status --json") %> reports the real path under
-      <%= docs_code("tailwind.css") %>.
+      In <%= docs_code("vendor/shadwire/shadwire.css") %>. <%= docs_code("shadwire init") %>
+      installs it and imports it in your app's Tailwind entrypoint, whose path
+      <%= docs_code("bin/shadwire status --json") %> shows under <%= docs_code("tailwind.css") %>.
     </p>
 
     <p class="leading-7 text-muted-foreground">The file has three layers:</p>
@@ -23,23 +22,23 @@
     <%= docs_code_block(@snippets[:layers], language: :css) %>
 
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("@theme inline") %> is what turns <%= docs_code("--primary") %> into the
+      <%= docs_code("@theme inline") %> turns <%= docs_code("--primary") %> into the
       <%= docs_code("bg-primary") %> and <%= docs_code("text-primary") %> utilities. The colours
-      are OKLCH.
+      are written in OKLCH.
     </p>
 
     <%= render layout: "docs/callout", locals: { icon: "info", title: "Edit :root and .dark, never @theme inline" } do %>
-      The <code>@theme inline</code> block is plumbing: it maps a variable to a utility. The
-      theme itself lives in the <code>:root</code> (light) and <code>.dark</code> blocks.
+      The <code>@theme inline</code> block only maps each variable to a Tailwind utility. The
+      colours themselves are set in the <code>:root</code> (light) and <code>.dark</code> blocks.
     <% end %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("The tokens") %>
     <p class="leading-7 text-muted-foreground">
-      Every surface has a matching <%= docs_code("-foreground") %>. Always use them as a pair:
-      <%= docs_code("bg-muted text-muted-foreground") %>, never
-      <%= docs_code("bg-muted") %> with the default text colour.
+      Each background token has a <%= docs_code("-foreground") %> token for the text on top of
+      it. Use the two together, as in <%= docs_code("bg-muted text-muted-foreground") %>, rather
+      than <%= docs_code("bg-muted") %> with the default text colour.
     </p>
 
     <%= render "docs/table",
@@ -51,13 +50,15 @@
     <%= docs_h2("Changing the brand colour") %>
     <p class="leading-7 text-muted-foreground">
       Set <%= docs_code("--primary") %> and <%= docs_code("--primary-foreground") %> in both
-      blocks. Every component that uses <%= docs_code("bg-primary") %> follows.
+      blocks, and every component that uses <%= docs_code("bg-primary") %> picks up the new
+      colour.
     </p>
 
     <%= docs_code_block(@snippets[:brand], language: :css) %>
 
     <p class="leading-7 text-muted-foreground">
-      Pick the foreground by its contrast against that surface, and check it in both modes.
+      Choose a foreground with enough contrast against the new primary, and check it in both
+      light and dark mode.
     </p>
   </section>
 
@@ -71,18 +72,17 @@
     <%= docs_code_block(@snippets[:new_token], language: :css) %>
 
     <p class="leading-7 text-muted-foreground">
-      From then on <%= docs_code("bg-success") %> and
-      <%= docs_code("text-success-foreground") %> behave like any other token.
+      After that, <%= docs_code("bg-success") %> and
+      <%= docs_code("text-success-foreground") %> work like any other token.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Corner radius") %>
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("--radius") %> feeds the derived
-      <%= docs_code("radius-sm") %> / <%= docs_code("radius-md") %> /
-      <%= docs_code("radius-lg") %> scale, so changing it reshapes cards, inputs, buttons and
-      popovers at once.
+      <%= docs_code("radius-sm") %>, <%= docs_code("radius-md") %> and
+      <%= docs_code("radius-lg") %> are all derived from <%= docs_code("--radius") %>, so
+      changing it changes the corners of cards, inputs, buttons and popovers in one go.
     </p>
 
     <%= docs_code_block(@snippets[:radius], language: :css) %>
@@ -91,15 +91,15 @@
   <section class="space-y-4">
     <%= docs_h2("Adding a variant") %>
     <p class="leading-7 text-muted-foreground">
-      Variants are frozen Ruby hashes inside the component's class. Since the file is yours,
-      adding one is adding a key:
+      Variants are frozen Ruby hashes in the component's class. The file is yours, so adding a
+      variant means adding a key:
     </p>
 
     <%= docs_code_block(@snippets[:variant], language: :ruby) %>
     <%= docs_code_block(@snippets[:variant_usage]) %>
 
     <p class="leading-7 text-muted-foreground">
-      That is a local edit: <%= docs_code("bin/shadwire diff") %> will report the file as
+      This counts as a local edit: <%= docs_code("bin/shadwire diff") %> will list the file as
       <%= docs_code("modified") %>, and <%= docs_code("bin/shadwire update") %> would overwrite it.
     </p>
   </section>
@@ -113,14 +113,14 @@
         <%= docs_code("bin/shadwire update <name>") %> <strong class="font-semibold text-foreground">without</strong>
         <%= docs_code("--yes") %>: it asks about each modified file and shows the diff.
       </li>
-      <li>Reapply your edits on top.</li>
+      <li>Put your edits back on top of the new version.</li>
     </ol>
 
     <%= docs_code_block(@snippets[:keep_edits], language: :shell) %>
 
     <p class="leading-7 text-muted-foreground">
-      Prefer adding (a new variant key, a new token) over rewriting existing classes. Additive
-      changes survive updates with far less conflict.
+      Where you can, add things (a new variant, a new token) instead of rewriting existing
+      classes. Additions are much easier to carry over when you update.
     </p>
   </section>
 </article>

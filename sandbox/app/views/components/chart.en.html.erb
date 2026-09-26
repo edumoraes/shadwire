@@ -23,50 +23,52 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">How a chart is put together</h2>
     <p class="leading-7 text-muted-foreground">
-      A chart is a container and the parts you put in it. The container, <%= docs_code("ui_chart") %>,
-      holds what every part shares: the rows, the config and the layout. Each part draws one layer of
-      the chart — <%= docs_code("ui_chart_grid") %>, <%= docs_code("ui_chart_x_axis") %>,
-      <%= docs_code("ui_chart_bar") %>, <%= docs_code("ui_chart_tooltip") %> — and the parts stack in
-      the order you write them, like the children of a Recharts chart. There is no chart type to pick:
-      bars and a line in one container make a composed chart, and plain markup inside it sits on top
-      of the drawing.
+      A chart is a container with parts inside it. The container, <%= docs_code("ui_chart") %>,
+      holds what all the parts share: the rows, the config and the layout. Each part, such as
+      <%= docs_code("ui_chart_grid") %>, <%= docs_code("ui_chart_x_axis") %>,
+      <%= docs_code("ui_chart_bar") %> or <%= docs_code("ui_chart_tooltip") %>, draws one layer, and
+      the layers stack in the order you write them, like the children of a Recharts chart. You don't
+      pick a chart type: put bars and a line in the same container and you get a combined chart. Plain
+      HTML inside the container is drawn on top.
     </p>
     <p class="leading-7 text-muted-foreground">
-      The drawing is D3's. The container's Stimulus controller, <%= docs_code("ui-chart") %>, measures
-      the chart, works out the scales and the stacks, and hands them to every part in a
-      <%= docs_code("ui-chart:render") %> event. Each part has a controller of its own that draws its
-      own <%= docs_code("<svg>") %> with D3, so a part you do not use is a file you can delete — and a
-      part you need is one you can write. The colors are CSS custom properties: switching the theme
-      repaints the chart without redrawing it. D3 itself is imported only on the pages that have a chart.
+      D3 does the drawing. The container's Stimulus controller, <%= docs_code("ui-chart") %>, measures
+      the chart, computes the scales and stacks, and passes them to every part in a
+      <%= docs_code("ui-chart:render") %> event. Each part has its own controller that draws its own
+      <%= docs_code("<svg>") %> with D3. That means you can delete the files of parts you don't use,
+      and write new parts when you need them. Colors are CSS custom properties, so switching the theme
+      recolors the chart without redrawing it. D3 is only loaded on pages that have a chart.
     </p>
   </section>
 
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Your first chart</h2>
     <p class="leading-7 text-muted-foreground">
-      Let's build a bar chart, then add a grid, an axis, a tooltip and a legend, one part at a time.
+      This section builds a bar chart, then adds a grid, an axis, a tooltip and a legend, one part at
+      a time.
     </p>
 
     <h3 class="text-lg font-semibold tracking-[-0.006em]">Start with the rows</h3>
     <p class="leading-7 text-muted-foreground">
-      One hash per category, in any shape: <%= docs_code("data_key:") %> names the field each part
-      reads. Rows usually come from a query. Dates and times serialize as ISO strings, which the axes
-      and the tooltip format; a <%= docs_code("BigDecimal") %> arrives as a string and is read as a number.
+      One hash per category, with whatever keys you like; each part's <%= docs_code("data_key:") %>
+      says which field it reads. The rows usually come from a query. Dates and times are sent as ISO
+      strings, which the axes and the tooltip format for you, and a <%= docs_code("BigDecimal") %>
+      arrives as a string and is read as a number.
     </p>
     <%= docs_code_block(@snippets[:rows], language: :ruby) %>
 
     <h3 class="text-lg font-semibold tracking-[-0.006em]">Define the config</h3>
     <p class="leading-7 text-muted-foreground">
-      The config holds what the rows do not: each series' label and color. It is kept apart from the
-      data on purpose, so several charts can share one config — and the rows can come from anywhere.
+      The config holds what the rows don't: each series' label and color. It is separate from the
+      data so that several charts can share one config, and so the rows can come from anywhere.
     </p>
     <%= docs_code_block(@snippets[:config], language: :ruby) %>
 
     <h3 class="text-lg font-semibold tracking-[-0.006em]">Compose the chart</h3>
     <p class="leading-7 text-muted-foreground">
-      One <%= docs_code("ui_chart_bar") %> per series. The container is
-      <%= docs_code("aspect-video") %> by default; give it a <%= docs_code("min-h-*") %> or a height
-      too, or it has no room to draw in.
+      Add one <%= docs_code("ui_chart_bar") %> per series. The container is
+      <%= docs_code("aspect-video") %> by default; also give it a <%= docs_code("min-h-*") %> or a
+      height, or it has no room to draw.
     </p>
     <%= docs_code_block(@snippets[:bars]) %>
 
@@ -78,23 +80,23 @@
 
     <h3 class="text-lg font-semibold tracking-[-0.006em]">Add an axis</h3>
     <p class="leading-7 text-muted-foreground">
-      The x axis labels the categories with the <%= docs_code("data_key:") %> field.
-      <%= docs_code("tick_format:") %> is a d3-time-format specifier here — the months are dates — so
-      the labels read <em>Jan</em>, <em>Feb</em>… in the language of the page.
+      The x axis labels the categories with the <%= docs_code("data_key:") %> field. The months are
+      dates, so <%= docs_code("tick_format:") %> is a d3-time-format specifier here, and the labels
+      read <em>Jan</em>, <em>Feb</em>… in the page's language.
     </p>
     <%= docs_code_block(@snippets[:axis]) %>
 
     <h3 class="text-lg font-semibold tracking-[-0.006em]">Add a tooltip</h3>
     <p class="leading-7 text-muted-foreground">
-      Point at a month and <%= docs_code("ui_chart_tooltip") %> lists each series' value there, under
-      the month's full name.
+      Hover over a month and <%= docs_code("ui_chart_tooltip") %> lists each series' value for that
+      month, under the month's full name.
     </p>
     <%= docs_code_block(@snippets[:tooltip]) %>
 
     <h3 class="text-lg font-semibold tracking-[-0.006em]">Add a legend</h3>
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("ui_chart_legend") %> names the series with the config's labels and takes the room
-      it needs below the plot.
+      <%= docs_code("ui_chart_legend") %> shows the series with the labels from the config, below the
+      plot.
     </p>
     <%= docs_code_block(@snippets[:legend]) %>
 
@@ -109,10 +111,10 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Chart config</h2>
     <p class="leading-7 text-muted-foreground">
-      Each key of the config is a series — or a category that a pie, a ring or a legend names. It takes
-      a <%= docs_code("label:") %>, a <%= docs_code("color:") %> or a <%= docs_code("theme:") %> with one
-      color per theme, and a Lucide <%= docs_code("icon:") %>, which the legend and the tooltip show in
-      place of the color swatch.
+      Each key in the config is a series, or a category that a pie, a ring or a legend shows. It takes
+      a <%= docs_code("label:") %>, either a <%= docs_code("color:") %> or a <%= docs_code("theme:") %>
+      with one color per theme, and optionally a Lucide <%= docs_code("icon:") %>, which the legend and
+      the tooltip show instead of the color swatch.
     </p>
     <%= docs_code_block(@snippets[:config_full], language: :ruby) %>
   </section>
@@ -120,15 +122,15 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Theming</h2>
     <p class="leading-7 text-muted-foreground">
-      Each color in the config becomes a <%= docs_code("--color-<key>") %> custom property scoped to the
-      chart, and every part paints with those. Point them at the theme's chart tokens and the chart
-      follows the theme, dark mode included.
+      Each color in the config becomes a <%= docs_code("--color-<key>") %> custom property on the
+      chart, and every part draws with those. Set them to the theme's chart tokens and the chart
+      follows the theme, including dark mode.
     </p>
     <%= docs_code_block(@snippets[:theme_tokens], language: :css) %>
     <p class="leading-7 text-muted-foreground">
-      Any CSS color works as well — hex, <%= docs_code("hsl()") %>, <%= docs_code("oklch()") %> — and
-      the variables reach past the parts: a part's own <%= docs_code("color:") %>, a row's
-      <%= docs_code("fill") %> and your own markup inside the chart can all use them.
+      Any CSS color works too (hex, <%= docs_code("hsl()") %>, <%= docs_code("oklch()") %>). The
+      variables are not limited to the parts: a part's own <%= docs_code("color:") %>, a row's
+      <%= docs_code("fill") %> and your own markup inside the chart can use them as well.
     </p>
     <%= docs_code_block(@snippets[:colors_elsewhere]) %>
   </section>
@@ -136,16 +138,16 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Tooltip</h2>
     <p class="leading-7 text-muted-foreground">
-      The tooltip shows a label — the category — and a row per series with an indicator, a name and a
+      The tooltip shows a label (the category) and one row per series, with an indicator, a name and a
       value. <%= docs_code("indicator:") %> is <%= docs_code(":dot") %>, <%= docs_code(":line") %> or
       <%= docs_code(":dashed") %>; <%= docs_code("hide_label:") %> and <%= docs_code("hide_indicator:") %>
-      leave either out. <%= docs_code("cursor:") %> shades the category the pointer is on, and
-      <%= docs_code("default_index:") %> opens the tooltip before anyone points.
+      hide those. <%= docs_code("cursor:") %> shades the category under the pointer, and
+      <%= docs_code("default_index:") %> shows the tooltip for a category before anyone hovers.
     </p>
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("label_key:") %> and <%= docs_code("name_key:") %> read the label and the names from
-      another config entry or field. Here the label is <em>Total visitors</em> and the names come from
-      the browser each slice belongs to:
+      <%= docs_code("label_key:") %> and <%= docs_code("name_key:") %> take the label and the names from
+      another config entry or field. Here the label is <em>Total visitors</em> and each name is the
+      browser the slice represents:
     </p>
     <%= docs_code_block(@snippets[:tooltip_keys]) %>
   </section>
@@ -153,8 +155,8 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Legend</h2>
     <p class="leading-7 text-muted-foreground">
-      The legend lists the series — or, for a pie, its slices — with the config's labels and colors.
-      <%= docs_code("name_key:") %> lists the rows instead, named by a field, and
+      The legend lists the series (or, for a pie, its slices) with the labels and colors from the
+      config. With <%= docs_code("name_key:") %> it lists the rows instead, named by that field, and
       <%= docs_code("vertical_align: :top") %> moves it above the plot.
     </p>
     <%= docs_code_block(@snippets[:legend_name_key]) %>
@@ -165,31 +167,31 @@
     <p class="leading-7 text-muted-foreground">
       The axes' <%= docs_code("tick_format:") %>, the tooltip's <%= docs_code("label_format:") %> and
       <%= docs_code("value_format:") %> and the label lists' <%= docs_code("format:") %> are D3
-      specifiers: d3-format for numbers, d3-time-format for dates. Without one, numbers are written the
-      way the page's language writes them.
+      specifiers: d3-format for numbers, d3-time-format for dates. Without one, numbers are formatted
+      for the page's language.
     </p>
     <%= docs_code_block(@snippets[:formats]) %>
     <p class="leading-7 text-muted-foreground">
-      The month and day names and the separators come from the app's own translations —
-      <%= docs_code("date.month_names") %>, <%= docs_code("date.abbr_day_names") %>,
-      <%= docs_code("number.format.delimiter") %> and the rest of Rails' keys — so an app that speaks
-      Portuguese gets <em>Fev</em> and <em>1.234,5</em> with no setup on the chart.
+      Month and day names and number separators come from the app's own Rails translations
+      (<%= docs_code("date.month_names") %>, <%= docs_code("date.abbr_day_names") %>,
+      <%= docs_code("number.format.delimiter") %> and so on), so an app in Portuguese gets
+      <em>Fev</em> and <em>1.234,5</em> without configuring the chart.
     </p>
   </section>
 
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">A layer of your own</h2>
     <p class="leading-7 text-muted-foreground">
-      The built-in parts are no different from one you write. <%= docs_code("ui_chart_layer") %> puts an
-      <%= docs_code("<svg>") %> over the chart and wires it to a Stimulus controller of yours, which
-      receives the chart's scales and draws with D3. This one draws a goal line:
+      The built-in parts work the same way as one you write yourself. <%= docs_code("ui_chart_layer") %>
+      adds an <%= docs_code("<svg>") %> over the chart and connects it to your own Stimulus controller,
+      which receives the chart's scales and draws with D3. This one draws a goal line:
     </p>
     <%= docs_code_block(@snippets[:layer]) %>
     <%= docs_code_block(@snippets[:layer_controller], language: :javascript) %>
     <p class="leading-7 text-muted-foreground">
-      A part hears three events, in this order. <%= docs_code("event.detail.chart") %> carries the rows,
-      the config, the plot's box, the category and value scales, the polar geometry, a formatter and
-      <%= docs_code("d3") %> itself.
+      A part receives three events, in this order. <%= docs_code("event.detail.chart") %> contains the
+      rows, the config, the plot area, the category and value scales, the polar geometry, a formatter
+      and <%= docs_code("d3") %> itself.
     </p>
     <%= docs_code_block(@snippets[:events], language: :text) %>
   </section>
@@ -197,10 +199,11 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]">Accessibility</h2>
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("label:") %> names the chart. The drawing is hidden from assistive technology; the
-      legend is text. With a tooltip, the chart takes focus: the arrow keys, <kbd>Home</kbd> and
-      <kbd>End</kbd> move from category to category, <kbd>Escape</kbd> closes it, and what the tooltip
-      shows is announced. With reduced motion set, nothing animates.
+      <%= docs_code("label:") %> gives the chart its accessible name. The drawing is hidden from
+      assistive technology, and the legend is plain text. When the chart has a tooltip, it can take
+      focus: the arrow keys, <kbd>Home</kbd> and <kbd>End</kbd> move between categories,
+      <kbd>Escape</kbd> closes the tooltip, and screen readers announce what it shows. If the user
+      prefers reduced motion, nothing animates.
     </p>
   </section>
 

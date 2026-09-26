@@ -17,8 +17,8 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
       Use the <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_label</code> helper.
-      Because <code class="rounded bg-muted px-1 py-0.5 text-xs">for</code> is a reserved word
-      in Ruby, it travels as a free-form HTML attribute — always point it at the
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">for</code> is a reserved word in Ruby, so it is
+      passed as an ordinary HTML attribute. Point it at the
       <code class="rounded bg-muted px-1 py-0.5 text-xs">id</code> of the control.
     </p>
     <%= docs_code_block(@usage_helper) %>
@@ -61,7 +61,7 @@
         <td><code>&block</code></td>
         <td>Block</td>
         <td>—</td>
-        <td>The label's content — text and/or icons.</td>
+        <td>The label's content: text, icons or both.</td>
       </tr>
     <% end %>
   </section>

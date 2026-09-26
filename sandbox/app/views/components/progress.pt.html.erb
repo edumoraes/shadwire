@@ -16,9 +16,9 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      O valor é clampado em <code class="rounded bg-muted px-1 py-0.5 text-xs">0..max</code>
-      no servidor. Para atualizações ao vivo, re-renderize via Turbo (Streams/Frames) —
-      o componente não tem estado no cliente.
+      O servidor mantém o valor entre <code class="rounded bg-muted px-1 py-0.5 text-xs">0</code> e <code class="rounded bg-muted px-1 py-0.5 text-xs">max</code>.
+      O componente não guarda estado no navegador, então, para atualizar ao vivo, renderize de
+      novo com Turbo Streams ou Frames.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">
@@ -48,7 +48,7 @@
         <td><code>value</code></td>
         <td>Numeric</td>
         <td><code>0</code></td>
-        <td>Progresso atual; clampado em <code>0..max</code> e exposto como <code>aria-valuenow</code>.</td>
+        <td>O progresso atual, limitado a <code>0..max</code> e exposto como <code>aria-valuenow</code>.</td>
       </tr>
       <tr>
         <td><code>max</code></td>

@@ -4,7 +4,7 @@
 pt:
   site:
     name: Shadwire
-    description: Componentes shadcn/ui portados para o Ruby on Rails. Código aberto que você instala e passa a possuir.
+    description: Componentes shadcn/ui portados para Ruby on Rails. Código que você instala e passa a ser seu.
     nav:
       main: Principal
       docs: Documentação
@@ -92,13 +92,13 @@ pt:
     showcase:
       with_icon:
         title: Botão
-        description: Componha um ui_icon dentro do bloco; o botão dimensiona o SVG automaticamente.
+        description: Coloque um ui_icon dentro do bloco e o botão ajusta o tamanho do SVG.
       card_default:
         title: Card
         description: Uma superfície com cabeçalho, conteúdo e rodapé para agrupar ações relacionadas.
       input_with_label:
         title: Formulário
-        description: Controles de formulário acessíveis, ligados por label e id.
+        description: Controles de formulário acessíveis, com o rótulo ligado ao campo pelo id.
       alert_default:
         title: Alerta
         description: Destaque uma mensagem importante com semântica de alerta.
@@ -157,46 +157,46 @@ pt:
             development, cria o binstub bin/shadwire e insere o @import do Tailwind.
         - signature: bin/shadwire add NOME...
           summary: >-
-            Instala um ou mais componentes com as dependências de registry deles, aplica gems
-            e pins de importmap, e registra tudo no shadwire.json.
+            Instala um ou mais componentes junto com os itens do registry de que eles dependem,
+            adiciona gems e pins de importmap e registra tudo no shadwire.json.
         - signature: bin/shadwire list
           summary: Lista todos os componentes do catálogo do registry.
         - signature: bin/shadwire search CONSULTA
           summary: >-
-            Busca no catálogo por nome, título, descrição e pelo texto de quando usar, então
-            termos conceituais como form, modal ou loading funcionam.
+            Busca no catálogo por nome, título, descrição e pelo texto de quando usar, então dá
+            para buscar por coisas como form, modal ou loading.
         - signature: bin/shadwire info NOME
           summary: >-
             Mostra a API completa do componente: helpers, variantes, tamanhos, props,
             arquivos, gems, pins e dependências de registry.
         - signature: bin/shadwire diff [NOME...]
           summary: >-
-            Compara os arquivos instalados com o registry e reporta unchanged, modified ou
-            missing, com o diff unificado dos modificados. Só leitura.
+            Compara os arquivos instalados com o registry e marca cada um como unchanged,
+            modified ou missing, com o diff unificado dos modificados. Não altera nada.
         - signature: bin/shadwire update [NOME...]
           summary: >-
             Reaplica a versão do registry dos componentes instalados. Sobrescreve edições
             locais, então rode o diff antes.
         - signature: bin/shadwire remove NOME...
           summary: >-
-            Desinstala componentes apagando só os arquivos exclusivos deles, nunca a base
-            compartilhada nem um arquivo que outro componente instalado ainda usa.
+            Desinstala componentes. Apaga só os arquivos deles, nunca os arquivos base
+            compartilhados nem um arquivo que outro componente instalado ainda usa.
         - signature: bin/shadwire status
           summary: >-
-            Descreve o app inteiro em uma chamada: stack detectada, componentes instalados com
-            os helpers que definem, e drift.
+            Descreve o app inteiro em uma chamada: a stack detectada, os componentes instalados
+            com os helpers que eles definem, e o que mudou em relação ao registry.
         - signature: bin/shadwire version
           summary: Imprime a versão instalada da CLI.
       flags:
         - flag: --cwd DIR
           commands: todos
-          description: Roda contra outro diretório de aplicação, em vez do diretório atual.
+          description: Roda em outro diretório de aplicação, em vez do atual.
         - flag: --registry URL
           commands: todos
-          description: Lê de outro registry. Aceita https:// e file://, que é como se testa um registry construído localmente.
+          description: Lê de outro registry. Aceita URLs https:// e file://; use file:// para testar um registry gerado localmente.
         - flag: --json
           commands: todos, menos version
-          description: Emite JSON legível por máquina em vez da saída humana. É o que agentes e CI usam.
+          description: Mostra a saída em JSON em vez de texto para humanos, para agentes e CI.
         - flag: --yes, -y
           commands: init, add, update, remove
           description: Aplica mudanças de arquivo e de dependência sem perguntar.
@@ -205,19 +205,19 @@ pt:
           description: Sobrescreve arquivos modificados localmente sem perguntar.
         - flag: --no-deps
           commands: add, update
-          description: Pula as dependências transitivas de registry (ligadas por padrão).
+          description: Não instala os itens do registry de que o componente depende (por padrão, eles são instalados).
         - flag: --force
           commands: init
           description: Reescreve um shadwire.json existente e recria o binstub.
         - flag: --exit-code
           commands: diff
-          description: Sai com código não-zero quando existe drift, para travar o CI.
+          description: Sai com código diferente de zero quando algum arquivo mudou, para o CI poder falhar.
 
     theming:
       tokens:
         - token: background / foreground
           controls: Fundo da aplicação e texto padrão
-          used_by: Shell da página, seções, texto padrão
+          used_by: Estrutura da página, seções, texto padrão
         - token: card / card-foreground
           controls: Superfícies elevadas
           used_by: Card, painéis de dashboard e de configurações
@@ -252,20 +252,20 @@ pt:
           controls: Paleta de gráficos
           used_by: Charts e blocks orientados a gráfico
         - token: sidebar / sidebar-foreground
-          controls: Superfície e texto do sidebar
-          used_by: Container do Sidebar
+          controls: Superfície e texto da sidebar
+          used_by: O contêiner da Sidebar
         - token: sidebar-primary / -foreground
-          controls: Ações de alta ênfase no sidebar
-          used_by: Itens ativos, ladrilhos de ícone, CTAs
+          controls: Ações de alta ênfase na sidebar
+          used_by: Itens ativos, blocos com ícone, CTAs
         - token: sidebar-accent / -foreground
-          controls: Hover e seleção no sidebar
+          controls: Hover e seleção na sidebar
           used_by: Hover de menu, itens abertos
         - token: sidebar-border
-          controls: Bordas do sidebar
-          used_by: Headers, grupos e divisores do sidebar
+          controls: Bordas da sidebar
+          used_by: Cabeçalhos, grupos e divisores da sidebar
         - token: sidebar-ring
-          controls: Anéis de foco do sidebar
-          used_by: Controles focados no sidebar
+          controls: Anéis de foco da sidebar
+          used_by: Controles com foco na sidebar
         - token: radius
           controls: Raio de canto base
           used_by: Cards, inputs, botões, popovers
@@ -274,28 +274,28 @@ pt:
       files:
         - path: SKILL.md
           summary: >-
-            Princípios, regras críticas, tabela de seleção de componente e o workflow. Injeta
-            bin/shadwire status --json como contexto do projeto.
+            Princípios, as regras mais importantes, a tabela para escolher um componente e o
+            fluxo de trabalho. Carrega o bin/shadwire status --json como contexto do projeto.
         - path: cli.md
           summary: >-
             Referência de cada comando e flag, o formato do payload JSON e como interpretar
             erros e códigos de saída.
         - path: theming.md
           summary: >-
-            Onde ficam os tokens, dark mode por classe, como retematizar, adicionar token e
-            preservar edições entre updates.
+            Onde ficam os tokens, dark mode por classe, como mudar o tema, como adicionar um
+            token e como não perder edições nas atualizações.
         - path: rules/composition.md
           summary: >-
             Subcomponentes como helpers aninhados, itens dentro do grupo, título obrigatório em
             overlays, Stimulus.
         - path: rules/styling.md
           summary: >-
-            Tokens semânticos, precedência de classes, atributos HTML livres, convenções de
+            Tokens semânticos, qual classe prevalece, como passar atributos HTML, convenções de
             utilitários do Tailwind.
         - path: rules/forms.md
           summary: >-
-            A família field, estado de validação, integração com form_with e a escolha do
-            controle.
+            Os componentes de field, o estado de validação, o uso com form_with e como escolher
+            o controle.
         - path: rules/icons.md
           summary: >-
             lucide-rails, nomes kebab-case, tamanhos e quando o ícone precisa de rótulo
@@ -354,11 +354,11 @@ pt:
           type: "O `type` do input."
         ui_input_group_button:
           size: "O tamanho; os tamanhos `icon_` são quadrados."
-          type: "O `type` do botão — `\"button\"`, para nunca enviar o formulário sem querer."
+          type: "O `type` do botão. É `\"button\"`, para nunca enviar o formulário sem querer."
         ui_button_group:
           orientation: "Junta os botões numa linha (`:horizontal`) ou numa coluna (`:vertical`)."
         ui_button_group_text:
-          tag: "O elemento renderizado — `:label` para nomear um input do grupo."
+          tag: "O elemento renderizado; use `:label` para nomear um input do grupo."
         ui_button_group_separator:
           orientation: "`:vertical` entre botões numa linha, `:horizontal` numa coluna."
         ui_field:
@@ -367,7 +367,7 @@ pt:
         ui_field_legend:
           variant: "`:legend` tem o tamanho base, `:label` é pequeno."
         ui_field_error:
-          errors: "As mensagens da lista, ex.: `form.object.errors[:email]`. Uma mensagem só pode vir no bloco."
+          errors: "As mensagens a listar, por exemplo `form.object.errors[:email]`. Uma única mensagem pode vir no bloco."
         ui_collapsible:
           open: "Começa aberto."
         ui_collapsible_trigger:
@@ -442,61 +442,61 @@ pt:
           orientation: "O `orientation:` do carrossel, repetido."
         ui_sonner:
           position: "Onde os toasts se empilham: `:top_left`, `:top_center`, `:top_right`, `:bottom_left`, `:bottom_center` ou `:bottom_right`."
-          duration: "Milissegundos que um toast fica antes de se dispensar."
+          duration: "Quantos milissegundos um toast fica na tela antes de sumir sozinho."
         ui_chart:
-          config: "As séries — e as categorias que uma pizza ou uma legenda nomeiam — como `{ chave: { label:, color:, icon: } }`, ou `theme: { light:, dark: }` no lugar de `color:`. Cada cor vira `--color-<chave>` no gráfico."
-          rows: "Os dados, um hash por categoria. É `rows:` e não `data:`, para que `data:` continue sendo os atributos data do HTML."
+          config: "As séries, e as categorias que uma pizza ou uma legenda mostram, como `{ chave: { label:, color:, icon: } }`, ou `theme: { light:, dark: }` no lugar de `color:`. Cada cor vira `--color-<chave>` no gráfico."
+          rows: "Os dados, um hash por categoria. Chama `rows:` e não `data:` para que `data:` continue definindo atributos data do HTML."
           layout: "`:horizontal` põe as categorias ao longo do eixo x; `:vertical`, descendo o eixo y, para barras horizontais."
           stack_offset: "O offset do D3 para as séries que compartilham um `stack_id:`: `:none`, `:expand` (até 100%), `:diverging`, `:silhouette` ou `:wiggle`."
-          margin: "Espaço em volta da área do gráfico, em pixels por lado: `{ left: 12, right: 12 }`. Os eixos e a legenda reservam o deles por cima disso."
-          inner_radius: "O raio interno que pizzas, anéis e radares compartilham: em pixels, ou uma porcentagem do espaço disponível (`\"30%\"`)."
-          outer_radius: "O raio externo deles, do mesmo jeito."
+          margin: "Espaço em volta da área do gráfico, em pixels por lado: `{ left: 12, right: 12 }`. Os eixos e a legenda somam o próprio espaço a isso."
+          inner_radius: "O raio interno de pizzas, anéis e radares: em pixels, ou uma porcentagem do espaço disponível (`\"30%\"`)."
+          outer_radius: "O raio externo, nas mesmas unidades."
           start_angle: "Onde pizzas, anéis e radares começam, em graus no sentido horário a partir do meio-dia."
-          end_angle: "Onde terminam, nos mesmos graus."
+          end_angle: "Onde terminam, também em graus no sentido horário a partir do meio-dia."
           label: "O nome acessível do gráfico."
         ui_chart_layer:
           controller: "O controller Stimulus que desenha a camada. Ele recebe `ui-chart:render`, com as escalas do gráfico em `event.detail.chart`."
           options: "O que esse controller precisar, em `event.detail.options`."
         ui_chart_grid:
-          horizontal: "Desenha as linhas horizontais. Sem valor, só as linhas que cruzam o eixo de valores."
-          vertical: "Desenha as linhas verticais, nas mesmas condições."
+          horizontal: "Desenha as linhas horizontais. Se nenhum dos dois for definido, só as linhas que cruzam o eixo de valores aparecem."
+          vertical: "Desenha as linhas verticais, com o mesmo padrão."
         ui_chart_x_axis:
-          data_key: "No eixo de categorias, o campo cujos valores rotulam as categorias — e o tooltip."
-          hide: "Mantém as categorias do eixo sem desenhá-lo."
+          data_key: "No eixo de categorias, o campo cujos valores rotulam as categorias e o tooltip."
+          hide: "Esconde o eixo, mas mantém as categorias dele."
           tick_line: "Desenha um traço em cada rótulo."
           axis_line: "Desenha a linha do eixo."
           tick_margin: "Pixels entre a área do gráfico e os rótulos."
           tick_count: "Quantas marcas, aproximadamente, o eixo de valores recebe."
           tick_format: "Um especificador do d3-format para números (`\"~s\"`, `\"$,.0f\"`) ou do d3-time-format para datas (`\"%b %d\"`)."
-          min_tick_gap: "O menor espaço entre dois rótulos de categoria, em pixels: os rótulos que colidiriam ficam de fora."
+          min_tick_gap: "O espaço mínimo entre dois rótulos de categoria, em pixels; rótulos que ficariam sobrepostos são omitidos."
           domain: "O `[mín, máx]` do eixo de valores; `nil` em uma das pontas deixa essa ponta para os dados."
-          height: "O espaço que o eixo ocupa, em pixels. Sem valor, ele mede os próprios rótulos."
+          height: "O espaço que o eixo ocupa, em pixels. Se não for definido, é calculado pelos rótulos."
         ui_chart_y_axis:
-          data_key: "No eixo de categorias — o eixo y de um layout vertical —, o campo cujos valores rotulam as categorias e o tooltip."
-          hide: "Mantém as categorias do eixo sem desenhá-lo."
+          data_key: "No eixo de categorias (o eixo y num layout vertical), o campo cujos valores rotulam as categorias e o tooltip."
+          hide: "Esconde o eixo, mas mantém as categorias dele."
           tick_line: "Desenha um traço em cada rótulo."
           axis_line: "Desenha a linha do eixo."
           tick_margin: "Pixels entre a área do gráfico e os rótulos."
           tick_count: "Quantas marcas, aproximadamente, o eixo de valores recebe."
           tick_format: "Um especificador do d3-format para números (`\"~s\"`, `\"$,.0f\"`) ou do d3-time-format para datas (`\"%b %d\"`)."
-          min_tick_gap: "O menor espaço entre dois rótulos de categoria, em pixels: os rótulos que colidiriam ficam de fora."
+          min_tick_gap: "O espaço mínimo entre dois rótulos de categoria, em pixels; rótulos que ficariam sobrepostos são omitidos."
           domain: "O `[mín, máx]` do eixo de valores; `nil` em uma das pontas deixa essa ponta para os dados."
-          width: "O espaço que o eixo ocupa, em pixels. Sem valor, ele mede os próprios rótulos."
+          width: "O espaço que o eixo ocupa, em pixels. Se não for definido, é calculado pelos rótulos."
         ui_chart_bar:
           data_key: "O campo que cada barra mostra."
-          color: "A cor das barras, por cima da do config."
+          color: "A cor das barras, no lugar da definida no config."
           stack_id: "Barras com o mesmo `stack_id` se empilham; as outras ficam lado a lado."
           radius: "O raio dos cantos em pixels: um número, ou `[sup_esq, sup_dir, inf_dir, inf_esq]`."
         ui_chart_line:
           data_key: "O campo por onde a linha passa."
-          color: "A cor da linha, por cima da do config."
+          color: "A cor da linha, no lugar da definida no config."
           curve: "A curva do D3: `:natural`, `:linear`, `:monotone`, `:step`, `:step_before`, `:step_after`, `:basis`, `:cardinal` ou `:catmull_rom`."
           stroke_width: "A espessura da linha, em pixels."
           dot: "Marca cada ponto."
           connect_nulls: "Atravessa um valor ausente em vez de interromper a linha ali."
         ui_chart_area:
           data_key: "O campo até onde a área sobe."
-          color: "A cor da área, por cima da do config."
+          color: "A cor da área, no lugar da definida no config."
           stack_id: "Áreas com o mesmo `stack_id` se empilham."
           curve: "A curva do D3, como na linha."
           fill_opacity: "A opacidade do preenchimento, de 0 a 1."
@@ -507,21 +507,21 @@ pt:
         ui_chart_pie:
           data_key: "O campo de onde vem o tamanho de cada fatia."
           name_key: "O campo que nomeia cada fatia: a chave do config que lhe dá rótulo e cor."
-          inner_radius: "Por cima do raio do gráfico: pixels ou porcentagem. Qualquer valor acima de zero faz uma rosca."
-          outer_radius: "Por cima do raio do gráfico."
+          inner_radius: "Substitui o raio do gráfico: pixels ou porcentagem. Qualquer valor acima de zero faz uma rosca."
+          outer_radius: "Substitui o raio do gráfico."
           padding_angle: "Um vão entre as fatias, em graus."
           corner_radius: "Arredonda os cantos das fatias, em pixels."
           stroke_width: "Um contorno entre as fatias na cor do fundo; `class: \"stroke-card\"` combina com um card."
         ui_chart_radial_bar:
           data_key: "O campo de onde vem a varredura de cada anel."
           name_key: "O campo que nomeia cada anel, que passa a ter o rótulo e a cor da sua entrada no config."
-          color: "A cor dos anéis, por cima da do config."
+          color: "A cor dos anéis, no lugar da definida no config."
           stack_id: "Barras radiais com o mesmo `stack_id` se empilham ao longo dos anéis."
           background: "Desenha o resto de cada anel como uma trilha apagada."
           corner_radius: "Arredonda as pontas dos anéis, em pixels."
         ui_chart_radar:
           data_key: "O campo de onde vem a distância de cada vértice."
-          color: "A cor do polígono, por cima da do config."
+          color: "A cor do polígono, no lugar da definida no config."
           fill_opacity: "A opacidade do preenchimento, de 0 a 1; 0 deixa só o contorno."
           stroke_width: "Contorna o polígono, em pixels."
           dot: "Marca cada vértice."
@@ -529,7 +529,7 @@ pt:
           grid_type: "`:polygon`, anéis que passam pelos raios, ou `:circle`."
           radial_lines: "Desenha um raio por categoria."
         ui_chart_polar_angle_axis:
-          data_key: "O campo cujos valores rotulam os raios — e o tooltip."
+          data_key: "O campo cujos valores rotulam os raios e o tooltip."
           tick_format: "Um especificador do d3 para os rótulos."
           tick_margin: "Pixels entre o anel externo e os rótulos."
         ui_chart_label_list:
@@ -546,10 +546,10 @@ pt:
           label_format: "Um especificador do d3 para o rótulo (`\"%B\"`)."
           value_format: "Um especificador do d3 para os valores (`\",d\"`)."
           cursor: "Sombreia a categoria sob o ponteiro."
-          default_index: "Abre nesta categoria antes que alguém aponte."
+          default_index: "Mostra o tooltip desta categoria antes de alguém passar o mouse."
         ui_chart_legend:
           name_key: "Lista cada linha, nomeada por este campo, em vez de cada série."
-          hide_icon: "Mantém a amostra de cor onde o config tem um ícone."
+          hide_icon: "Mostra a amostra de cor mesmo quando o config tem um ícone."
           vertical_align: "A borda onde fica: `:bottom` ou `:top`."
         ui_data_table:
           columns: "As colunas, como hashes `{ key:, label:, sortable:, sort_value: }`."
@@ -560,7 +560,7 @@ pt:
           selectable: "Adiciona uma coluna de checkboxes para selecionar linhas."
           empty_text: "O que a tabela mostra quando nenhuma linha corresponde."
     install:
-      lead_html: "O Shadwire segue o modelo <em>open-code</em> do shadcn/ui: o código-fonte do componente é copiado para a sua aplicação e passa a ser seu. Instale com a CLI:"
+      lead_html: "O Shadwire segue o modelo <em>open code</em> do shadcn/ui: o código-fonte do componente é copiado para o seu app e passa a ser seu. Instale com a CLI:"
       files_html: "O item %{name} do registry instala estes arquivos:"
       stimulus_html: "Este componente usa Stimulus, então a aplicação precisa de %{importmap} e %{stimulus} com carregamento automático de controllers."
       cli_html: "Ainda não instalou a CLI? %{install} e depois %{init}."
@@ -580,7 +580,7 @@ pt:
         description: "Para ações destrutivas, como excluir um registro."
       outline:
         title: "Contorno"
-        description: "Apenas borda, sem preenchimento — boa para ações neutras."
+        description: "Só a borda, sem preenchimento, para ações neutras."
       ghost:
         title: "Ghost"
         description: "Sem fundo nem borda até o hover."
@@ -589,16 +589,16 @@ pt:
         description: "Aparência de link de texto, mantendo a semântica de botão."
       icon:
         title: "Ícone"
-        description: "Botão quadrado só com ícone (size: :icon). Informe label: no ícone para leitores de tela."
+        description: "Um botão quadrado só com ícone (size: :icon). Passe label: no ícone para os leitores de tela."
       with_icon:
         title: "Com ícone"
-        description: "Componha ui_icon dentro do bloco; o botão dimensiona o SVG automaticamente."
+        description: "Coloque um ui_icon dentro do bloco e o botão ajusta o tamanho do SVG."
       sizes:
         title: "Tamanhos"
         description: "Os tamanhos :sm, :default e :lg lado a lado."
       loading:
         title: "Carregando"
-        description: "Estado de carregamento composto com um ícone giratório e disabled."
+        description: "Um estado de carregamento: um ícone girando, com o botão desabilitado."
       disabled:
         title: "Desabilitado"
         description: "Passe disabled: true como atributo HTML."
@@ -607,13 +607,13 @@ pt:
         description: "Renderize como <a> com tag: :a, mantendo o visual de botão."
       badge_variants:
         title: "Variantes"
-        description: "Use variantes para indicar prioridade, estado ou categorias."
+        description: "Use as variantes para indicar prioridade, estado ou categoria."
       card_default:
         title: "Padrão"
-        description: "Componha header, title, description, content e footer dentro do card."
+        description: "Monte o card com header, title, description, content e footer."
       alert_default:
         title: "Padrão"
-        description: "Mensagem importante com role=\"alert\" por padrão."
+        description: "Uma mensagem importante, com role=\"alert\" por padrão."
       alert_destructive:
         title: "Destrutivo"
         description: "Use para erros ou avisos de alta severidade."
@@ -622,28 +622,28 @@ pt:
         description: "Separadores semânticos expõem aria-orientation; decorativos ficam ocultos da tecnologia assistiva."
       avatar_default:
         title: "Imagem, fallback e rótulo"
-        description: "Renderize uma imagem com fallback ou um fallback isolado para usuários sem foto."
+        description: "Uma imagem com texto alternativo, ou só o texto para usuários sem foto."
       icon_default:
         title: "Decorativo e rotulado"
-        description: "Ícones são decorativos por padrão; passe label: quando o ícone carregar significado."
+        description: "Ícones são decorativos por padrão; passe label: quando o ícone tiver significado."
       accordion_basic:
-        title: "Basic"
+        title: "Básico"
         description: "Um accordion simples que exibe um item por vez. O primeiro item começa aberto."
       accordion_multiple:
-        title: "Multiple"
+        title: "Vários abertos"
         description: "Use multiple: true para permitir que vários itens fiquem abertos ao mesmo tempo."
       accordion_disabled:
-        title: "Disabled"
+        title: "Desabilitado"
         description: "Use disabled: true no item para bloquear um painel específico."
       accordion_borders:
-        title: "Borders"
-        description: "Adicione border no accordion para destacar o contorno do grupo."
+        title: "Com borda"
+        description: "Adicione a classe border no accordion para contornar o grupo."
       accordion_card:
         title: "Card"
-        description: "Componha o Accordion dentro de Card quando ele fizer parte de uma superfície maior."
+        description: "Coloque o Accordion dentro de um Card quando ele fizer parte de uma área maior."
       scroll_area_vertical:
-        title: "Preview"
-        description: "Uma Scroll Area vertical mantém a rolagem nativa com o visual do Shadwire."
+        title: "Prévia"
+        description: "Uma área de rolagem vertical: rolagem nativa, com uma barra que combina com o tema."
       scroll_area_horizontal:
         title: "Horizontal"
         description: "Use a barra horizontal para galerias e conteúdo largo."
@@ -652,7 +652,7 @@ pt:
         description: "Use dir: \"rtl\" para conteúdo escrito da direita para a esquerda."
       input_default:
         title: "Padrão"
-        description: "Um campo de texto com o visual shadcn. Atributos HTML livres passam direto para o <input>."
+        description: "Um campo de texto no estilo shadcn. Qualquer atributo HTML que você passar vai para o <input>."
       input_with_label:
         title: "Com label"
         description: "Combine com ui_label usando for:/id: para associar o rótulo ao campo."
@@ -664,16 +664,16 @@ pt:
         description: "type: :file estiliza o seletor de arquivo nativo."
       input_form:
         title: "Com form_with"
-        description: "Use form.field_name/form.field_id para integrar com formulários Rails."
+        description: "Use form.field_name/form.field_id para ligar o campo a um formulário Rails."
       label_default:
         title: "Padrão"
         description: "Associe o rótulo ao campo com for: apontando para o id do controle."
       label_disabled:
         title: "Grupo desabilitado"
-        description: "Dentro de um grupo com data-disabled, o rótulo reduz a opacidade automaticamente."
+        description: "Dentro de um grupo com data-disabled, o rótulo fica esmaecido."
       textarea_default:
         title: "Padrão"
-        description: "Uma área de texto com o visual shadcn; cresce com o conteúdo via field-sizing."
+        description: "Uma área de texto no estilo shadcn. Ela cresce com o conteúdo, usando field-sizing."
       textarea_with_label:
         title: "Com label"
         description: "Combine com ui_label para formulários acessíveis."
@@ -682,7 +682,7 @@ pt:
         description: "Passe disabled: true como atributo HTML."
       checkbox_default:
         title: "Padrão"
-        description: "Um checkbox nativo estilizado, associado a um ui_label via for:/id:."
+        description: "Um checkbox nativo estilizado, ligado a um ui_label por for:/id:."
       checkbox_checked:
         title: "Marcado"
         description: "Use checked: true para renderizar marcado; combine com textos auxiliares."
@@ -691,10 +691,10 @@ pt:
         description: "disabled: true desabilita o input nativo."
       checkbox_form:
         title: "Com form_with"
-        description: "Use form.field_name/form.field_id. Diferente de form.check_box, não há input hidden — trate a ausência do parâmetro como desmarcado."
+        description: "Use form.field_name/form.field_id. Ao contrário do form.check_box, não há input hidden, então trate a ausência do parâmetro como desmarcado."
       radio_group_default:
         title: "Padrão"
-        description: "Radios nativos compartilhando o mesmo name: — a navegação por setas vem do navegador."
+        description: "Radios nativos com o mesmo name:, então o navegador cuida da navegação pelas setas."
       radio_group_disabled:
         title: "Item desabilitado"
         description: "disabled: true desabilita um item específico sem afetar o grupo."
@@ -703,7 +703,7 @@ pt:
         description: "Use form.field_name para o name compartilhado e form.field_id(attr, valor) para cada id."
       switch_default:
         title: "Padrão"
-        description: "Um checkbox nativo com role=\"switch\" — semântica de alternância para leitores de tela."
+        description: "Um checkbox nativo com role=\"switch\", para os leitores de tela o anunciarem como interruptor."
       switch_checked:
         title: "Ligado"
         description: "Use checked: true para iniciar ligado; combine com textos auxiliares."
@@ -712,7 +712,7 @@ pt:
         description: "disabled: true desabilita o input nativo."
       switch_form:
         title: "Com form_with"
-        description: "Use form.field_name/form.field_id. Sem input hidden — trate a ausência do parâmetro como desligado."
+        description: "Use form.field_name/form.field_id. Não há input hidden, então trate a ausência do parâmetro como desligado."
       skeleton_default:
         title: "Padrão"
         description: "Combine formas para esboçar o conteúdo que está carregando."
@@ -726,8 +726,8 @@ pt:
         title: "Valores"
         description: "Barras em diferentes estágios de conclusão."
       progress_custom:
-        title: "Máximo e altura customizados"
-        description: "Use max: para escalas próprias e classes para ajustar a altura."
+        title: "Máximo e altura personalizados"
+        description: "Use max: para outra escala e classes para ajustar a altura."
       table_demo:
         title: "Faturas"
         description: "A anatomia completa: caption, header, body e footer com células alinhadas."
@@ -741,32 +741,32 @@ pt:
         title: "Recolhido"
         description: "Use ui_breadcrumb_ellipsis para trilhas longas."
       breadcrumb_custom_separator:
-        title: "Separador custom"
+        title: "Separador personalizado"
         description: "Passe um bloco ao separador para trocar o chevron padrão."
       pagination_default:
         title: "Padrão"
-        description: "Anterior/Próxima com rótulos acessíveis, página ativa com aria-current=\"page\" e ellipsis decorativo."
+        description: "Anterior/Próxima com rótulos acessíveis, a página ativa marcada com aria-current=\"page\" e reticências decorativas."
       tabs_default:
         title: "Padrão"
-        description: "Dois painéis com cards; o painel ativo é controlado pelo controller ui-tabs."
+        description: "Dois painéis com cards; o controller ui-tabs alterna entre eles."
       tabs_disabled:
         title: "Trigger desabilitado"
         description: "disabled: true tira o trigger do fluxo de teclado e da ativação."
       dialog_default:
         title: "Padrão"
-        description: "Formulário de perfil em um <dialog> nativo: focus trap, Esc e restauração de foco vêm do navegador."
+        description: "Um formulário de perfil num <dialog> nativo: o navegador cuida de prender o foco, do Esc e de devolver o foco ao fechar."
       dialog_no_backdrop_close:
         title: "Sem fechar pelo backdrop"
         description: "close_on_backdrop: false ignora cliques fora do painel."
       dialog_custom_close:
-        title: "Footer custom"
+        title: "Rodapé personalizado"
         description: "show_close_button: false remove o X; componha seus próprios botões com ui_dialog_close."
       alert_dialog_default:
         title: "Confirmação de exclusão"
-        description: "Backdrop e Esc não fecham — a pessoa precisa escolher Cancelar ou Continuar."
+        description: "Nem o backdrop nem o Esc fecham: é preciso escolher Cancelar ou Continuar."
       sheet_default:
         title: "Padrão"
-        description: "Um painel que desliza da direita, com formulário e footer."
+        description: "Um painel que desliza da direita, com formulário e rodapé."
       sheet_sides:
         title: "Os quatro lados"
         description: "side: :right, :left, :top ou :bottom controla a borda de origem e a animação."
@@ -778,34 +778,34 @@ pt:
         description: "side: :top, :right, :bottom ou :left posiciona o balão."
       popover_default:
         title: "Padrão"
-        description: "Painel não-modal: abre no clique, foca o conteúdo e fecha por clique fora ou Esc."
+        description: "Um painel não modal: abre no clique, põe o foco no conteúdo e fecha com um clique fora ou com Esc."
       popover_align:
         title: "Alinhamento"
         description: "align: :start, :center ou :end desloca o painel no eixo cruzado."
       dropdown_menu_default:
         title: "Padrão"
-        description: "Label, grupos, itens com atalhos. Setas navegam, typeahead busca por prefixo, Esc fecha."
+        description: "Rótulo, grupos e itens com atalhos. As setas navegam, digitar as primeiras letras leva ao item e Esc fecha."
       dropdown_menu_variants:
         title: "Inset, links e destrutivo"
-        description: "inset: alinha com itens que têm ícone; tag: :a vira link; variant: :destructive destaca ações perigosas."
+        description: "inset: alinha com itens que têm ícone; tag: :a transforma o item em link; variant: :destructive destaca ações perigosas."
       select_default:
         title: "Padrão"
-        description: "Combobox APG: o foco fica no gatilho, setas/typeahead navegam e a opção ativa usa aria-activedescendant."
+        description: "Um combobox no padrão APG: o foco fica no gatilho, as setas e a digitação navegam, e a opção ativa usa aria-activedescendant."
       select_groups:
         title: "Grupos"
         description: "Agrupe opções com label e separador; itens podem ser desabilitados."
       select_form:
         title: "Com form_with"
-        description: "O valor vai num input hidden (name:). O required nativo não se aplica — valide no servidor."
+        description: "O valor vai num input hidden (name:). O required nativo não funciona aqui, então valide no servidor."
       sidebar_basic:
-        title: "Preview"
-        description: "Um sidebar contido (collapsible: :none) com header, grupos e menu. O bloco completo, com colapso e drawer mobile, está em /blocks/sidebar-01."
+        title: "Prévia"
+        description: "Uma sidebar fixa (collapsible: :none) com cabeçalho, grupos e menu. O bloco completo, que recolhe e vira gaveta no celular, está em /blocks/sidebar-01."
       aspect_ratio_default:
         title: "Padrão"
         description: "Restringe o conteúdo à proporção 16 / 9."
       spinner_default:
         title: "Padrão"
-        description: "Standalone (anuncia \"Carregando\") e composto dentro de um botão (decorativo)."
+        description: "Sozinho (anuncia \"Carregando\") e dentro de um botão (decorativo)."
       kbd_default:
         title: "Padrão"
         description: "Um grupo de teclas dentro de um texto."
@@ -817,7 +817,7 @@ pt:
         description: "Um item com mídia, conteúdo e ação."
       input_group_default:
         title: "Padrão"
-        description: "Addon de ícone à esquerda e atalho à direita."
+        description: "Um ícone à esquerda e um atalho à direita."
       button_group_default:
         title: "Padrão"
         description: "Dois botões unidos em um grupo horizontal."
@@ -826,10 +826,10 @@ pt:
         description: "Um campo vertical com label, input e descrição."
       native_select_default:
         title: "Padrão"
-        description: "Select nativo com chevron e foco estilizados."
+        description: "Um select nativo com a seta e o foco estilizados."
       collapsible_default:
         title: "Padrão"
-        description: "Lista que revela itens adicionais."
+        description: "Uma lista que mostra mais itens ao abrir."
       toggle_default:
         title: "Padrão"
         description: "Toggles de formatação, um deles pressionado."
@@ -838,61 +838,61 @@ pt:
         description: "Seleção múltipla de formatação de texto."
       slider_default:
         title: "Padrão"
-        description: "Arraste o thumb ou use as setas do teclado."
+        description: "Arraste o marcador ou use as setas do teclado."
       hover_card_default:
         title: "Padrão"
-        description: "Cartão de perfil exibido no hover."
+        description: "Um cartão de perfil que aparece ao passar o mouse."
       input_otp_default:
         title: "Padrão"
-        description: "Dois grupos de três slots separados por um traço."
+        description: "Dois grupos de três casas separados por um traço."
       drawer_default:
         title: "Padrão"
-        description: "Drawer inferior com cabeçalho, descrição e ações."
+        description: "Uma gaveta que sobe de baixo, com cabeçalho, descrição e ações."
       context_menu_default:
         title: "Padrão"
-        description: "Área que abre o menu no clique direito."
+        description: "Uma área que abre o menu com o botão direito do mouse."
       menubar_default:
         title: "Padrão"
         description: "Dois menus com itens, separadores e atalhos."
       navigation_menu_default:
         title: "Padrão"
-        description: "Gatilho com painel e um link simples."
+        description: "Um gatilho com painel e um link simples."
       command_default:
         title: "Padrão"
-        description: "Paleta com grupos, ícones e atalhos."
+        description: "Uma paleta com grupos, ícones e atalhos."
       combobox_default:
         title: "Padrão"
-        description: "Gatilho de popover com uma lista de comandos buscável."
+        description: "Um popover com uma lista de comandos em que dá para buscar."
       calendar_default:
         title: "Padrão"
-        description: "Mês atual com o dia de hoje selecionado. Setas percorrem os dias, Home/End vão às pontas da semana e PageUp/PageDown trocam de mês."
+        description: "O mês atual, com o dia de hoje selecionado. As setas percorrem os dias, Home/End vão às pontas da semana e PageUp/PageDown trocam de mês."
       calendar_range:
         title: "Intervalo"
-        description: "mode: :range grava duas datas; passar o mouse depois do primeiro clique prevê o intervalo. number_of_months: 2 mostra dois meses lado a lado."
+        description: "mode: :range guarda duas datas; depois do primeiro clique, passar o mouse mostra o intervalo. number_of_months: 2 mostra dois meses lado a lado."
       calendar_dropdown:
         title: "Legenda com selects"
-        description: "caption_layout: :dropdown troca o nome do mês por selects de mês e ano — o caminho curto para anos distantes."
+        description: "caption_layout: :dropdown troca o nome do mês por selects de mês e ano, o que facilita chegar a um ano distante."
       date_picker_default:
         title: "Padrão"
-        description: "Botão que abre o calendário em um popover e passa a exibir a data escolhida."
+        description: "Um botão que abre o calendário num popover e depois mostra a data escolhida."
       date_picker_field:
         title: "Com rótulo"
         description: "O mesmo gatilho dentro de um Field, associado ao rótulo por id."
       date_picker_range:
         title: "Intervalo"
-        description: "Duas datas em um gatilho só. O popover fecha quando a segunda ponta entra, não na primeira."
+        description: "Duas datas num só gatilho. O popover fecha depois da segunda data, não da primeira."
       date_picker_dob:
         title: "Data de nascimento"
-        description: "Legenda com selects de mês e ano e max: hoje — ninguém nasceu semana que vem."
+        description: "Selects de mês e ano na legenda e max: hoje, já que ninguém nasce no futuro."
       date_picker_input:
         title: "Com campo de texto"
-        description: "Digite a data ou escolha no calendário: o texto vira data e a data volta formatada. ↓ abre o popover."
+        description: "Digite a data ou escolha no calendário. O que você digita é interpretado, e o campo mostra a data formatada. ↓ abre o popover."
       date_picker_time:
         title: "Data e hora"
-        description: "O picker resolve o dia; um input type=\"time\" nativo resolve a hora."
+        description: "O picker define o dia e um input type=\"time\" nativo define a hora."
       date_picker_natural:
         title: "Linguagem natural"
-        description: "Aceita \"hoje\", \"amanhã\", \"em 2 semanas\", \"próxima sexta\". A tabela de frases mora no controller — é código seu."
+        description: "Entende \"hoje\", \"amanhã\", \"em 2 semanas\" e \"próxima sexta\". A lista de frases fica no controller, então você pode acrescentar as suas."
       date_picker_rtl:
         title: "RTL"
         description: "dir: :rtl espelha a grade, as setas e as teclas ←/→; month_names:/day_names: traduzem a legenda."
@@ -904,25 +904,25 @@ pt:
         description: "Cinco slides numerados com controles."
       sonner_default:
         title: "Padrão"
-        description: "Variantes default, sucesso, erro e com ação."
+        description: "As variantes padrão, sucesso, erro e com ação."
       chart_bar:
         title: "Gráfico de barras"
         description: "Uma grade, um eixo, um tooltip e uma legenda em volta de duas séries de barras: o gráfico montado passo a passo acima."
       chart_bar_horizontal:
         title: "Barras horizontais"
-        description: "Um layout vertical põe os meses descendo o eixo y. Duas listas de rótulos dentro das barras imprimem o mês e o valor."
+        description: "Num layout vertical, os meses ficam no eixo y. Duas listas de rótulos dentro das barras imprimem o mês e o valor."
       chart_bar_stacked:
         title: "Barras empilhadas"
-        description: "Barras que compartilham um stack id se empilham. Cada raio arredonda só os cantos externos da pilha."
+        description: "Barras com o mesmo stack id são empilhadas, e o raio arredonda só os cantos externos de cada pilha."
       chart_line:
         title: "Linhas"
         description: "Uma curva natural e uma em degraus, ambas com pontos, sob um tooltip com indicador de linha."
       chart_area:
         title: "Áreas empilhadas"
-        description: "Três meses de linhas diárias sob um degradê. As datas saem no idioma da página, e os rótulos que colidiriam ficam de fora."
+        description: "Três meses de linhas diárias sob um degradê. As datas aparecem no idioma da página, e rótulos que ficariam sobrepostos são omitidos."
       chart_pie:
         title: "Rosca"
-        description: "Uma pizza com raio interno, e marcação comum no furo: as camadas também compõem com HTML."
+        description: "Uma pizza com raio interno e HTML comum no meio: as camadas também se misturam com HTML."
       chart_radar:
         title: "Radar"
         description: "Dois radares sobre uma grade polar, com os meses em volta."
@@ -931,10 +931,10 @@ pt:
         description: "Um anel por navegador sobre uma trilha apagada, com o rótulo onde cada anel começa."
       chart_tooltip:
         title: "Indicadores do tooltip"
-        description: "Os indicadores de ponto, linha e tracejado, cada um aberto na terça-feira antes que alguém aponte."
+        description: "Os indicadores de ponto, linha e tracejado, cada um já mostrando a terça-feira antes de alguém passar o mouse."
       chart_layer:
         title: "Uma camada sua"
-        description: "Uma linha de meta desenhada por um controller Stimulus do próprio app, na escala de valores do gráfico."
+        description: "Uma linha de meta desenhada na escala de valores do gráfico por um controller Stimulus do próprio app."
       data_table_default:
         title: "Padrão"
         description: "Filtro por e-mail, colunas ordenáveis e seleção de linhas."
@@ -952,13 +952,13 @@ pt:
       empty:
         subtitle: "Um estado vazio: mídia, título, descrição e ações centralizados."
       item:
-        subtitle: "Uma linha flexível: mídia + conteúdo (título/descrição) + ações. Agrupe com ui_item_group."
+        subtitle: "Uma linha flexível com mídia, conteúdo (título e descrição) e ações. Agrupe várias com ui_item_group."
       input_group:
-        subtitle: "Combina um input/textarea com addons (ícones, texto, botões) no início ou fim."
+        subtitle: "Junta um input ou textarea com complementos (ícones, texto, botões) no começo ou no fim."
       button_group:
-        subtitle: "Junta visualmente uma sequência de botões, colapsando bordas e cantos internos."
+        subtitle: "Junta visualmente uma sequência de botões, unindo as bordas e os cantos internos."
       field:
-        subtitle: "Compõe label, controle, descrição e erro de um campo de formulário."
+        subtitle: "Reúne o rótulo, o controle, a descrição e o erro de um campo de formulário."
       native_select:
         subtitle: "Um <select> nativo estilizado para combinar com os demais controles."
       collapsible:
@@ -968,13 +968,13 @@ pt:
       toggle_group:
         subtitle: "Um grupo de toggles com seleção única ou múltipla e navegação por setas."
       slider:
-        subtitle: "Um slider de um thumb (padrão WAI-ARIA) com valor espelhado em um input hidden."
+        subtitle: "Um slider com um marcador (padrão WAI-ARIA), com o valor copiado para um input hidden."
       hover_card:
         subtitle: "Conteúdo rico que abre ao passar o mouse ou focar o gatilho, com atrasos configuráveis."
       input_otp:
-        subtitle: "Campo de código de uso único: slots de um caractere com avanço, backspace e colagem."
+        subtitle: "Um campo para código de uso único: casas de um caractere, com avanço automático, backspace e colar."
       drawer:
-        subtitle: "Um painel que desliza de uma borda, sobre um <dialog> nativo, com arrastar para fechar."
+        subtitle: "Um painel que desliza de uma borda, feito com um <dialog> nativo, que fecha ao ser arrastado."
       context_menu:
         subtitle: "Um menu aberto com o botão direito, posicionado no ponteiro, com navegação por teclado."
       menubar:
@@ -984,15 +984,15 @@ pt:
       command:
         subtitle: "Uma paleta de comandos filtrável, com navegação por setas e Enter."
       combobox:
-        subtitle: "Uma receita: Popover + Command. Não é um componente novo — instala popover e command."
+        subtitle: "Um Popover com um Command dentro. Não é um componente separado: instalá-lo instala popover e command."
       resizable:
         subtitle: "Painéis redimensionáveis com alças arrastáveis e ajuste por teclado."
       carousel:
         subtitle: "Um carrossel de slides com controles anterior/próximo e navegação por setas."
       sonner:
-        subtitle: "Notificações temporárias empilhadas numa região live polida. Dispare com window.toast ou via Stimulus."
+        subtitle: "Notificações temporárias empilhadas numa região aria-live polite. Dispare com window.toast ou pelo Stimulus."
       chart:
-        subtitle: "Gráficos componíveis desenhados com D3. Monte uma grade, eixos, séries, um tooltip e uma legenda — ou uma camada que você mesmo desenha."
+        subtitle: "Gráficos desenhados com D3 e montados por partes: grade, eixos, séries, tooltip e legenda, ou uma camada que você mesmo desenha."
       data_table:
-        subtitle: "Tabela com filtro, ordenação, paginação, seleção de linhas e visibilidade de colunas — tudo no cliente."
+        subtitle: "Uma tabela com filtro, ordenação, paginação, seleção de linhas e escolha de colunas visíveis, tudo no navegador."
 

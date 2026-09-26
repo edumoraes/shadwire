@@ -1,5 +1,5 @@
 <% content_for :title, "Composição — Shadwire" %>
-<% content_for :description, "Como os componentes do Shadwire se compõem: helpers aninhados em vez de props, itens dentro do grupo, título em overlays e quando renderizar a classe direto." %>
+<% content_for :description, "Como montar os componentes do Shadwire: helpers aninhados em vez de props, itens dentro do grupo, título em overlays e quando renderizar a classe diretamente." %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
 <% end %>
@@ -7,7 +7,7 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Composição",
-        description: "Subcomponentes são helpers aninhados, não props. A estrutura da view espelha a do HTML, como no shadcn/ui." %>
+        description: "Você monta um componente aninhando helpers, como o shadcn/ui aninha componentes React. A view fica com a mesma forma do HTML que ela gera." %>
 
   <section class="space-y-4">
     <%= docs_h2("Helpers só existem para o que está instalado") %>
@@ -20,33 +20,32 @@
     </p>
     <p class="leading-7 text-muted-foreground">
       O helper de um componente que <em>não</em> está instalado não existe, e chamá-lo levanta
-      <%= docs_code("NoMethodError") %> no request. Confira
-      <%= docs_code("installed[].helpers") %> antes de escrever.
+      <%= docs_code("NoMethodError") %> quando a página renderiza. Confira
+      <%= docs_code("installed[].helpers") %> antes de escrever a view.
     </p>
 
     <%= docs_code_block("bin/shadwire status --json\nbin/shadwire add carousel --yes", language: :shell) %>
 
     <%= render layout: "docs/callout", locals: { icon: "info", title: "Sobrou um ui_helper.rb na raiz?" } do %>
-      Instalações antigas tinham um único <code>app/helpers/ui_helper.rb</code>. Ele define
-      helpers de componentes que talvez não estejam instalados.
-      <code>status --json</code> reporta isso em <code>helpers.legacyHelperPresent</code>; pode
-      apagar o arquivo.
+      Versões antigas instalavam um único <code>app/helpers/ui_helper.rb</code>, que define
+      helpers de componentes que você talvez não tenha. O <code>status --json</code> aponta
+      esse arquivo em <code>helpers.legacyHelperPresent</code>, e você pode apagá-lo.
     <% end %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Subcomponentes são helpers aninhados") %>
     <p class="leading-7 text-muted-foreground">
-      Não existem slots do ViewComponent nem props de conteúdo neste código. A composição
-      acontece por chamadas aninhadas.
+      Estes componentes não usam slots do ViewComponent nem recebem o conteúdo como argumento.
+      Você os monta aninhando chamadas.
     </p>
 
     <%= docs_code_block(@snippets[:wrong_props]) %>
     <%= docs_code_block(@snippets[:right_props]) %>
 
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("bin/shadwire info <nome>") %> lista os helpers de subcomponente de cada
-      item. Não invente nomes: o helper é <%= docs_code("ui_card_content") %>, não
+      <%= docs_code("bin/shadwire info <nome>") %> lista o helper de cada parte. Consulte em vez
+      de chutar: o helper é <%= docs_code("ui_card_content") %>, e não
       <%= docs_code("ui_card_body") %>.
     </p>
   </section>
@@ -54,8 +53,8 @@
   <section class="space-y-4">
     <%= docs_h2("Use a composição inteira") %>
     <p class="leading-7 text-muted-foreground">
-      Não colapse um componente em uma parte só. Header, title e description carregam
-      semântica; despejar tudo dentro do content joga isso fora.
+      Não coloque tudo numa parte só. Header, title e description renderizam cada um a sua
+      própria marcação, e jogar tudo dentro do content perde isso.
     </p>
 
     <%= docs_code_block(@snippets[:wrong_collapse]) %>
@@ -68,7 +67,7 @@
     <%= docs_code_block(@snippets[:right_group]) %>
 
     <p class="leading-7 text-muted-foreground">
-      Vale igual para <%= docs_code("ui_tabs_trigger") %> dentro de
+      O mesmo vale para <%= docs_code("ui_tabs_trigger") %> dentro de
       <%= docs_code("ui_tabs_list") %>, <%= docs_code("ui_breadcrumb_item") %> dentro de
       <%= docs_code("ui_breadcrumb_list") %> e <%= docs_code("ui_pagination_item") %> dentro de
       <%= docs_code("ui_pagination_content") %>.
@@ -80,7 +79,8 @@
     <p class="leading-7 text-muted-foreground">
       <%= docs_code("dialog") %>, <%= docs_code("alert-dialog") %>,
       <%= docs_code("sheet") %> e <%= docs_code("drawer") %> precisam do componente de título
-      para leitores de tela, mesmo quando o desenho não mostra nenhum.
+      para que leitores de tela consigam anunciá-los, mesmo quando o layout não mostra um
+      título visível.
     </p>
 
     <%= docs_code_block(@snippets[:wrong_title]) %>
@@ -91,7 +91,7 @@
     <%= docs_h2("Componentes interativos precisam de Stimulus") %>
     <p class="leading-7 text-muted-foreground">
       <%= registry_stimulus_component_count %> dos <%= docs_component_items.size %> componentes trazem um controller.
-      <%= docs_code("bin/shadwire info <nome>") %> reporta
+      O <%= docs_code("bin/shadwire info <nome>") %> indica quais pelo campo
       <%= docs_code("requiresStimulus") %>, e <%= docs_code("status.stack") %> diz se o app tem
       importmap e stimulus-rails.
     </p>
@@ -104,17 +104,18 @@
   </section>
 
   <section class="space-y-4">
-    <%= docs_h2("Renderizando a classe direto") %>
+    <%= docs_h2("Renderizando a classe diretamente") %>
     <p class="leading-7 text-muted-foreground">
-      O helper é um invólucro fino. As duas formas são equivalentes:
+      O helper só embrulha a classe, então as duas formas renderizam a mesma coisa:
     </p>
 
     <%= docs_code_block(@snippets[:helper_vs_class]) %>
 
     <p class="leading-7 text-muted-foreground">
-      Prefira o helper nas views. Use a classe quando precisar do objeto do componente, ou
-      dentro de outro ViewComponent. Componentes não recebem helpers automaticamente, então
-      inclua o módulo para chamar <%= docs_code("ui_button") %> a partir do template:
+      Nas views, use o helper. Use a classe quando precisar do próprio objeto do componente,
+      ou dentro de outro ViewComponent. ViewComponents não recebem helpers automaticamente,
+      então inclua o módulo para chamar <%= docs_code("ui_button") %> no template do
+      componente:
     </p>
 
     <%= docs_code_block(@snippets[:inside_component], language: :ruby) %>

@@ -16,7 +16,7 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      Separadores e ellipsis são decorativos (<code class="rounded bg-muted px-1 py-0.5 text-xs">aria-hidden</code>);
+      Os separadores e as reticências são decorativos (<code class="rounded bg-muted px-1 py-0.5 text-xs">aria-hidden</code>);
       a página atual usa <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-current="page"</code>.
     </p>
     <%= docs_code_block(@usage_helper) %>
@@ -49,22 +49,22 @@
       <tr>
         <td><code>ui_breadcrumb</code></td>
         <td><code>nav</code></td>
-        <td>Já vem com <code>aria-label="breadcrumb"</code> (sobrescritível).</td>
+        <td>Já vem com <code>aria-label="breadcrumb"</code>, que você pode trocar.</td>
       </tr>
       <tr>
         <td><code>ui_breadcrumb_list</code> / <code>ui_breadcrumb_item</code></td>
         <td><code>ol</code> / <code>li</code></td>
-        <td>Estrutura da trilha.</td>
+        <td>A estrutura da trilha.</td>
       </tr>
       <tr>
         <td><code>ui_breadcrumb_link</code></td>
         <td><code>a</code></td>
-        <td>Passe <code>href</code> via attrs.</td>
+        <td>Passe <code>href</code> como qualquer outro atributo HTML.</td>
       </tr>
       <tr>
         <td><code>ui_breadcrumb_page</code></td>
         <td><code>span</code></td>
-        <td>Página atual: <code>role="link"</code>, <code>aria-disabled</code>, <code>aria-current="page"</code>.</td>
+        <td>A página atual: <code>role="link"</code>, <code>aria-disabled</code>, <code>aria-current="page"</code>.</td>
       </tr>
       <tr>
         <td><code>ui_breadcrumb_separator</code></td>
@@ -74,7 +74,7 @@
       <tr>
         <td><code>ui_breadcrumb_ellipsis</code></td>
         <td><code>span</code></td>
-        <td>Indicador decorativo de itens recolhidos.</td>
+        <td>Um marcador decorativo para itens recolhidos.</td>
       </tr>
     <% end %>
   </section>

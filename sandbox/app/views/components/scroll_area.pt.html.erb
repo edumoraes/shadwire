@@ -7,7 +7,7 @@
   <header class="flex flex-col gap-3">
     <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-5xl">Scroll Area</h1>
     <p class="text-lg leading-snug text-muted-foreground">
-      Aprimora a rolagem nativa com uma barra estilizada e consistente entre navegadores.
+      A rolagem nativa, com uma barra estilizada que fica igual em todos os navegadores.
     </p>
   </header>
 
@@ -16,8 +16,8 @@
   <section class="flex flex-col gap-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      Use o helper nas views Rails, ou renderize a classe ViewComponent diretamente
-      quando precisar da API de objeto.
+      Use o helper nas views, ou renderize a classe ViewComponent diretamente quando
+      precisar do próprio objeto do componente.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <%= docs_code_block(@usage_component) %>
@@ -29,7 +29,7 @@
       A anatomia do shadcn é <code class="rounded bg-muted px-1 py-0.5 text-xs">ScrollArea</code>
       com um <code class="rounded bg-muted px-1 py-0.5 text-xs">ScrollBar</code> opcional.
       No Shadwire, <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_scroll_area</code>
-      renderiza viewport, conteúdo, barras, thumb e canto para você.
+      renderiza para você o viewport, o conteúdo, as barras, o cursor da barra e o canto.
     </p>
     <%= docs_code_block(@composition, language: :text) %>
   </section>

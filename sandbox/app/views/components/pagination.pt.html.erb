@@ -16,10 +16,10 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      Os links compõem o visual do <code class="rounded bg-muted px-1 py-0.5 text-xs">Button</code>:
+      Os links usam o visual do <code class="rounded bg-muted px-1 py-0.5 text-xs">Button</code>:
       a página ativa usa a variante outline e recebe
       <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-current="page"</code>.
-      Integre com Pagy/Kaminari gerando os <code class="rounded bg-muted px-1 py-0.5 text-xs">href</code> reais.
+      Para usar com Pagy ou Kaminari, gere os <code class="rounded bg-muted px-1 py-0.5 text-xs">href</code> de verdade com eles.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">
@@ -56,7 +56,7 @@
       <tr>
         <td><code>ui_pagination_link</code></td>
         <td><code>active: false</code>, <code>size: :icon</code></td>
-        <td>Renderiza <code>&lt;a&gt;</code> com visual de Button (outline quando ativo, ghost caso contrário).</td>
+        <td>Renderiza um <code>&lt;a&gt;</code> com visual de Button (outline quando ativo, ghost nos demais).</td>
       </tr>
       <tr>
         <td><code>ui_pagination_previous</code> / <code>ui_pagination_next</code></td>

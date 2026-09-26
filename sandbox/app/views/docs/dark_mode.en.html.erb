@@ -7,57 +7,58 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Dark mode",
-        description: "One class on <html> decides the whole theme. No component has to know about it." %>
+        description: "A single class on <html> switches the whole site to dark mode, and the components never need to know." %>
 
   <section class="space-y-4">
     <p class="leading-7">
-      <%= docs_code("shadwire.css") %> declares the dark variant anchored to a class:
+      <%= docs_code("shadwire.css") %> ties Tailwind's dark variant to a class:
     </p>
 
     <%= docs_code_block(@snippets[:variant], language: :css) %>
 
     <p class="leading-7 text-muted-foreground">
-      The <%= docs_code("dark") %> variant fires when an ancestor carries the
-      <%= docs_code(".dark") %> class, so switching themes is toggling that class on
-      <%= docs_code("<html>") %>. Because every component uses tokens, and every token already
-      has a value in both blocks, dark mode costs no component code at all.
+      The <%= docs_code("dark") %> variant applies when an ancestor has the
+      <%= docs_code(".dark") %> class, so you switch themes by adding or removing that class on
+      <%= docs_code("<html>") %>. The components only use tokens, and every token has both a
+      light and a dark value, so dark mode needs no code in the components.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("The toggle") %>
     <p class="leading-7 text-muted-foreground">
-      A five-line Stimulus controller. It is what switches the theme on this site:
+      This five-line Stimulus controller is what switches the theme on this site:
     </p>
 
     <%= docs_code_block(@snippets[:controller], language: :javascript) %>
 
     <p class="leading-7 text-muted-foreground">
-      And the button, with the two icons swapping through the variant itself:
+      And the button. The dark variant decides which of its two icons is shown:
     </p>
 
     <%= docs_code_block(@snippets[:toggle_markup]) %>
 
     <p class="text-sm leading-6 text-muted-foreground">
-      <%= docs_code("dark:hidden") %> and <%= docs_code("hidden dark:block") %> decide which
-      element shows, not what colour it is. That is the legitimate use of the
-      <%= docs_code("dark:") %> prefix.
+      <%= docs_code("dark:hidden") %> and <%= docs_code("hidden dark:block") %> choose which
+      element is visible, not its colour. That is a fine use of the <%= docs_code("dark:") %>
+      prefix; using it for colours is not, as explained below.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Avoiding the flash") %>
     <p class="leading-7 text-muted-foreground">
-      If the class is only applied once the application's JavaScript has loaded, anyone who
-      chose the dark theme gets a white flash on every navigation. The fix is an inline script
-      in <%= docs_code("<head>") %>, ahead of any stylesheet, so it runs before the first paint:
+      If the class is only added after the app's JavaScript loads, people who chose the dark
+      theme see a white flash on every page load. To avoid it, put an inline script in
+      <%= docs_code("<head>") %>, before any stylesheet, so it runs before the page is drawn:
     </p>
 
     <%= docs_code_block(@snippets[:head_script], language: :html) %>
 
     <p class="leading-7 text-muted-foreground">
-      The order matters: the saved preference first, the system preference as the fallback.
-      That way someone can choose light on a dark system and have the choice stick.
+      It checks the saved preference first and only then falls back to the system setting.
+      That way someone can pick the light theme on a system set to dark, and the choice is
+      remembered.
     </p>
 
     <%= render layout: "docs/callout", locals: { icon: "info", title: "Content Security Policy" } do %>
@@ -68,29 +69,29 @@
   </section>
 
   <section class="space-y-4">
-    <%= docs_h2("Never write dark: for colour") %>
+    <%= docs_h2("Don't use dark: for colours") %>
     <p class="leading-7 text-muted-foreground">
-      A hand-written override duplicates the colour decision and falls out of step with the
-      theme the first time anyone touches the tokens:
+      A hand-written dark colour repeats a decision the tokens already make, and it stops
+      matching the theme as soon as someone changes the tokens:
     </p>
 
     <%= docs_code_block(@snippets[:wrong]) %>
     <%= docs_code_block(@snippets[:right]) %>
 
     <p class="leading-7 text-muted-foreground">
-      If you need a colour the tokens do not cover,
+      If you need a colour the tokens don't cover,
       <%= link_to "add a token", docs_theming_path, class: "font-medium underline underline-offset-4" %>.
-      It gets a light and a dark value, and it keeps working through any future retheming.
+      You give it a light and a dark value, and it keeps working when the theme changes.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Testing both modes") %>
     <p class="leading-7 text-muted-foreground">
-      Theme bugs are almost never a literally wrong colour. They are usually a specificity
-      collision between utilities of equal weight, or a missing companion utility: the class
-      string looks right and the compiled CSS is not. When something looks off in the dark,
-      read the generated CSS.
+      Check your screens in both modes. When something looks wrong in dark mode, the colour
+      value itself is rarely the problem. More often two utilities with the same specificity
+      are competing, or one of a pair of utilities is missing, so the class list looks right
+      while the compiled CSS is not. Look at the generated CSS.
     </p>
   </section>
 </article>
