@@ -1,29 +1,30 @@
 # shadwire
 
-shadcn/ui components for Ruby on Rails, delivered the shadcn **Open Code** way:
-the CLI copies component *source* into your app and records it in `shadwire.json`.
-Installed files are yours to edit — there is no runtime dependency on Shadwire.
+shadcn/ui components for Ruby on Rails. Like the shadcn CLI, this one copies the
+component *source* into your app and records what it installed in
+`shadwire.json`. You can edit the installed files freely, and your app does not
+depend on Shadwire at runtime.
 
-Part of the [Shadwire](https://github.com/edumoraes/shadwire) monorepo. The
-component source lives in that repo's `registry/` and is published to a static
-registry the CLI installs from over HTTP.
+The CLI is part of the [Shadwire](https://github.com/edumoraes/shadwire) monorepo.
+The component source lives in that repo's `registry/`, which is published as a
+static registry that the CLI downloads from over HTTP.
 
 ## Install
 
 ```bash
-gem install shadwire                       # global — then: shadwire init
-bundle add shadwire --group development    # in the app — then: bundle exec shadwire init
+gem install shadwire                       # global, then: shadwire init
+bundle add shadwire --group development    # in the app, then: bundle exec shadwire init
 ```
 
-`init` adds `shadwire` to the app's `development` group (if it is not there
-already) and writes the `bin/shadwire` binstub. That binstub is the canonical
-entry point: it resolves through the app's bundle, so everyone who installs the
-development group runs the same CLI version. `init` is the one command you run
-un-prefixed, because it is what creates the binstub.
+`init` adds `shadwire` to the app's `development` group if it is not there yet,
+and writes a `bin/shadwire` binstub. Run every other command through the binstub:
+it loads the CLI from the app's bundle, so everyone on the project uses the same
+version. `init` is the only command you run without `bin/`, because the binstub
+does not exist until it runs.
 
-A bundle installed with `--without development` (common for deploy, and for some
-CI jobs) has no `shadwire`, so `bin/shadwire` will not run there. Install the
-development group in any job that runs the CLI — the drift check below, for one.
+A bundle installed with `--without development`, which is common in deploys and
+some CI jobs, does not include `shadwire`, so `bin/shadwire` will not run there.
+Any job that uses the CLI, such as a drift check, needs the development group.
 
 Requires Ruby >= 3.2 and a Rails app (>= 7.1) using ViewComponent and Tailwind CSS.
 
@@ -46,8 +47,8 @@ Run `bin/shadwire help COMMAND` for the built-in usage of any command.
 
 ### `status` and coding agents
 
-`status --json` is the one call that describes the whole install, which is why
-the Shadwire agent skill injects it:
+`status --json` describes the whole install in a single call. The Shadwire agent
+skill loads it into the agent's context for that reason:
 
 ```json
 {
@@ -64,28 +65,29 @@ the Shadwire agent skill injects it:
 }
 ```
 
-`installed[].helpers` lists the `ui_*` methods that actually exist in the app, so
-there is no guessing about which helpers are callable.
+`installed[].helpers` lists the `ui_*` methods defined in the app, so an agent
+knows which helpers it can call.
 
-`status` never raises: a directory that is not a Rails app, a missing
-`shadwire.json`, and an unreachable registry are all reported as fields
-(`"rails": false`, `"registryError": "..."`) with exit code 0.
+`status` never fails. A directory that is not a Rails app, a missing
+`shadwire.json` or an unreachable registry show up as fields
+(`"rails": false`, `"registryError": "..."`), and the exit code is still 0.
 
 ### Flags
 
-- `--cwd DIR` — run against another app directory (default: the current directory). Available on every command.
-- `--yes`, `-y` — apply file and dependency changes without prompting (the agent / CI path).
-- `--overwrite` — overwrite locally-modified files without prompting (`add` / `update`).
-- `--no-deps` — skip transitive registry dependencies (`add` / `update`; deps are on by default).
-- `--registry URL` — install or read from this registry instead of the configured one.
-- `--json` — emit machine-readable JSON instead of human output.
-- `--force` — overwrite an existing `shadwire.json` (`init`).
-- `--exit-code` — make `diff` exit non-zero when any drift is found (for CI).
+- `--cwd DIR`: run against another app directory instead of the current one. Works with every command.
+- `--yes`, `-y`: apply file and dependency changes without asking. Agents and CI use this.
+- `--overwrite`: overwrite files you changed locally without asking (`add`, `update`).
+- `--no-deps`: skip the component's registry dependencies, which are installed by default (`add`, `update`).
+- `--registry URL`: read from this registry instead of the configured one.
+- `--json`: print JSON instead of human-readable output.
+- `--force`: overwrite an existing `shadwire.json` (`init`).
+- `--exit-code`: make `diff` exit non-zero when a file has drifted, so CI can fail on it.
 
 ## `shadwire.json`
 
-`init` writes `shadwire.json` at the app root. It records the registry, where
-files install (aliases), the Tailwind entrypoint, and what is installed:
+`init` writes `shadwire.json` at the app root. It records the registry URL, the
+directories each kind of file goes to (aliases), the Tailwind entrypoint, and
+what is installed:
 
 ```json
 {
@@ -104,10 +106,10 @@ files install (aliases), the Tailwind entrypoint, and what is installed:
 }
 ```
 
-- `registry` — base URL the CLI installs from (persisted from `init --registry`).
-- `tailwind.css` — the app's Tailwind entrypoint that receives the `@import`.
-- `aliases` — install targets for each kind of file.
-- `installed` — per-component `version` plus the files it owns (used by `diff`, `update`, and `remove`).
+- `registry`: the base URL the CLI installs from. `init --registry` sets it.
+- `tailwind.css`: the app's Tailwind entrypoint, where `init` adds the `@import`.
+- `aliases`: the directory for each kind of file.
+- `installed`: each component's `version` and the files it owns. `diff`, `update` and `remove` read this.
 
 ## Registry resolution
 
@@ -117,10 +119,10 @@ For any command, the registry base URL is resolved in this order:
 2. the `registry` field in the app's `shadwire.json`;
 3. the built-in default, `https://shadwire.edumoraes.dev.br/r`.
 
-Both `https://` and local `file://` bases are supported. Point `--registry` at a
-`file://` path to install from a registry built locally with `bin/build_registry`
-(for example `file://$PWD/build/r`). The CLI reads `index.json` (the catalog and
-shared base) and `<name>.json` (a component with its files inlined) from that base.
+Both `https://` and local `file://` URLs work. To test a registry you built with
+`bin/build_registry`, point `--registry` at it (for example `file://$PWD/build/r`).
+The CLI reads `index.json` (the catalog and the shared base files) and
+`<name>.json` (one component, with its files inlined) from that URL.
 
 ## License
 

@@ -1,5 +1,5 @@
 <% content_for :title, "Registry — Shadwire" %>
-<% content_for :description, "The static registry the CLI installs from: index.json, the items with their file contents inlined, and how to serve your own." %>
+<% content_for :description, "The static registry the CLI installs from: index.json, one JSON file per component with its source inside, and how to host your own." %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
 <% end %>
@@ -7,21 +7,21 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Registry",
-        description: "Static JSON files served over HTTP, with no application server and no authentication. It is what the CLI reads." %>
+        description: "The CLI installs components from a set of static JSON files. There is no application server and no login." %>
 
   <section class="space-y-4">
     <p class="leading-7">
-      Shadwire's published registry lives at
+      Shadwire's registry is published at
       <%= link_to "shadwire.edumoraes.dev.br/r", "https://shadwire.edumoraes.dev.br/r/index.json", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>.
-      There are two kinds of document: an index carrying the catalog, and one file per item with
-      the contents of each of its files inlined.
+      It has an index with the catalog, and one file per item that contains the full source of
+      each of the item's files.
     </p>
 
     <%= render "docs/table",
           headers: [ "URL", "Contents" ],
           rows: [
-            [ docs_code("/r/index.json"), "The catalog (name, title, description, when to use) and `base`: the shared files and gems that init installs." ],
-            [ docs_code("/r/{name}.json"), "One component: metadata, resolved registry dependencies, the extracted API, and the files with their contents inlined." ],
+            [ docs_code("/r/index.json"), safe_join([ "The catalog (name, title, description, when to use) and ", docs_code("base"), ": the shared files and gems that init installs." ]) ],
+            [ docs_code("/r/{name}.json"), "One component: its metadata, the other items it depends on, its API, and its files with their contents." ],
             [ docs_code("/r/llms.txt"), "The same catalog in plain text, for agents." ],
             [ docs_code("/r/llms-full.txt"), "Every component's full API in plain text." ]
           ] %>
@@ -32,8 +32,8 @@
   <section class="space-y-4">
     <%= docs_h2("index.json") %>
     <p class="leading-7 text-muted-foreground">
-      What <%= docs_code("list") %> and <%= docs_code("search") %> read, and where
-      <%= docs_code("init") %> gets the base installation from.
+      <%= docs_code("list") %> and <%= docs_code("search") %> read this file, and
+      <%= docs_code("init") %> gets the base files from it.
     </p>
 
     <%= docs_code_block(@snippets[:index], language: :json) %>
@@ -42,9 +42,9 @@
   <section class="space-y-4">
     <%= docs_h2("One item") %>
     <p class="leading-7 text-muted-foreground">
-      Each item carries enough to install without a second request, file contents included.
-      <%= docs_code("registryDependencies") %> arrives with its transitive closure already
-      resolved, so the CLI never has to walk the graph.
+      Each item has everything needed to install it in a single request, file contents
+      included. <%= docs_code("registryDependencies") %> already includes the dependencies of
+      dependencies, so the CLI does not have to look them up one by one.
     </p>
 
     <%= docs_code_block(@snippets[:item], language: :json) %>
@@ -52,51 +52,53 @@
     <%= render "docs/table",
           headers: [ "Field", "What it is" ],
           rows: [
-            [ docs_code("whenToUse"), "One sentence on when to reach for this component and what its neighbours are. It is the text search matches against." ],
-            [ docs_code("usage"), "Ready-made ERB snippets for the most common case." ],
-            [ docs_code("registryDependencies"), "Other items that have to come along, transitive closure included." ],
+            [ docs_code("whenToUse"), "A sentence on when to use this component and which similar ones to consider. Search matches against this text." ],
+            [ docs_code("usage"), "ERB snippets for the most common uses." ],
+            [ docs_code("registryDependencies"), "The other items that get installed with it, including indirect dependencies." ],
             [ docs_code("requiresStimulus"), "True when the item installs a controller under app/javascript/." ],
-            [ docs_code("api.components[]"), "Extracted from the source: class, helper, variants, sizes, props and attributes." ],
-            [ docs_code("files[]"), safe_join([ "Each file as ", docs_code("{ target, type, content }"), ", with no source paths." ]) ]
+            [ docs_code("api.components[]"), "Read from the source code: class, helper, variants, sizes, arguments and attributes." ],
+            [ docs_code("files[]"), safe_join([ "Each file as ", docs_code("{ target, type, content }"), ". Paths inside the Shadwire repository are left out." ]) ]
           ] %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("How it is built") %>
     <p class="leading-7 text-muted-foreground">
-      The source of truth is <%= docs_code("registry/registry.json") %> in the monorepo, which
-      lists each item's files as <%= docs_code("source") %> → <%= docs_code("target") %> pairs.
-      <%= docs_code("bin/build_registry") %> turns that into the published registry, inlining the
-      contents and extracting the API from the source:
+      It starts from <%= docs_code("registry/registry.json") %> in the Shadwire repository,
+      which lists each item's files as <%= docs_code("source") %> → <%= docs_code("target") %>
+      pairs. <%= docs_code("bin/build_registry") %> turns that into the published registry: it
+      copies in each file's contents and reads the API from the source:
     </p>
 
     <%= docs_code_block(@snippets[:build], language: :shell) %>
 
     <p class="leading-7 text-muted-foreground">
-      The output goes to <%= docs_code("build/") %>, which is generated and never hand-edited.
-      CI rebuilds it on every push to <%= docs_code("main") %>, alongside this site's deploy.
+      The output goes to <%= docs_code("build/") %>, which is generated and should not be
+      edited by hand. CI rebuilds it on every push to <%= docs_code("main") %>, when it deploys
+      this site.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Serving your own") %>
     <p class="leading-7 text-muted-foreground">
-      Because these are static files, any host will do: a bucket, a Pages site, a directory
-      behind a proxy. Point the CLI at it with <%= docs_code("--registry") %>, or persist the
-      choice into <%= docs_code("shadwire.json") %> by passing the flag to
-      <%= docs_code("init") %>.
+      These are static files, so you can host them anywhere: a storage bucket, GitHub Pages,
+      a directory behind a web server. Point the CLI at it with <%= docs_code("--registry") %>,
+      or pass the flag to <%= docs_code("init") %> to save it in
+      <%= docs_code("shadwire.json") %>.
     </p>
 
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code("file://") %> bases work too, which is how you test a registry built locally:
+      <%= docs_code("file://") %> URLs work too, which is handy for testing a registry you
+      built locally:
     </p>
 
     <%= docs_code_block(@snippets[:local], language: :shell) %>
 
     <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "The registry URL is written into the user's app" } do %>
-      <code>shadwire.json</code> keeps the URL used at <code>init</code> time. Existing installs
-      go on pointing at the old address, so moving a published registry means keeping a
-      redirect in place.
+      <code>shadwire.json</code> keeps the URL that was used when <code>init</code> ran. Apps
+      that already installed from you keep using that address, so if you move a registry,
+      leave a redirect at the old URL.
     <% end %>
   </section>
 </article>

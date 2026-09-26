@@ -1,5 +1,5 @@
 <% content_for :title, "Introdução — Shadwire" %>
-<% content_for :description, "Shadwire porta o modelo Open Code do shadcn/ui para o Ruby on Rails: código de componentes ViewComponent que a sua aplicação instala e passa a possuir." %>
+<% content_for :description, "O shadcn/ui para Ruby on Rails: componentes ViewComponent cujo código-fonte você instala no seu app e passa a manter como seu." %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
 <% end %>
@@ -7,39 +7,38 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Introdução",
-        description: "Shadwire porta o modelo Open Code do shadcn/ui para o Ruby on Rails. Os componentes são código-fonte que a sua aplicação copia e passa a possuir, sem nenhuma gem em runtime." %>
+        description: "O shadcn/ui para Ruby on Rails. A CLI copia o código-fonte de cada componente para o seu app, e daí em diante o código é seu." %>
 
   <section class="space-y-4">
     <p class="leading-7">
-      O shadcn/ui inverteu a relação com bibliotecas de UI. Em vez de instalar um pacote e
-      configurar por fora o que ele permite, você copia o código-fonte do componente para
-      dentro do projeto. Shadwire faz o mesmo para o Rails. Os componentes são classes
+      O shadcn/ui mudou o jeito de usar uma biblioteca de UI. Em vez de instalar um pacote e
+      configurá-lo de fora, você copia o código-fonte de cada componente para o projeto e mexe
+      nele como no resto do seu código. O Shadwire faz o mesmo no Rails. Os componentes são classes
       <%= link_to "ViewComponent", "https://viewcomponent.org", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
-      estilizadas com Tailwind CSS v4, distribuídas por um registry estático e instaladas
-      por uma CLI.
+      estilizadas com Tailwind CSS v4, e uma CLI os instala a partir de um registry estático.
     </p>
 
-    <%= render layout: "docs/callout", locals: { icon: "info", title: "Nada disso vira dependência de runtime" } do %>
-      A gem <code>shadwire</code> vive no grupo <code>development</code> e só existe para
-      instalar e sincronizar arquivos. Se você removê-la, os componentes instalados
-      continuam funcionando como estão.
+    <%= render layout: "docs/callout", locals: { icon: "info", title: "Sem dependência em runtime" } do %>
+      A gem <code>shadwire</code> fica no grupo <code>development</code> e só serve para
+      instalar e atualizar arquivos. Se você removê-la, os componentes instalados
+      continuam funcionando.
     <% end %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Como funciona") %>
     <p class="leading-7 text-muted-foreground">
-      O registry publica, a CLI instala e o seu app fica com os arquivos.
+      Um componente sai do registry e chega ao seu app em três passos.
     </p>
 
     <ol class="space-y-4">
       <% [
         { step: "1", title: "O registry publica",
-          body: "Cada componente é publicado como um JSON com o conteúdo dos arquivos embutido, servido em https://shadwire.edumoraes.dev.br/r. São arquivos estáticos, sem servidor de aplicação nem autenticação." },
+          body: "Cada componente é publicado em https://shadwire.edumoraes.dev.br/r como um arquivo JSON que traz o conteúdo dos seus arquivos-fonte. São arquivos estáticos: não há servidor de aplicação nem login." },
         { step: "2", title: "A CLI instala",
-          body: "bin/shadwire add button baixa o item, grava os arquivos nos caminhos do seu app, aplica as gems e os pins de importmap que ele precisa, e anota tudo no shadwire.json." },
-        { step: "3", title: "Você passa a ser dono",
-          body: "Os arquivos são seus. Edite variantes, troque classes, renomeie. bin/shadwire diff mostra o que divergiu do registry." }
+          body: "bin/shadwire add button baixa o item, grava os arquivos nos lugares certos do seu app, adiciona as gems e os pins de importmap de que ele precisa e registra tudo no shadwire.json." },
+        { step: "3", title: "O código é seu",
+          body: "A partir daí os arquivos fazem parte do seu app. Mude variantes, classes ou nomes como quiser; bin/shadwire diff mostra o que você alterou em relação ao registry." }
       ].each do |item| %>
         <li class="flex gap-4">
           <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
@@ -66,17 +65,17 @@
     <div class="grid gap-4 sm:grid-cols-2">
       <% [
         { icon: "package-open", title: "Open Code",
-          body: "O código do componente fica visível e editável no seu repositório. Não existe camada de configuração a contornar: quando a biblioteca não previu um caso, você muda o arquivo." },
+          body: "O código do componente fica no seu repositório, onde você pode ler e alterar. Quando um componente não atende ao seu caso, você edita o arquivo em vez de procurar uma opção de configuração." },
         { icon: "blocks", title: "Composição",
-          body: "Subcomponentes são helpers aninhados, não props: ui_card_header dentro de ui_card, ui_select_item dentro de ui_select_content. A estrutura da view espelha a do HTML." },
+          body: "Você monta um componente com helpers aninhados em vez de props: ui_card_header vai dentro de ui_card, ui_select_item dentro de ui_select_content. A view fica parecida com o HTML que ela gera." },
         { icon: "palette", title: "Tokens semânticos",
-          body: "Toda cor vem de um token shadcn (bg-primary, text-muted-foreground). Retematizar é editar duas listas de variáveis CSS; nenhum componente precisa mudar." },
+          body: "As cores vêm dos tokens do shadcn (bg-primary, text-muted-foreground). Para mudar o tema, você edita duas listas de variáveis CSS, uma para o modo claro e outra para o escuro, sem mexer nos componentes." },
         { icon: "accessibility", title: "Acessível por padrão",
-          body: "Semântica ARIA e os padrões do WAI-ARIA APG vêm embutidos: foco, teclado, rótulos e estados. A suíte do repositório valida isso a cada mudança." },
+          body: "Os componentes seguem os padrões do WAI-ARIA APG para foco, teclado, rótulos e estados, e os testes do repositório verificam isso a cada mudança." },
         { icon: "bot", title: "Pronto para agentes",
-          body: "Uma skill de agente e os arquivos llms.txt descrevem o catálogo em texto plano, e toda a CLI fala --json, então um agente lê a API em vez de adivinhar." },
+          body: "Uma skill para agentes e os arquivos llms.txt descrevem o catálogo em texto simples, e todo comando da CLI aceita --json. Assim, um agente de código consulta a API do componente em vez de adivinhar." },
         { icon: "git-compare-arrows", title: "Atualização explícita",
-          body: "Nada muda sozinho. diff mostra a divergência e update reaplica a versão do registry quando você mandar, reportando o que sobrescreveu." }
+          body: "Os arquivos instalados só mudam quando você pede. diff mostra onde a sua cópia difere do registry, e update traz a versão do registry e avisa o que sobrescreveu." }
       ].each do |principle| %>
         <%= ui_card(class: "h-full") do %>
           <%= ui_card_header do %>
@@ -93,7 +92,7 @@
   <section class="space-y-4">
     <%= docs_h2("O que já existe") %>
     <p class="leading-7 text-muted-foreground">
-      <%= docs_component_items.size %> componentes e 1 block, todos validados na aplicação Rails
+      <%= docs_component_items.size %> componentes e 1 block, todos testados na aplicação Rails
       que serve este site.
     </p>
 
@@ -108,8 +107,8 @@
           ] %>
 
     <p class="text-sm text-muted-foreground">
-      O catálogo inteiro está em <%= link_to "Componentes", components_path, class: "font-medium underline underline-offset-4" %>,
-      e a CLI responde <%= docs_code("bin/shadwire list") %> com a mesma lista.
+      O catálogo completo está na página <%= link_to "Componentes", components_path, class: "font-medium underline underline-offset-4" %>,
+      e <%= docs_code("bin/shadwire list") %> mostra a mesma lista.
     </p>
   </section>
 
@@ -118,9 +117,9 @@
     <div class="grid gap-4 sm:grid-cols-2">
       <% [
         { icon: "download", title: "Instalação", body: "Requisitos, a CLI e o primeiro componente no seu app.", path: docs_installation_path },
-        { icon: "terminal", title: "CLI", body: "Todos os comandos, flags e o payload JSON.", path: docs_cli_path },
-        { icon: "palette", title: "Theming", body: "Os tokens, a cor de marca e como manter suas edições.", path: docs_theming_path },
-        { icon: "bot", title: "Agent skill", body: "O contexto que Claude Code, Codex e outros agentes usam.", path: docs_agent_skill_path }
+        { icon: "terminal", title: "CLI", body: "Todos os comandos e flags, e a saída em JSON.", path: docs_cli_path },
+        { icon: "palette", title: "Theming", body: "Os tokens de cor, a cor da sua marca e como não perder suas edições nas atualizações.", path: docs_theming_path },
+        { icon: "bot", title: "Agent skill", body: "O que Claude Code, Codex e outros agentes precisam saber para usar o Shadwire.", path: docs_agent_skill_path }
       ].each do |card| %>
         <%= link_to card[:path], class: "group flex h-full flex-col gap-2 rounded-xl border bg-card p-5 text-card-foreground shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none" do %>
           <span class="flex items-center gap-2 font-medium">
@@ -135,15 +134,15 @@
   <section class="space-y-4">
     <%= docs_h2("Licença") %>
     <p class="leading-7 text-muted-foreground">
-      Shadwire é MIT, e os componentes que a CLI instala no seu app são seus: use, modifique
-      e publique em produtos comerciais e de código fechado, sem exigência de atribuição nos
-      arquivos instalados e sem dependência de runtime.
+      O Shadwire usa a licença MIT. Os componentes que a CLI instala são seus: você pode
+      alterá-los e usá-los em produtos comerciais ou de código fechado sem incluir atribuição
+      nos arquivos instalados.
     </p>
     <p class="leading-7 text-muted-foreground">
-      Shadwire é um port do
+      O Shadwire é um port do
       <%= link_to "shadcn/ui", "https://ui.shadcn.com", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>,
-      que também é MIT. Esse aviso e as licenças de tudo que um componente instalado carrega
-      junto (view_component, lucide-rails, os ícones do Lucide, o D3) estão no
+      que também é MIT. O aviso de licença dele e os das bibliotecas que os componentes usam
+      (view_component, lucide-rails, os ícones do Lucide, o D3) estão no arquivo
       <%= link_to "NOTICE", "https://github.com/edumoraes/shadwire/blob/main/NOTICE", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
       do repositório.
     </p>

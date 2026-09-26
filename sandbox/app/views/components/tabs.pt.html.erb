@@ -7,7 +7,7 @@
   <header class="space-y-3">
     <h1 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] sm:text-5xl">Tabs</h1>
     <p class="text-lg leading-snug text-muted-foreground">
-      Camadas de conteúdo — painéis de abas — exibidas uma por vez.
+      Painéis de conteúdo exibidos um de cada vez.
     </p>
   </header>
 
@@ -16,10 +16,10 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      O controller Stimulus implementa o padrão WAI-ARIA de tabs: roving tabindex,
+      O controller Stimulus implementa o padrão WAI-ARIA de abas: roving tabindex,
       ativação automática com <kbd class="rounded bg-muted px-1 text-xs">←</kbd>/<kbd class="rounded bg-muted px-1 text-xs">→</kbd>,
       <kbd class="rounded bg-muted px-1 text-xs">Home</kbd>/<kbd class="rounded bg-muted px-1 text-xs">End</kbd>,
-      e o wiring de <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-controls</code>/<code class="rounded bg-muted px-1 py-0.5 text-xs">aria-labelledby</code>.
+      e a ligação de <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-controls</code>/<code class="rounded bg-muted px-1 py-0.5 text-xs">aria-labelledby</code>.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">

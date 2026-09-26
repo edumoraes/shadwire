@@ -17,10 +17,10 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">showModal()</code> entrega
-      focus trap, top layer, <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd> e
-      restauração de foco nativamente; o controller adiciona animações, fechamento
-      pelo backdrop e o wiring de
+      O <code class="rounded bg-muted px-1 py-0.5 text-xs">showModal()</code> do navegador já prende o foco,
+      coloca o diálogo acima de tudo, fecha com <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd> e
+      devolve o foco ao fechar; o controller acrescenta as animações, o fechamento
+      pelo backdrop e a ligação de
       <code class="rounded bg-muted px-1 py-0.5 text-xs">aria-labelledby</code>/<code class="rounded bg-muted px-1 py-0.5 text-xs">aria-describedby</code>.
     </p>
     <%= docs_code_block(@usage_helper) %>
@@ -60,7 +60,7 @@
         <td><code>Dialog::Trigger</code> / <code>Dialog::Close</code></td>
         <td><code>variant</code>, <code>size</code></td>
         <td><code>:outline</code>, <code>:default</code></td>
-        <td>Encapsulam <code>Ui::ButtonComponent</code> com as ações de abrir/fechar.</td>
+        <td>Encapsulam o <code>Ui::ButtonComponent</code> com as ações de abrir e fechar.</td>
       </tr>
       <tr>
         <td><code>Dialog::Content</code></td>
@@ -72,7 +72,7 @@
         <td><code>Dialog::Title</code> / <code>Dialog::Description</code></td>
         <td>—</td>
         <td>—</td>
-        <td>Ligados ao diálogo via <code>aria-labelledby</code>/<code>aria-describedby</code> na abertura.</td>
+        <td>Ligados ao diálogo por <code>aria-labelledby</code>/<code>aria-describedby</code> quando ele abre.</td>
       </tr>
     <% end %>
   </section>

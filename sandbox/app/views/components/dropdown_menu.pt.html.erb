@@ -17,11 +17,11 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
       O controller <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-dropdown-menu</code>
-      implementa o padrão WAI-ARIA de menu: foco rotativo entre os itens,
-      <kbd class="rounded bg-muted px-1 text-xs">↑</kbd>/<kbd class="rounded bg-muted px-1 text-xs">↓</kbd> circulares,
-      <kbd class="rounded bg-muted px-1 text-xs">Home</kbd>/<kbd class="rounded bg-muted px-1 text-xs">End</kbd>,
-      busca por digitação (typeahead) e fechamento por
-      <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>, Tab ou clique fora.
+      implementa o padrão WAI-ARIA de menu: <kbd class="rounded bg-muted px-1 text-xs">↑</kbd>/<kbd class="rounded bg-muted px-1 text-xs">↓</kbd>
+      movem o foco entre os itens (do último, voltam ao primeiro),
+      <kbd class="rounded bg-muted px-1 text-xs">Home</kbd>/<kbd class="rounded bg-muted px-1 text-xs">End</kbd> vão para as pontas,
+      digitar as primeiras letras leva ao item, e o menu fecha com
+      <kbd class="rounded bg-muted px-1 text-xs">Esc</kbd>, Tab ou um clique fora.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">
@@ -60,7 +60,7 @@
         <td><code>DropdownMenu::Content</code></td>
         <td><code>side</code>, <code>align</code></td>
         <td><code>:bottom</code>, <code>:start</code></td>
-        <td>Posicionamento do menu por utilitários.</td>
+        <td>A posição do menu, feita com utilitários.</td>
       </tr>
       <tr>
         <td><code>DropdownMenu::Item</code></td>
@@ -72,7 +72,7 @@
         <td><code>DropdownMenu::Item</code></td>
         <td><code>inset</code>, <code>disabled</code></td>
         <td><code>false</code></td>
-        <td>Recuo para alinhar com ícones; desabilitado é pulado na navegação.</td>
+        <td>Recua o item para alinhar com os que têm ícone; um item desabilitado é pulado na navegação.</td>
       </tr>
       <tr>
         <td><code>DropdownMenu::Item</code></td>

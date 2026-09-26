@@ -17,8 +17,8 @@
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
       Use the <code class="rounded bg-muted px-1 py-0.5 text-xs">ui_input</code> helper
-      in any view. Because <code class="rounded bg-muted px-1 py-0.5 text-xs">&lt;input&gt;</code>
-      is a void element, the helper takes no block — all state travels in attributes.
+      in any view. <code class="rounded bg-muted px-1 py-0.5 text-xs">&lt;input&gt;</code> is a void element, so the helper
+      takes no block: everything, including the value, goes in attributes.
     </p>
     <%= docs_code_block(@usage_helper) %>
     <p class="text-sm text-muted-foreground">

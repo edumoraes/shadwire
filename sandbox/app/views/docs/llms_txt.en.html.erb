@@ -1,5 +1,5 @@
 <% content_for :title, "llms.txt — Shadwire" %>
-<% content_for :description, "Shadwire's catalog in plain text, for agents that install no skill and cannot run the CLI." %>
+<% content_for :description, "Shadwire's catalog in plain text, for agents that cannot use the skill or run the CLI." %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
 <% end %>
@@ -7,14 +7,14 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "llms.txt",
-        description: "The same catalog in plain text, for when the agent has neither the skill nor a way to run the CLI." %>
+        description: "The component catalog in plain text, for agents that have neither the skill nor a way to run the CLI." %>
 
   <section class="space-y-4">
     <p class="leading-7">
       The <%= link_to "agent skill", docs_agent_skill_path, class: "font-medium underline underline-offset-4" %>
-      is the preferred route: it reads the app and knows what is installed. But not every agent
-      installs skills, and not every context has a shell. For those, the registry build publishes
-      two plain-text variants, generated from the same data.
+      is the better option, because it looks at your app and knows what is installed. But not
+      every agent supports skills, and not every agent can run commands. For those cases the
+      registry also comes in two plain-text files, generated from the same data.
     </p>
 
     <%= render "docs/table",
@@ -22,9 +22,9 @@
           rows: [
             [ link_to(docs_code("/r/llms.txt"), "https://shadwire.edumoraes.dev.br/r/llms.txt", target: "_blank", rel: "noopener"),
               "Every component with its title, description and when-to-use text.",
-              "Choosing the right component. Fits comfortably in any context window." ],
+              "Choosing a component. It is small enough for any context window." ],
             [ link_to(docs_code("/r/llms-full.txt"), "https://shadwire.edumoraes.dev.br/r/llms-full.txt", target: "_blank", rel: "noopener"),
-              "The above plus the full API: helpers, variants, sizes, props and usage snippets.",
+              "Everything in llms.txt, plus the full API: helpers, variants, sizes, arguments and usage examples.",
               "Writing ERB with no way to consult the CLI." ]
           ] %>
 
@@ -36,26 +36,25 @@
     <p class="leading-7 text-muted-foreground">
       Plain Markdown, following the
       <%= link_to "llms.txt", "https://llmstxt.org", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
-      convention: a title, a short summary, and sections by area — how to install,
-      the licence the source arrives under, and the catalog itself.
+      convention: a title, a short summary, and sections for how to install, the licence of the
+      code, and the catalog itself.
     </p>
 
     <%= docs_code_block(@snippets[:sample], language: :markdown) %>
   </section>
 
   <section class="space-y-4">
-    <%= docs_h2("The limitation") %>
+    <%= docs_h2("What they can't tell you") %>
     <p class="leading-7 text-muted-foreground">
       These files describe the <em>registry</em>, not <em>your app</em>. They list all
-      <%= docs_component_items.size %> components, including the ones you never installed — and
-      the helper of a component you did not install does not exist.
+      <%= docs_component_items.size %> components, including the ones you have not installed,
+      and the helpers of those components do not exist in your app.
     </p>
 
     <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "Installing by hand leaves shadwire.json inaccurate" } do %>
-      You can copy the code out of <code>llms-full.txt</code>, but the inventory in
-      <code>shadwire.json</code> is not updated — and that inventory is what makes
-      <code>diff</code>, <code>update</code> and <code>remove</code> work. If the CLI is
-      available, use the CLI.
+      You can copy the code out of <code>llms-full.txt</code>, but then the list in
+      <code>shadwire.json</code> is not updated, and <code>diff</code>, <code>update</code> and
+      <code>remove</code> rely on it. If you can run the CLI, use it.
     <% end %>
   </section>
 </article>

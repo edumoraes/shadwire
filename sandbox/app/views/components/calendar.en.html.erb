@@ -16,11 +16,10 @@
   <section class="space-y-4">
     <h2 class="border-b pb-2 text-2xl font-bold tracking-[-0.01em]"><%= t("components.sections.usage") %></h2>
     <p class="text-sm text-muted-foreground">
-      The server renders only the scaffold; the <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar</code> controller
-      builds the days, so changing month costs no request. The chosen date goes into an
-      <code class="rounded bg-muted px-1 py-0.5 text-xs">input[type=hidden]</code> — the calendar submits like
-      works inside a <code class="rounded bg-muted px-1 py-0.5 text-xs">form_with</code> like
-      any other field. For a field that opens the calendar in a popover, see
+      The server only renders the frame; the <code class="rounded bg-muted px-1 py-0.5 text-xs">ui-calendar</code> controller
+      builds the days in the browser, so changing month does not make a request. The chosen date
+      goes into an <code class="rounded bg-muted px-1 py-0.5 text-xs">input[type=hidden]</code>, so inside a
+      <code class="rounded bg-muted px-1 py-0.5 text-xs">form_with</code> the calendar is submitted like any other field. For a field that opens the calendar in a popover, see
       <%= link_to "Date Picker", components_date_picker_path, class: "underline underline-offset-4" %>.
     </p>
     <%= docs_code_block(@usage_helper) %>

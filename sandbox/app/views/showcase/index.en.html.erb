@@ -1,7 +1,7 @@
 <% content_for :title, "Shadwire — shadcn/ui components for Ruby on Rails" %>
 <% content_for :description do %>
-  Shadwire brings shadcn/ui's Open Code model to Ruby on Rails: open, copyable
-  ViewComponent source that your app installs and then owns, with no runtime gem.
+  shadcn/ui for Ruby on Rails. A CLI copies each component's ViewComponent source
+  into your app, where it becomes your code. Nothing to depend on at runtime.
 <% end %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
@@ -17,9 +17,10 @@
       shadcn/ui components that become your code.
     </h1>
     <p class="mx-auto mt-6 max-w-2xl text-balance text-xl leading-[1.2] tracking-[-0.006em] text-muted-foreground sm:text-2xl">
-      Shadwire brings shadcn/ui's <strong class="font-semibold text-foreground">Open Code</strong> model
-      to Ruby on Rails: open, copyable ViewComponent source that your app installs
-      and then owns — with no runtime gem.
+      Shadwire ports shadcn/ui to Ruby on Rails and keeps its
+      <strong class="font-semibold text-foreground">Open Code</strong> approach: a CLI copies
+      each component's source into your app, and from then on it is your code. No gem is
+      needed at runtime.
     </p>
     <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
       <%= ui_button(tag: :a, href: docs_path, size: :lg) do %>
@@ -72,10 +73,10 @@
 <section>
   <div class="mx-auto max-w-6xl px-5 py-16 sm:py-24">
     <div class="mx-auto max-w-2xl text-center">
-      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] text-primary sm:text-5xl">Everything you need.</h2>
+      <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] text-primary sm:text-5xl">See them working.</h2>
       <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
-        Accessible, copy-ready components — from buttons and forms to dialogs and
-        sidebars. Here are a few of them running live, with the code beside them.
+        The catalog goes from buttons and form controls to dialogs and sidebars. Here are a
+        few of them, rendered live, with the code next to each one.
       </p>
     </div>
 
@@ -104,19 +105,19 @@
     <div class="mx-auto max-w-2xl text-center">
       <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] text-primary sm:text-5xl">The code is yours.</h2>
       <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
-        Shadwire is not a runtime gem. You install the component source into your
-        app and maintain it from there, free to adapt it to whatever you are building.
+        Shadwire is not a gem your app loads at runtime. You install the component source
+        into your app and maintain it there, changing it however your project needs.
       </p>
     </div>
 
     <div class="mx-auto mt-14 grid max-w-4xl gap-10 sm:grid-cols-3">
       <% [
         { icon: "package-open", title: "You own it",
-          description: "The files are copied into your project and run with no Shadwire dependency at all." },
+          description: "The files are copied into your project and keep working without Shadwire installed." },
         { icon: "accessibility", title: "Accessible by default",
-          description: "ARIA semantics and APG patterns are built into every component." },
+          description: "Every component follows the WAI-ARIA APG patterns for roles, focus and keyboard use." },
         { icon: "palette", title: "Semantic tokens",
-          description: "Styled with shadcn tokens (bg-primary, text-muted-foreground…), dark mode included." }
+          description: "Colours come from shadcn's tokens (bg-primary, text-muted-foreground…), so dark mode needs no extra work." }
       ].each do |principle| %>
         <div>
           <span class="inline-flex size-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
@@ -136,7 +137,7 @@
     <div class="mx-auto max-w-2xl text-center">
       <h2 class="text-4xl font-bold tracking-[-0.01em] leading-[0.92] text-primary sm:text-5xl">Start here.</h2>
       <p class="mt-4 text-lg leading-snug text-muted-foreground sm:text-xl">
-        Browse the catalog, look through the ready-made compositions, or follow the project on GitHub.
+        Read the docs, browse the components and blocks, or look at the source on GitHub.
       </p>
     </div>
 
@@ -146,8 +147,8 @@
       <% [
         { eyebrow: "Learn", icon: "book-open", title: "Documentation", description: "Installation, the CLI, the agent skill, theming, and the guides on composition, styling and forms.", cta: "Read the docs", path: docs_path, external: false },
         { eyebrow: "Browse", icon: "blocks", title: "Components", description: "#{docs_component_items.size} documented components, each with live examples and an API reference.", cta: "Browse the catalog", path: components_path, external: false },
-        { eyebrow: "Compose", icon: "layout-dashboard", title: "Blocks", description: "Ready-made compositions built out of the components, like sidebar-01.", cta: "See the blocks", path: blocks_path, external: false },
-        { eyebrow: "Contribute", icon: "github", title: "GitHub", description: "Read the source and the registry, and contribute to the project.", cta: "Open the repository", path: "https://github.com/edumoraes/shadwire", external: true }
+        { eyebrow: "Compose", icon: "layout-dashboard", title: "Blocks", description: "Larger layouts built from the components, such as sidebar-01.", cta: "See the blocks", path: blocks_path, external: false },
+        { eyebrow: "Contribute", icon: "github", title: "GitHub", description: "Read the source, report issues and contribute.", cta: "Open the repository", path: "https://github.com/edumoraes/shadwire", external: true }
       ].each do |card| %>
         <%= link_to card[:path],
               **(card[:external] ? { target: "_blank", rel: "noopener" } : {}),

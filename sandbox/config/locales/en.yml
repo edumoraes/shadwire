@@ -34,13 +34,13 @@ en:
     showcase:
       with_icon:
         title: Button
-        description: Compose a ui_icon inside the block; the button sizes the SVG for you.
+        description: Put a ui_icon inside the block and the button sizes the SVG for you.
       card_default:
         title: Card
         description: A surface with a header, content and footer for grouping related actions.
       input_with_label:
         title: Form
-        description: Accessible form controls, tied to each other by label and id.
+        description: Accessible form controls, with the label tied to its input by id.
       alert_default:
         title: Alert
         description: Call out an important message with alert semantics.
@@ -107,8 +107,8 @@ en:
           summary: Lists every component in the registry's catalog.
         - signature: bin/shadwire search QUERY
           summary: >-
-            Searches the catalog by name, title, description and when-to-use text, so
-            conceptual terms like form, modal or loading work.
+            Searches the catalog by name, title, description and when-to-use text, so you
+            can search for things like form, modal or loading.
         - signature: bin/shadwire info NAME
           summary: >-
             Shows the component's full API: helpers, variants, sizes, props, files, gems,
@@ -123,8 +123,8 @@ en:
             edits, so run diff first.
         - signature: bin/shadwire remove NAME...
           summary: >-
-            Uninstalls components, deleting only the files exclusive to them — never the
-            shared base, and never a file another installed component still uses.
+            Uninstalls components. It only deletes their own files, never the shared base
+            files or a file another installed component still uses.
         - signature: bin/shadwire status
           summary: >-
             Describes the whole app in one call: detected stack, installed components with the
@@ -137,10 +137,10 @@ en:
           description: Runs against another application directory instead of the current one.
         - flag: --registry URL
           commands: all
-          description: Reads from another registry. Accepts https:// and file://, which is how you test a locally built registry.
+          description: Reads from another registry. Accepts https:// and file:// URLs; use file:// to test a registry you built locally.
         - flag: --json
           commands: all but version
-          description: Emits machine-readable JSON instead of human output. This is what agents and CI use.
+          description: Prints JSON instead of human-readable output, for agents and CI.
         - flag: --yes, -y
           commands: init, add, update, remove
           description: Applies file and dependency changes without asking.
@@ -218,8 +218,8 @@ en:
       files:
         - path: SKILL.md
           summary: >-
-            Principles, critical rules, the component selection table and the workflow. Injects
-            bin/shadwire status --json as project context.
+            Principles, the rules that matter most, the table for choosing a component, and the
+            workflow. Loads bin/shadwire status --json as project context.
         - path: cli.md
           summary: >-
             A reference for every command and flag, the shape of the JSON payload, and how to
@@ -300,11 +300,11 @@ en:
           type: "The input's `type`."
         ui_input_group_button:
           size: "The size; the `icon_` sizes are square."
-          type: "The button's `type` — `\"button\"`, so it never submits the form by accident."
+          type: "The button's `type`. It is `\"button\"`, so it never submits the form by accident."
         ui_button_group:
           orientation: "Joins the buttons in a row (`:horizontal`) or a column (`:vertical`)."
         ui_button_group_text:
-          tag: "The element to render — `:label` to name an input in the group."
+          tag: "The element to render; use `:label` to name an input in the group."
         ui_button_group_separator:
           orientation: "`:vertical` between buttons in a row, `:horizontal` in a column."
         ui_field:
@@ -390,59 +390,59 @@ en:
           position: "Where toasts stack: `:top_left`, `:top_center`, `:top_right`, `:bottom_left`, `:bottom_center` or `:bottom_right`."
           duration: "Milliseconds a toast stays before it dismisses itself."
         ui_chart:
-          config: "The series — and the categories a pie or a legend names — as `{ key: { label:, color:, icon: } }`, or `theme: { light:, dark: }` in place of `color:`. Each color becomes `--color-<key>` on the chart."
-          rows: "The data, one hash per category. It is `rows:` rather than `data:`, so `data:` stays the HTML data attributes."
+          config: "The series, and the categories a pie or a legend shows, as `{ key: { label:, color:, icon: } }`, or `theme: { light:, dark: }` in place of `color:`. Each color becomes `--color-<key>` on the chart."
+          rows: "The data, one hash per category. It is called `rows:` rather than `data:` so that `data:` still sets HTML data attributes."
           layout: "`:horizontal` runs the categories along the x axis; `:vertical` down the y axis, for horizontal bars."
           stack_offset: "D3's offset for the series that share a `stack_id:`: `:none`, `:expand` (to 100%), `:diverging`, `:silhouette` or `:wiggle`."
-          margin: "Room around the plot, in pixels per side: `{ left: 12, right: 12 }`. The axes and the legend claim theirs on top."
-          inner_radius: "The inner radius pies, rings and radars share: pixels, or a percentage of the room there is (`\"30%\"`)."
-          outer_radius: "Their outer radius, the same way."
+          margin: "Space around the plot, in pixels per side: `{ left: 12, right: 12 }`. The axes and the legend add their own space on top of this."
+          inner_radius: "The inner radius of pies, rings and radars: in pixels, or as a percentage of the available space (`\"30%\"`)."
+          outer_radius: "Their outer radius, in the same units."
           start_angle: "Where pies, rings and radars start, in degrees clockwise from twelve o'clock."
-          end_angle: "Where they end, in the same degrees."
+          end_angle: "Where they end, also in degrees clockwise from twelve o'clock."
           label: "The chart's accessible name."
         ui_chart_layer:
           controller: "The Stimulus controller that draws the layer. It receives `ui-chart:render`, with the chart's scales in `event.detail.chart`."
           options: "Whatever that controller needs, as `event.detail.options`."
         ui_chart_grid:
-          horizontal: "Draws the horizontal lines. Unset, only the lines across the value axis are drawn."
-          vertical: "Draws the vertical lines, on the same terms."
+          horizontal: "Draws the horizontal lines. If neither is set, only the lines across the value axis are drawn."
+          vertical: "Draws the vertical lines, with the same default."
         ui_chart_x_axis:
-          data_key: "On the category axis, the field whose values label the categories — and the tooltip."
-          hide: "Keeps the axis' categories without drawing it."
+          data_key: "On the category axis, the field whose values label the categories and the tooltip."
+          hide: "Hides the axis but keeps its categories."
           tick_line: "Draws a tick at each label."
           axis_line: "Draws the axis line."
           tick_margin: "Pixels between the plot and the labels."
           tick_count: "About how many ticks the value axis gets."
           tick_format: "A d3-format specifier for numbers (`\"~s\"`, `\"$,.0f\"`) or a d3-time-format one for dates (`\"%b %d\"`)."
-          min_tick_gap: "The least room between two category labels, in pixels: the labels that would collide are left out."
+          min_tick_gap: "The minimum space between two category labels, in pixels; labels that would overlap are skipped."
           domain: "The value axis' `[min, max]`; `nil` at either end leaves that end to the data."
-          height: "The room the axis takes, in pixels. Unset, it measures its labels."
+          height: "The space the axis takes, in pixels. If unset, it is measured from the labels."
         ui_chart_y_axis:
-          data_key: "On the category axis — the y axis of a vertical layout — the field whose values label the categories, and the tooltip."
-          hide: "Keeps the axis' categories without drawing it."
+          data_key: "On the category axis (the y axis in a vertical layout), the field whose values label the categories and the tooltip."
+          hide: "Hides the axis but keeps its categories."
           tick_line: "Draws a tick at each label."
           axis_line: "Draws the axis line."
           tick_margin: "Pixels between the plot and the labels."
           tick_count: "About how many ticks the value axis gets."
           tick_format: "A d3-format specifier for numbers (`\"~s\"`, `\"$,.0f\"`) or a d3-time-format one for dates (`\"%b %d\"`)."
-          min_tick_gap: "The least room between two category labels, in pixels: the labels that would collide are left out."
+          min_tick_gap: "The minimum space between two category labels, in pixels; labels that would overlap are skipped."
           domain: "The value axis' `[min, max]`; `nil` at either end leaves that end to the data."
-          width: "The room the axis takes, in pixels. Unset, it measures its labels."
+          width: "The space the axis takes, in pixels. If unset, it is measured from the labels."
         ui_chart_bar:
           data_key: "The field each bar shows."
-          color: "The bars' color, over the config's."
+          color: "The bars' color, overriding the config's."
           stack_id: "Bars with the same `stack_id` stack; the others stand side by side."
           radius: "The corners' radius in pixels: one number, or `[top_left, top_right, bottom_right, bottom_left]`."
         ui_chart_line:
           data_key: "The field the line runs through."
-          color: "The line's color, over the config's."
+          color: "The line's color, overriding the config's."
           curve: "D3's curve: `:natural`, `:linear`, `:monotone`, `:step`, `:step_before`, `:step_after`, `:basis`, `:cardinal` or `:catmull_rom`."
           stroke_width: "The line's width, in pixels."
           dot: "Marks every point."
           connect_nulls: "Runs across a missing value instead of breaking there."
         ui_chart_area:
           data_key: "The field the area rises to."
-          color: "The area's color, over the config's."
+          color: "The area's color, overriding the config's."
           stack_id: "Areas with the same `stack_id` stack."
           curve: "D3's curve, as on the line."
           fill_opacity: "The fill's opacity, from 0 to 1."
@@ -453,21 +453,21 @@ en:
         ui_chart_pie:
           data_key: "The field each slice's size comes from."
           name_key: "The field naming each slice: the config key that labels and colors it."
-          inner_radius: "Over the chart's: pixels or a percentage. Anything above zero makes a donut."
-          outer_radius: "Over the chart's."
+          inner_radius: "Overrides the chart's: pixels or a percentage. Anything above zero makes a donut."
+          outer_radius: "Overrides the chart's."
           padding_angle: "A gap between the slices, in degrees."
           corner_radius: "Rounds the slices' corners, in pixels."
           stroke_width: "A stroke between the slices in the background color; `class: \"stroke-card\"` matches a card."
         ui_chart_radial_bar:
           data_key: "The field each ring's sweep comes from."
           name_key: "The field naming each ring, which then takes its config entry's label and color."
-          color: "The rings' color, over the config's."
+          color: "The rings' color, overriding the config's."
           stack_id: "Radial bars with the same `stack_id` stack along their rings."
           background: "Draws the rest of each ring as a muted track."
           corner_radius: "Rounds the rings' ends, in pixels."
         ui_chart_radar:
           data_key: "The field each corner's distance comes from."
-          color: "The polygon's color, over the config's."
+          color: "The polygon's color, overriding the config's."
           fill_opacity: "The fill's opacity, from 0 to 1; 0 leaves the outline alone."
           stroke_width: "Outlines the polygon, in pixels."
           dot: "Marks every corner."
@@ -475,7 +475,7 @@ en:
           grid_type: "`:polygon`, rings through the spokes, or `:circle`."
           radial_lines: "Draws a spoke per category."
         ui_chart_polar_angle_axis:
-          data_key: "The field whose values label the spokes — and the tooltip."
+          data_key: "The field whose values label the spokes and the tooltip."
           tick_format: "A d3 specifier for the labels."
           tick_margin: "Pixels between the outer ring and the labels."
         ui_chart_label_list:
@@ -492,10 +492,10 @@ en:
           label_format: "A d3 specifier for the label (`\"%B\"`)."
           value_format: "A d3 specifier for the values (`\",d\"`)."
           cursor: "Shades the category the pointer is on."
-          default_index: "Opens on this category before anyone points."
+          default_index: "Shows the tooltip for this category before anyone hovers."
         ui_chart_legend:
           name_key: "Lists each row, named by this field, instead of each series."
-          hide_icon: "Keeps the swatch where the config has an icon."
+          hide_icon: "Shows the color swatch even when the config has an icon."
           vertical_align: "The edge it sits at: `:bottom` or `:top`."
         ui_data_table:
           columns: "The columns, as `{ key:, label:, sortable:, sort_value: }` hashes."
@@ -526,7 +526,7 @@ en:
         description: "For destructive actions, such as deleting a record."
       outline:
         title: "Outline"
-        description: "Border only, no fill — good for neutral actions."
+        description: "A border and no fill, for neutral actions."
       ghost:
         title: "Ghost"
         description: "No background and no border until hover."
@@ -538,13 +538,13 @@ en:
         description: "A square icon-only button (size: :icon). Pass label: on the icon for screen readers."
       with_icon:
         title: "With icon"
-        description: "Compose ui_icon inside the block; the button sizes the SVG for you."
+        description: "Put a ui_icon inside the block and the button sizes the SVG for you."
       sizes:
         title: "Sizes"
         description: "The :sm, :default and :lg sizes side by side."
       loading:
         title: "Loading"
-        description: "A loading state composed from a spinning icon and disabled."
+        description: "A loading state: a spinning icon, with the button disabled."
       disabled:
         title: "Disabled"
         description: "Pass disabled: true as an HTML attribute."
@@ -589,7 +589,7 @@ en:
         description: "Compose the Accordion inside a Card when it is part of a larger surface."
       scroll_area_vertical:
         title: "Preview"
-        description: "A vertical Scroll Area keeps native scrolling while matching Shadwire styles."
+        description: "A vertical scroll area: native scrolling, with a scrollbar that matches the theme."
       scroll_area_horizontal:
         title: "Horizontal"
         description: "Use a horizontal scrollbar for galleries and wide content."
@@ -598,7 +598,7 @@ en:
         description: "Use dir: \"rtl\" when rendering right-to-left content."
       input_default:
         title: "Default"
-        description: "A text field with the shadcn look. Free-form HTML attributes pass straight to the <input>."
+        description: "A text field in the shadcn style. Any HTML attribute you pass goes to the <input>."
       input_with_label:
         title: "With a label"
         description: "Pair it with ui_label using for:/id: to tie the label to the field."
@@ -619,7 +619,7 @@ en:
         description: "Inside a group carrying data-disabled, the label dims automatically."
       textarea_default:
         title: "Default"
-        description: "A textarea with the shadcn look; it grows with its content through field-sizing."
+        description: "A textarea in the shadcn style. It grows with its content, using field-sizing."
       textarea_with_label:
         title: "With a label"
         description: "Pair it with ui_label for accessible forms."
@@ -637,10 +637,10 @@ en:
         description: "disabled: true disables the native input."
       checkbox_form:
         title: "With form_with"
-        description: "Use form.field_name/form.field_id. Unlike form.check_box there is no hidden input — treat a missing parameter as unchecked."
+        description: "Use form.field_name/form.field_id. Unlike form.check_box, there is no hidden input, so treat a missing parameter as unchecked."
       radio_group_default:
         title: "Default"
-        description: "Native radios sharing one name: — arrow-key navigation comes from the browser."
+        description: "Native radios that share one name:, so the browser handles arrow-key navigation."
       radio_group_disabled:
         title: "Disabled item"
         description: "disabled: true disables one item without affecting the group."
@@ -649,7 +649,7 @@ en:
         description: "Use form.field_name for the shared name and form.field_id(attr, value) for each id."
       switch_default:
         title: "Default"
-        description: "A native checkbox with role=\"switch\" — toggle semantics for screen readers."
+        description: "A native checkbox with role=\"switch\", so screen readers announce it as a switch."
       switch_checked:
         title: "On"
         description: "Use checked: true to start it on; pair it with supporting text."
@@ -658,7 +658,7 @@ en:
         description: "disabled: true disables the native input."
       switch_form:
         title: "With form_with"
-        description: "Use form.field_name/form.field_id. No hidden input — treat a missing parameter as off."
+        description: "Use form.field_name/form.field_id. There is no hidden input, so treat a missing parameter as off."
       skeleton_default:
         title: "Default"
         description: "Combine shapes to sketch the content that is loading."
@@ -694,7 +694,7 @@ en:
         description: "Previous/Next with accessible labels, the active page marked aria-current=\"page\", and a decorative ellipsis."
       tabs_default:
         title: "Default"
-        description: "Two panels holding cards; the active panel is driven by the ui-tabs controller."
+        description: "Two panels with cards; the ui-tabs controller switches between them."
       tabs_disabled:
         title: "Disabled trigger"
         description: "disabled: true removes the trigger from the keyboard flow and from activation."
@@ -709,7 +709,7 @@ en:
         description: "show_close_button: false drops the X; compose your own buttons with ui_dialog_close."
       alert_dialog_default:
         title: "Delete confirmation"
-        description: "Neither the backdrop nor Esc closes it — the person has to choose Cancel or Continue."
+        description: "Neither the backdrop nor Esc closes it: the user has to pick Cancel or Continue."
       sheet_default:
         title: "Default"
         description: "A panel sliding in from the right, with a form and a footer."
@@ -742,7 +742,7 @@ en:
         description: "Group options with a label and a separator; items can be disabled."
       select_form:
         title: "With form_with"
-        description: "The value travels in a hidden input (name:). Native required does not apply — validate on the server."
+        description: "The value is sent in a hidden input (name:). The native required attribute does not apply, so validate on the server."
       sidebar_basic:
         title: "Preview"
         description: "A contained sidebar (collapsible: :none) with a header, groups and a menu. The full block, with collapsing and a mobile drawer, is at /blocks/sidebar-01."
@@ -817,7 +817,7 @@ en:
         description: "mode: :range records two dates; hovering after the first click previews the range. number_of_months: 2 shows two months side by side."
       calendar_dropdown:
         title: "Caption with selects"
-        description: "caption_layout: :dropdown swaps the month name for month and year selects — the short way to a distant year."
+        description: "caption_layout: :dropdown replaces the month name with month and year selects, which makes a distant year quicker to reach."
       date_picker_default:
         title: "Default"
         description: "A button that opens the calendar in a popover and then shows the chosen date."
@@ -826,19 +826,19 @@ en:
         description: "The same trigger inside a Field, tied to the label by id."
       date_picker_range:
         title: "Range"
-        description: "Two dates in a single trigger. The popover closes when the second end lands, not the first."
+        description: "Two dates in one trigger. The popover closes after the second date is picked, not the first."
       date_picker_dob:
         title: "Date of birth"
-        description: "A caption with month and year selects and max: today — nobody was born next week."
+        description: "Month and year selects in the caption, and max: today, since nobody is born in the future."
       date_picker_input:
         title: "With a text field"
-        description: "Type the date or pick it in the calendar: the text becomes a date and the date comes back formatted. ↓ opens the popover."
+        description: "Type a date or pick one in the calendar. What you type is parsed, and the field then shows the date formatted. ↓ opens the popover."
       date_picker_time:
         title: "Date and time"
-        description: "The picker settles the day; a native input type=\"time\" settles the hour."
+        description: "The picker sets the day and a native input type=\"time\" sets the time."
       date_picker_natural:
         title: "Natural language"
-        description: "It takes \"today\", \"tomorrow\", \"in 2 weeks\", \"next friday\". The phrase table lives in the controller — it is your code."
+        description: "Understands \"today\", \"tomorrow\", \"in 2 weeks\" and \"next friday\". The list of phrases is in the controller, so you can add your own."
       date_picker_rtl:
         title: "RTL"
         description: "dir: :rtl mirrors the grid, the arrows and the ←/→ keys; month_names:/day_names: translate the caption."
@@ -859,16 +859,16 @@ en:
         description: "A vertical layout runs the months down the y axis. Two label lists inside the bars print the month and the value."
       chart_bar_stacked:
         title: "Stacked bars"
-        description: "Bars that share a stack id stack. Each radius rounds only the outer corners of the stack."
+        description: "Bars with the same stack id are stacked, and the radius only rounds the outer corners of each stack."
       chart_line:
         title: "Lines"
         description: "A natural curve and a step, both with dots, under a tooltip with a line indicator."
       chart_area:
         title: "Stacked areas"
-        description: "Three months of daily rows under a gradient. The dates are formatted in the page's language, and the labels that would collide are left out."
+        description: "Three months of daily rows under a gradient. The dates are formatted in the page's language, and labels that would overlap are skipped."
       chart_pie:
         title: "Donut"
-        description: "A pie with an inner radius, and plain markup in the hole: the layers compose with HTML too."
+        description: "A pie with an inner radius and plain HTML in the middle: layers can be mixed with HTML."
       chart_radar:
         title: "Radar"
         description: "Two radars over a polar grid, with the months around them."
@@ -877,10 +877,10 @@ en:
         description: "A ring per browser over a muted track, labelled where each ring starts."
       chart_tooltip:
         title: "Tooltip indicators"
-        description: "The dot, line and dashed indicators, each open on Tuesday before anyone points."
+        description: "The dot, line and dashed indicators, each showing Tuesday before anyone hovers."
       chart_layer:
         title: "A layer of your own"
-        description: "A goal line drawn by a Stimulus controller of the app's own, on the chart's value scale."
+        description: "A goal line drawn on the chart's value scale by a Stimulus controller from the app itself."
       data_table_default:
         title: "Default"
         description: "Filtering by email, sortable columns and row selection."
@@ -930,7 +930,7 @@ en:
       command:
         subtitle: "A filterable command palette, with arrow-key navigation and Enter."
       combobox:
-        subtitle: "A recipe: Popover + Command. Not a new component — it installs popover and command."
+        subtitle: "A Popover with a Command inside. It is not a separate component: installing it installs popover and command."
       resizable:
         subtitle: "Resizable panels with draggable handles and keyboard adjustment."
       carousel:
@@ -938,7 +938,7 @@ en:
       sonner:
         subtitle: "Temporary notifications stacked in a polite live region. Fire them with window.toast or through Stimulus."
       chart:
-        subtitle: "Composable charts drawn with D3. Put together a grid, axes, series, a tooltip and a legend — or a layer you draw yourself."
+        subtitle: "Charts drawn with D3 and built from parts: a grid, axes, series, a tooltip and a legend, or a layer you draw yourself."
       data_table:
-        subtitle: "A table with filtering, sorting, pagination, row selection and column visibility — all client-side."
+        subtitle: "A table with filtering, sorting, pagination, row selection and column visibility, all in the browser."
 

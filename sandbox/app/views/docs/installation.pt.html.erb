@@ -12,8 +12,8 @@
   <section class="space-y-4">
     <%= docs_h2("Requisitos") %>
     <p class="leading-7 text-muted-foreground">
-      Os componentes instalados dependem só do que a sua aplicação já tem. O registry declara
-      estes pisos de suporte:
+      Os componentes instalados só precisam do que um app Rails normalmente já tem. Estas são
+      as versões mínimas:
     </p>
 
     <%= render "docs/table",
@@ -22,7 +22,7 @@
             [ docs_code("ruby"), ">= 3.2", "Sintaxe usada pelos componentes e pela CLI." ],
             [ docs_code("rails"), ">= 7.1", "Helpers de view, tag builder e o pipeline de assets." ],
             [ docs_code("view_component"), ">= 4.0", "Os componentes são classes ViewComponent." ],
-            [ docs_code("lucide-rails"), ">= 0.7", "O port Rails do Lucide, o set de ícones do shadcn/ui." ],
+            [ docs_code("lucide-rails"), ">= 0.7", "O port para Rails do Lucide, o conjunto de ícones do shadcn/ui." ],
             [ "Tailwind CSS", "v4", safe_join([ "Os tokens usam ", docs_code("@theme inline"), ", que é da v4." ]) ]
           ] %>
 
@@ -31,15 +31,15 @@
       são instalados em <code>app/javascript/controllers/</code> e se registram pelo
       <code>eagerLoadControllersFrom</code> padrão do <code>importmap-rails</code>. Se o seu
       app registra controllers manualmente, registre os novos também.
-      <code>bin/shadwire status --json</code> reporta o que encontrou em <code>stack</code>.
+      <code>bin/shadwire status --json</code> mostra o que detectou em <code>stack</code>.
     <% end %>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Instale a CLI") %>
     <p class="leading-7 text-muted-foreground">
-      A CLI é uma ferramenta de desenvolvimento e não vira dependência de runtime. Instale
-      globalmente ou direto no app; as duas formas funcionam.
+      A CLI só é usada durante o desenvolvimento, nunca em runtime. Você pode instalá-la
+      globalmente ou adicioná-la ao app.
     </p>
 
     <%= docs_code_block(@snippets[:install_cli], language: :shell) %>
@@ -48,8 +48,8 @@
   <section class="space-y-4">
     <%= docs_h2("Rode o init") %>
     <p class="leading-7 text-muted-foreground">
-      Na raiz do app Rails. É o único comando que roda sem prefixo, porque é ele que cria o
-      binstub usado pelos demais.
+      Rode na raiz do app Rails. É o único comando que você roda sem <code>bin/</code>,
+      porque é ele que cria o binstub que os outros comandos usam.
     </p>
 
     <%= docs_code_block(@snippets[:init], language: :shell) %>
@@ -58,12 +58,12 @@
 
     <ul class="space-y-2 text-sm leading-6 text-muted-foreground">
       <% [
-        [ "shadwire.json", "grava o manifesto na raiz do app: registry, aliases de destino, entrypoint do Tailwind e o que está instalado." ],
+        [ "shadwire.json", "grava o manifesto na raiz do app: a URL do registry, onde cada tipo de arquivo vai, o entrypoint do Tailwind e o que está instalado." ],
         [ "Arquivos base", "instala app/components/ui_component.rb (a superclasse compartilhada) e vendor/shadwire/shadwire.css (os tokens)." ],
         [ "Gems base", "adiciona view_component e lucide-rails ao Gemfile, se faltarem." ],
         [ "Grupo development", "adiciona a própria shadwire ao grupo development do Gemfile." ],
-        [ "bin/shadwire", "escreve o binstub, o ponto de entrada canônico, resolvido pelo bundle do app." ],
-        [ "@import do Tailwind", "insere o import do shadwire.css no entrypoint do Tailwind." ]
+        [ "bin/shadwire", "cria o binstub que você passa a usar para rodar a CLI. Ele carrega a CLI pelo bundle do app." ],
+        [ "@import do Tailwind", "importa o shadwire.css no entrypoint do Tailwind." ]
       ].each do |label, body| %>
         <li class="flex gap-3">
           <%= ui_icon("check", size: :sm, class: "mt-1 shrink-0 text-primary") %>
@@ -73,25 +73,25 @@
     </ul>
 
     <p class="leading-7 text-muted-foreground">
-      O comando é idempotente: rodar de novo não desfaz nada e um binstub existente é
-      deixado em paz. <%= docs_code("--force") %> reseta o <%= docs_code("shadwire.json") %>
-      e reescreve o binstub.
+      Pode rodar de novo sem medo: ele não desfaz nada e não mexe num binstub que já existe.
+      <%= docs_code("--force") %> recria o <%= docs_code("shadwire.json") %> e reescreve o
+      binstub.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Por que bin/shadwire") %>
     <p class="leading-7 text-muted-foreground">
-      Depois do init, rode tudo por <%= docs_code("bin/shadwire") %>. O binstub resolve pelo
-      bundle do app, então quem instalar o grupo de desenvolvimento roda a mesma versão da
-      CLI, sem depender do que cada pessoa tem instalado globalmente.
+      Depois do init, rode todos os comandos por <%= docs_code("bin/shadwire") %>. O binstub
+      carrega a CLI pelo bundle do app, então todo mundo no projeto usa a mesma versão,
+      independente do que cada um tem instalado globalmente.
     </p>
 
     <%= render layout: "docs/callout", locals: { icon: "triangle-alert", title: "Um bundle sem o grupo development não tem a CLI" } do %>
-      <code>bundle install --without development</code> (comum em deploy e em alguns jobs de
-      CI) não instala a <code>shadwire</code>, e <code>bin/shadwire</code> não roda ali.
-      Instale o grupo de desenvolvimento em qualquer job que use a CLI, como o de checagem de
-      drift.
+      <code>bundle install --without development</code>, comum em deploy e em alguns jobs de
+      CI, não instala a <code>shadwire</code>, então <code>bin/shadwire</code> não funciona
+      nesse ambiente. Todo job que usa a CLI, como uma checagem de drift, precisa do grupo
+      development.
     <% end %>
   </section>
 
@@ -101,8 +101,8 @@
     <%= docs_code_block(@snippets[:add], language: :shell) %>
 
     <p class="leading-7 text-muted-foreground">
-      As dependências de registry vêm junto automaticamente. Cada componente instala o
-      próprio módulo de helper (<%= docs_code("button") %> grava
+      Os componentes de que ele depende são instalados junto. Cada componente também instala
+      o próprio módulo de helper (<%= docs_code("button") %> grava
       <%= docs_code("app/helpers/ui/button_helper.rb") %>), e o Rails inclui tudo que está em
       <%= docs_code("app/helpers/") %> nas views, sem <%= docs_code("include") %>.
     </p>
@@ -110,7 +110,7 @@
     <%= docs_code_block(@snippets[:usage]) %>
 
     <p class="leading-7 text-muted-foreground">
-      As duas formas são equivalentes; prefira o helper nas views.
+      As duas formas renderizam a mesma coisa. Nas views, o helper é mais curto.
     </p>
   </section>
 
@@ -120,11 +120,12 @@
     <%= docs_code_block(@snippets[:status], language: :shell) %>
 
     <p class="leading-7 text-muted-foreground">
-      O <%= docs_code("status") %> nunca falha. Fora de um app Rails ele responde
-      <%= docs_code('"rails": false') %>, um registry inacessível vira
-      <%= docs_code("registryError") %> e um <%= docs_code("shadwire.json") %> ilegível vira
-      <%= docs_code("configError") %>, sempre com código de saída 0. Os campos estão todos em
-      <%= link_to "CLI", docs_cli_path, class: "font-medium underline underline-offset-4" %>.
+      O <%= docs_code("status") %> nunca falha. Fora de um app Rails ele retorna
+      <%= docs_code('"rails": false') %>, um registry fora do ar aparece como
+      <%= docs_code("registryError") %> e um <%= docs_code("shadwire.json") %> ilegível como
+      <%= docs_code("configError") %>, e o código de saída é sempre 0. A página da
+      <%= link_to "CLI", docs_cli_path, class: "font-medium underline underline-offset-4" %>
+      lista todos os campos.
     </p>
   </section>
 
@@ -134,9 +135,9 @@
       Dá para copiar os arquivos à mão a partir do
       <%= link_to "registry publicado", docs_registry_path, class: "font-medium underline underline-offset-4" %>
       ou do <%= link_to "llms-full.txt", docs_llms_txt_path, class: "font-medium underline underline-offset-4" %>,
-      mas o <%= docs_code("shadwire.json") %> fica desatualizado, e é ele que faz
+      mas aí o <%= docs_code("shadwire.json") %> não fica sabendo deles, e
       <%= docs_code("diff") %>, <%= docs_code("update") %> e <%= docs_code("remove") %>
-      funcionarem. Prefira a CLI.
+      dependem dele. Sempre que possível, use a CLI.
     </p>
   </section>
 </article>

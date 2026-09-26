@@ -1,5 +1,5 @@
 <% content_for :title, "Localização — Shadwire" %>
-<% content_for :description, "Todo texto visível de um componente instalado passa por I18n com um padrão em inglês. A lista completa de chaves, as quatro lidas por JavaScript e como sobrescrevê-las." %>
+<% content_for :description, "Todo texto que um componente instalado mostra passa pelo I18n com um padrão em inglês. A lista completa de chaves, as que o JavaScript lê e como sobrescrevê-las." %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
 <% end %>
@@ -7,47 +7,46 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Localização",
-        description: "Componentes instalados leem seus textos de I18n com padrões em inglês. Um app que não define nada recebe inglês; um app que define a chave recebe o próprio texto." %>
+        description: "Os componentes instalados buscam seus textos no I18n e, se não encontram, usam o inglês. Se o seu app define uma chave, o componente usa o seu texto." %>
 
   <section class="space-y-4">
     <p class="leading-7">
-      Todo texto que um componente renderiza por conta própria — o rótulo de um
-      botão de fechar, a seta da paginação, a mensagem de tabela vazia — passa por
+      Todo texto que um componente renderiza por conta própria, como o rótulo de um
+      botão de fechar, a seta da paginação ou a mensagem de tabela vazia, passa pelo
       <%= docs_code("I18n.t") %> com o texto em inglês como padrão:
     </p>
 
     <%= docs_code_block(@snippets[:call], language: :ruby) %>
 
     <p class="leading-7 text-muted-foreground">
-      É esse padrão que faz a instalação funcionar sem configuração: o componente
-      renderiza em inglês num app que não tem nenhum arquivo de locale para ele.
-      Nada precisa ser configurado antes de o componente ser útil, e nada quebra
-      num app que nunca encosta em I18n.
+      Graças a esse padrão, o componente funciona logo depois de instalado: sem
+      arquivo de locale, ele aparece em inglês. Não é preciso configurar nada antes,
+      e apps que não usam I18n não são afetados.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Sobrescrevendo um texto") %>
     <p class="leading-7 text-muted-foreground">
-      Defina a chave no seu próprio arquivo de locale. Não há etapa de registro nem
-      prop no componente — a chave <em>é</em> a API.
+      Defina a chave no seu próprio arquivo de locale. Não é preciso registrar nada
+      nem passar argumento para o componente; basta a chave.
     </p>
 
     <%= docs_code_block(@snippets[:override], language: :yaml) %>
 
     <p class="leading-7 text-muted-foreground">
-      Só as chaves que você define são sobrescritas; as demais mantêm o padrão em
-      inglês, então dá para traduzir um componente por vez.
+      Só mudam as chaves que você define. As outras continuam com o padrão em inglês,
+      então dá para traduzir um componente de cada vez.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("As chaves") %>
     <p class="leading-7 text-muted-foreground">
-      Toda chave que um componente lê, com o texto para o qual ela recai. As
+      Todas as chaves que os componentes leem, com o texto padrão de cada uma. As
       marcadas como <strong>value</strong> vão para um atributo
-      <%= docs_code("data-*-value") %> e são lidas por um controller Stimulus, em vez
-      de impressas pelo servidor — veja abaixo.
+      <%= docs_code("data-*-value") %> e são usadas por um controller Stimulus, em vez
+      de impressas pelo servidor; a próxima seção explica por que isso importa.
     </p>
 
     <% @keys.each do |component, entries| %>
@@ -70,25 +69,23 @@
       <%= docs_code("ui.data_table.selection") %>, <%= docs_code("ui.data_table.page") %>,
       <%= docs_code("ui.calendar.month") %>, <%= docs_code("ui.calendar.year") %> e
       <%= docs_code("ui.sonner.close") %> não são
-      impressas na página. Elas são resolvidas uma vez, quando o componente
-      renderiza, e escritas num atributo <%= docs_code("data-*-value") %> que o
-      controller lê. Traduzir funciona exatamente igual — continuam sendo chaves
-      I18n comuns.
+      impressas na página. Elas são buscadas uma vez, quando o componente renderiza,
+      e gravadas num atributo <%= docs_code("data-*-value") %> para o controller ler.
+      Você as traduz do mesmo jeito que as outras, porque são chaves de I18n comuns.
     </p>
 
     <p class="leading-7 text-muted-foreground">
-      Duas delas carregam uma armadilha. A contagem de seleção e o contador de
-      páginas da data table são interpolados <em>pelo controller</em>, não pelo I18n,
-      então os tokens precisam sobreviver à tradução:
+      Duas delas pedem cuidado. A contagem de selecionados e o contador de páginas da
+      data table são preenchidos <em>pelo controller</em>, não pelo I18n, então a sua
+      tradução precisa manter os marcadores:
     </p>
 
     <%= docs_code_block(@snippets[:interpolated], language: :yaml) %>
 
     <p class="leading-7 text-muted-foreground">
-      Traduzir ou remover <%= docs_code("%{selected}") %>, <%= docs_code("%{page}") %>
-      ou <%= docs_code("%{total}") %> deixa a legenda com um token literal ou sem
-      número nenhum, e nada acusa —
-      o I18n nunca vê esses marcadores.
+      Se você traduzir ou remover <%= docs_code("%{selected}") %>, <%= docs_code("%{page}") %>
+      ou <%= docs_code("%{total}") %>, a legenda mostra o marcador como texto ou fica sem
+      número, e nenhum erro aparece, porque o I18n nunca vê esses marcadores.
     </p>
   </section>
 
@@ -98,29 +95,30 @@
       A legenda e os cabeçalhos do calendário não estão no namespace
       <%= docs_code("ui.") %>. O calendário os lê das traduções de data do próprio
       Rails, <%= docs_code("date.month_names") %> e
-      <%= docs_code("date.abbr_day_names") %>: em inglês de fábrica, e no seu idioma
-      assim que o app o carrega — pelo
+      <%= docs_code("date.abbr_day_names") %>. Eles vêm em inglês por padrão, e no seu
+      idioma assim que o app carrega as traduções, seja pelo
       <%= link_to "rails-i18n", "https://github.com/svenfuchs/rails-i18n", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
-      ou pelo seu próprio arquivo de locale. Para usar outros nomes num calendário, passe-os:
+      ou pelo seu próprio arquivo de locale. Para usar outros nomes em um calendário
+      específico, passe-os como argumento:
     </p>
 
     <%= docs_code_block(@snippets[:calendar_names]) %>
 
     <p class="leading-7 text-muted-foreground">
-      O <%= docs_code(".compact") %> importa: o
-      <%= docs_code("date.abbr_month_names") %> do Rails é indexado a partir de 1 e começa
-      com um <%= docs_code("nil") %>.
+      O <%= docs_code(".compact") %> é necessário: o
+      <%= docs_code("date.abbr_month_names") %> do Rails começa no índice 1, então o primeiro
+      elemento é <%= docs_code("nil") %>.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Um exemplo completo") %>
     <p class="leading-7 text-muted-foreground">
-      Este site é o exemplo. As páginas em português renderizam os mesmos
-      componentes que você instala, com o bloco <%= docs_code("ui.") %> inteiro
-      definido uma vez — é por isso que todo texto que os componentes fornecem
-      por conta própria em <%= docs_code("/pt") %> (botões de fechar, setas da
-      paginação, a mensagem de tabela vazia) aparece em português.
+      Este site é um. As páginas em português renderizam os mesmos componentes que você
+      instala, e o site define o bloco <%= docs_code("ui.") %> inteiro uma única vez. É
+      por isso que os textos que os próprios componentes colocam em
+      <%= docs_code("/pt") %> (botões de fechar, setas da paginação, a mensagem de
+      tabela vazia) aparecem em português.
     </p>
 
     <p class="leading-7 text-muted-foreground">
@@ -128,8 +126,8 @@
       <%= link_to "sandbox/config/locales/pt.yml",
             "https://github.com/edumoraes/shadwire/blob/main/sandbox/config/locales/pt.yml",
             target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
-      carrega todas as chaves desta página e serve de ponto de partida para copiar
-      num app em português.
+      tem todas as chaves desta página, e você pode copiá-lo como ponto de partida para
+      um app em português.
     </p>
   </section>
 </article>

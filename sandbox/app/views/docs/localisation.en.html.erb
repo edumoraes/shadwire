@@ -1,5 +1,5 @@
 <% content_for :title, "Localisation — Shadwire" %>
-<% content_for :description, "Every user-facing string in an installed component goes through I18n with an English default. The full key list, the four read by JavaScript, and how to override them." %>
+<% content_for :description, "Every piece of text an installed component shows goes through I18n with an English default. The full list of keys, the ones JavaScript reads, and how to override them." %>
 <% content_for :head do %>
   <%= tag.style rouge_stylesheet %>
 <% end %>
@@ -7,47 +7,46 @@
 <article class="space-y-12">
   <%= render "docs/header",
         title: "Localisation",
-        description: "Installed components read their user-facing strings from I18n with English defaults. An app that defines nothing gets English; an app that defines the key gets its own text." %>
+        description: "Installed components look up their text in I18n and fall back to English. If your app defines a key, the component uses your text instead." %>
 
   <section class="space-y-4">
     <p class="leading-7">
-      Every string a component renders on its own — a close button's label, a
-      pagination arrow, an empty-table message — goes through
+      Any text a component renders by itself, such as a close button's label, a
+      pagination arrow or an empty table's message, goes through
       <%= docs_code("I18n.t") %> with the English text as the default:
     </p>
 
     <%= docs_code_block(@snippets[:call], language: :ruby) %>
 
     <p class="leading-7 text-muted-foreground">
-      That default is what makes an install work with no setup: the component
-      renders English in an app with no locale file for it at all. Nothing has to
-      be configured before a component is usable, and nothing breaks in an app
-      that never touches I18n.
+      Because of that default, a component works right after you install it: with no
+      locale file, it renders in English. You don't have to configure anything first,
+      and apps that don't use I18n at all are not affected.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("Overriding a string") %>
     <p class="leading-7 text-muted-foreground">
-      Define the key in your own locale file. There is no registration step and no
-      component prop — the key <em>is</em> the API.
+      Define the key in your own locale file. You don't need to register anything or
+      pass an argument to the component; the key is all there is to it.
     </p>
 
     <%= docs_code_block(@snippets[:override], language: :yaml) %>
 
     <p class="leading-7 text-muted-foreground">
-      Only the keys you define are overridden; the rest keep their English
-      defaults, so you can translate a component at a time.
+      Only the keys you define change. The rest keep their English defaults, so you
+      can translate one component at a time.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("The keys") %>
     <p class="leading-7 text-muted-foreground">
-      Every key a component reads, with the text it falls back to. Keys marked
-      <strong>value</strong> are rendered into a <%= docs_code("data-*-value") %>
-      attribute and read by a Stimulus controller rather than printed by the
-      server — see below.
+      Every key a component reads, with its default text. Keys marked
+      <strong>value</strong> are written into a <%= docs_code("data-*-value") %>
+      attribute and used by a Stimulus controller instead of being printed by the
+      server; the next section explains why that matters.
     </p>
 
     <% @keys.each do |component, entries| %>
@@ -70,24 +69,25 @@
       <%= docs_code("ui.data_table.selection") %>, <%= docs_code("ui.data_table.page") %>,
       <%= docs_code("ui.calendar.month") %>, <%= docs_code("ui.calendar.year") %> and
       <%= docs_code("ui.sonner.close") %> are not
-      printed into the page. They are resolved once, when the component renders, and
-      written into a <%= docs_code("data-*-value") %> attribute the controller reads.
-      Translating them works exactly the same way — they are still ordinary I18n keys.
+      printed on the page. They are looked up once, when the component renders, and
+      written into a <%= docs_code("data-*-value") %> attribute for the controller to
+      read. You translate them the same way as the others, since they are ordinary
+      I18n keys.
     </p>
 
     <p class="leading-7 text-muted-foreground">
-      Two of them carry a trap. The data table's selection count and page counter
-      are interpolated <em>by the controller</em>, not by I18n, so their tokens have
-      to survive the translation:
+      Two of them need care. The data table's selection count and page counter are
+      filled in <em>by the controller</em>, not by I18n, so your translation has to
+      keep their placeholders:
     </p>
 
     <%= docs_code_block(@snippets[:interpolated], language: :yaml) %>
 
     <p class="leading-7 text-muted-foreground">
-      Translating or dropping <%= docs_code("%{selected}") %>, <%= docs_code("%{page}") %>
-      or <%= docs_code("%{total}") %> leaves the caption with a literal token or no
-      numbers at all, and nothing
-      reports it — I18n never sees these placeholders.
+      If you translate or remove <%= docs_code("%{selected}") %>, <%= docs_code("%{page}") %>
+      or <%= docs_code("%{total}") %>, the caption shows the placeholder as text or no
+      number at all, and you won't get an error, because I18n never sees these
+      placeholders.
     </p>
   </section>
 
@@ -97,37 +97,36 @@
       The calendar's caption and column headers are not in the
       <%= docs_code("ui.") %> namespace. The calendar reads them from Rails' own date
       translations, <%= docs_code("date.month_names") %> and
-      <%= docs_code("date.abbr_day_names") %>: English out of the box, and your
-      language as soon as your app loads it — from
+      <%= docs_code("date.abbr_day_names") %>. They are in English by default, and in
+      your language once your app loads the translations, either from
       <%= link_to "rails-i18n", "https://github.com/svenfuchs/rails-i18n", target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
-      or from your own locale file. To use other names for one calendar, pass them:
+      or from your own locale file. To use different names in one calendar, pass them in:
     </p>
 
     <%= docs_code_block(@snippets[:calendar_names]) %>
 
     <p class="leading-7 text-muted-foreground">
-      <%= docs_code(".compact") %> matters: Rails'
-      <%= docs_code("date.abbr_month_names") %> is 1-indexed and starts with a
-      <%= docs_code("nil") %>.
+      You need the <%= docs_code(".compact") %>: Rails'
+      <%= docs_code("date.abbr_month_names") %> starts at index 1, so its first element
+      is <%= docs_code("nil") %>.
     </p>
   </section>
 
   <section class="space-y-4">
     <%= docs_h2("A worked example") %>
     <p class="leading-7 text-muted-foreground">
-      This site is the example. Its Portuguese pages render the same components
-      you install, with the whole <%= docs_code("ui.") %> block defined once —
-      which is why every string the components supply themselves on
-      <%= docs_code("/pt") %> (close buttons, pagination arrows, the empty-table
-      message) reads in Portuguese.
+      This site is one. Its Portuguese pages render the same components you install,
+      and the site defines the whole <%= docs_code("ui.") %> block once. That is why
+      the text the components add themselves on <%= docs_code("/pt") %> (close
+      buttons, pagination arrows, the empty table message) is in Portuguese.
     </p>
 
     <p class="leading-7 text-muted-foreground">
       <%= link_to "sandbox/config/locales/pt.yml",
             "https://github.com/edumoraes/shadwire/blob/main/sandbox/config/locales/pt.yml",
             target: "_blank", rel: "noopener", class: "font-medium underline underline-offset-4" %>
-      carries every key on this page, and is a copy-paste starting point for a
-      Portuguese app.
+      has every key on this page, and you can copy it as a starting point for an app
+      in Portuguese.
     </p>
   </section>
 </article>
